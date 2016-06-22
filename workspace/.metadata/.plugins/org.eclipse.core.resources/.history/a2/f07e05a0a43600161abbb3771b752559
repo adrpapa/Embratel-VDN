@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"dijit/registry",
+			"dojox/mvc/getPlainValue",
+			"aps/WizardData",
+			"dojox/mvc/at",
+			"aps/load",
+			"aps/Memory",
+			/* Include JSON file that defines the wizard steps */
+			"dojo/text!./channel-wizard.json",
+			"dojo/text!./channel_new.json",
+			"aps/ready!"
+		], function (registry, getPlainValue, wd, at, load, Memory, wizardControl, channel_new) {
+			wizardControl = JSON.parse(wizardControl);
+			wizardControl[0].active = true;
+
+			/* Declare the data source */
+			var model = typeof aps.context.params.isNew === "undefined" ? JSON.parse(channel_new) : wd.get() );
+
+// 			screen_formats = new Memory({
+// 				idProperty: "value",
+// 					data: [
+// 						{ value: "16:9",      label: "16:9" },
+// 						{ value: "4:3",       label: "4:3" },
+//                         { value: "2.35:1",       label: "2.35:1" },
+// 					]
+// 				});
+// 						["aps/Select", { id: "new1_fmt", label: _( "Screen Format"), value: at(model,"screen_format"), store: screen_formats }],
+
+			/* Create widgets */
+			var widgets =
+				["aps/PageContainer", { id: "page" }, [
+					["aps/WizardControl", {steps: wizardControl }],
+					["aps/FieldSet", { id: "new1_general", title:  "Channel Configuration"  }, [
+						["aps/TextBox", { id: "new1_channelName", label: _("Channel Name"), value: at(model, "name"), required: true }],
+						["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") }]]],
+					]]
+			]];
+			load(widgets).then(function(){
+				/* Create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("channels");
+				};
+				aps.app.onNext = function() {
+					var page = registry.byId("page");
+					page.get("messageList").removeAll();
+
+					/* Validate the values assigned to widgets */
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+
+					/* Save the values in the client"s storage */
+					wd.put(getPlainValue(model));
+					/* and proceed to the next screen */
+					aps.apsc.gotoView("channel-new-last");
+				};
+			});
+		}
+	);
+	</script>
+</head>
+<body>
+</body>
+</html>

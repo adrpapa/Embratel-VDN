@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aps="http://aps-standard.org/ns/2" xmlns:concern="http://www.eclipse.org/sirius/diagram/description/concern/1.1.0" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:filter="http://www.eclipse.org/sirius/diagram/description/filter/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/diagram/description/concern/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/concern http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/filter/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/filter http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style" xmi:id="_JPpwEDV_Eea-BKUY8UYOlw" selectedViews="_JP_HQDV_Eea-BKUY8UYOlw" version="10.1.0.201509162000">
+  <semanticResources>model.types</semanticResources>
+  <ownedViews xmi:type="viewpoint:DRepresentationContainer" xmi:id="_JP_HQDV_Eea-BKUY8UYOlw">
+    <ownedRepresentations xmi:type="diagram:DSemanticDiagram" xmi:id="_JT1FcDV_Eea-BKUY8UYOlw" name="BasicWithUI diagram">
+      <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_JT1FcTV_Eea-BKUY8UYOlw" source="DANNOTATION_CUSTOMIZATION_KEY">
+        <data xmi:type="diagram:ComputedStyleDescriptionRegistry" xmi:id="_JT1sgDV_Eea-BKUY8UYOlw"/>
+      </ownedAnnotationEntries>
+      <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_JT_dgDV_Eea-BKUY8UYOlw" source="GMF_DIAGRAMS">
+        <data xmi:type="notation:Diagram" xmi:id="_JT_dgTV_Eea-BKUY8UYOlw" type="Sirius" element="_JT1FcDV_Eea-BKUY8UYOlw" measurementUnit="Pixel">
+          <children xmi:type="notation:Node" xmi:id="_JUCg0DV_Eea-BKUY8UYOlw" type="2003" element="_JT1sgTV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUS_gDV_Eea-BKUY8UYOlw" type="3012" element="_JT1sgjV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUUNoDV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUUNoTV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUcJcDV_Eea-BKUY8UYOlw" type="3004" element="_JT1sgzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUcJcTV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUcJcjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUS_gTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUS_gjV_Eea-BKUY8UYOlw" x="8" y="-8" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUaUQDV_Eea-BKUY8UYOlw" type="3012" element="_JT1shDV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUa7UDV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUa7UTV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUcJczV_Eea-BKUY8UYOlw" type="3004" element="_JT1shTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUcJdDV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUcJdTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUaUQTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUaUQjV_Eea-BKUY8UYOlw" x="149" y="8" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUJOgDV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUKcoDV_Eea-BKUY8UYOlw" type="7004">
+              <children xmi:type="notation:Node" xmi:id="_JUdXkDV_Eea-BKUY8UYOlw" type="3010" element="_JT1shzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUdXkTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUdXkjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUdXkzV_Eea-BKUY8UYOlw" type="3010" element="_JT1siTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUdXlDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUdXlTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUd-oDV_Eea-BKUY8UYOlw" type="3010" element="_JT1sizV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUd-oTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUd-ojV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUd-ozV_Eea-BKUY8UYOlw" type="3010" element="_JT1sjTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUd-pDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUd-pTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUd-pjV_Eea-BKUY8UYOlw" type="3010" element="_JT1sjzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUd-pzV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUd-qDV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUKcoTV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUKcojV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JUCg0TV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUCg0jV_Eea-BKUY8UYOlw" x="69" y="100"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_JULDsDV_Eea-BKUY8UYOlw" type="2003" element="_JT1skTV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUelsDV_Eea-BKUY8UYOlw" type="3012" element="_JT1skjV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUelszV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUeltDV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUhB8DV_Eea-BKUY8UYOlw" type="3004" element="_JT1skzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUhB8TV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUhB8jV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUelsTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUelsjV_Eea-BKUY8UYOlw" x="8" y="-8" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUfMwDV_Eea-BKUY8UYOlw" type="3012" element="_JT1slDV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUfMwzV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUfMxDV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUhpADV_Eea-BKUY8UYOlw" type="3004" element="_JT1slTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUhpATV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUhpAjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUfMwTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUfMwjV_Eea-BKUY8UYOlw" x="72" y="-8" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUfz0DV_Eea-BKUY8UYOlw" type="3012" element="_JT1sljV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUfz0zV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUfz1DV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUiQEDV_Eea-BKUY8UYOlw" type="3004" element="_JT1slzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUiQETV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUiQEjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUfz0TV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUfz0jV_Eea-BKUY8UYOlw" x="40" y="-8" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUga4DV_Eea-BKUY8UYOlw" type="3012" element="_JT1smDV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUga4zV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUga5DV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUi3IDV_Eea-BKUY8UYOlw" type="3004" element="_JT1smTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUi3ITV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUi3IjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUga4TV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUga4jV_Eea-BKUY8UYOlw" x="104" y="-8" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JULqwDV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUMR0DV_Eea-BKUY8UYOlw" type="7004">
+              <children xmi:type="notation:Node" xmi:id="_JUi3IzV_Eea-BKUY8UYOlw" type="3010" element="_JT1smzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUi3JDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUi3JTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUi3JjV_Eea-BKUY8UYOlw" type="3010" element="_JT1snTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUi3JzV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUi3KDV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUMR0TV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUMR0jV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JULDsTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JULDsjV_Eea-BKUY8UYOlw" x="420" y="280"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_JUMR0zV_Eea-BKUY8UYOlw" type="2003" element="_JT1snzV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUjeMDV_Eea-BKUY8UYOlw" type="3012" element="_JT1soDV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUjeMzV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUjeNDV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUkFQDV_Eea-BKUY8UYOlw" type="3004" element="_JT1soTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUkFQTV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUkFQjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUjeMTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUjeMjV_Eea-BKUY8UYOlw" x="8" y="91" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUM44DV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUM44TV_Eea-BKUY8UYOlw" type="7004">
+              <children xmi:type="notation:Node" xmi:id="_JUkFQzV_Eea-BKUY8UYOlw" type="3010" element="_JT1sozV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUkFRDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUkFRTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUksUDV_Eea-BKUY8UYOlw" type="3010" element="_JT1spTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUksUTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUksUjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUksUzV_Eea-BKUY8UYOlw" type="3010" element="_JT1spzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUksVDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUksVTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUM44jV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUM44zV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JUMR1DV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUMR1TV_Eea-BKUY8UYOlw" x="480" y="100"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_JUM45DV_Eea-BKUY8UYOlw" type="2003" element="_JT1sqTV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUksVjV_Eea-BKUY8UYOlw" type="3012" element="_JT1sqjV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUlTYDV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUlTYTV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUlTYjV_Eea-BKUY8UYOlw" type="3004" element="_JT1sqzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUlTYzV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUlTZDV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUksVzV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUksWDV_Eea-BKUY8UYOlw" x="8" y="36" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUNf8DV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUNf8TV_Eea-BKUY8UYOlw" type="7004">
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUNf8jV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUNf8zV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JUM45TV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUM45jV_Eea-BKUY8UYOlw"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_JUOHADV_Eea-BKUY8UYOlw" visible="false" type="2003" element="_JT1srTV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUOuEDV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUOuETV_Eea-BKUY8UYOlw" type="7004">
+              <children xmi:type="notation:Node" xmi:id="_JUl6cDV_Eea-BKUY8UYOlw" visible="false" type="3010" element="_JT1srzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUl6cTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUl6cjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUl6czV_Eea-BKUY8UYOlw" visible="false" type="3010" element="_JT1ssTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUl6dDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUl6dTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUmhgDV_Eea-BKUY8UYOlw" visible="false" type="3010" element="_JT1sszV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUmhgTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUmhgjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUmhgzV_Eea-BKUY8UYOlw" visible="false" type="3010" element="_JT1stTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUmhhDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUmhhTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUOuEjV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUOuEzV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JUOHATV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUOHAjV_Eea-BKUY8UYOlw"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_JUOuFDV_Eea-BKUY8UYOlw" visible="false" type="2003" element="_JT1stzV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUPVIDV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUPVITV_Eea-BKUY8UYOlw" type="7004">
+              <children xmi:type="notation:Node" xmi:id="_JUnIkDV_Eea-BKUY8UYOlw" visible="false" type="3010" element="_JT1suTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUnIkTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUnIkjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUPVIjV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUPVIzV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JUOuFTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUOuFjV_Eea-BKUY8UYOlw"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_JUP8MDV_Eea-BKUY8UYOlw" type="2003" element="_JT1suzV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUnIkzV_Eea-BKUY8UYOlw" type="3012" element="_JT1svDV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUnvoDV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUnvoTV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUnvojV_Eea-BKUY8UYOlw" type="3004" element="_JT1svTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUnvozV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUnvpDV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUnIlDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUnIlTV_Eea-BKUY8UYOlw" x="8" y="115" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUQjQDV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUQjQTV_Eea-BKUY8UYOlw" type="7004">
+              <children xmi:type="notation:Node" xmi:id="_JUoWsDV_Eea-BKUY8UYOlw" type="3010" element="_JT1svzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUoWsTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUoWsjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUo9wDV_Eea-BKUY8UYOlw" type="3010" element="_JT1swTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUo9wTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUo9wjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUo9wzV_Eea-BKUY8UYOlw" type="3010" element="_JT1swzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUo9xDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUo9xTV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUpk0DV_Eea-BKUY8UYOlw" type="3010" element="_JT1sxTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUpk0TV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUpk0jV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUpk0zV_Eea-BKUY8UYOlw" type="3010" element="_JT1sxzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUpk1DV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUpk1TV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUQjQjV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUQjQzV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JUP8MTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUP8MjV_Eea-BKUY8UYOlw" x="284" y="100"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_JURKUDV_Eea-BKUY8UYOlw" type="2003" element="_JT1syTV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUqL4DV_Eea-BKUY8UYOlw" type="3012" element="_JT1syjV_Eea-BKUY8UYOlw">
+              <children xmi:type="notation:Node" xmi:id="_JUqL4zV_Eea-BKUY8UYOlw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUqL5DV_Eea-BKUY8UYOlw" x="1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUqy8DV_Eea-BKUY8UYOlw" type="3004" element="_JT1syzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_JUqy8TV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUqy8jV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_JUqL4TV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUqL4jV_Eea-BKUY8UYOlw" x="8" y="61" width="0" height="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JURxYDV_Eea-BKUY8UYOlw" type="5007"/>
+            <children xmi:type="notation:Node" xmi:id="_JUSYcDV_Eea-BKUY8UYOlw" type="7004">
+              <children xmi:type="notation:Node" xmi:id="_JUqy8zV_Eea-BKUY8UYOlw" type="3010" element="_JT1szTV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUqy9DV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUqy9TV_Eea-BKUY8UYOlw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_JUraADV_Eea-BKUY8UYOlw" type="3010" element="_JT1szzV_Eea-BKUY8UYOlw">
+                <styles xmi:type="notation:FontStyle" xmi:id="_JUraATV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_JUraAjV_Eea-BKUY8UYOlw"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_JUSYcTV_Eea-BKUY8UYOlw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_JUSYcjV_Eea-BKUY8UYOlw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_JURKUTV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JURKUjV_Eea-BKUY8UYOlw" x="695" y="100"/>
+          </children>
+          <styles xmi:type="notation:DiagramStyle" xmi:id="_JT_dgjV_Eea-BKUY8UYOlw"/>
+          <edges xmi:type="notation:Edge" xmi:id="_JUt2QDV_Eea-BKUY8UYOlw" type="4001" element="_JT1s0TV_Eea-BKUY8UYOlw" source="_JUS_gDV_Eea-BKUY8UYOlw" target="_JUksVjV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUvEYDV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUvEYTV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUvrcDV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUvrcTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JUwSgDV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUwSgTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JUt2QTV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JUt2QjV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JUt2QzV_Eea-BKUY8UYOlw" points="[0, 0, 69, 66]$[-69, -66, 0, 0]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JUzV0DV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JUzV0TV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JUz84DV_Eea-BKUY8UYOlw" type="4001" element="_JT1s1TV_Eea-BKUY8UYOlw" source="_JUelsDV_Eea-BKUY8UYOlw" target="_JUaUQDV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JUz85DV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JUz85TV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU0j8DV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU0j8TV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU0j8jV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU0j8zV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JUz84TV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JUz84jV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JUz84zV_Eea-BKUY8UYOlw" points="[0, 0, 215, 170]$[-215, -170, 0, 0]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU0j9DV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU0j9TV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JU0j9jV_Eea-BKUY8UYOlw" type="4001" element="_JT1s2TV_Eea-BKUY8UYOlw" source="_JUfMwDV_Eea-BKUY8UYOlw" target="_JUjeMDV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JU1LADV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU1LATV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU1LAjV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU1LAzV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU1LBDV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU1LBTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JU0j9zV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JU0j-DV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JU0j-TV_Eea-BKUY8UYOlw" points="[0, 0, 4, 98]$[-4, -98, 0, 0]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU1yEDV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU1yETV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JU1yEjV_Eea-BKUY8UYOlw" type="4001" element="_JT1s3TV_Eea-BKUY8UYOlw" source="_JUfz0DV_Eea-BKUY8UYOlw" target="_JUnIkzV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JU2ZIDV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU2ZITV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU2ZIjV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU2ZIzV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU2ZJDV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU2ZJTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JU1yEzV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JU1yFDV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JU1yFTV_Eea-BKUY8UYOlw" points="[0, 0, 172, 68]$[-172, -68, 0, 0]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU2ZJjV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU3AMDV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JU3AMTV_Eea-BKUY8UYOlw" type="4001" element="_JT1s4TV_Eea-BKUY8UYOlw" source="_JUga4DV_Eea-BKUY8UYOlw" target="_JUqL4DV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JU3ANTV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU3ANjV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU3ANzV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU3AODV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU3AOTV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU3AOjV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JU3AMjV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JU3AMzV_Eea-BKUY8UYOlw" fontName="Noto Sans" fontHeight="8"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JU3ANDV_Eea-BKUY8UYOlw" points="[0, 0, -179, 122]$[179, -122, 0, 0]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU3nQDV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU3nQTV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JU3nQjV_Eea-BKUY8UYOlw" visible="false" type="4001" element="_JT1s5TV_Eea-BKUY8UYOlw" source="_JUCg0DV_Eea-BKUY8UYOlw" target="_JUOHADV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JU3nRjV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU3nRzV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU3nSDV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU3nSTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU4OUDV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU4OUTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JU3nQzV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JU3nRDV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JU3nRTV_Eea-BKUY8UYOlw" points="[-1, -1, -1, -1]$[-1, -1, -1, -1]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU4OUjV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU4OUzV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JU4OVDV_Eea-BKUY8UYOlw" visible="false" type="4001" element="_JT1s5zV_Eea-BKUY8UYOlw" source="_JULDsDV_Eea-BKUY8UYOlw" target="_JUOHADV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JU41YDV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU41YTV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU41YjV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU41YzV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU41ZDV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU41ZTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JU4OVTV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JU4OVjV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JU4OVzV_Eea-BKUY8UYOlw" points="[-1, -1, -1, -1]$[-1, -1, -1, -1]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU5ccDV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU5ccTV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JU5ccjV_Eea-BKUY8UYOlw" visible="false" type="4001" element="_JT1s6TV_Eea-BKUY8UYOlw" source="_JUMR0zV_Eea-BKUY8UYOlw" target="_JUOuFDV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JU5cdjV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU5cdzV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU5ceDV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU5ceTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU5cejV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU5cezV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JU5cczV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JU5cdDV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JU5cdTV_Eea-BKUY8UYOlw" points="[-1, -1, -1, -1]$[-1, -1, -1, -1]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU6DgDV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU6DgTV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_JU6DgjV_Eea-BKUY8UYOlw" visible="false" type="4001" element="_JT1s6zV_Eea-BKUY8UYOlw" source="_JUOuFDV_Eea-BKUY8UYOlw" target="_JUOHADV_Eea-BKUY8UYOlw">
+            <children xmi:type="notation:Node" xmi:id="_JU6qkDV_Eea-BKUY8UYOlw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU6qkTV_Eea-BKUY8UYOlw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU6qkjV_Eea-BKUY8UYOlw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU6qkzV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_JU6qlDV_Eea-BKUY8UYOlw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JU6qlTV_Eea-BKUY8UYOlw" y="10"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_JU6DgzV_Eea-BKUY8UYOlw" routing="Rectilinear"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_JU6DhDV_Eea-BKUY8UYOlw" fontName="Noto Sans"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JU6DhTV_Eea-BKUY8UYOlw" points="[-1, -1, -1, -1]$[-1, -1, -1, -1]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU6qljV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JU6qlzV_Eea-BKUY8UYOlw" id="(0.5,0.5)"/>
+          </edges>
+        </data>
+      </ownedAnnotationEntries>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1sgTV_Eea-BKUY8UYOlw" name="vps" outgoingEdges="_JT1s5TV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSType" href="model.types#//@internalTypes.0"/>
+        <semanticElements xmi:type="aps:APSType" href="model.types#//@internalTypes.0"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1sgjV_Eea-BKUY8UYOlw" outgoingEdges="_JT1s0TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.0/@source"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.0/@source"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1sgzV_Eea-BKUY8UYOlw" showIcon="false" color="246,139,139">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']/@conditionnalStyles.2/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1shDV_Eea-BKUY8UYOlw" incomingEdges="_JT1s1TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.1/@target"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.1/@target"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1shTV_Eea-BKUY8UYOlw" showIcon="false" color="194,239,255">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1shjV_Eea-BKUY8UYOlw" labelSize="10" borderSize="-1" borderSizeComputationExpression="-1" foregroundColor="204,242,166">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']"/>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1shzV_Eea-BKUY8UYOlw" name="name : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.0"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1siDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1siTV_Eea-BKUY8UYOlw" name="description : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.1"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1sijV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1sizV_Eea-BKUY8UYOlw" name="state : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.2"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.2"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1sjDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1sjTV_Eea-BKUY8UYOlw" name="hardware : Hardware">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.3"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.3"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1sjjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1sjzV_Eea-BKUY8UYOlw" name="platform : Platform">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.4"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.0/@properties.4"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1skDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1skTV_Eea-BKUY8UYOlw" name="context" outgoingEdges="_JT1s5zV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSType" href="model.types#//@internalTypes.1"/>
+        <semanticElements xmi:type="aps:APSType" href="model.types#//@internalTypes.1"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1skjV_Eea-BKUY8UYOlw" outgoingEdges="_JT1s1TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.1/@source"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.1/@source"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1skzV_Eea-BKUY8UYOlw" showIcon="false" shape="ring" color="194,239,255">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']/@conditionnalStyles.1/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1slDV_Eea-BKUY8UYOlw" outgoingEdges="_JT1s2TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.2/@source"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.2/@source"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1slTV_Eea-BKUY8UYOlw" showIcon="false" color="246,139,139">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']/@conditionnalStyles.2/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1sljV_Eea-BKUY8UYOlw" outgoingEdges="_JT1s3TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.3/@source"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.3/@source"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1slzV_Eea-BKUY8UYOlw" showIcon="false" color="246,139,139">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']/@conditionnalStyles.2/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1smDV_Eea-BKUY8UYOlw" outgoingEdges="_JT1s4TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.4/@source"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.4/@source"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1smTV_Eea-BKUY8UYOlw" showIcon="false" color="246,139,139">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']/@conditionnalStyles.2/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1smjV_Eea-BKUY8UYOlw" labelSize="10" borderSize="-1" borderSizeComputationExpression="-1" foregroundColor="204,242,166">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']"/>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1smzV_Eea-BKUY8UYOlw" name="contextid : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.1/@properties.0"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.1/@properties.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1snDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1snTV_Eea-BKUY8UYOlw" name="contextpass : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.1/@properties.1"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.1/@properties.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1snjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1snzV_Eea-BKUY8UYOlw" name="cloud" outgoingEdges="_JT1s6TV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSType" href="model.types#//@internalTypes.2"/>
+        <semanticElements xmi:type="aps:APSType" href="model.types#//@internalTypes.2"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1soDV_Eea-BKUY8UYOlw" incomingEdges="_JT1s2TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.2/@target"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.2/@target"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1soTV_Eea-BKUY8UYOlw" showIcon="false" shape="ring" color="194,239,255">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']/@conditionnalStyles.1/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@borderedNodeMappings[name='Relation']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1sojV_Eea-BKUY8UYOlw" labelSize="10" borderSize="5" borderSizeComputationExpression="5" borderColor="114,159,207" foregroundColor="204,242,166">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@conditionnalStyles.0/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']"/>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1sozV_Eea-BKUY8UYOlw" name="apphost : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.2/@properties.0"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.2/@properties.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1spDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1spTV_Eea-BKUY8UYOlw" name="cloudadmin : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.2/@properties.1"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.2/@properties.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1spjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1spzV_Eea-BKUY8UYOlw" name="cloudpass : string">
+          <target xmi:type="aps:Property" href="model.types#//@internalTypes.2/@properties.2"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@internalTypes.2/@properties.2"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1sqDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1sqTV_Eea-BKUY8UYOlw" name="http://aps-standard.org/samples/basic/context">
+        <target xmi:type="aps:ExternalAPSType" href="model.types#//@externalTypes.0"/>
+        <semanticElements xmi:type="aps:ExternalAPSType" href="model.types#//@externalTypes.0"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1sqjV_Eea-BKUY8UYOlw" incomingEdges="_JT1s0TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.0/@target"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.0/@target"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1sqzV_Eea-BKUY8UYOlw" showIcon="false" color="209,209,209">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='External%20APS%20Type']/@borderedNodeMappings[name='Unknown%20Relation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='External%20APS%20Type']/@borderedNodeMappings[name='Unknown%20Relation']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1srDV_Eea-BKUY8UYOlw" labelSize="9" borderSize="-1" borderSizeComputationExpression="-1">
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='External%20APS%20Type']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='External%20APS%20Type']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1srTV_Eea-BKUY8UYOlw" name="Resource" visible="false" incomingEdges="_JT1s5TV_Eea-BKUY8UYOlw _JT1s5zV_Eea-BKUY8UYOlw _JT1s6zV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.0"/>
+        <semanticElements xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.0"/>
+        <graphicalFilters xmi:type="diagram:AppliedCompositeFilters" xmi:id="_JWdisDV_Eea-BKUY8UYOlw">
+          <compositeFilterDescriptions xmi:type="filter:CompositeFilterDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@filters[name='HideResourceType']"/>
+        </graphicalFilters>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1srjV_Eea-BKUY8UYOlw" labelSize="10" borderSize="-1" borderSizeComputationExpression="-1" foregroundColor="194,239,255">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']"/>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1srzV_Eea-BKUY8UYOlw" name="provision : POST" visible="false">
+          <target xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.0"/>
+          <semanticElements xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1ssDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1ssTV_Eea-BKUY8UYOlw" name="retrieve : GET" visible="false">
+          <target xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.1"/>
+          <semanticElements xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1ssjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1sszV_Eea-BKUY8UYOlw" name="configure : PUT" visible="false">
+          <target xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.2"/>
+          <semanticElements xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.2"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1stDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1stTV_Eea-BKUY8UYOlw" name="unprovision : DELETE" visible="false">
+          <target xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.3"/>
+          <semanticElements xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.0/@operations.3"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1stjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']"/>
+        </ownedElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1stzV_Eea-BKUY8UYOlw" name="Application" visible="false" outgoingEdges="_JT1s6zV_Eea-BKUY8UYOlw" incomingEdges="_JT1s6TV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.1"/>
+        <semanticElements xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.1"/>
+        <graphicalFilters xmi:type="diagram:AppliedCompositeFilters" xmi:id="_JWeJwDV_Eea-BKUY8UYOlw">
+          <compositeFilterDescriptions xmi:type="filter:CompositeFilterDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@filters[name='HideApplicationType']"/>
+        </graphicalFilters>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1suDV_Eea-BKUY8UYOlw" labelSize="10" borderSize="-1" borderSizeComputationExpression="-1" foregroundColor="194,239,255">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']"/>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1suTV_Eea-BKUY8UYOlw" name="upgrade : POST" visible="false">
+          <target xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.1/@operations.0"/>
+          <semanticElements xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.1/@operations.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1sujV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']"/>
+        </ownedElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1suzV_Eea-BKUY8UYOlw" name="Subscription">
+        <target xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.2"/>
+        <semanticElements xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.2"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1svDV_Eea-BKUY8UYOlw" incomingEdges="_JT1s3TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.3/@target"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.3/@target"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1svTV_Eea-BKUY8UYOlw" showIcon="false" color="209,209,209">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@borderedNodeMappings[name='External%20Relation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@borderedNodeMappings[name='External%20Relation']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1svjV_Eea-BKUY8UYOlw" labelSize="10" borderSize="-1" borderSizeComputationExpression="-1" foregroundColor="194,239,255">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']"/>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1svzV_Eea-BKUY8UYOlw" name="trial : boolean">
+          <target xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.0"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1swDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1swTV_Eea-BKUY8UYOlw" name="disabled : boolean">
+          <target xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.1"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1swjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1swzV_Eea-BKUY8UYOlw" name="name : string">
+          <target xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.2"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.2"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1sxDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1sxTV_Eea-BKUY8UYOlw" name="description : string">
+          <target xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.3"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@typesFromLibrary.2/@properties.3"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1sxjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1sxzV_Eea-BKUY8UYOlw" name="resources : GET">
+          <target xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.2/@operations.0"/>
+          <semanticElements xmi:type="aps:Operation" href="model.types#//@typesFromLibrary.2/@operations.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1syDV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Operation']"/>
+        </ownedElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_JT1syTV_Eea-BKUY8UYOlw" name="Account">
+        <target xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.3"/>
+        <semanticElements xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.3"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_JT1syjV_Eea-BKUY8UYOlw" incomingEdges="_JT1s4TV_Eea-BKUY8UYOlw" width="0" height="0">
+          <target xmi:type="aps:Relation" href="model.types#//@relations.4/@target"/>
+          <semanticElements xmi:type="aps:Relation" href="model.types#//@relations.4/@target"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_JT1syzV_Eea-BKUY8UYOlw" showIcon="false" color="209,209,209">
+            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@borderedNodeMappings[name='External%20Relation']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@borderedNodeMappings[name='External%20Relation']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_JT1szDV_Eea-BKUY8UYOlw" labelSize="10" borderSize="-1" borderSizeComputationExpression="-1" foregroundColor="194,239,255">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']"/>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1szTV_Eea-BKUY8UYOlw" name="companyName : string">
+          <target xmi:type="aps:Property" href="model.types#//@typesFromLibrary.3/@properties.0"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@typesFromLibrary.3/@properties.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1szjV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_JT1szzV_Eea-BKUY8UYOlw" name="addressPostal : http://aps-standard.org/types/core/contact/1.1#Address">
+          <target xmi:type="aps:Property" href="model.types#//@typesFromLibrary.3/@properties.1"/>
+          <semanticElements xmi:type="aps:Property" href="model.types#//@typesFromLibrary.3/@properties.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_JT1s0DV_Eea-BKUY8UYOlw" labelSize="10" labelAlignment="LEFT" labelPosition="node" color="0,0,0">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@containerMappings[name='APS%20Type%20From%20Library']/@subNodeMappings[name='Property']"/>
+        </ownedElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s0TV_Eea-BKUY8UYOlw" sourceNode="_JT1sgjV_Eea-BKUY8UYOlw" targetNode="_JT1sqjV_Eea-BKUY8UYOlw" beginLabel="context">
+        <target xmi:type="aps:Link" href="model.types#//@relations.0"/>
+        <semanticElements xmi:type="aps:Link" href="model.types#//@relations.0"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s0jV_Eea-BKUY8UYOlw" targetArrow="NoDecoration" routingStyle="manhattan" strokeColor="0,0,0">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']/@style"/>
+          <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_JT1s0zV_Eea-BKUY8UYOlw" showIcon="false"/>
+          <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_JT1s1DV_Eea-BKUY8UYOlw" showIcon="false"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s1TV_Eea-BKUY8UYOlw" sourceNode="_JT1skjV_Eea-BKUY8UYOlw" targetNode="_JT1shDV_Eea-BKUY8UYOlw" beginLabel="vpses">
+        <target xmi:type="aps:Link" href="model.types#//@relations.1"/>
+        <semanticElements xmi:type="aps:Link" href="model.types#//@relations.1"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s1jV_Eea-BKUY8UYOlw" targetArrow="NoDecoration" routingStyle="manhattan" strokeColor="0,0,0">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']/@style"/>
+          <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_JT1s1zV_Eea-BKUY8UYOlw" showIcon="false"/>
+          <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_JT1s2DV_Eea-BKUY8UYOlw" showIcon="false"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s2TV_Eea-BKUY8UYOlw" sourceNode="_JT1slDV_Eea-BKUY8UYOlw" targetNode="_JT1soDV_Eea-BKUY8UYOlw" beginLabel="cloud" endLabel="contexts">
+        <target xmi:type="aps:Link" href="model.types#//@relations.2"/>
+        <semanticElements xmi:type="aps:Link" href="model.types#//@relations.2"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s2jV_Eea-BKUY8UYOlw" targetArrow="NoDecoration" routingStyle="manhattan" strokeColor="0,0,0">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']/@style"/>
+          <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_JT1s2zV_Eea-BKUY8UYOlw" showIcon="false"/>
+          <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_JT1s3DV_Eea-BKUY8UYOlw" showIcon="false"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s3TV_Eea-BKUY8UYOlw" sourceNode="_JT1sljV_Eea-BKUY8UYOlw" targetNode="_JT1svDV_Eea-BKUY8UYOlw" beginLabel="subscription">
+        <target xmi:type="aps:Link" href="model.types#//@relations.3"/>
+        <semanticElements xmi:type="aps:Link" href="model.types#//@relations.3"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s3jV_Eea-BKUY8UYOlw" targetArrow="NoDecoration" routingStyle="manhattan" strokeColor="0,0,0">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']/@style"/>
+          <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_JT1s3zV_Eea-BKUY8UYOlw" showIcon="false"/>
+          <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_JT1s4DV_Eea-BKUY8UYOlw" showIcon="false"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s4TV_Eea-BKUY8UYOlw" sourceNode="_JT1smDV_Eea-BKUY8UYOlw" targetNode="_JT1syjV_Eea-BKUY8UYOlw" beginLabel="account">
+        <target xmi:type="aps:Link" href="model.types#//@relations.4"/>
+        <semanticElements xmi:type="aps:Link" href="model.types#//@relations.4"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s4jV_Eea-BKUY8UYOlw" targetArrow="NoDecoration" routingStyle="manhattan" strokeColor="0,0,0">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']/@style"/>
+          <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_JT1s4zV_Eea-BKUY8UYOlw" showIcon="false"/>
+          <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_JT1s5DV_Eea-BKUY8UYOlw" showIcon="false"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s5TV_Eea-BKUY8UYOlw" visible="false" sourceNode="_JT1sgTV_Eea-BKUY8UYOlw" targetNode="_JT1srTV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSType" href="model.types#//@internalTypes.0"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s5jV_Eea-BKUY8UYOlw" lineStyle="dot" targetArrow="InputClosedArrow" routingStyle="manhattan">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s5zV_Eea-BKUY8UYOlw" visible="false" sourceNode="_JT1skTV_Eea-BKUY8UYOlw" targetNode="_JT1srTV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSType" href="model.types#//@internalTypes.1"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s6DV_Eea-BKUY8UYOlw" lineStyle="dot" targetArrow="InputClosedArrow" routingStyle="manhattan">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s6TV_Eea-BKUY8UYOlw" visible="false" sourceNode="_JT1snzV_Eea-BKUY8UYOlw" targetNode="_JT1stzV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSType" href="model.types#//@internalTypes.2"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s6jV_Eea-BKUY8UYOlw" lineStyle="dot" targetArrow="InputClosedArrow" routingStyle="manhattan">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_JT1s6zV_Eea-BKUY8UYOlw" visible="false" sourceNode="_JT1stzV_Eea-BKUY8UYOlw" targetNode="_JT1srTV_Eea-BKUY8UYOlw">
+        <target xmi:type="aps:APSTypeFromLibrary" href="model.types#//@typesFromLibrary.1"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_JT1s7DV_Eea-BKUY8UYOlw" lineStyle="dot" targetArrow="InputClosedArrow" routingStyle="manhattan">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer/@edgeMappings[name='Implements%20Link']"/>
+      </ownedDiagramElements>
+      <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']"/>
+      <currentConcern xmi:type="concern:ConcernDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@concerns/@ownedConcernDescriptions.0"/>
+      <activatedFilters xmi:type="filter:CompositeFilterDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@filters[name='HideApplicationType']"/>
+      <activatedFilters xmi:type="filter:CompositeFilterDescription" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@filters[name='HideResourceType']"/>
+      <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_JT1s7TV_Eea-BKUY8UYOlw"/>
+      <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']/@ownedRepresentations[name='APS%20types%20diagram']/@defaultLayer"/>
+      <target xmi:type="aps:APSPackage" href="model.types#/"/>
+    </ownedRepresentations>
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/com.parallels.aps.ide.core.types_diagram/description/types.odesign#//@ownedViewpoints[name='types']"/>
+  </ownedViews>
+</viewpoint:DAnalysis>

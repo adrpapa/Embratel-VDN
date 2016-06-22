@@ -1,0 +1,71 @@
+<?php
+
+require "aps/2/runtime.php";
+
+/**
+ * Class vdnGlobals presents application and its global parameters
+ * @type("http://company.example/app/CloudBasic/cloud/1.1")
+ * @implements("http://aps-standard.org/types/core/application/1.0")
+ */
+class cloud extends APS\ResourceBase {
+
+	# Link to collection of offers. Pay attention to [] brackets at the end of the @link line.
+	/**
+	 * @link("http://company.example/app/CloudBasic/offer/1.1[]")
+	 */
+	 public $offers;
+	
+	# Link to collection of contexts. Pay attention to [] brackets at the end of the @link line.
+	/**
+	 * @link("http://company.example/app/CloudBasic/context/1.1[]")
+	 */
+	public $contexts;
+
+# Global connection settings will be configured by the provider
+# Must be forwarded to the app end-point to set the connection with the external system
+	/**
+        * @type(string)
+        * @title("apphost")
+        * @description("Cloud management server IP or domain name")
+        */
+        public $apphost;
+        
+        /**
+        * @type(string)
+        * @title("Cloud Admin")
+        * @description("Cloud administrator")
+        */
+        public $cloudadmin;
+
+        /**
+        * @type(string)
+        * @title("Cloud Password")
+        * @description("Cloud administrator password")
+        * @encrypted
+        */
+        public $cloudpass;
+
+        public function upgrade($version) {
+        	// Connect to the APS controller
+        	$apsc = \APS\Request::getController();
+        
+        	// Setup the default offer using the class declared in offers.php
+        	$defaultOffer = offer::createDefaultOffer();
+        
+        	// Link it to the *Application* resource
+        	$defaultOffer->cloud = $this;
+        
+        	// Register the default offer in APS controller
+        	$defaultOffer = $apsc->registerResource($defaultOffer);
+        
+        	// Get a list of all VPSes
+        	$rqlFilter = 'implementing(http://company.example/app/CloudBasic/vps/2.0)';
+        	$vpslist = $apsc->getResources($rqlFilter);
+        
+        	// Update each VPS, i.e. link it to the default offer
+        	foreach ($vpslist as $vps) {
+        		$apsc->linkResource($vps, 'offer', $defaultOffer);
+        	}
+        }
+        
+}

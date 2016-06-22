@@ -1,0 +1,87 @@
+<application xmlns="http://aps-standard.org/ns/2" version="2.0">
+    <id>http://aps-standard.org/samples/basicwithui</id>
+    <name>Sample VPS Cloud Basic</name>
+    <version>1.0</version>
+    <release>0</release>
+    <homepage>http://doc.apsstandard.org/pa/demo-projects/basic</homepage>
+    <vendor>
+    	<name>APS team</name>
+    	<homepage>http://dev.apsstandard.org/</homepage>
+    	<icon path="images/icon.png" />
+    </vendor>
+  	<packager>
+           <name>APS team</name>
+    	   <homepage>http://dev.apsstandard.org/</homepage>
+    	   <icon path="images/icon.png" />
+    	   <uri>http://dev.apsstandard.org/</uri>
+        </packager>
+    <presentation>
+    	<summary>Simplest starter multi-tenant application</summary>
+    	<description>This is a demo application to demonstrate how to develop APS apps step by step</description>
+        <icon path="images/icon.png"/>
+        <changelog>
+        	<version release="0" version="1.0">
+        		<entry>First release</entry>
+        	</version>
+        </changelog>
+        <categories>
+           <category>Samples</category>
+    	   <category>Infrastructure/Management</category>
+    	</categories>
+        <navigation id="ccp" label="VPS Management">
+        	<var type-id="http://aps-standard.org/samples/basicwithui/context/1.0" name="context" />
+        	<plugs-to id="http://www.aps-standard.org/ui/service" />
+        	<item id="servers" label="Servers">
+        		<view id="servers" label="Servers">
+        			<view id="server.new-1" label="New VPS">
+        				<controls>
+        					<cancel />
+        					<next />
+        				</controls>
+        			</view>
+        			<view id="server.new-last" label="Review">
+        				<controls>
+        					<prev />
+        					<finish />
+        				</controls>
+        			</view>
+        			<view id="server.edit" label="Edit VPS">
+        				<controls>
+        					<cancel />
+        					<submit />
+        				</controls>
+        				<var type-id="http://aps-standard.org/samples/basicwithui/vps/1.0" name="vps" />
+        			</view>
+        		</view>
+        	</item>
+        </navigation>
+    </presentation>
+    <license-agreement must-accept="true">
+	<free/>
+	<text>
+		<name>End-User License Agreement</name>
+		<file>http://opensource.org/licenses/bsd-license</file>
+	</text>
+    </license-agreement>
+    <service id="clouds">
+		<code engine="php" path="scripts/clouds.php"/>
+		<presentation>
+			<name>VPS cloud globals</name>
+			<summary>VPS cloud application global service</summary>
+		</presentation>
+    </service>
+    <service id="contexts">
+		<code engine="php" path="scripts/contexts.php"/>
+		<presentation>
+			<name>VPS Management</name>
+			<summary>VPS management environment</summary>
+		</presentation>
+    </service>
+    <service id="vpses">
+    	<code engine="php" path="scripts/vpses.php"></code>
+    	<presentation>
+    		<name>Virtual Private Server</name>
+    		<summary>Cloud virtual private server</summary>
+    	</presentation>
+    </service>
+</application>

@@ -1,0 +1,58 @@
+<application packaged="2014-10-02T18:54:14" version="2.0" xmlns="http://aps-standard.org/ns/2">
+
+    <id>http://company.example/app/BasicWithUI</id>
+    <name>BasicWithUI</name>
+    <version>1.0</version>
+    <release>1</release>
+    <vendor>
+        <name>Parallels</name>
+        <homepage/>
+    </vendor>
+    <packager>
+        <name>Parallels</name>
+        <homepage/>
+    </packager>
+	<presentation>
+		<icon path="images/icon.png"/>
+		<changelog>
+			<version release="1" version="1.0">
+				<entry>Initial release.</entry>
+			</version>
+		</changelog>
+		<categories>
+			<category>Samples</category>
+		</categories>
+
+		<navigation id="pcp" label="Provider Sample">
+			<var name="uiview_pcp" type-id="http://parallels.com/samples/sample-aps2-empty/application/1.0"/>
+			<plugs-to id="http://www.aps-standard.org/ui/application"/>
+
+			<item id="provider_sample" label="Provider Sample">
+				<view id="sample_grid" label="Sample Grid">
+				</view>
+			</item>
+		</navigation>
+	</presentation>
+
+    <license-agreement>
+        <free/>
+        <text>
+            <name>End-User License Agreement</name>
+            <url>http://opensource.org/licenses/bsd-license</url>
+        </text>
+    </license-agreement>
+
+	<service id="applications">
+		
+<code engine="php" path="scripts/application.php"/>
+
+		<presentation>
+			<name>Sample Application</name>
+			<summary>Sample Application</summary>
+			<infolinks>
+				<link class="deployment-guide" href="http://parallels.com/link-to-deployment-guide">Deployment Guide</link>
+				<link class="support" href="http://parallels.com/link-to-support">Support Guide</link>
+			</infolinks>
+		</presentation>
+	</service>
+</application>

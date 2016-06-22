@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;VDN_Embratel/scripts/clouds.php&apos; to &apos;vdnGlobals.php&apos;" description="Rename resource &apos;clouds.php&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="scripts/clouds.php" name="vdnGlobals.php" stamp="1466174899900" updateReferences="true"/>
+</session>

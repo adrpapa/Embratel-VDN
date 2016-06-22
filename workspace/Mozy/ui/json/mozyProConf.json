@@ -1,0 +1,10 @@
+{
+    "aps":
+    {
+        "type": "http://www.mozy.com/mozyProAPS2/mozyProConf/1.1"
+    },
+
+    "logoUrl": "",
+    "branded_tab_name":""
+
+}

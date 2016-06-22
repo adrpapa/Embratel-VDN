@@ -1,0 +1,164 @@
+<?php
+
+if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
+
+require "aps/2/runtime.php";
+require_once "elemental_api/live.php";
+require_once "elemental_api/deltaOutputTemplate.php";
+require_once "elemental_api/deltaInput.php";
+	
+	/**
+	 * Class channel
+	 * @type("http://embratel.com.br/app/VDN_Embratel/channel/1.0")
+	 * @implements("http://aps-standard.org/types/core/resource/1.0")
+	 */
+	
+	class channel extends \APS\ResourceBase
+	{
+		/**
+	 	 * @link("http://embratel.com.br/app/VDN_Embratel/context/1.0")
+		 * @required
+		 */
+		public $context;
+
+		/**
+		 * @type("string")
+		 * @title("Name")
+		 * @description("Channel Name")
+		 * @required
+		 */
+		public $name;	
+
+		/**
+		 * @type("string")
+		 * @title("Description")
+		 * @description("Channel Description")
+		 * @required
+		 */
+		public $description;	
+
+		/**
+		 * @type(string)
+		 * @title("Screen Format")
+		 * @description("4:3 / 16:9 ?")
+		 */
+		public $screen_format;
+
+		/**
+		 * @type("string")
+		 * @title("Premium parameters")
+		 * @description("Parâmetros de override para subscriptions Premium")
+		 */
+		public $premium_parms;
+
+
+		/**
+		 * Readonly parameters obtained from Elemental Live
+		 */
+		 
+		/**
+		 * @type(string)
+		 * @title("Live Event ID")
+		 * @description("Live Event ID in Elemental Live Conductor")
+		 * @readonly
+		 */
+		public $live_event_id;
+
+		/**
+		 * @type(string)
+		 * @title("Live Event name")
+		 * @description("Live Event Name in Elemental Live Conductor")
+		 * @readonly
+		 */
+		public $live_event_name;
+
+		/**
+		 * @type(string)
+		 * @title("State")
+	 	* @description("Live channel current state")
+		 * @readonly
+		 */
+		public $state;		
+
+		/**
+		 * @type(string)
+		 * @title("Input URI")
+		 * @description("Live Channel Input URI for client's transmission")
+		 * @readonly
+		 */
+		public $input_URI;	
+
+		/**
+		 * @type(integer)
+		 * @title("Delta UDP Port")
+		 * @description("UDP Port used for communication with Elemental Delta")
+		 * @readonly
+		 */
+		public $delta_port;		
+
+		/**
+		 * @type(string)
+		 * @title("Live Node")
+		 * @description("Elemental Live node this channell is assigned to")
+		 * @readonly
+		 */
+		public $live_node;
+		
+		/**
+		 * @type(string)
+		 * @title("Profile id")
+		 */
+		public $profile_id;
+
+	     public function __construct() {
+	          // setting new log file, path relative to your script current directory
+	          $this->logger = \APS\LoggerRegistry::get();
+	          $this->logger->setLogFile("logs/basicwithui.log");
+	     }
+
+    #############################################################################################################################################
+    ## Definition of the functions that will respond to the different CRUD operations
+    #############################################################################################################################################
+
+    public function provision() {
+    	$this->logger->debug("Iniciando provisionamento");
+    	$this->logger->debug(var_dump($this->context ) );
+    	 $event = LiveEvent::newPremiumLiveEvent( $this->name, $this->context->account->clientID);
+    	\APS\LoggerRegistry::get()->debug("Event:".var_dump($event) );
+    	 ## TODO retrieve info from live:
+    	 ## live Node where channel was instatiated
+    }
+
+    public function configure($new) {
+			\APS\LoggerRegistry::get()->info ("Estado atual do canal: ".$this->state);
+			\APS\LoggerRegistry::get()->info ("Novo estado atual do canal: ".$new->state);
+    }
+
+		public function retrieve(){
+    		\APS\LoggerRegistry::get()->trace("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->debug("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->info ("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->error("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->fatal("Entrando na função retrieve");
+
+		}
+
+		public function upgrade(){
+    		\APS\LoggerRegistry::get()->trace("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->debug("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->info ("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->error("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->fatal("Entrando na função upgrade");
+
+		}
+
+		public function unprovision(){
+    		\APS\LoggerRegistry::get()->trace("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->debug("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->info ("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->error("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->fatal("Entrando na função unprovision");
+
+		}
+}
+?>		

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<input_filter href="/input_filters/42" product="Delta" version="1.6.1.34713">
+  <filter_type>watch_folder_input</filter_type>
+  <label>CDN-POC-WF</label>
+  <filter_settings>
+    <template_id>1</template_id>
+    <incoming>
+      <uri>/data/server/drive/poc-cdn/to-package/</uri>
+    </incoming>
+    <search_subfolders>false</search_subfolders>
+  </filter_settings>
+</input_filter>

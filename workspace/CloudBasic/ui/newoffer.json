@@ -1,0 +1,19 @@
+{
+    "aps": {                                               
+        "type": "http://company.example/app/CloudBasic/offer/1.1"
+    },
+    "platform": {
+        "OS":
+        {
+            "name": "centos-6"
+        }
+    },
+    "hardware": {
+        "CPU":
+        {
+            "number": 2
+        },
+        "diskspace": 16,
+        "memory": 512
+    }
+}

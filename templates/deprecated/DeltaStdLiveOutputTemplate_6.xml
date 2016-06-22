@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<output_template href="/output_templates/6" product="Delta" version="1.6.1.34713">
+  <name>LiveApiTest</name>
+<filter href="/output_template/6/filters/347" product="Delta" version="1.6.1.34713">
+  <name>filter_347</name>
+  <parent_filter/>
+  <endpoint>true</endpoint>
+  <output_url>Cliente1/$fn$</output_url>
+  <filter_type>hls_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <segment_duration>10</segment_duration>
+    <index_duration>60</index_duration>
+    <playlist_type>EVENT</playlist_type>
+    <avail_trigger>all</avail_trigger>
+    <ad_markers>none</ad_markers>
+    <broadcast_time>false</broadcast_time>
+    <ignore_web_delivery_allowed>false</ignore_web_delivery_allowed>
+    <ignore_no_regional_blackout>false</ignore_no_regional_blackout>
+    <enable_blackout>false</enable_blackout>
+    <enable_network_end_blackout>false</enable_network_end_blackout>
+    <network_id/>
+    <include_program_date_time>false</include_program_date_time>
+    <program_date_time_interval>600</program_date_time_interval>
+  </filter_settings>
+</filter>
+</output_template>

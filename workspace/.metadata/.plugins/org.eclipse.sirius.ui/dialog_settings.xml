@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExportRepresentationsAsImagesDialog">
+		<item value="JPG" key="ExportRepresentationsAsImagesDialog.imageFormat"/>
+		<list key="ExportRepresentationsAsImagesDialog.file">
+			<item value="/home/fastlane/Dropbox/Clientes/Fastlane/Embratel/docs"/>
+			<item value="/home/fastlane/Dropbox/Clientes/Fastlane/Embratel/docs/VDN_Embratel diagram.jpg"/>
+		</list>
+	</section>
+</section>

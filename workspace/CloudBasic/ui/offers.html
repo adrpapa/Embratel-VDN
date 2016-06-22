@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"aps/ResourceStore",
+			"dojo/when",
+			"dijit/registry",
+			"aps/load",
+			"./displayError.js",
+			"dojo/_base/array",
+			"aps/ready!"
+		], function (Store, when, registry, load, displayError, arr) {
+			var store = new Store({
+				apsType:    "http://company.example/app/CloudBasic/offer/1.1",
+				target:     "/aps/2/resources/" + aps.context.vars.cloud.aps.id + "/offers"
+			});
+			load(["aps/PageContainer", { id: "page" }, [
+				["aps/Grid", {
+					id:                "grid",
+					selectionMode:     "multiple",
+					apsResourceViewId: "offer-edit",
+					columns:   [
+						{ field: "name",    name: "Name", type: "resourceName" },
+						{ field: "hardware.memory",       name: "RAM, MB" },
+						{ field: "hardware.diskspace",    name: "Diskspace, GB" },
+						{ field: "hardware.CPU.number",   name: "CPU cores" },
+						{ field: "platform.OS.name",      name: "OS" }
+					],
+					store: store
+				}, [
+                    ["aps/Toolbar", { id: "toolbar" }, [
+						["aps/ToolbarButton", { id: "new",        iconClass: "sb-add-new",    label:  "New" }],
+						// Declare a button with CSS class sb-delete and label Delete.
+						// It will be enabled only if at least one string is selected
+						["aps/ToolbarButton", { id: "delete",     iconClass: "sb-delete",     label: "Delete",    requireItems: true }],
+						["aps/ToolbarButton", { id: "refresh",    iconClass: "sb-refresh",    label: "Refresh",   autoBusy: false }]
+					]]
+				]]
+			]]).then(function() {
+				registry.byId("new").on("click", function() {
+					aps.apsc.gotoView("offer-new");
+				});
+
+				registry.byId("refresh").on("click", function() {
+					registry.byId("grid").refresh();
+				});
+
+				registry.byId("delete").on("click", function() {
+					var self = this;
+					if (!confirm("Are you sure you want to delete Offers?")) {
+						self.cancel();
+						return;
+					}
+				    var grid    = registry.byId("grid"),
+						sel       = grid.get("selectionArray"),
+						counter   = sel.length;
+
+					registry.byId("page").get("messageList").removeAll();
+
+					arr.forEach(sel, function(offerId){ /* Get a VPS from the selected list */
+						console.log("I'm trying to delete Offer with id = [" + offerId + "]");
+
+						/* Remove the VPS */
+						when(store.remove(offerId),
+							 /* If success, process the next VPS until the list is empty */
+							function(){
+								console.log("Offer with id = [" + offerId + "] removed");
+								sel.splice(sel.indexOf(offerId),1);
+                                grid.refresh();
+								if(--counter === 0){ self.cancel();}
+							},
+						    /* If failure, call the error handler */
+							function(e){
+								displayError(e);
+								if(--counter === 0){ self.cancel(); }
+							}
+						);
+					});
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

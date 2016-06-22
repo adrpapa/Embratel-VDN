@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+
+	<script>
+		require([
+			"aps/ResourceStore",
+			"dijit/registry",
+			"dojo/when",
+			"dojox/mvc/getPlainValue",
+			"dojox/mvc/at",
+			"dojox/mvc/getStateful",
+			"aps/load",
+			"./displayError.js",
+			"aps/ready!"
+		], function (Store, registry, when, getPlainValue, at, getStateful, load, displayError) {
+			/* Declare data sources */
+			var store = new Store({
+					apsType:    "http://company.example/app/CloudBasic/offer/1.1",
+					target:     "/aps/2/resources/"
+				}),
+				model;
+
+			store.get(aps.context.vars.offer.aps.id).then(function(object) {
+				model = getStateful(object);
+                /* Create widgets */
+				var widgets =
+						["aps/PageContainer", {id: "page"}, [
+							["aps/FieldSet", {title: true}, [
+								["aps/TextBox", {id: "offerName", label: _("Offer Name"), value: at(model, "name"), required: true}],
+								["aps/TextBox", {label: _("Description"), value: at(model, "description")}]
+							]],
+							["aps/FieldSet", {title: true}, [
+								["aps/Slider", { label: _( "CPU Number"), minimum: 1, maximum: 16, value: at(model.hardware.CPU, "number"), step: 1}],
+								["aps/Slider", {label: _("Disk Space"), minimum: 1, maximum: 100, value: at(model.hardware, "diskspace"), legend: _("GB"), step: 1}],
+								["aps/Slider", {label: _("RAM"), minimum: 128, maximum: 8192, value: at(model.hardware, "memory"), step: 128, legend: _("MB")}]
+							]]
+						]];
+
+				return load(widgets);
+			}).then(function(){
+				/* Once the widgets are created, create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("offers");
+				};
+				aps.app.onSubmit = function() {
+					var page = registry.byId("page");
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+					when(store.put(getPlainValue(model)),
+						function(){	aps.apsc.gotoView("offers"); },
+						displayError
+					);
+				};
+			}).otherwise(displayError);
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

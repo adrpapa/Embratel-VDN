@@ -1,0 +1,160 @@
+<?php
+    require_once "configConsts.php";
+    require_once "elementalRest.php";
+    require_once "deltaInput.php";
+    require_once "utils.php";
+
+    /*
+    ** Classe que cria e controla live events
+    */
+    class LiveEvent {
+        /*
+        ** cria objeto LiveEvent, e monta XML para inclusão do mesmo
+        */
+        public static function newLiveEvent( $name, $clientID, $level ) {
+            $templateID = $level === 'premium' 
+                    ? ConfigConsts::LIVE_TEMPLATE_PREMIUM
+                    : ConfigConsts::LIVE_TEMPLATE_STANDARD;
+            
+            $liveEvent = new self();
+            $liveEvent->name = cleanName($name);
+            $liveEvent->clientID = cleanClientID($clientID);
+            $inputFilter = DeltaInputFilter::newUdpInputFilter($clientID, $name, $level);
+            $liveEvent->udpPort = $inputFilter->udpPort;  
+        // TODO Calcular automaticamente o nó Live onde será gerado o evento
+            $liveEvent->inputURI = ConfigConsts::LIVE_NODE_URL;
+            $liveEvent->inputURI .= $liveEvent->clientID.'/'.$liveEvent->clientID.'_';
+            $liveEvent->inputURI .= preg_replace('/\s+/', '', $liveEvent->name);
+        // TODO Verificar como será criado no delta - se haverá conductor qual URL
+            $liveEvent->outputURI = "udp://".ConfigConsts::DELTA_HOST.':'.$liveEvent->udpPort;
+            $liveEvent->xml = LiveEvent::getElementalRest()->getTemplate(
+                    $templateID, "ElementalLive".$templateID);
+            $liveEvent->xml->name = $liveEvent->name;
+            $liveEvent->xml->input->network_input->uri = $liveEvent->inputURI;
+            $liveEvent->xml->output_group->output->udp_settings->destination->uri = $liveEvent->outputURI;
+            print $liveEvent->xml->asXml().'\n';
+            $liveEvent->setPropertiesFromXML(LiveEvent::getElementalRest()->postRecord(null, null, $liveEvent->xml));
+            return( $liveEvent );
+        }
+
+        // cria objeto LiveEvent para perfil Standard, e monta XML para inclusão do mesmo
+        public static function newStandardLiveEvent( $name, $clientID ) {
+            return LiveEvent::newLiveEvent( $name, $clientID, 'standard' );
+        }
+
+        // cria objeto LiveEvent para perfil Premium, e monta XML para inclusão do mesmo
+        public static function newPremiumLiveEvent( $name, $clientID ) {
+            return LiveEvent::newLiveEvent( $name, $clientID, 'premium' );
+        }
+
+        public static function liveEventFromXML( $event ) {
+            $liveEvent = new self();
+            $liveEvent->setPropertiesFromXML($event);
+            return $liveEvent;
+        }
+
+        public static function getLiveEventById($id) {
+            return LiveEvent::liveEventFromXML(
+                    LiveEvent::getElementalRest()->restGet($id)
+                );
+        }
+
+        public static $elementaRest = null;
+
+        public static function getElementalRest() {
+            if (LiveEvent::$elementaRest == null){
+                LiveEvent::$elementaRest = new ElementalRest(ConfigConsts::LIVE_CONDUCTOR_HOST, 'live_events');
+            }
+            return LiveEvent::$elementaRest;
+        }
+
+        public static function getEventList( $id="", $filter="" ) {
+        // Valores possíveis para filtro de eventos Live:
+        // pending      Live Events in the pending state
+        // active       Live Events in the preprocessing, running or postprocessing state
+        // pre          Live Events in the preprocessing state
+        // running      Live Events in the running state
+        // post         Live Events in the postprocessing state
+        // complete     Live Events in the complete state
+        // cancelled    Live Events in the cancelled state
+        // error        Live Events in the error state
+        // archived     Live Events that have been archived
+            return LiveEvent::getElementalRest()->restGet($id, $filter);
+        }
+
+        public static function getStatus( $id ) {
+            return LiveEvent::getElementalRest()->restCall($id=$id, $command='status');
+        }
+
+        public function setPropertiesFromXML( $event ) {
+            $this->name = $event->name."";
+            $this->inputURI = $event->input->network_input->uri."";
+            // Extraimos o cliente da uri ex: rtmp://localhost:1935/sgr/sgrstream
+            $toks = explode(':',$this->inputURI);
+            if( count($toks) > 2 ) {
+            	var $subtoks =  explode('/',$toks[2]);
+                $this->clientID = $subtoks[1];
+            } else {
+                $this->clientID = "";
+            }
+            $this->status = $event->xpath('status')[0]."";
+            $this->href = $event["href"]."";      
+            $toks = explode('/',$this->href);
+            $this->id = $toks[count($toks)-1];
+        }
+        
+        public function refresh(){
+            $this->setPropertiesFromXML(LiveEvent::getElementalRest()->restGet($this->id));
+        }
+        
+        public function isStatusPending() {
+            return $this->status == 'pending';
+        }
+
+        public function isStatusCancelled() {
+            return $this->status == 'cancelled';
+        }
+
+        public function isStatusRunning() {
+            return $this->status == 'running';
+        }
+
+        public function isStatusArchived() {
+            $event = LiveEvent::getEventList($this->id, "filter-=archived");
+            var_dump($event);
+            return $event->id == $this->id;
+        }
+
+        public static function delete($id) {
+            $liveEvent = LiveEvent::getLiveEventById($id);
+            printf("%s - %s %s\n",$liveEvent->id, $liveEvent->name, $liveEvent->status);
+            if($liveEvent->isStatusPending()) {
+                $liveEvent->cancel();
+                $liveEvent = LiveEvent::getLiveEventById($id);
+            }
+            if(! $liveEvent->isStatusArchived() ) {
+                $liveEvent->archive();
+                $liveEvent = LiveEvent::getLiveEventById($id);
+            }
+            LiveEvent::getElementalRest()->restDelete($liveEvent->id);
+        }
+
+        public function start() {
+            LiveEvent::getElementalRest()->postRecord($this->id, "start");
+        }
+
+        public function stop() {
+            LiveEvent::getElementalRest()->postRecord($this->id, "stop");
+            $this->refresh();
+        }
+
+        public function cancel() {
+            LiveEvent::getElementalRest()->postRecord($this->id, "cancel");
+            $this->refresh();
+        }
+
+        public function archive() {
+            LiveEvent::getElementalRest()->postRecord($this->id, "archive");
+        }
+    }
+?>

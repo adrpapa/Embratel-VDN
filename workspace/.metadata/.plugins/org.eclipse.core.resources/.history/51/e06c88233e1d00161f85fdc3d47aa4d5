@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ASCII"?>
+<aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="VDN_Embratel">
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/job" version="1.0" relations="//@relations.0/@source" name="job" implements="//@typesFromLibrary.0">
+    <properties name="input_URI" type="string" description="Endere&#xe7;o da origem do conte&#xfa;do" required="true"/>
+    <properties name="screen_format" type="string" description="Formato da tela (4:3 / 16:9)"/>
+    <properties name="profile_id" type="string" description="Preset utilizado para fazer encoding do v&#xed;deo"/>
+    <properties name="premium_parms" type="premium_parms" description="Par&#xe2;metros de override para subscriptions Premium"/>
+    <properties name="status" type="string" description="Estado de processamento do conte&#xfa;do" readonly="true"/>
+    <structures name="premium_parms">
+      <properties name="resolution" type="string" description="Resolu&#xe7;&#xe3;o 1600x1200 960x720 640x480 480x360 360x240 1920x1080 1280x720"/>
+      <properties name="bitrate" type="string" description="Bitrate 5Mbps 3.5Mbps 2Mbps 1.2Mbps 800kbps 650kbps 480kbps 250kbps"/>
+      <properties name="v_framerate" type="string" description="Video Framerate 29.97 14.985"/>
+      <properties name="a_framerate" type="string" description="&#xc1;udio Framerate 96kbps 64kbps"/>
+    </structures>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/context" version="1.0" relations="//@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.0/@target //@relations.4/@source" name="context" implements="//@typesFromLibrary.0">
+    <properties name="contextid" type="string" readonly="true"/>
+    <properties name="contextpass" type="string" readonly="true"/>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/application" version="1.0" relations="//@relations.1/@target" application="true" name="VDN_Embratel" implements="//@typesFromLibrary.1">
+    <properties name="plano" type="string" description="Plano de Servi&#xe7;os Std/Premium"/>
+    <properties name="volume_in" type="integer" description="Franquia de volume(h) mensal ingerido"/>
+    <properties name="canais" type="integer" description="N&#xfa;mero de eventos ao vivo simult&#xe2;neos"/>
+    <properties name="retencao" type="integer" description="Reten&#xe7;&#xe3;o(H) de trasmiss&#xf5;es ao vivo - DVR"/>
+    <properties name="volume_out" type="integer" description="Franquia de volume(TB) entregue aos consumidores de conte&#xfa;do"/>
+    <properties name="https" type="boolean" description="Usar protocolo HTTPS para trasmiss&#xe3;o de conte&#xfa;do"/>
+    <properties name="jit_encrypt" type="boolean" description="Utilizar criptografia na trasmiss&#xe3;o de conte&#xfa;do"/>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/channel" version="1.0" relations="//@relations.4/@target" name="channel" implements="//@typesFromLibrary.0">
+    <properties name="input_URI" type="string" required="true"/>
+    <properties name="screen_format" type="string"/>
+    <properties name="profile_id" type="string"/>
+    <properties name="premium_parms" type="premium_parms" description="Par&#xe2;metros de override para subscriptions Premium"/>
+    <properties name="status" type="string" readonly="true"/>
+    <properties name="stream_name" type="string"/>
+    <properties name="delta_port" type="integer" readonly="true"/>
+    <structures name="premium_parms">
+      <properties name="resolution" type="string" description="Resolu&#xe7;&#xe3;o 1600x1200 960x720 640x480 480x360 360x240 1920x1080 1280x720"/>
+      <properties name="bitrate" type="string" description="Bitrate 5Mbps 3.5Mbps 2Mbps 1.2Mbps 800kbps 650kbps 480kbps 250kbps"/>
+      <properties name="v_framerate" type="string" description="Video Framerate 29.97 14.985"/>
+      <properties name="a_framerate" type="string" description="&#xc1;udio Framerate 96kbps 64kbps"/>
+    </structures>
+  </internalTypes>
+  <typesFromLibrary id="http://aps-standard.org/types/core/resource" version="1.0" name="Resource">
+    <operations name="provision" verb="POST" path="/"/>
+    <operations name="retrieve" verb="GET" path="/"/>
+    <operations name="configure" verb="PUT" path="/"/>
+    <operations name="unprovision" verb="DELETE" path="/"/>
+    <structures name="Counter">
+      <properties name="usage" type="integer"/>
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Limit">
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Usage">
+      <properties name="usage" type="integer"/>
+    </structures>
+    <structures name="NotificationSource">
+      <properties name="type" type="string" description="APS Type of source resources"/>
+      <properties name="id" type="string" description="Resource which is source of event"/>
+    </structures>
+    <structures name="Notification">
+      <properties name="type" type="string" description="Type of event (URI)" required="true"/>
+      <properties name="time" type="string" description="Date-time when event happens"/>
+      <properties name="serial" type="number" description="Serial number of event (incrementing)"/>
+      <properties name="source" type="NotificationSource" description="Resource originating the event"/>
+    </structures>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/application" version="1.0" name="Application" implements="//@typesFromLibrary.0">
+    <operations name="upgrade" verb="POST" path="/upgrade"/>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/subscription" version="1.0" relations="//@relations.2/@target" name="Subscription">
+    <properties name="trial" type="boolean"/>
+    <properties name="disabled" type="boolean"/>
+    <properties name="name" type="string"/>
+    <properties name="description" type="string"/>
+    <operations name="resources" verb="GET" path="/resources"/>
+    <structures name="SubscriptionResource">
+      <properties name="id" type="string" required="true"/>
+      <properties name="title" type="string"/>
+      <properties name="apsId" type="string"/>
+      <properties name="apsType" type="string"/>
+      <properties name="applicationId" type="string"/>
+      <properties name="property" type="string"/>
+      <properties name="usage" type="integer"/>
+      <properties name="limit" type="integer"/>
+      <properties name="autoprovisioning" type="boolean"/>
+      <properties name="unit" type="string" required="true"/>
+    </structures>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.3/@target" name="Account">
+    <properties name="companyName" type="string" required="true"/>
+    <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
+  </typesFromLibrary>
+  <relations>
+    <source type="//@internalTypes.0" name="context" required="true"/>
+    <target type="//@internalTypes.1" name="jobs" collection="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.1" name="VDN_Embratel" required="true"/>
+    <target type="//@internalTypes.2" name="context"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.1" name="subscription" required="true"/>
+    <target type="//@typesFromLibrary.2"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.1" name="account" required="true"/>
+    <target type="//@typesFromLibrary.3"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.1" name="channels" collection="true"/>
+    <target type="//@internalTypes.3" name="context" required="true"/>
+  </relations>
+</aps:APSPackage>

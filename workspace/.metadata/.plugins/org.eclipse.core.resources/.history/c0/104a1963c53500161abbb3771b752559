@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"aps/ResourceStore",
+			"dojo/when",
+			"dijit/registry",
+			"aps/load",
+			"aps/Memory",
+			"dojox/mvc/getStateful",
+			"dojox/mvc/getPlainValue",
+			"aps/WizardData",
+			"dojo/text!./server-wizard.json",
+			"./displayError.js",
+			"dojox/mvc/at",
+			"aps/ready!"
+		], function (Store, when, registry, load, Memory, getStateful, getPlainValue, wd, wizardControl, displayError, at) {
+			wizardControl = JSON.parse(wizardControl);
+			wizardControl[1].active = true;
+
+			var store = new Store({
+					apsType: "http://aps-standard.org/samples/basic/vps/1.0",
+					target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/vpses"
+				}),
+				model = getStateful(wd.get());
+
+			load(["aps/PageContainer", { id: "page" }, [
+				["aps/WizardControl", { steps: wizardControl }],
+				["aps/FieldSet", { id: "new_general", title: "General" }, [
+					["aps/Output", { id: "new_serverName",  label: "Server Name", value: at(model, "name") }],
+					["aps/Output", { id: "new_description", label: "Description", value: at(model, "description") }]
+				]],
+				["aps/FieldSet", { id: "new_props", title: "Server Configuration" }, [
+					["aps/Output", { id: "new_os",         label: "OS",          value: at(model.platform.OS, "name") }],
+					["aps/Output", { id: "new_cpu",        label: "CPU",         value: at(model.hardware.CPU, "number") }],
+					["aps/Output", { id: "new_diskSpace",  label: "Disk Space",  value: at(model.hardware, "diskspace") }],
+					["aps/Output", { id: "new_ram",        label: "RAM",         value: at(model.hardware, "memory") }]
+				]]
+			]]).then(function(){
+				/* Once the widgets are created, create handlers for the navigation buttons */
+				aps.app.onSubmit = function() {
+					var page = registry.byId("page");
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+					when(store.put(getPlainValue(model)),
+						function(){ aps.apsc.gotoView("servers"); },
+						displayError
+					);
+				};
+				aps.app.onPrev = function() {
+					aps.apsc.gotoView("server.new-1", null, { "isNew": false });
+				};
+			});
+		} // End of function
+	); // End of require
+	</script>
+</head>
+<body>
+</body>
+</html>

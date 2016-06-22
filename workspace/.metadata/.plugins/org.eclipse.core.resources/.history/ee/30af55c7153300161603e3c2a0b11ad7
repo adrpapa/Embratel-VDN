@@ -1,0 +1,120 @@
+<application packaged="2016-06-15T14:17:25" version="2.0" xmlns="http://aps-standard.org/ns/2">
+    <id>http://company.example/app/offering</id>
+    <name>offering</name>
+    <version>1.0</version>
+    <release>166</release>
+    <homepage>http://doc.apsstandard.org/pa/demo-projects/offer-mgmt</homepage>
+    <vendor>
+    	<name>APS team</name>
+    	<homepage>http://dev.apsstandard.org/</homepage>
+    	<icon path="images/icon.png"/>
+    </vendor>
+  	<packager>
+           <name>APS team</name>
+    	   <homepage>http://dev.apsstandard.org/</homepage>
+    	   <icon path="images/icon.png"/>
+    	   <uri>http://dev.apsstandard.org/</uri>
+        </packager>
+    <presentation>
+    	<summary>Simplest application with offers. PA version 6.0 or later is required, since the select() filter is demonstrated.</summary>
+    	<description>This is a demo application to demonstrate how to offer different configurations when creating services for clients. PA version 6.0 or later is required.</description>
+        <icon path="images/icon.png"/>
+        <changelog>
+        	<version release="1" version="1.0">
+        		<entry>First release</entry>
+        	</version>
+        </changelog>
+        <categories>
+           <category>Samples</category>
+    	   <category>Infrastructure/Management</category>
+    	</categories>
+        <navigation id="pcp" label="Offer Management">
+        	<var name="cloud" type-id="http://aps-standard.org/samples/offer-mgmt/cloud/1.0"/>
+        	<plugs-to id="http://www.aps-standard.org/ui/application"/>
+        	<item id="offers" label="Offer Management">
+        		<view id="offers" label="Offers">
+        			<view id="offer-new" label="New Offer">
+        				<controls>
+        					<cancel/>
+        					<submit/>
+        				</controls>
+        			</view>
+        			<view id="offer-edit" label="Offer {offer.name}">
+        				<controls>
+        					<cancel/>
+        					<submit/>
+        				</controls>
+        				<var name="offer" type-id="http://aps-standard.org/samples/offer-mgmt/offer/1.0"/>
+        			</view>
+        		</view>
+        	</item>
+        </navigation>
+        <navigation id="ccp" label="VPS Management">
+        	<var name="context" type-id="http://aps-standard.org/samples/offer-mgmt/context/1.0"/>
+        	<plugs-to id="http://www.aps-standard.org/ui/service"/>
+        	<item id="servers" label="Servers">
+        		<view id="servers" label="Servers">
+        			<view id="server-new-1" label="New VPS">
+        				<controls>
+        					<cancel/>
+        					<next/>
+        				</controls>
+        			</view>
+        			<view id="server-new-last" label="Review">
+        				<controls>
+        					<prev/>
+        					<finish/>
+        				</controls>
+        			</view>
+        			<view id="server-edit" label="Edit VPS">
+        				<controls>
+        					<cancel/>
+        					<submit/>
+        				</controls>
+        				<var filter="select(offer)" name="vps" type-id="http://aps-standard.org/samples/offer-mgmt/vps/1.0"/>
+        			</view>
+        		</view>
+        	</item>
+        </navigation>
+    </presentation>
+    <license-agreement must-accept="true">
+	<free/>
+	<text>
+		<name>End-User License Agreement</name>
+		<file>http://opensource.org/licenses/bsd-license</file>
+	</text>
+    </license-agreement>
+    <upgrade match="version =ge= 1, release=ge=0"/>
+    <service id="clouds">
+		
+<code engine="php" path="scripts/clouds.php"/>
+		<presentation>
+			<name>VPS cloud globals</name>
+			<summary>VPS cloud application global service</summary>
+			<infolinks>
+				<link class="deployment-guide" href="http://doc.apsstandard.org/pa/demo-projects/offer-mgmt/">Demo project description</link>
+				<link class="support" href="http://dev.apsstandard.org/develop/rt/tickets/new/">APS support</link>
+			</infolinks>
+		</presentation>
+    </service>
+    <service id="contexts">
+		
+<code engine="php" path="scripts/contexts.php"/>
+		<presentation>
+			<name>VPS Management</name>
+			<summary>VPS management environment</summary>
+		</presentation>
+    </service>
+    <service id="vpses">
+    	
+<code engine="php" path="scripts/vpses.php"/>
+    	<presentation>
+    		<name>Virtual Private Server</name>
+    		<summary>Cloud virtual private server</summary>
+    	</presentation>
+    </service>
+    <service id="offers">
+    	
+<code engine="php" path="scripts/offers.php"/>
+    </service>
+</application>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"aps/ResourceStore",
+			"dijit/registry",
+			"dojo/when",
+			"dojox/mvc/getPlainValue",
+			"dojox/mvc/at",
+			"dojox/mvc/getStateful",
+			"aps/load",
+			"aps/PageContainer",
+			"aps/Memory",
+			"./displayError.js",
+			"aps/ready!"
+		], function (Store, registry, when, getPlainValue, at, getStateful, load, PageContainer, Memory, displayError) {
+			var store = new Store({
+					target: "/aps/2/resources"
+				}),
+				model;
+
+			/* Getting Channel properties */
+			store.get(aps.context.vars.channel.aps.id).then(function(object){
+				/* Collect the Channel properties in the model */
+				model = getStateful(object);
+				/* and create the widgets */
+	            var widgets =
+	                ["aps/PageContainer", { id: "page" }, [
+	                    ["aps/WizardControl", {steps: wizardControl }],
+	                    ["aps/FieldSet", { id: "new1_general", title:  "Channel Configuration"  }, [
+	                        ["aps/TextBox", { id: "new1_channelName", label: _("Channel Name"), value: at(model, "name"), required: true }],
+	                        ["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") }]
+	                    ]],
+                        ["aps/FieldSet", { id: "new1_info", title:  "Elemental Live Information"  }, [
+                            ["aps/Output", { id: "new1_state", label: _("State"), value: at(model, "state")}],
+                            ["aps/Output", { id: "new1_screen_format", label: _("Screen Format"), value: at(model, "screen_format")}],
+                            ["aps/Output", { id: "new1_live_event_id", label: _("Live Event Iid"), value: at(model, "live_event_id")}],
+                            ["aps/Output", { id: "new1_input_URI", label: _("Input URI"), value: at(model, "input_URI")}],
+                            ["aps/Output", { id: "new1_delta_port", label: _("UDP Delta Port"), value: at(model, "delta_port")}],
+                            ["aps/Output", { id: "new1_live_node", label: _("Elemental Live Node"), value: at(model, "live_node")}],
+                            ["aps/Output", { id: "new1_", label: _("profile_id"), value: at(model, "profile_id")}],
+
+                        ]]
+	                ]]
+	            ]];
+				
+				return load(widgets);
+			}).then(function(){
+				/* Once the widgets are created, create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("channels");
+				};
+
+				aps.app.onSubmit = function() {
+					var page = registry.byId("page");
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+					when(store.put(getPlainValue(model)),
+						function() {
+							aps.apsc.gotoView("channels");
+						},
+						displayError
+					);
+			   };
+			}).otherwise(displayError);
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

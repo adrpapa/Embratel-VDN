@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<files xmlns="http://apstandard.com/ns/1" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
+    <file name="APP-META.xml" size="1727" sha256="36b1b69c1f9e15f911c4cb28ba91a80e3bcbcac077fa0ff44d5c190f03e4a484"/>
+    <file name="schemas/application.schema.gen" size="375" sha256="3809e33d54b362193e00e27d777b5d6142ca5961311ba57213dcd957f03ad2d3"/>
+    <file name="images/icon.png" size="2061" sha256="b64a677330f5d9766631228f4298c5a1c1648e040470e29021a6aab6ab2c7941"/>
+    <file name="scripts/application.php" size="527" sha256="fc5a68a45e7c5eed95527ba78dc1e6c90126213f03c5152842060eb9c719ccd0"/>
+    <file name="ui/sample_grid.html" size="1802" sha256="4b7b45a1d9cab128fbd8897e3ae0e6aa3c267dadc72792c9aceb850d13028fb8"/>
+</files>

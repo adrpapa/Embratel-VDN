@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:files xmlns="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://apstandard.com/ns/1">
+    <ns2:file name="images/icon.png" size="2062" sha256="b7ad0a1256344c511adef68971c179098724eaf8e9b7ff4df7167edb930c2f47"/>
+    <ns2:file name="images/resource-schema.png" size="101395" sha256="fc64e8277128e2ca0bfa2245ecface9565f55dade57d4d43b5922d5f71a566b4"/>
+    <ns2:file name="images/screenshot.png" size="145929" sha256="c692b24f759396136f0df20e8036a70cc79cd6789df5ff737ffcabe63febffe2"/>
+    <ns2:file name="ui/server-edit.html" size="5241" sha256="3b4f1e452d9034b0125f5a64b87cb0c0fc049efb0a4844847f321c2772a4e8b9"/>
+    <ns2:file name="ui/server-wizard.json" size="49" sha256="5ca6cea6bffe518ec34a8781d2cf371f37a23aa7fa00e2d21be1c5bc54d7ad29"/>
+    <ns2:file name="ui/servers.html" size="5122" sha256="d2ba047bf44d917749c05f7217f7214fc9d31a6dc31d4f8521d37ffce8ec371e"/>
+    <ns2:file name="ui/offer-edit.html" size="2069" sha256="8317655a786aac4f6f6c6d615cd5f35fc18ed5d2ec8a7f8b82ece631102e742f"/>
+    <ns2:file name="ui/newoffer.json" size="358" sha256="aed4b1349080a257582045b03da88820e1ee413527b2c51db54b71766d926ef4"/>
+    <ns2:file name="ui/offers.html" size="2902" sha256="889c15a2b1ea93459e16b0dd755520377d311b87104b26aca5864708bb29c753"/>
+    <ns2:file name="ui/server-new-last.html" size="2105" sha256="1049c6fe9e1ca83d57575087683033393ac82468fe1a469781f721e2b720c81d"/>
+    <ns2:file name="ui/offer-new.html" size="2453" sha256="3425370d5f9cfde8d797fce43301c284905f94fa8112bb811986bcb34d58bd4d"/>
+    <ns2:file name="ui/server-new-1.html" size="3512" sha256="2861032caae20072cff29833325f160f171b3ce95dc53ccd36615c9cb32e77e3"/>
+    <ns2:file name="ui/displayError.js" size="839" sha256="1cde2f894723c91284130b38d9b65d4afd5d5e344e2a315f1473103c35190660"/>
+    <ns2:file name="ui/newvps.json" size="375" sha256="2ba0f69861150eba7e1b555304f7c633c40e835ad0af7280582981173353f248"/>
+    <ns2:file name="scripts/contexts.php" size="1606" sha256="448ad115a463e3a685ce1dcec66c9a9016b55b2d3f59240fda30ea1af041ab58"/>
+    <ns2:file name="scripts/clouds.php" size="2221" sha256="04c72d5718e2426bf386f85097f7e046a7cdef304b527d7027ae78c2fb5234ee"/>
+    <ns2:file name="scripts/vpses.php" size="2133" sha256="a3e4eba8b1bf927de404f02ff8365611dfe32a4996d3ff71db866452ca873c8b"/>
+    <ns2:file name="scripts/offers.php" size="2816" sha256="060bcbd029a08322a7bd8178dc9a28db59881830b43da8fd4ec44a9999eb8695"/>
+    <ns2:file name="schemas/clouds.schema.gen" size="1022" sha256="da415dff155d785f4a6f9129e85949fef1c08748d71b4ff989b77074438b844f"/>
+    <ns2:file name="schemas/contexts.schema.gen" size="1142" sha256="de20d66b24f81db52c42977c03c19c82f10492e821804f67560d3607504026d3"/>
+    <ns2:file name="schemas/vpses.schema.gen" size="2637" sha256="845654dbce5538e91d46ee7d4c27fe5fc9437c6c133b0dbf57ba5270927b391a"/>
+    <ns2:file name="schemas/offers.schema.gen" size="2438" sha256="ecf0d342c49136b34c913586511a3477e201eb983abeae5746a1e9dc3c248e14"/>
+    <ns2:file name="i18n/en_US.json" size="3" sha256="257c1be96ae69f4b01c2c69bdb6d78605f59175819fb007d0bf245bf48444c4a"/>
+    <ns2:file name="APP-META.xml" size="5733" sha256="7d02dcba40327bdd566448e3631bf42bedba990536c38208831fa7ebcdc03099"/>
+</ns2:files>

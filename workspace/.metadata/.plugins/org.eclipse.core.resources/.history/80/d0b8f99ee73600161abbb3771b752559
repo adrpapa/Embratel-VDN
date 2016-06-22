@@ -1,0 +1,149 @@
+<?php
+
+define('APS_DEVELOPMENT_MODE', true);
+require "aps/2/runtime.php";
+
+/**
+ * Class cloud presents application and its global parameters
+ * @type("http://embratel.com.br/app/VDN_Embratel/cloud/1.0")
+ * @implements("http://aps-standard.org/types/core/application/1.0")
+ */
+class cloud extends APS\ResourceBase {
+# Link to collection of contexts. Pay attention to [] brackets at the end of the @link line.
+	/**
+	 * @link("http://embratel.com.br/app/VDN_Embratel/context/1.0[]")
+	 */
+	public $contexts;
+
+# Global connection settings will be configured by the provider
+# Must be forwarded to the app end-point to set the connection with the external system
+	/**
+        * @type(string)
+        * @title("Template Path")
+        * @description("Path for all elemental default templates ")
+        */
+        public $TEMPLATE_PATH = 'templates';
+
+        /**
+        * @type(string)
+        * @title("$API_VERSION")
+        */
+        public $API_VERSION = 'v1';
+        
+        /**
+        * @type(string)
+        * @title("$LIVE_CONDUCTOR_HOST")
+        */
+        public $LIVE_CONDUCTOR_HOST = '201.31.12.4';
+        
+        /**
+        * @type(string)
+        * @title("$LIVE_TEMPLATE_STANDARD")
+        */
+        public $LIVE_TEMPLATE_STANDARD = 13;
+        
+        /**
+        * @type(string)
+        * @title("$LIVE_TEMPLATE_PREMIUM")
+        */
+        public $LIVE_TEMPLATE_PREMIUM = 13;
+        
+        /**
+        * @type(string)
+        * @title("$LIVE_NODE_URL")
+        */
+        public $LIVE_NODE_URL = 'rtmp://localhost:1935/';
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_HOST")
+        */
+        public $DELTA_HOST = '201.31.12.36';
+        
+        /**
+        * @type(string)
+        * @title("$API_VERSION")
+        */
+        public $DELTA_PORT = '8080';
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_UDP_INPUT_FILTER_TEMPLATE")
+        */
+        public $DELTA_UDP_INPUT_FILTER_TEMPLATE = 274;
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_WF_INPUT_FILTER_TEMPLATE")
+        */
+        public $DELTA_WF_INPUT_FILTER_TEMPLATE = 42;
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_LIVE_STORAGE_LOCATION")
+        */
+        public $DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive/live';
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_VOD_STORAGE_LOCATION")
+        */
+        public $DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/vod';
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_WF_INCOMMING_URI")
+        */
+        public $DELTA_WF_INCOMMING_URI = '/data/server/drive/watchfolders';
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_STD_EVENT_OUTPUT_TEMPLATE")
+        */
+        public $DELTA_STD_EVENT_OUTPUT_TEMPLATE = 10;
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE")
+        */
+        public $DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE = 10;
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_STD_VOD_OUTPUT_TEMPLATE")
+        */
+        public $DELTA_STD_VOD_OUTPUT_TEMPLATE = 10;
+        
+        /**
+        * @type(string)
+        * @title("$DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE")
+        */
+        public $DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 10;
+        
+
+# Functions to process link/unlink requests
+/* Commented out since we don't need to redefine the parent operations
+        public function contextsLink() { }
+        public function contextsUnlink() { }
+*/
+
+# Functions to process CRUD operations:
+/* Commented out since we don't need to redefine the parent operations
+	public function provision() {  // create new instance
+	# Declaration is needed
+	}
+
+	public function configure($new=null) { // change properties
+	}
+	
+	public function retrieve() { // get data
+	}
+	
+	public function unprovision() { delete object
+	}
+*/
+# Custom functions should be declared here
+
+}
+
+?>

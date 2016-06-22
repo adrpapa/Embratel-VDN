@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteBase /mozy
+  RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_URI} !=/favicon.ico
+  #RewriteRule ^.*$ index.php [L,QSA]
+ 
+
+  RewriteRule ^mozyPro(|/.*)$ mozyPro.php?q=$1 [L,QSA]
+  RewriteRule ^mozyProAccountGroup(|/.*)$ mozyProAccountGroup.php?q=$1 [L,QSA]
+  RewriteRule ^mozyProAccountUser(|/.*)$ mozyProAccountUser.php?q=$1 [L,QSA]
+  RewriteRule ^mozyProAccountUserLicense(|/.*)$ mozyProAccountUserLicense.php?q=$1 [L,QSA]
+
+  RewriteRule ^mozyProAccount(|/.*)$ mozyProAccount.php?q=$1 [L,QSA]
+  RewriteRule ^mozyProConf(|/.*)$ index.php?q=$1 [L,QSA]
+
+RewriteCond %{HTTPS} !=on
+RewriteRule .* - [F]
+
+ 
+
+</IfModule>

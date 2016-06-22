@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"aps/ResourceStore",
+			"dojo/when",
+			"dijit/registry",
+			"aps/load",
+			"./displayError.js",
+			"dojo/_base/array",
+			"aps/ready!"
+		], function (Store, when, registry, load, displayError, arr) {
+			/* Create the data store */
+			var store = new Store({
+				apsType: "http://aps-standard.org/samples/basicwithui/channel/1.0",
+				target: "/aps/2/resources/"
+			});
+
+			/* Create widgets */
+			load(["aps/PageContainer", { id: "page" }, [
+				["aps/Grid", {
+					id:                "chnl_grid",
+					store:             store,
+				    selectionMode:     "multiple",
+					apsResourceViewId: "channel-info",
+					columns:           [
+						{ field: "name",                  name: "Name",       filter: { title: "Name" }, type: "resourceName" },
+						{ field: "state",                 name: "State" }
+						{ field: "input_URI",    name: "Input URI", filter: { title: "IN-URI" } },
+						{ field: "screen_format",       name: "Fmt",        filter: { title: "Fmt" } },
+					]
+			    }, [
+                    ["aps/Toolbar", [
+						["aps/ToolbarButton", { id: "chnl_new",        iconClass: "sb-add-new",        label: "New" }],
+						// Declare a button with CSS class sb-service-start and label Start.
+						// It will be enabled only if at least one string is selected
+						["aps/ToolbarButton", { id: "chnl_start",      iconClass: "sb-service-start",  label: "Start",     requireItems:   true }],
+						["aps/ToolbarButton", { id: "chnl_stop",       iconClass: "sb-service-stop",   label: "Stop",      requireItems:   true }],
+						// ["aps/ToolbarButton", { id: "chnl_delete",     iconClass: "sb-delete",         label: "Delete",    requireItems:   true }],
+						["aps/ToolbarButton", { id: "chnl_refresh",    iconClass: "sb-refresh",        label: "Refresh",   autoBusy:       false }]
+					]]
+				]]
+			]]).then(function(){
+				/* Once the widgets are created, create the widget processing logic */
+				var grid = registry.byId("chnl_grid"),
+					page = registry.byId("page");
+
+				/* Create a handler for the *New* button click */
+				registry.byId("chnl_new").on("click", function() {
+					/* Start the process of creating a VPS by going to the first screen */
+					aps.apsc.gotoView("channel-new-1");
+				});
+
+				registry.byId("chnl_refresh").on("click", function() {
+					grid.refresh();
+				});
+
+				function changeState(state, btn){
+					var sel = grid.get("selectionArray"),
+					counter = sel.length;
+
+					/* Clear the current messages on the screen */
+					page.get("messageList").removeAll();
+
+					arr.forEach(sel, function(vpsId){
+						console.log("I'm trying to change state of VPS with id = [" + vpsId + "]");
+
+						var vps = {
+							aps: { id: vpsId },
+							state: state
+						};
+
+						/* Save the VPS properties */
+						when(store.put(vps),
+							 /* If success, process the next VPS until the list is empty */
+							function(){
+								console.log("State of VPS with id = [" + vpsId + "] changed");
+								sel.splice(sel.indexOf(vpsId),1);
+								grid.refresh();
+								if (--counter === 0) { btn.cancel(); } /* Remove busy state for button */
+							},
+							/* If failure, call the error handler */
+							function(e){
+								displayError(e);
+                                if (--counter === 0) { btn.cancel(); }
+							}
+						);
+					});
+				}
+
+				/* Create the on-click handler for the *Stop* button */
+				registry.byId("chnl_stop").on("click", function() {
+					changeState("Stopped", this);
+				});
+
+				/* Create the on-click handler for the *Start* button */
+				registry.byId("chnl_start").on("click", function() {
+					changeState("Running", this);
+				});
+
+				/* Create the on-click handler for the *Delete* button
+				** Channel limit shoul be something around 3, so should user delete channels?
+				*/
+// 				registry.byId("chnl_delete").on("click", function() {
+//                     var self = this;
+// 					/* Get confirmation from the user for the delete operation */
+//                     if (!confirm("Are you sure you want delete VPSes?")) {
+//                         self.cancel();
+//                         return;
+//                     }
+// 					var sel = grid.get("selectionArray"),
+// 					counter = sel.length;
+
+// 					/* Clear the current messages on the screen */
+// 					page.get("messageList").removeAll();
+
+// 					arr.forEach(sel, function(vpsId){
+// 						console.log("I'm trying to delete VPS with id = [" + vpsId + "]");
+
+// 						/* Remove the VPS from the APS controller DB */
+// 						when(store.remove(vpsId),
+// 							 /* If success, process the next VPS until the list is empty */
+// 							function(){
+// 								console.log("VPS with id = [" + vpsId + "] removed");
+// 								sel.splice(sel.indexOf(vpsId),1);
+// 								grid.refresh();
+// 								if (--counter === 0) { self.cancel(); }
+// 							},
+// 							/* If failure, call the error handler */
+// 							function(e){
+// 								displayError(e);
+//                                 if (--counter === 0) { self.cancel(); }
+// 							}
+// 						);
+// 					});
+
+
+				});
+			});
+		}   /* end of main function  */
+	);    /* end of require */
+	</script>
+</head>
+<body>
+</body>
+</html>

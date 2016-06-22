@@ -1,0 +1,145 @@
+<application packaged="2016-06-16T10:37:18" version="2.0" xmlns="http://aps-standard.org/ns/2">
+    <id>http://embratel.com.br/app/VDN_Embratel</id>
+    <name>VDN_Embratel</name>
+    <version>1.0</version>
+    <release>1</release>
+    <homepage>http://embratel.com.br/app/VDN_Embratel</homepage>
+    <vendor>
+        <name>Embratel</name>
+        <homepage>https://embratel.com.br</homepage>
+    </vendor>
+    <packager>
+        <name>Fastlane</name>
+        <homepage>https://flts.com.br</homepage>
+    </packager>
+    <presentation>
+        <summary>Elemental Server/Live/Delta plugin for parallels</summary>
+        <description>APS para suportar venda de infraestrutura para provedores de conteúdo.
+Permite configurar os back-ends:
+Elemental server - para encoding de conteúdo estático
+Elemental live - para streaming ao vivo
+Elemental delta para empacotamento
+CISCO VDN para entrega distribuída de conteúdo
+</description>
+        <icon path="images/icon.png"/>
+        <changelog>
+            <version release="1" version="1.0">
+                <entry>Initial release.</entry>
+            </version>
+        </changelog>
+        <categories>
+            <category>Video Streaming</category>
+           <category>Streaming Infrastructure/Management</category>
+        </categories>
+
+        <navigation id="ccp" label="VPS Management">
+                <var name="context" type-id="http://company.example/app/basicwithui/context/1.0"/>
+                <plugs-to id="http://www.aps-standard.org/ui/service"/>
+                <item id="servers" label="VPS Servers">
+                        <view id="servers" label="Servers">
+                                <view id="server-new-1" label="New VPS step 1">
+                                        <controls>
+                                                <cancel/>
+                                                <next/>
+                                        </controls>
+                                </view>
+                                <view id="server-new-last" label="Review">
+                                        <controls>
+                                                <prev/>
+                                                <finish/>
+                                        </controls>
+                                </view>
+			                    <view id="server-edit" label="Edit VPS">
+			                        <controls>
+			                            <cancel/>
+			                            <submit/>
+			                        </controls>
+			                        <var name="vps" type-id="http://aps-standard.org/samples/basicwithui/vps/1.0"/>
+			                    </view>
+                        </view>
+                </item>
+        </navigation>       
+
+
+       <navigation id="ccpebt" label="VDN Embratel">
+            <var name="context" type-id="http://aps-standard.org/samples/basicwithui/context/1.0"/>
+            <plugs-to id="http://www.aps-standard.org/ui/service"/>
+            <item id="channels" label="Live Channels">
+                <view id="channels" label="Live Channels">
+                    <view id="channel-new-1" label="New Channel">
+                        <controls>
+                            <cancel/>
+                            <next/>
+                        </controls>
+                    </view>
+                    <view id="channel-new-last" label="Review">
+                        <controls>
+                            <prev/>
+                            <finish/>
+                        </controls>
+                    </view>
+                </view>
+            </item>
+<!--         	<item id="vods" label="VOD Content"> -->
+<!--         		<view id="content" label="Video on demand Contents"> -->
+<!--         			<view id="channel-new-1" label="Submit Video"> -->
+<!--         				<controls> -->
+<!--         					<cancel/> -->
+<!--         					<next/> -->
+<!--         				</controls> -->
+<!--         			</view> -->
+<!--         			<view id="channel-new-last" label="Review"> -->
+<!--         				<controls> -->
+<!--         					<prev/> -->
+<!--         					<finish/> -->
+<!--         				</controls> -->
+<!--         			</view> -->
+<!--         		</view> -->
+<!--         	</item> -->
+        </navigation>    	
+    	
+    </presentation>
+    <license-agreement must-accept="true">
+	<free/>
+	<text>
+		<name>End-User License Agreement</name>
+		<file>http://opensource.org/licenses/bsd-license</file>
+	</text>
+    </license-agreement>
+    <service id="clouds">
+		
+		<schema path="schemas/clouds.schema.gen"/>
+<code engine="php" path="scripts/clouds.php"/>
+		<presentation>
+			<name>VDN  Embratel globals</name>
+			<summary>VDN  Embratel  global configuration variables</summary>
+		</presentation>
+    </service>
+    
+    <service id="contexts">
+		<schema path="schemas/contexts.schema.gen"/>
+<code engine="php" path="scripts/contexts.php"/>
+		<presentation>
+			<name>VDN  Embratel Management</name>
+			<summary>VDN Embratel environment</summary>
+		</presentation>
+    </service>
+
+    <service id="channels">
+        <schema path="schemas/channels.schema.gen"/>
+<code engine="php" path="scripts/channels.php"/>
+        <presentation>
+            <name>VDN Live Channels</name>
+            <summary>VDN Live Channels</summary>
+        </presentation>
+    </service>    
+    
+    <service id="vpses">
+    	<schema path="schemas/vpses.schema.gen"/>
+<code engine="php" path="scripts/vpses.php"/>
+    	<presentation>
+    		<name>VDN Live Channels</name>
+    		<summary>VDN Live Channels</summary>
+    	</presentation>
+    </service>    
+</application>

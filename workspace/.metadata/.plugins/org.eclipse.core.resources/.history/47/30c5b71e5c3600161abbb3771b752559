@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ASCII"?>
+<aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="BasicWithUI">
+  <internalTypes id="http://aps-standard.org/samples/basicwithui/vps" version="1.0" relations="//@relations.0/@source" name="vps" implements="//@typesFromLibrary.0">
+    <properties name="name" type="string" description="Server Name"/>
+    <properties name="description" type="string" description="Server Description"/>
+    <properties name="state" type="string" description="Server State"/>
+    <properties name="hardware" type="Hardware" description="Server Hardware"/>
+    <properties name="platform" type="Platform" description="OS Platform"/>
+    <structures name="CPU">
+      <properties name="number" type="integer" description="Number of CPU cores"/>
+    </structures>
+    <structures name="OS">
+      <properties name="name" type="string" description="Operating System Name"/>
+      <properties name="version" type="string" description="Operating System version"/>
+    </structures>
+    <structures name="Hardware">
+      <properties name="memory" type="integer" description="RAM size in GB"/>
+      <properties name="diskspace" type="integer" description="Disk space in GB"/>
+      <properties name="CPU" type="CPU" description="Server CPU parameters"/>
+    </structures>
+    <structures name="Platform">
+      <properties name="arch" type="string" description="Platform architecture"/>
+      <properties name="OS" type="OS" description="Parameters of operating system"/>
+    </structures>
+  </internalTypes>
+  <internalTypes id="http://aps-standard.org/samples/basicwithui/cloud" version="1.0" relations="//@relations.1/@source" application="true" name="cloud" implements="//@typesFromLibrary.1">
+    <properties name="apphost" type="string" description="Cloud management server IP or domain name"/>
+    <properties name="cloudadmin" type="string" description="Cloud administrator"/>
+    <properties name="cloudpass" type="string" description="Cloud administrator password"/>
+  </internalTypes>
+  <typesFromLibrary id="http://aps-standard.org/types/core/resource" version="1.0" name="Resource">
+    <operations name="provision" verb="POST" path="/"/>
+    <operations name="retrieve" verb="GET" path="/"/>
+    <operations name="configure" verb="PUT" path="/"/>
+    <operations name="unprovision" verb="DELETE" path="/"/>
+    <structures name="Counter">
+      <properties name="usage" type="integer"/>
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Limit">
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Usage">
+      <properties name="usage" type="integer"/>
+    </structures>
+    <structures name="NotificationSource">
+      <properties name="type" type="string" description="APS Type of source resources"/>
+      <properties name="id" type="string" description="Resource which is source of event"/>
+    </structures>
+    <structures name="Notification">
+      <properties name="type" type="string" description="Type of event (URI)" required="true"/>
+      <properties name="time" type="string" description="Date-time when event happens"/>
+      <properties name="serial" type="number" description="Serial number of event (incrementing)"/>
+      <properties name="source" type="NotificationSource" description="Resource originating the event"/>
+    </structures>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/application" version="1.0" name="Application" implements="//@typesFromLibrary.0">
+    <operations name="upgrade" verb="POST" path="/upgrade"/>
+  </typesFromLibrary>
+  <externalTypes id="http://aps-standard.org/samples/basicwithui/context" version="1.0" relations="//@relations.0/@target //@relations.1/@target"/>
+  <relations>
+    <source type="//@internalTypes.0" name="context" required="true"/>
+    <target type="//@externalTypes.0"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.1" name="contexts" collection="true"/>
+    <target type="//@externalTypes.0"/>
+  </relations>
+</aps:APSPackage>

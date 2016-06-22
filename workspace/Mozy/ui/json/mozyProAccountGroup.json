@@ -1,0 +1,17 @@
+{
+    "aps":
+    {
+        "type": "http://www.mozy.com/mozyProAPS2/mozyProAccountGroup/1.0"
+    },
+    "name":"",
+     "groupId":"",
+     "serverKeysAssigned":"0",
+     "serverKeysOrdered":"0",
+     "desktopKeysAssigned":"0",
+     "desktopKeysOrdered":"0",
+     "serverQuotaAssigned":"0",
+     "serverQuotaOrdered":"0",
+     "desktopQuotaAssigned":"0",
+     "desktopQuotaOrdered":"0"
+
+   }

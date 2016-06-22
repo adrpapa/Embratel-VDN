@@ -1,0 +1,10 @@
+{
+	"aps": {
+		"type": "http://aps-standard.org/samples/basicwithui/vps/1.0"
+	},
+	"state": "Stopped",
+	"name": "",
+	"description": "",
+	"screen_format": "16:9",
+	"premium_parms": "",
+}

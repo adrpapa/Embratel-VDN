@@ -1,0 +1,15 @@
+{
+	"aps": {
+		"type": "http://embratel.com.br/app/VDN_Embratel/channel/1.0"
+	},
+	"state": "Stopped",
+	"name": "",
+	"description": "",
+	"screen_format": "16:9",
+	"premium_parms": "",
+	"live_event_id": "TBD",
+	"input_URI": "rtmp://localhost:1935/clientId_streamname",
+	"delta_port": "50xx",
+	"live_node": "http://201.31.12.4/",
+	"profile_id": "uhhh?!"
+}

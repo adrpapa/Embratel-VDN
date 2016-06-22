@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Teste</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>net.sourceforge.phpeclipse.parserbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>net.sourceforge.phpeclipse.phpnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>phpApiCall</name>
+			<type>2</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Embratel/pgms/phpApiCall</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

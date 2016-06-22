@@ -1,0 +1,135 @@
+<application packaged="2016-06-09T10:32:06" version="2.0" xmlns="http://aps-standard.org/ns/2">
+    <id>http://flts.com.br/app/CloudBasicSample</id>
+    <name>CloudBasicSample</name>
+    <version>2.0</version>
+    <release>153</release>
+    <homepage>http://doc.apsstandard.org/pa/demo-projects/basic-to-offer</homepage>
+    <vendor>
+    	<name>APS team</name>
+    	<homepage>http://dev.apsstandard.org/</homepage>
+    	<icon path="images/icon.png"/>
+    </vendor>
+  	<packager>
+           <name>APS team</name>
+    	   <homepage>http://dev.apsstandard.org/</homepage>
+    	   <icon path="images/icon.png"/>
+    	   <uri>http://dev.apsstandard.org/</uri>
+        </packager>
+    <presentation>
+    	<summary>Simplest basic multi-tenant application</summary>
+    	<description>This is a demo application to demonstrate how to update an APS application.
+</description>
+        <icon path="images/icon.png"/>
+        <screenshot path="images/resource-schema.png">
+            <description>Resource schema</description>
+        </screenshot>
+        <changelog>
+            <version release="0" version="1.0">
+                <entry>Source application package</entry>
+            </version>
+            <version release="153" version="2.0">
+            	<entry>Offers added
+Update script added to the provisioning logic</entry>
+            </version>
+        </changelog>
+        <categories>
+                <category>Samples</category>
+                <category>Infrastructure/Management</category>
+        </categories>
+
+	    <navigation id="pcp" label="Offers Management">
+	       <var name="cloud" type-id="http://aps-standard.org/samples/basic/cloud/1.1"/>
+	       <plugs-to id="http://www.aps-standard.org/ui/application"/>
+	       <item id="offers" label="Offers">
+	           <view id="offers" label="Offers List">
+	               <view id="offer-edit" label="Offer {offer.offername}">
+	                   <var name="offer" type-id="http://aps-standard.org/samples/basic/offer/1.1"/>
+	                   <controls>
+	                       <cancel label="Back to Offers list"/>
+	                       <submit label="Save Changes"/>
+	                   </controls>                                     
+	               </view>                                 
+	               <view id="offer-new" label="New Offer">
+	                   <controls>
+	                       <cancel label="Back to Offers list"/>
+	                       <submit label="Save Offer"/>
+	                   </controls>
+	               </view>
+	           </view>
+	       </item>
+	   </navigation>
+    
+        <navigation id="ccp" label="VPS Management">
+                <var name="context" type-id="http://aps-standard.org/samples/basic/context/1.1"/>
+                <plugs-to id="http://www.aps-standard.org/ui/service"/>
+
+                <item id="servers" label="Servers">
+                        <view id="servers" label="Servers">
+                                <view id="server-new-1" label="New VPS step 1">
+                                        <controls>
+                                                <cancel/>
+                                                <next/>
+                                        </controls>
+                                </view>
+                                <view id="server-new-last" label="Review">
+                                        <controls>
+                                                <prev/>
+                                                <finish/>
+                                        </controls>
+                                </view>
+                                <view id="server-edit" label="Edit">
+                                        <var filter="select(offer)" name="vps" type-id="http://aps-standard.org/samples/basic/vps/2.0"/>
+                                        <controls>
+                                                <cancel/>
+                                                <finish/>
+                                        </controls>
+                                </view>
+                        </view>
+                </item>
+    	 </navigation>
+    </presentation>
+    <license-agreement must-accept="true">
+	<free/>
+	<text>
+		<name>End-User License Agreement</name>
+		<file>http://opensource.org/licenses/bsd-license</file>
+	</text>
+    </license-agreement>
+    <upgrade match="version=1.0,release=ge=0"/>
+    <service id="clouds">
+		
+<code engine="php" path="scripts/clouds.php"/>
+		<presentation>
+			<name>VPS cloud globals</name>
+			<summary>VPS cloud application global service</summary>
+			<infolinks>
+			    <link class="deployment-guide" href="http://localhost/pa/demo-projects/basic-to-offer/">Application Deployment</link>
+			    <link class="support" href="mailto:aps2-support@apsstandard.org">Support mail</link>
+			</infolinks>
+		</presentation>
+    </service>
+    <service id="contexts">
+		
+<code engine="php" path="scripts/contexts.php"/>
+		<presentation>
+			<name>VPS Management</name>
+			<summary>VPS management environment</summary>
+		</presentation>
+    </service>
+    <service id="vpses">
+	    
+<code engine="php" path="scripts/vpses.php"/>
+        <presentation>
+             <name>Virtual Private Server</name>
+             <summary>Cloud virtual private server</summary>
+        </presentation>
+    </service>
+    <service id="offers">
+    	
+<code engine="php" path="scripts/offers.php"/>
+    	<presentation>
+    		<name>Offer for VPS</name>
+    		<summary>Limits on VPS parameters</summary>
+    	</presentation>
+    </service>
+</application>

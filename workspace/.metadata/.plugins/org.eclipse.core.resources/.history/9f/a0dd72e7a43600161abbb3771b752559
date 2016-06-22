@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+    <script>
+        require([
+            "aps/ResourceStore",
+            "dojo/when",
+            "dijit/registry",
+            "aps/load",
+            "aps/Memory",
+            "dojox/mvc/getStateful",
+            "dojox/mvc/getPlainValue",
+            "aps/WizardData",
+            "dojo/text!./channel-wizard.json",
+            "./displayError.js",
+            "dojox/mvc/at",
+            "aps/ready!"
+        ], function (Store, when, registry, load, Memory, getStateful, getPlainValue, wd, wizardControl, displayError, at) {
+            wizardControl = JSON.parse(wizardControl);
+            wizardControl[1].active = true;
+
+            var store = new Store({
+                    apsType: "http://aps-standard.org/samples/basicwithui/channel/1.0",
+                    target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/channels"
+                }),
+                model = getStateful(wd.get());
+
+            var widgets =
+                ["aps/PageContainer", { id: "page" }, [
+                ["aps/WizardControl", {steps: wizardControl }],
+                ["aps/FieldSet", { id: "new1_general", title:  "Channel Configuration"  }, [
+                ["aps/Output", { id: "new1_channelName", label: _("Channel Name"), value: at(model, "name") }],
+                ["aps/Output", { id: "new1_description", label: _("Description"), value: at(model, "description") }]]],
+            ]];
+            load(widgets).then(function(){
+	            /* Once the widgets are created, create handlers for the navigation buttons */
+	            aps.app.onSubmit = function() {
+	                var page = registry.byId("page");
+	                if (!page.validate()) {
+	                    aps.apsc.cancelProcessing();
+	                    return;
+	                }
+	                when(store.put(getPlainValue(model)),
+	                    function(){ aps.apsc.gotoView("channels"); },
+	                    displayError
+	                );
+	            };
+	            aps.app.onPrev = function() {
+	                aps.apsc.gotoView("channel.new-1", null, { "isNew": false });
+                };
+            });
+        } // End of function
+    ); // End of require
+    </script>
+</head>
+<body>
+</body>
+</html>

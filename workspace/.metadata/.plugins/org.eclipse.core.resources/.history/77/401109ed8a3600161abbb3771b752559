@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ASCII"?>
+<aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="BasicWithUI">
+  <internalTypes id="http://aps-standard.org/samples/basicwithui/context" version="1.0" relations="//@relations.0/@source //@relations.1/@source //@relations.2/@source //@relations.3/@source" name="context" implements="//@typesFromLibrary.0">
+    <properties name="isPremium" type="boolean"/>
+    <properties name="contextid" type="string" readonly="true"/>
+    <properties name="contextpass" type="string" readonly="true"/>
+  </internalTypes>
+  <internalTypes id="http://aps-standard.org/samples/basicwithui/cloud" version="1.0" relations="//@relations.1/@target" application="true" name="cloud" implements="//@typesFromLibrary.1">
+    <properties name="apphost" type="string" description="Cloud management server IP or domain name"/>
+    <properties name="cloudadmin" type="string" description="Cloud administrator"/>
+    <properties name="cloudpass" type="string" description="Cloud administrator password"/>
+  </internalTypes>
+  <typesFromLibrary id="http://aps-standard.org/types/core/resource" version="1.0" name="Resource">
+    <operations name="provision" verb="POST" path="/"/>
+    <operations name="retrieve" verb="GET" path="/"/>
+    <operations name="configure" verb="PUT" path="/"/>
+    <operations name="unprovision" verb="DELETE" path="/"/>
+    <structures name="Counter">
+      <properties name="usage" type="integer"/>
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Limit">
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Usage">
+      <properties name="usage" type="integer"/>
+    </structures>
+    <structures name="NotificationSource">
+      <properties name="type" type="string" description="APS Type of source resources"/>
+      <properties name="id" type="string" description="Resource which is source of event"/>
+    </structures>
+    <structures name="Notification">
+      <properties name="type" type="string" description="Type of event (URI)" required="true"/>
+      <properties name="time" type="string" description="Date-time when event happens"/>
+      <properties name="serial" type="number" description="Serial number of event (incrementing)"/>
+      <properties name="source" type="NotificationSource" description="Resource originating the event"/>
+    </structures>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/application" version="1.0" name="Application" implements="//@typesFromLibrary.0">
+    <operations name="upgrade" verb="POST" path="/upgrade"/>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/subscription" version="1.0" relations="//@relations.2/@target" name="Subscription">
+    <properties name="trial" type="boolean"/>
+    <properties name="disabled" type="boolean"/>
+    <properties name="name" type="string"/>
+    <properties name="description" type="string"/>
+    <operations name="resources" verb="GET" path="/resources"/>
+    <structures name="SubscriptionResource">
+      <properties name="id" type="string" required="true"/>
+      <properties name="title" type="string"/>
+      <properties name="apsId" type="string"/>
+      <properties name="apsType" type="string"/>
+      <properties name="applicationId" type="string"/>
+      <properties name="property" type="string"/>
+      <properties name="usage" type="integer"/>
+      <properties name="limit" type="integer"/>
+      <properties name="autoprovisioning" type="boolean"/>
+      <properties name="unit" type="string" required="true"/>
+    </structures>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.3/@target" name="Account">
+    <properties name="companyName" type="string" required="true"/>
+    <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
+  </typesFromLibrary>
+  <externalTypes id="http://aps-standard.org/samples/basicwithui/vps" version="1.0" relations="//@relations.0/@target"/>
+  <relations>
+    <source type="//@internalTypes.0" name="vpses" collection="true"/>
+    <target type="//@externalTypes.0"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="cloud" required="true"/>
+    <target type="//@internalTypes.1" name="contexts" collection="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="subscription" required="true"/>
+    <target type="//@typesFromLibrary.2"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="account" required="true"/>
+    <target type="//@typesFromLibrary.3"/>
+  </relations>
+</aps:APSPackage>

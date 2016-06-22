@@ -1,0 +1,102 @@
+<application packaged="2014-03-18T11:04:17" version="2.0" xmlns="http://aps-standard.org/ns/2">
+    <id>http://www.parallels.com/samples/sample-aps2-reslist</id>
+    <name>APS2_Resource_Listing</name>
+    <version>1</version>
+    <release>1</release>
+    <homepage>http://www.parallels.com</homepage>
+    <vendor>
+        <name>Parallels</name>
+        <homepage>http://www.parallels.com</homepage>
+    </vendor>
+    <packager>
+        <name>Parallels</name>
+        <homepage>http://www.parallels.com</homepage>
+    </packager>
+    <presentation>
+        <summary>Package allows to browse all APS2 resources visible in context</summary>
+		<icon path="images/icon.png"/>
+		<categories>
+			<category>Samples</category>
+		</categories>
+
+		
+		<navigation id="pcp" label="Provider Sample Resource List Management">
+			
+			<var name="uiview_pcp" type-id="http://www.parallels.com/resourcelist/global/1.0"/>
+			
+			<plugs-to id="http://www.aps-standard.org/ui/application"/>
+			
+			
+			<item id="samplerltab_pcp" label="Resource List Management">
+				<item id="samplerl_pcp" label="Resource List">
+					<view id="rlist_pcp" label="Resource List"/>
+				</item>
+			</item>
+		</navigation>
+
+	
+		<navigation id="ccp" label="Sample Resource List Management">
+			
+			<var name="uiview" type-id="http://www.parallels.com/resourcelist/global/1.0"/>
+			
+			<plugs-to id="http://www.aps-standard.org/ui/service"/>
+			
+			
+			<item id="samplerltab" label="Resource List Management">
+				<item id="samplerl" label="Resource List">
+					<view id="rlist" label="Resource List"/>
+				</item>
+			</item>
+		</navigation>
+		
+			
+		<navigation id="mycp" label="MyCP Sample Resource List Management">
+			
+			<var name="uiview_mycp" type-id="http://www.parallels.com/resourcelist/user/1.0"/>
+			
+			<plugs-to id="http://www.aps-standard.org/ui/user"/>
+			
+			
+			<item id="samplerltab_mycp" label="Resource List Management">
+				<item id="samplerl_mycp" label="Resource List">
+					<view id="rlist_mycp" label="Resource List"/>
+				</item>
+			</item>
+		</navigation>
+
+		 <navigation id="suwizard">
+			<view id="suwizard.new" label="Assign SU to VPS">
+				<plugs-to id="http://www.aps-standard.org/ui/service/suwizard.new"/>
+			</view>
+			<view id="suwizard.overview" label="VPS" src="ui/empty.html">
+				<plugs-to id="http://www.aps-standard.org/ui/service/suwizard.overview"/>
+			</view>			
+			<view id="suservice.view" label="VPS" src="ui/empty.html">
+				<plugs-to id="http://www.aps-standard.org/ui/service/suservice.view"/>
+			</view>
+		 </navigation>
+	</presentation>
+
+    <license-agreement>
+        <free/>
+        <text>
+            <name>End-User License Agreement</name>
+            <url>http://opensource.org/licenses/bsd-license</url>
+        </text>
+    </license-agreement>
+
+    <service id="globals">
+        <schema path="schemas/global.schema"/>
+		<presentation>
+			<name>Sample Resource List Application</name>
+			<summary>Sample of Resource List application</summary>
+		</presentation>
+    </service>
+    <service id="user">
+        <schema path="schemas/user.schema"/>
+		<presentation>
+			<name>Sample Resource List Users</name>
+			<summary>Users of Resource List application</summary>
+		</presentation>
+    </service>
+</application>

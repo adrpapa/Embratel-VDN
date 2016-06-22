@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		eval("debugger;");
+		require([
+			"dijit/registry",
+			"dojox/mvc/getPlainValue",
+			"aps/WizardData",
+			"dojox/mvc/at",
+			"aps/load",
+			"aps/Memory",
+			/* Include JSON file that defines the wizard steps */
+			"dojo/text!./server-wizard.json",
+			"dojo/text!./newvps.json",
+			"aps/ready!"
+		], function (registry, getPlainValue, wd, at, load, Memory, wizardControl, newVPS) {
+			wizardControl = JSON.parse(wizardControl);
+			wizardControl[0].active = true;
+
+			/* Declare the data source */
+			var model = typeof aps.context.params.isNew === "undefined" ? JSON.parse(newVPS) : wd.get(),
+				oses = new Memory({
+					idProperty: "value",
+						data: [
+							{ value: "centos6",      label: "CentOS 6" },
+							{ value: "debian",       label: "Debian" },
+							{ value: "windows2008",  label: "Windows 2008 Server" },
+							{ value: "windows2012",  label: "Windows 2012 Server" }
+						]
+				});
+
+			/* Create widgets */
+			var widgets =
+				["aps/PageContainer", { id: "page" }, [
+					["aps/WizardControl", {steps: wizardControl }],
+					["aps/FieldSet", { id: "new1_general", title: true }, [
+						["aps/TextBox", { id: "new1_serverName", label: _("Server Name"), value: at(model, "name"), required: true }],
+						["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") }]]],
+					["aps/FieldSet", { id: "new1_props", title: true}, [
+						["aps/Select", { id: "new1_os", label: _( "OS"), value: at(model.platform.OS, "name"), store: oses }],
+						["aps/Slider", { id: "new1_cpuNumber", label: _( "CPU Number"), minimum: 1, maximum: 16, value: at(model.hardware.CPU, "number"), step: 1 }],
+						["aps/Slider", { id: "new1_diskSpace", label: _("Disk Space"), minimum: 1, maximum: 100, value: at(model.hardware, "diskspace"), legend: _("Gb"), step: 1 }],
+						["aps/Slider", { id: "new1_ram", label: _("RAM"), minimum: 128, maximum: 8192, value: at(model.hardware, "memory"), step: 128, legend: _("Mb") }]
+					]]
+			]];
+			load(widgets).then(function(){
+				/* Create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("servers");
+				};
+				aps.app.onNext = function() {
+					var page = registry.byId("page");
+
+					page.get("messageList").removeAll();
+
+					/* Validate the values assigned to widgets */
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+
+					/* Save the values in the client"s storage */
+					wd.put(getPlainValue(model));
+					/* and proceed to the next screen */
+					aps.apsc.gotoView("server.new-last");
+				};
+			});
+		}
+	);
+	</script>
+</head>
+<body>
+</body>
+</html>

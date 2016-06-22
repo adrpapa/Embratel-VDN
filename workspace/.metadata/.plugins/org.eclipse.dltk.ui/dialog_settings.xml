@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="PHPDLTKSearchPage">
+		<item value="4" key="HISTORY_SIZE"/>
+		<item value="false" key="CASE_SENSITIVE"/>
+		<section name="HISTORY2">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="cloudadmin" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY3">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="$apphost" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY0">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="cloud" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY1">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="cloudpass" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+	</section>
+</section>

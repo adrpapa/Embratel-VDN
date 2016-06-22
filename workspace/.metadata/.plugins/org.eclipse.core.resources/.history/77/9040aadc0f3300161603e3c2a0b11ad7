@@ -1,0 +1,52 @@
+<application packaged="2014-02-20T16:13:55" version="2.0" xmlns="http://aps-standard.org/ns/2">
+        <id>http://company.example/app/hello</id>
+        <name>hello</name>
+        <version>1</version>
+        <release>10</release>
+        <homepage>http://helloworld.org/</homepage>
+
+        <vendor>
+                <name>Helloworld.org</name>
+                <homepage>http://helloworld.org/</homepage>
+        </vendor>
+
+        <packager>
+                <name>Parallels</name>
+                <homepage>http://parallels.com/</homepage>
+                <uri>uuid:714f0a7b-85d6-4eb8-b68e-40f9acbb3103</uri>
+        </packager>
+
+        <presentation>
+                <summary> Helloworld is the simplest web application </summary>
+                <description>
+                        Helloworld is the simplest web application displaying Hello World on the screen.
+                </description>
+
+                <categories>
+                        <category>Samples</category>
+                </categories>
+
+        </presentation>
+        <license-agreement must-accept="true">
+                <free/>
+                <text>
+                        <name>End-User License Agreement</name>
+                        <file>http://opensource.org/licenses/bsd-license</file>
+                </text>
+        </license-agreement>
+
+        <service id="hello">
+             
+<code engine="php" path="scripts/hello.php"/>
+        <presentation>
+                <summary>Hello app service</summary>
+
+                <entry-points>
+                        <entry dst="/">
+                                <label>Display Hello!</label> 
+                        </entry>
+                </entry-points>
+        </presentation>
+        </service>
+
+   </application>

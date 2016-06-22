@@ -1,0 +1,48 @@
+<application packaged="2016-06-15T16:33:54" version="2.0" xmlns="http://aps-standard.org/ns/2">
+    <id>http://embratel.com.br/app/VDN</id>
+    <name>VDN</name>
+    <version>1.0</version>
+    <release>167</release>
+    <homepage>http://doc.apsstandard.org/pa/demo-projects/starter</homepage>
+    <vendor>
+    	<name>APS team</name>
+    	<homepage>http://dev.apsstandard.org/</homepage>
+    </vendor>
+  	<packager>
+           <name>APS team</name>
+    	   <homepage>http://dev.apsstandard.org/</homepage>
+    	   <uri>http://dev.apsstandard.org/</uri>
+        </packager>
+    <presentation>
+    	<summary>Simplest starter multi-tenant application</summary>
+    	<description>This is a demo application to demonstrate how to develop APS apps step by step</description>
+        <icon path="images/icon.png"/>
+    	<categories>
+           <category>Samples</category>
+    	   <category>Infrastructure/Management</category>
+    	</categories>
+    </presentation>
+    <license-agreement must-accept="true">
+	<free/>
+	<text>
+		<name>End-User License Agreement</name>
+		<file>http://opensource.org/licenses/bsd-license</file>
+	</text>
+    </license-agreement>
+    <service id="clouds">
+		
+<code engine="php" path="scripts/clouds.php"/>
+		<presentation>
+			<name>VPS cloud globals</name>
+			<summary>VPS cloud application global service</summary>
+		</presentation>
+    </service>
+    <service id="contexts">
+		
+<code engine="php" path="scripts/contexts.php"/>
+		<presentation>
+			<name>VPS Management</name>
+			<summary>VPS management environment</summary>
+		</presentation>
+    </service>
+</application>

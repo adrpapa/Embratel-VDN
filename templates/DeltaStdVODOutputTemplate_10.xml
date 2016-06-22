@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<output_template href="/output_templates/10" product="Delta" version="1.6.1.34713">
+  <name>live_template_std</name>
+<filter href="/output_template/10/filters/376" product="Delta" version="1.6.1.34713">
+  <name>filter_376</name>
+  <parent_filter/>
+  <endpoint>true</endpoint>
+  <output_url>$fn$</output_url>
+  <filter_type>hls_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <segment_duration>10</segment_duration>
+    <index_duration>60</index_duration>
+    <playlist_type/>
+    <avail_trigger>all</avail_trigger>
+    <ad_markers>none</ad_markers>
+    <broadcast_time>false</broadcast_time>
+    <ignore_web_delivery_allowed>false</ignore_web_delivery_allowed>
+    <ignore_no_regional_blackout>false</ignore_no_regional_blackout>
+    <enable_blackout>false</enable_blackout>
+    <enable_network_end_blackout>false</enable_network_end_blackout>
+    <network_id/>
+    <include_program_date_time>false</include_program_date_time>
+    <program_date_time_interval>600</program_date_time_interval>
+  </filter_settings>
+</filter>
+<filter href="/output_template/10/filters/378" product="Delta" version="1.6.1.34713">
+  <name>filter_378</name>
+  <parent_filter/>
+  <endpoint>true</endpoint>
+  <output_url>$fn$</output_url>
+  <filter_type>hds_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <fragment_duration>10</fragment_duration>
+    <index_duration>60</index_duration>
+    <external_bootstrap>true</external_bootstrap>
+    <avail_trigger>all</avail_trigger>
+    <ad_markers>none</ad_markers>
+    <broadcast_time>false</broadcast_time>
+    <ignore_web_delivery_allowed>false</ignore_web_delivery_allowed>
+    <ignore_no_regional_blackout>false</ignore_no_regional_blackout>
+    <absolute_timestamps>false</absolute_timestamps>
+  </filter_settings>
+</filter>
+<filter href="/output_template/10/filters/379" product="Delta" version="1.6.1.34713">
+  <name>filter_379</name>
+  <parent_filter>filter_378</parent_filter>
+  <endpoint>true</endpoint>
+  <output_url>$fn$</output_url>
+  <filter_type>flash_access</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <use_phds>true</use_phds>
+    <encrypt_video>true</encrypt_video>
+    <encrypt_audio>true</encrypt_audio>
+    <encrypt_data>true</encrypt_data>
+    <video_encrypt_level>1</video_encrypt_level>
+    <generate_cek>true</generate_cek>
+    <content_id/>
+    <packager_credential/>
+    <transport_certificate/>
+    <license_server/>
+    <policy_file/>
+    <swf_identifiers/>
+    <key_server_certificate/>
+    <license_server_certificate/>
+    <recipient_certificate/>
+    <license_server_credential/>
+    <content_encryption_key/>
+  </filter_settings>
+</filter>
+<filter href="/output_template/10/filters/384" product="Delta" version="1.6.1.34713">
+  <name>filter_384</name>
+  <parent_filter/>
+  <endpoint>true</endpoint>
+  <output_url>$fn$</output_url>
+  <filter_type>dash_iso_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <fragment_duration>2</fragment_duration>
+    <index_duration>60</index_duration>
+    <hbbtv/>
+    <min_update_period>30</min_update_period>
+    <min_buffer_time>30</min_buffer_time>
+  </filter_settings>
+</filter>
+<filter href="/output_template/10/filters/389" product="Delta" version="1.6.1.34713">
+  <name>filter_389</name>
+  <parent_filter/>
+  <endpoint>true</endpoint>
+  <output_url>$fn$</output_url>
+  <filter_type>mss_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <fragment_duration>2</fragment_duration>
+    <index_duration>60</index_duration>
+  </filter_settings>
+</filter>
+<filter href="/output_template/10/filters/377" product="Delta" version="1.6.1.34713">
+  <name>filter_377</name>
+  <parent_filter>filter_376</parent_filter>
+  <endpoint>true</endpoint>
+  <output_url>$fn$-drm</output_url>
+  <filter_type>flash_access</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <use_phds>true</use_phds>
+    <encrypt_video>true</encrypt_video>
+    <encrypt_audio>true</encrypt_audio>
+    <encrypt_data>true</encrypt_data>
+    <video_encrypt_level>1</video_encrypt_level>
+    <generate_cek>true</generate_cek>
+    <content_id/>
+    <packager_credential/>
+    <transport_certificate/>
+    <license_server/>
+    <policy_file/>
+    <swf_identifiers/>
+    <key_server_certificate/>
+    <license_server_certificate/>
+    <recipient_certificate/>
+    <license_server_credential/>
+    <content_encryption_key/>
+  </filter_settings>
+</filter>
+</output_template>

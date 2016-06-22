@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="APSDeployDialog">
+		<item value="0,-1,1,33,38,47,84,89,0http://cdn.flts.apsdemo.org:8080admin123@mudarhttp://cdn.flts.apsdemo.org:8440/RPC2admin123@mudar" key="APSDeployDialog_Host"/>
+		<item value="true" key="APSDeployDialog_Provision_Instance"/>
+		<item value="false" key="APSDeployDialog_Delete_Instance"/>
+		<item value="true" key="APSDeployDialog_AutoSync"/>
+		<item value="https://mn.cdn.flts.apsdemo.org/ebtvdn" key="APSDeployDialog_Endpoint"/>
+	</section>
+</section>

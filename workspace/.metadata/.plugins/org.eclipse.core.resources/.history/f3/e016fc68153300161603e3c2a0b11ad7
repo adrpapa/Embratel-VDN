@@ -1,0 +1,160 @@
+<application packaged="2014-02-20T16:23:36" version="2.0" xmlns="http://aps-standard.org/ns/2">
+
+    <id>http://company.example/app/uicontrols</id>
+    <name>uicontrols</name>
+    <version>1.0</version>
+    <release>138</release>
+    <homepage>http://www.parallels.com</homepage>
+    <vendor>
+        <name>Parallels</name>
+        <homepage>http://www.parallels.com</homepage>
+    </vendor>
+    <packager>
+        <name>Parallels</name>
+        <homepage>http://www.parallels.com</homepage>
+    </packager>
+	<presentation>
+        <summary>sample-aps2-ui-controls</summary>
+		<icon path="images/icon.png"/>
+		<categories>
+			<category>Samples</category>
+		</categories>
+		
+		<navigation id="ccp" label="Sample UI Management">
+			
+			<var name="uiview" type-id="http://www.parallels.com/uiapp/1.0"/>
+			
+			<plugs-to id="http://www.aps-standard.org/ui/service"/>            		
+
+			<item id="current" label="Current">
+				<view id="testTemp/testTemp" label="Current"/>					
+			</item>
+			<item id="Simple" label="Simple Controls">
+				<item id="button" label="Button">
+					<view id="testButton" label="Button Test" src="/aps/2/ui/runtime/client/aps/tests/testButton/testButton.html"/>
+				</item>
+				<item id="password" label="Password">
+					<view id="testPassword" label="Password Test" src="/aps/2/ui/runtime/client/aps/tests/testPassword/testPassword.html"/>
+				</item>
+				<item id="select" label="Select">
+					<view id="testSelect" label="Select Test" src="/aps/2/ui/runtime/client/aps/tests/testSelect/testSelect.html"/>
+				</item>
+				<item id="textbox" label="TextBox">
+					<view id="testTextBox" label="TextBox Test" src="/aps/2/ui/runtime/client/aps/tests/testTextBox/testTextBox.html"/>
+				</item>
+				<item id="multiselect" label="MultiSelect">
+					<view id="testMultiSelect" label="MultiSelect Test" src="/aps/2/ui/runtime/client/aps/tests/testMultiSelect/testMultiSelect.html"/>
+				</item>
+				<item id="textarea" label="TextArea">
+					<view id="testTextArea" label="TextArea Test" src="/aps/2/ui/runtime/client/aps/tests/testTextArea/testTextArea.html"/>
+				</item>
+                <item id="slider" label="Slider">
+					<view id="testSlider" label="Slider Test" src="/aps/2/ui/runtime/client/aps/tests/testSlider/testSlider.html"/>
+				</item>
+                <item id="checkbox" label="CheckBox">
+					<view id="testCheckBox" label="CheckBox Test" src="/aps/2/ui/runtime/client/aps/tests/testCheckBox/testCheckBox.html"/>
+				</item>
+                <item id="combobox" label="ComboBox">
+					<view id="testCombokBox" label="ComboBox Test" src="/aps/2/ui/runtime/client/aps/tests/testCombokBox/testComboBox.html"/>
+				</item>
+                <item id="gauge" label="Gauge">
+					<view id="testGauge" label="Gauge Test" src="/aps/2/ui/runtime/client/aps/tests/testGauge/testGauge.html"/>
+				</item>                
+			</item>
+			<item id="Complex" label="Complex Controls">
+				<item id="toolbar" label="Toolbar">
+					<view id="testToolbar" label="Toolbar Test" src="/aps/2/ui/runtime/client/aps/tests/testToolbar/testToolbar.html"/>
+				</item>
+				<item id="wizardcontrol" label="WizardControl">
+					<view id="testWizardControl" label="WizardControl Test" src="/aps/2/ui/runtime/client/aps/tests/testWizardControl/testWizardControl.html"/>
+				</item>
+				<item id="datetextbox" label="DateTextBox">
+					<view id="testDateTextBox" label="DateTextBox Test" src="/aps/2/ui/runtime/client/aps/tests/testDateTextBox/testDateTextBox.html"/>
+				</item>				
+				<item id="tooltip" label="Tooltip">
+					<view id="testTooltip" label="Tooltip Test" src="/aps/2/ui/runtime/client/aps/tests/testTooltip/testTooltip.html"/>
+				</item>
+				<item id="fieldset" label="FieldSet">
+					<view id="testFieldSet" label="FieldSet Test" src="/aps/2/ui/runtime/client/aps/tests/testFieldSet/testFieldSet.html"/>
+				</item>
+                <item id="container" label="Container">
+				    <view id="testContainer" label="Container Test" src="/aps/2/ui/runtime/client/aps/tests/testContainer/testContainer.html"/>
+			    </item>			
+                <item id="toolslist" label="ToolsList">
+				    <view id="testToolsList" label="ToolsList Test" src="/aps/2/ui/runtime/client/aps/tests/testToolsList/testToolsList.html"/>
+			    </item>
+                <item id="output" label="Output">
+					<view id="testOutput" label="Output Test" src="/aps/2/ui/runtime/client/aps/tests/testOutput/testOutput.html"/>
+				</item>
+                <item id="progressbar" label="ProgressBar">
+					<view id="testProgressBar" label="ProgressBar Test" src="/aps/2/ui/runtime/client/aps/tests/testProgressBar/testProgressBar.html"/>
+				</item>
+                <item id="radiobutton" label="RadioButton">
+					<view id="testRadioButton" label="RadioButton Test" src="/aps/2/ui/runtime/client/aps/tests/testRadioButton/testRadioButton.html"/>
+				</item>			                
+			</item>
+			<item id="MessageList" label="MessageList">
+				<item id="messagelistdeclarative" label="Declarative">
+					<view id="testMessageListDeclarative" label="MessageList Declarative Test" src="/aps/2/ui/runtime/client/aps/tests/testMessageList/testMessageListDeclarative.html"/>
+				</item>
+				<item id="messagelistloader" label="Loader">
+					<view id="testMessageListLoader" label="MessageList Loader Test" src="/aps/2/ui/runtime/client/aps/tests/testMessageList/testMessageListLoader.html"/>
+				</item>
+				<item id="messagelistprogramming" label="Programming">
+					<view id="testMessageListProgramming" label="MessageList Programming Test" src="/aps/2/ui/runtime/client/aps/tests/testMessageList/testMessageListProgramming.html"/>
+				</item>
+			</item>
+			<item id="Page" label="Page">
+				<item id="pagedeclrative" label="Declarative">
+					<view id="testPageDeclarative" label="Page Declarative Test" src="/aps/2/ui/runtime/client/aps/tests/testPage/testPageDeclarative.html"/>
+				</item>
+				<item id="pageloader" label="Loader">
+					<view id="testPageLoader" label="Page Loader Test" src="/aps/2/ui/runtime/client/aps/tests/testPage/testPageLoader.html"/>
+				</item>
+				<item id="pageprogramming" label="Programming">
+					<view id="testPageProgramming" label="Page Programming Test" src="/aps/2/ui/runtime/client/aps/tests/testPage/testPageProgramming.html"/>
+				</item>
+			</item>
+            <item id="Table" label="Table Controls">
+                <item id="grid" label="Grid">
+				    <view id="testGrid" label="Grid Test" src="/aps/2/ui/runtime/client/aps/tests/testGrid/testGrid.html"/>
+			    </item>
+			    <item id="gridajax" label="GridAjax">
+				    <view id="testGridAjax" label="GridAjax Test" src="/aps/2/ui/runtime/client/aps/tests/testGrid/testGridAjax.html"/>
+			    </item>			    
+                <item id="activelist" label="ActiveList">
+				    <view id="testActiveList" label="ActiveList Test" src="/aps/2/ui/runtime/client/aps/tests/testActiveList/testActiveList.html"/>
+			    </item>
+                <item id="activelistajax" label="ActiveListAjax">
+				    <view id="testActiveListAjax" label="ActiveListAjax Test" src="/aps/2/ui/runtime/client/aps/tests/testActiveList/testActiveListAjax.html"/>
+			    </item>
+			    <item id="widgetlist" label="WidgetList">
+				    <view id="testWidgetList" label="WidgetList Test" src="/aps/2/ui/runtime/client/aps/tests/testWidgetList/testWidgetList.html"/>	
+			    </item>
+                <item id="listswitcher" label="ListSwitcher">
+				    <view id="testListSwitcher" label="ListSwitcher Test" src="/aps/2/ui/runtime/client/aps/tests/testListSwitcher/testListSwitcher.html"/>	
+			    </item>
+                <item id="listswitcherajax" label="ListSwitcherAjax">
+				    <view id="testListSwitcherAjax" label="ListSwitcherAjax Test" src="/aps/2/ui/runtime/client/aps/tests/testListSwitcher/testListSwitcherAjax.html"/>	
+			    </item>
+            </item>
+		</navigation>
+	</presentation>
+
+    <license-agreement>
+        <free/>
+        <text>
+            <name>End-User License Agreement</name>
+            <url>http://opensource.org/licenses/bsd-license</url>
+        </text>
+    </license-agreement>
+
+    <service id="app">
+        <schema path="schemas/app.schema"/>
+		<presentation>
+			<name>Sample UI Application</name>
+			<summary>Sample of UI application</summary>
+		</presentation>
+    </service>
+
+</application>

@@ -1,0 +1,2 @@
+PanelSettings_preferences=<?xml version\="1.0" encoding\="UTF-8" standalone\="yes"?><Panels><poaPanel><httpHost>http\://cdn.flts.apsdemo.org\:8080</httpHost><httpUser>admin</httpUser><httpPassword>123@mudar</httpPassword><xmlHost>http\://cdn.flts.apsdemo.org\:8440/RPC2</xmlHost><xmlUser>admin</xmlUser><xmlPassword>123@mudar</xmlPassword></poaPanel></Panels>
+eclipse.preferences.version=1

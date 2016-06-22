@@ -1,0 +1,22 @@
+{
+    "aps": {
+        "type": "http://www.mozy.com/mozyProAPS2/mozyProAccountUser/1.1"
+    },
+    "user_group_id": "",
+    "user_group_id_OLD": "",
+    "userstatus": "active",
+    "mozyUserId": "",
+    "displayName": "",
+    "login": "",
+    "userId": "",
+    "desktopQuotaSum": 0,
+    "desktopLicSum": 0,
+    "serverQuotaSum": 0,
+    "serverLicSum": 0,
+    "swTypeLicense": 0,
+    "user":
+            {
+                "aps": {
+                }
+            }
+}

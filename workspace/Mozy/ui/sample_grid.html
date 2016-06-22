@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"aps/ResourceStore",
+			"dojo/when",
+			"dijit/registry",
+			"aps/load",
+			"aps/Message",
+			"aps/ready!"
+		], function (Store, when, registry, load, Message) {
+			function displayError(err) {
+				var errData = {};
+				/* Getting the error message */
+				try {errData = eval("(" + err.response.text + ")")} catch (e){};
+				aps.apsc.cancelProcessing();
+
+				var messages = registry.byId("page").get("messageList");
+				/* Remove all current messages from the screen */
+				messages.removeAll();
+				/* And display the new message */
+				messages.addChild(new Message({description: err + (errData.message ?
+						"<br />" + errData.message : ""), type: "error"}));
+			};
+
+			/* Create the data store */
+			var store = new Store({
+				apsType: 	"http://embratel.com.br/app/VDN/application/1.0",
+				target: 	"/aps/2/resources/"
+			});
+
+			/* Create widgets */
+			load(["aps/PageContainer", { id: 'page' }, [
+				["aps/Grid", {
+					id: 				'grid',
+					store: 				store,
+					selectionMode: 		'multiple',
+					apsResourceViewId: 	'sample_grid',
+					columns: 			[
+						{ field: 'aps.id', 				name: 'ID',		filter: { title: 'ID' } }
+					]
+				}, [
+					["aps/Toolbar", [
+						["aps/ToolbarButton", { id: "refresh", 	iconClass: "sb-refresh", 		label: "Refresh", 	autoBusy: false }]
+					]]
+				]]
+			]]).then(function(){
+				/* Once the widgets are created, create the widget processing logic */
+				var grid = registry.byId("grid"),
+					page = registry.byId("page");
+
+
+				registry.byId("refresh").on("click", function() {
+					grid.refresh();
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

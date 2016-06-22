@@ -1,0 +1,16 @@
+{
+    "aps":
+            {
+                "type": "http://www.mozy.com/mozyProAPS2/mozyProAccountUserLicense/1.0"
+            },
+    "licenseType": "",
+    "user_group_id": "",
+    "quota": "",
+    "licenseNum": "",
+    "keyString": "",
+    "machineId": "",
+    "alias": "",
+    "last_backup_at": "",
+    "quotaMachine": "",
+    "quota_used_bytes": ""
+}

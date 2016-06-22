@@ -1,0 +1,113 @@
+<?php
+	define('APS_DEVELOPMENT_MODE', true);
+	require "aps/2/runtime.php";	
+	include "aux_types.php";
+	
+	/**
+	 * Class channel
+	 * @type("http://aps-standard.org/samples/basicwithui/channel/1.0")
+	 * @implements("http://aps-standard.org/types/core/resource/1.0")
+	 */
+	
+	class channel extends \APS\ResourceBase
+	{
+		/**
+	 	 * @link("http://aps-standard.org/samples/basicwithui//context/1.0")
+		 * @required
+		 */
+		public $context;
+
+		/**
+		 * @type("string")
+		 * @title("content_name")
+		 * @description("Nome de referência do conteúdo")
+		 * @required
+		 */
+		public $content_name;	
+
+		/**
+		 * @type(string)
+		 * @title("input_URI")
+		 * @required
+		 */
+		public $input_URI;	
+
+		/**
+		 * @type(string)
+		 * @title("screen_format")
+		 */
+		public $screen_format;
+
+		/**
+		 * @type(string)
+		 * @title("profile_id")
+		 */
+		public $profile_id;
+
+		/**
+		 * @type("premium_parms")
+		 * @title("Premium parameters")
+		 * @description("Parâmetros de override para subscriptions Premium")
+		 */
+		public $premium_parms;
+		
+		/**
+		 * @type(string)
+		 * @title("state")
+	 	* @description("Channel State")
+		 * @readonly
+		 */
+		public state;		
+
+		/**
+		 * @type(integer)
+		 * @title("delta_port")
+		 * @description("UDP Port used for communication with Elemental Delta")
+		 * @readonly
+		 */
+		public $delta_port;		
+	}
+
+    #############################################################################################################################################
+    ## Definition of the functions that will respond to the different CRUD operations
+    #############################################################################################################################################
+
+    public function provision() {
+    	$this->logger->debug("Iniciando provisionamento");
+    	\APS\LoggerRegistry::get()->error(var_dump($this->context->account ) );
+    	 LiveEvent::newPremiumLiveEvent( $this->content_name, $this->context->account->clientID);
+    }
+
+    public function configure($new) {
+			\APS\LoggerRegistry::get()->info ("Estado atual do canal: ".$this->state);
+			\APS\LoggerRegistry::get()->info ("Novo estado atual do canal: ".$new->state);
+    }
+
+		public function retrieve(){
+    		\APS\LoggerRegistry::get()->trace("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->debug("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->info ("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->error("Entrando na função retrieve");
+			\APS\LoggerRegistry::get()->fatal("Entrando na função retrieve");
+
+		}
+
+		public function upgrade(){
+    		\APS\LoggerRegistry::get()->trace("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->debug("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->info ("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->error("Entrando na função upgrade");
+			\APS\LoggerRegistry::get()->fatal("Entrando na função upgrade");
+
+		}
+
+		public function unprovision(){
+    		\APS\LoggerRegistry::get()->trace("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->debug("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->info ("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->error("Entrando na função unprovision");
+			\APS\LoggerRegistry::get()->fatal("Entrando na função unprovision");
+
+		}
+}
+?>		

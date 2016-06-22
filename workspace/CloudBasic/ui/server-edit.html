@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"aps/ResourceStore",
+			"dijit/registry",
+			"dojo/when",
+			"dojox/mvc/getPlainValue",
+            "dojox/mvc/getStateful",
+			"dojox/mvc/at",
+			"aps/load",
+			"aps/Memory",
+			"aps/xhr",
+			"dojo/promise/all",
+			"./displayError.js",
+			"aps/ready!"
+		], function (Store, registry, when, getPlainValue, getStateful, at, load, Memory, xhr, all, displayError) {
+
+            /* Declare and define data sources */
+            var vpsStore = new Store({ /* Interface with the VPS stored in the APS DB */
+				apsType:    "http://company.example/app/CloudBasic/vps/2.0",
+				target:     "/aps/2/resources"
+            }),
+            vps = aps.context.vars.vps, /* Selected VPS; vairable *vps* was declared in the navigation tree */
+            model = getStateful(vps),   /* Properties of the selected VPS */
+            offerCtrl,                  /* This will contain limits on VPS properties */
+            offerStore = new Store({    /* The list of offers for selection */
+                apsType: "http://company.example/app/CloudBasic/offer/1.1",
+                target: "/aps/2/resources/"
+            }),
+            offerCache;                 /* Cached list of offers */
+
+            /* Request the list of offers  and initiate data sources */
+            offerStore.query()
+            .then(function(offers){
+                if (offers.length === 0) return;
+                offerCache = new Memory({ idProperty: "aps.id", data: offers }); /* Offer list is cached */
+                return offerCache.get(model.offer.aps.id);
+            }).then(function(offer){
+                offerCtrl = getStateful({ model: offer }); /* Initialize set of limits from the current offer */
+
+                /* Handler on offer change */
+                function onChangeOffer(offerID) {
+                        when(offerCache.get(offerID), function(data) {
+                                console.log(offerID); /* For debugging only */
+                                var offer = getStateful(data);
+                                offerCtrl.set("model", offer);
+                        });
+                }
+                
+				/* Create widgets */
+				var widgets =
+                    ["aps/PageContainer", {id: "page"}, [
+                         ["aps/FieldSet", {title: true}, [
+                             ["aps/TextBox", {id: "serverName", label: _("Server Name"), value: at(model, "name"), required: true}],
+                             ["aps/TextBox", {label: _("Description"), value: at(model, "description")}]
+                         ]],
+                         ["aps/FieldSet", {title: _("Offers")}, [
+                             ["aps/Select", { id: 'offer', store: offerStore, onChange: onChangeOffer, labelAttr: "name", value: at(model.offer.aps, "id")}]
+                         ]],
+                         ["aps/FieldSet", {title: true}, [
+                             ["aps/Output", { label: _( "OS"), value: at(offerCtrl.model.platform.OS, "name") }],
+                             ["aps/Slider", { label: _( "CPU Cores"), minimum: 1, maximum: at(offerCtrl.model.hardware.CPU, "number"), value: at(model.hardware.CPU, "number"), step: 1}],
+                             ["aps/Slider", {label: _("Disk Space"), minimum: 1, maximum: at(offerCtrl.model.hardware, "diskspace"), value: at(model.hardware, "diskspace"), legend: _("GB"), step: 1}],
+                             ["aps/Slider", {label: _("RAM"), minimum: 128, maximum: at(offerCtrl.model.hardware, "memory"), value: at(model.hardware, "memory"), step: 128, legend: _("MB")}]
+                         ]]
+                ]];
+				return load(widgets);
+			}).then(function(){
+				/* Once the widgets are created, create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("servers");
+				};
+
+                aps.app.onSubmit = function() {
+                    var page = registry.byId("page");
+                    if (!page.validate()) {
+                            aps.apsc.cancelProcessing();
+                            return;
+                    }
+                    var data = getPlainValue(model),
+                    reqs = []; /* We may have one or two REST requests */
+
+                    /* If the offer has to be changed, we need first request re-linking the VPS to the other offer */
+                    if(data.offer.aps.id != vps.offer.aps.id)
+                        reqs.push(xhr("/aps/2/resources/" + aps.context.vars.vps.aps.id + "/offer",
+                           { method: "POST", data: JSON.stringify({ "aps": { "id": data.offer.aps.id } }) }));
+                    data.platform.OS.name = offerCtrl.model.platform.OS.name;
+                    reqs.push(vpsStore.put(data)); /* And now update the VPS properties */
+                    all(reqs).then(function(){     /* Once the requests are completed, navigate to the "servers" view */
+                               aps.apsc.gotoView("servers");
+	                      },
+	                      displayError
+                    );
+                };
+			}).otherwise(displayError);
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

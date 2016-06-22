@@ -1,0 +1,8 @@
+{
+    "aps": {
+        "type": "http://aps-standard.org/types/core/service-user/1.0"
+    },
+    "login": "",
+    "displayName": "",
+    "email": ""
+}
