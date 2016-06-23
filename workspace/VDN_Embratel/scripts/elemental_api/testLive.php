@@ -2,24 +2,29 @@
 
 <?php    
     require_once "live.php";
+    require_once "jobVOD.php";
     require_once "deltaOutputTemplate.php";
     require_once "deltaInput.php";
 
-    parse_str(implode('&', array_slice($argv, 1)), $_GET);
-    @$id = $_GET['id'];
-    @$func = $_GET['func'];
-    @$filter = $_GET['filter'];
-    @$cmd = $_GET['cmd'];
-    @$alvo = $_GET['alvo'];
+//    parse_str(implode('&', array_slice($argv, 1)), $_GET);
+//    @$id = $_GET['id'];
+//    @$func = $_GET['func'];
+//    @$filter = $_GET['filter'];
+//    @$cmd = $_GET['cmd'];
+//    @$alvo = $_GET['alvo'];
 //     var_dump($cmd);
 //     var_dump($func);
 
-
-    $name = "Teste de criacao via API";
+    @$id = NULL;
+    @$func = 'new';
+    @$filter = NULL;
+    @$cmd = NULL;
+    @$alvo = 'vod';
+    $name = "Job Teste Ftl 1";
     $clientID = "Cliente1";
     $level = "std";
-    $type = "live";
-//     $type = "vod";
+//    $type = "live";
+    $type = "vod";
 
     printf("\nUsando Codigo do Cliente=%s, Plano=%s, Tipo=%s, Label=%s\n\n", $clientID, $level, $type, $name);
     printf("\n\tAlvo=%s, Func=%s, cmd=%s\n\n", $alvo, $func, $cmd );
@@ -61,6 +66,13 @@
                 break;
         }
         return;
+    }
+    else {
+    	switch( $func ) {
+    		case 'new':
+    			$job = JobVOD::newJobVOD($name, "http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_1mb.mp4", $clientID, $level);
+    			break;    			
+    	}
     }
 
     if( $cmd == NULL && $func == NULL ) {
