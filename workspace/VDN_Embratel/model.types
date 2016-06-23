@@ -11,12 +11,12 @@
     <properties name="description" type="string" description="Channel Description" required="true"/>
     <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
     <properties name="premium_parms" type="string" description="Par&#xe2;metros de override para subscriptions Premium"/>
-    <properties name="live_event_id" type="integer" description="Live Event ID in Elemental Live Conductor" readonly="true"/>
+    <properties name="live_event_id" type="string" description="Live Event ID in Elemental Live Conductor" readonly="true"/>
     <properties name="live_event_name" type="string" description="Live Event Name in Elemental Live Conductor" readonly="true"/>
-    <properties name="input_filter_id" type="integer" description="Delta Input Filter ID" readonly="true"/>
+    <properties name="input_filter_id" type="string" description="Delta Input Filter ID" readonly="true"/>
     <properties name="state" type="string" description="Live channel current state" readonly="true"/>
     <properties name="input_URI" type="string" description="Live Channel Input URI for client's transmission" readonly="true"/>
-    <properties name="delta_port" type="integer" description="UDP Port used for communication with Elemental Delta" readonly="true"/>
+    <properties name="delta_port" type="string" description="UDP Port used for communication with Elemental Delta" readonly="true"/>
     <properties name="live_node" type="string" description="Elemental Live node this channell is assigned to" readonly="true"/>
     <properties name="profile_id" type="string"/>
   </internalTypes>
