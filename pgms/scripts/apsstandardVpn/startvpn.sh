@@ -6,10 +6,10 @@ if [ $(dig +noall +answer cdn.flts.apsdemo.org | wc -l) -gt 0 ]; then
 	exit 0
 fi
 
-cd /home/fastlane/Dropbox/Clientes/Fastlane/Embratel/pgms/scripts/apsstandardVpn
+cd /home/fastlane/Embratel/pgms/scripts/apsstandardVpn
 if [ $(id -u) != 0 ]; then
 	echo "must be root to run this script."
-	sudo /home/fastlane/Dropbox/Clientes/Fastlane/Embratel/pgms/scripts/apsstandardVpn/startvpn.sh 
+	sudo /home/fastlane/Embratel/pgms/scripts/apsstandardVpn/startvpn.sh 
 	exit 1
 fi
 
