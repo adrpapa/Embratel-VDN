@@ -80,14 +80,6 @@ class Platform {
  * @implements("http://aps-standard.org/types/core/resource/1.0")
  */
 class vps extends \APS\ResourceBase {
-
-	  public $logger;
-
-     public function __construct() {
-          // setting new log file, path relative to your script current directory
-          $this->logger = \APS\LoggerRegistry::get();
-          $this->logger->setLogFile("logs/basicwithui.log");
-     }
 	
 	// Relation with the management context
 	/**
@@ -141,10 +133,24 @@ class vps extends \APS\ResourceBase {
     #############################################################################################################################################
 
     public function provision() {
-    	$this->logger->debug("Iniciando provisionamento");
-    	\APS\LoggerRegistry::get()->error(var_dump($this->context->account ) );
-    	 $event = LiveEvent::newPremiumLiveEvent( $this->name, $this->context->account->clientID);
-    	 \APS\LoggerRegistry::get()->error(var_dump($event) );
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/vpses.log");
+    	$logger->debug("Iniciando provisionamento");
+        \APS\LoggerRegistry::get()->debug("Iniciando provisionamento de canal ".$this->aps->id);
+        $clientid = sprintf("Client_%06d",$this->context->account->id);
+        $event = LiveEvent::newStandardLiveEvent( $this->aps->id, $clientid );
+        \APS\LoggerRegistry::get()->debug("live_event_id:" . $event->id );
+        \APS\LoggerRegistry::get()->debug("live_event_name:" . $event->name );
+        \APS\LoggerRegistry::get()->debug("state:" . $event->status );
+        \APS\LoggerRegistry::get()->debug("input_URI:" . $event->inputURI );
+        \APS\LoggerRegistry::get()->debug("delta_port:" . $event->udpPort );
+        \APS\LoggerRegistry::get()->debug("live_node:" . $event->live_node );
+        \APS\LoggerRegistry::get()->debug("inputFilterID:" . $event->inputFilterID );
+        
+        
+        //     	\APS\LoggerRegistry::get()->error(var_dump($this->context->account ) );
+//     	 $event = LiveEvent::newPremiumLiveEvent( $this->name, $this->context->account->clientID);
+//         \APS\LoggerRegistry::get()->error(var_dump($event) );
     }
 
     public function configure($new) {

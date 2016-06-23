@@ -2,16 +2,13 @@
 <section name="Workbench">
 	<section name="">
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
-	</section>
-	<section name="SearchDialog.ScopePart">
-		<item value="0" key="scope"/>
-	</section>
-	<section name="">
-		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
 		<item value="TRUE" key="org.eclipse.dltk.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.wst.jsdt.search.resultpage.limit"/>
 		<item value="1000" key="org.eclipse.dltk.search.resultpage.limit"/>
 		<item value="TRUE" key="org.eclipse.wst.jsdt.search.resultpage.limit_enabled"/>
+	</section>
+	<section name="SearchDialog.ScopePart">
+		<item value="0" key="scope"/>
 	</section>
 	<section name="TextSearchPage">
 		<item value="12" key="HISTORY_SIZE"/>
@@ -202,7 +199,7 @@
 		</list>
 	</section>
 	<section name="SearchDialog">
-		<item value="org.eclipse.search.internal.ui.text.TextSearchPage" key="PREVIOUS_PAGE"/>
+		<item value="org.eclipse.php.ui.PHPSearchPage" key="PREVIOUS_PAGE"/>
 	</section>
 	<section name="org.eclipse.dltk.ui.DLTKSearchResultPage">
 		<item value="TRUE" key="org.eclipse.dltk.search.resultpage.limit_enabled"/>

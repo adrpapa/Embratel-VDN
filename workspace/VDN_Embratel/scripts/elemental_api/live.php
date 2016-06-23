@@ -35,6 +35,8 @@
             $liveEvent->xml->output_group->output->udp_settings->destination->uri = $liveEvent->outputURI;
             print $liveEvent->xml->asXml().'\n';
             $liveEvent->setPropertiesFromXML(LiveEvent::getElementalRest()->postRecord(null, null, $liveEvent->xml));
+            $liveEvent->inputFilterID = $inputFilter->id;
+            $liveEvent->outputTemplateID = $inputFilter->template_id;
             return( $liveEvent );
         }
 

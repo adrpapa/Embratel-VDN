@@ -1,4 +1,4 @@
-Mon Jun 20 21:12:00 BRT 2016
+Thu Jun 23 06:52:33 BRT 2016
 ERROR org.eclipse.rse.core  Unexpected Exception
 java.net.UnknownHostException: linux-t7gv: linux-t7gv: unknown error
 	at java.net.InetAddress.getLocalHost(Unknown Source)
@@ -32,4 +32,7 @@ Caused by: java.net.UnknownHostException: linux-t7gv: unknown error
 	at java.net.InetAddress$2.lookupAllHostAddr(Unknown Source)
 	at java.net.InetAddress.getAddressesFromNameService(Unknown Source)
 	... 26 more
+--------------------------------------------
+Thu Jun 23 06:52:34 BRT 2016
+INFO org.eclipse.rse.core  Saved passwords are not available for migration to secure storage. Deprecated authorization classes (org.eclipse.core.runtime.compatibility.auth) are not installed.
 --------------------------------------------

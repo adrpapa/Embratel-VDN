@@ -116,7 +116,7 @@ CISCO VDN para entrega distribuída de conteúdo
     <service id="clouds">
 		
 		<schema path="schemas/clouds.schema.gen"/>
-<code engine="php" path="scripts/clouds.php"/>
+        <code engine="php" path="scripts/clouds.php"/>
 		<presentation>
 			<name>VDN  Embratel globals</name>
 			<summary>VDN  Embratel  global configuration variables</summary>
@@ -125,7 +125,7 @@ CISCO VDN para entrega distribuída de conteúdo
     
     <service id="contexts">
 		<schema path="schemas/contexts.schema.gen"/>
-<code engine="php" path="scripts/contexts.php"/>
+        <code engine="php" path="scripts/contexts.php"/>
 		<presentation>
 			<name>VDN  Embratel Management</name>
 			<summary>VDN Embratel environment</summary>
@@ -134,7 +134,7 @@ CISCO VDN para entrega distribuída de conteúdo
 
     <service id="channels">
         <schema path="schemas/channels.schema.gen"/>
-<code engine="php" path="scripts/channels.php"/>
+        <code engine="php" path="scripts/channels.php"/>
         <presentation>
             <name>VDN Live Channels</name>
             <summary>VDN Live Channels</summary>
@@ -143,7 +143,7 @@ CISCO VDN para entrega distribuída de conteúdo
     
     <service id="vpses">
     	<schema path="schemas/vpses.schema.gen"/>
-<code engine="php" path="scripts/vpses.php"/>
+        <code engine="php" path="scripts/vpses.php"/>
     	<presentation>
     		<name>VDN Virtual Private Server</name>
     		<summary>Cloud virtual private server</summary>

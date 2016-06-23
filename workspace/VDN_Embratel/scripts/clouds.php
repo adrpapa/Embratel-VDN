@@ -132,7 +132,6 @@ class cloud extends APS\ResourceBase {
         * @readonly
         */
         public $LIVE_NODE_URL = 'rtmp://localhost:1935/';
-        
 
 # Functions to process link/unlink requests
 /* Commented out since we don't need to redefine the parent operations

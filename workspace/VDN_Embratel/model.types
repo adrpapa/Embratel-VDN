@@ -2,16 +2,18 @@
 <aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="VDN_Embratel">
   <internalTypes id="http://embratel.com.br/app/VDN_Embratel/context" version="1.0" relations="//@relations.0/@source //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source" name="context" implements="//@typesFromLibrary.0">
     <properties name="isPremium" type="boolean"/>
-    <properties name="contextid" type="string" readonly="true"/>
-    <properties name="contextpass" type="string" readonly="true"/>
+    <properties name="liveOutputTemplateID" type="integer" readonly="true"/>
+    <properties name="vodInputFilterID" type="integer" readonly="true"/>
+    <properties name="vodOutputTemplateID" type="integer" readonly="true"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDN_Embratel/channel" version="1.0" relations="//@relations.1/@target" name="channel" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="Channel Name" required="true"/>
     <properties name="description" type="string" description="Channel Description" required="true"/>
     <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
     <properties name="premium_parms" type="string" description="Par&#xe2;metros de override para subscriptions Premium"/>
-    <properties name="live_event_id" type="string" description="Live Event ID in Elemental Live Conductor" readonly="true"/>
+    <properties name="live_event_id" type="integer" description="Live Event ID in Elemental Live Conductor" readonly="true"/>
     <properties name="live_event_name" type="string" description="Live Event Name in Elemental Live Conductor" readonly="true"/>
+    <properties name="input_filter_id" type="integer" description="Delta Input Filter ID" readonly="true"/>
     <properties name="state" type="string" description="Live channel current state" readonly="true"/>
     <properties name="input_URI" type="string" description="Live Channel Input URI for client's transmission" readonly="true"/>
     <properties name="delta_port" type="integer" description="UDP Port used for communication with Elemental Delta" readonly="true"/>
