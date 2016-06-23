@@ -1,3 +1,5 @@
+*.zip
+workspace/VDN_Embratel/apspackages/VDN_Embratel-1.0-1.app.zip
 templates
 workspace/.metadata
 .directory
