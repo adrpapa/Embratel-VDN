@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<input_filter href="/input_filters/274" product="Delta" version="1.6.1.34713">
+  <filter_type>udp_input</filter_type>
+  <label>UDP</label>
+  <filter_settings>
+    <template_id>3</template_id>
+    <content_window_type>keep_seconds</content_window_type>
+    <seconds_to_keep>3600</seconds_to_keep>
+    <storage_location>/data/server/drive/udp/</storage_location>
+    <segmentation_marker>idr</segmentation_marker>
+    <enable_fec_rx>false</enable_fec_rx>
+    <buffer_time>7</buffer_time>
+    <udp_input>
+      <uri>udp://127.0.0.1:5001</uri>
+      <igmp_source/>
+      <bitrate/>
+    </udp_input>
+  </filter_settings>
+</input_filter>
