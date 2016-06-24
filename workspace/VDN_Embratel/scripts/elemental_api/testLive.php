@@ -15,8 +15,8 @@
 //     var_dump($cmd);
 //     var_dump($func);
 
-    @$id = NULL;
-    @$func = 'new';
+    @$id = "363";
+    @$func = 'del';
     @$filter = NULL;
     @$cmd = null;
     @$alvo = 'vod';
