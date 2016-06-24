@@ -1,6 +1,8 @@
 <?php
 require_once 'configConsts.php';
 
+// Classe que encapsula os dados de autenticação da API
+//
 class Auth {
 	protected $expires;
 	protected $auth_key;
