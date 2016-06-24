@@ -2,24 +2,29 @@
 
 <?php    
     require_once "live.php";
+    require_once "jobVOD.php";
     require_once "deltaOutputTemplate.php";
     require_once "deltaInput.php";
 
-    parse_str(implode('&', array_slice($argv, 1)), $_GET);
-    @$id = $_GET['id'];
-    @$func = $_GET['func'];
-    @$filter = $_GET['filter'];
-    @$cmd = $_GET['cmd'];
-    @$alvo = $_GET['alvo'];
+//    parse_str(implode('&', array_slice($argv, 1)), $_GET);
+//    @$id = $_GET['id'];
+//    @$func = $_GET['func'];
+//    @$filter = $_GET['filter'];
+//    @$cmd = $_GET['cmd'];
+//    @$alvo = $_GET['alvo'];
 //     var_dump($cmd);
 //     var_dump($func);
 
-
-    $name = "Teste de criacao via API";
+    @$id = 358;
+    @$func = 'del';
+    @$filter = NULL;
+    @$cmd = null;
+    @$alvo = 'vod';
+    $name = "Job Teste Ftl 1";
     $clientID = "Cliente1";
     $level = "std";
-    $type = "live";
-//     $type = "vod";
+//    $type = "live";
+    $type = "vod";
 
     printf("\nUsando Codigo do Cliente=%s, Plano=%s, Tipo=%s, Label=%s\n\n", $clientID, $level, $type, $name);
     printf("\n\tAlvo=%s, Func=%s, cmd=%s\n\n", $alvo, $func, $cmd );
@@ -61,6 +66,36 @@
                 break;
         }
         return;
+    }
+    else {
+    	if( $cmd ){
+    		JobVOD::getElementalRest()->postRecord($id, $cmd);
+    		exit();
+    	}
+    	
+    	switch( $func ) {
+    		case 'new':
+    			ElementalRest::$auth = new Auth( 'elemental','elemental' );
+    			$job = JobVOD::newJobVOD($name, "http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_1mb.mp4", $clientID, $level);
+    			break;    	
+    		case 'del':
+    				ElementalRest::$auth = new Auth( 'elemental','elemental' );
+    				JobVOD::delete($id);
+    				break;    			
+    		case 'list':
+    			ElementalRest::$auth = new Auth( 'elemental','elemental' );
+    			$jobs = JobVOD::getJobList($id, $filter);
+    			if($id) {
+    				print($jobs->asXml());
+    				printf("%s - %s %s\n",$jobs->id, $jobs->name, $jobs->status);
+    			} else {
+    				foreach ( $jobs->live_event as $job ) {
+    					$job = JobVOD::jobVODFromXML($job);
+    					printf("%02d - %-30s \t ===> %s\n",$job->id, $job->name, $job->status);
+    				}
+    			}
+    			break;    			
+    	}
     }
 
     if( $cmd == NULL && $func == NULL ) {
