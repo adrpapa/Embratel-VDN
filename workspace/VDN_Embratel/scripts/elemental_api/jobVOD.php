@@ -6,11 +6,11 @@
     require_once "utils.php";
 
     /*
-    ** Classe que cria e controla live events
+    ** Classe que cria e controla job (Elemental Server)
     */
     class JobVOD {
         /*
-        ** cria objeto LiveEvent, e monta XML para inclusão do mesmo
+        ** cria objeto JOB, e monta XML para inclusão do mesmo
         */
     	public static function newJobVOD( $name, $file_input_uri, $clientID, $level, Presets $presets=NULL ) {
     		$templateID = $level === 'premium'
@@ -32,12 +32,14 @@
     		return( $job );
     	}    	
 
-    	// cria objeto LiveEvent para perfil Standard, e monta XML para inclusão do mesmo
+    	// cria objeto JOB para perfil Standard, e monta XML para inclusão do mesmo
+    	//
     	public static function newStandardJobVOD( $name, $file_input_uri, $clientID ) {
     		return JobVOD::newJobVOD( $name, $file_input_uri, $clientID, 'std' );
     	}
     	
-    	// cria objeto LiveEvent para perfil Premium, e monta XML para inclusão do mesmo
+    	// cria objeto JOB para perfil Premium, e monta XML para inclusão do mesmo
+    	//
     	public static function newPremiumJobVOD( $name, $file_input_uri, $clientID ) {
     		return JobVOD::newJobVOD( $name, $file_input_uri, $clientID, 'prm' );
     	}
@@ -64,16 +66,16 @@
     	}
     	   	
     	public static function getJobList( $id="", $filter="" ) {
-    		// Valores possíveis para filtro de eventos Live:
-    		// pending      Live Events in the pending state
-    		// active       Live Events in the preprocessing, running or postprocessing state
-    		// pre          Live Events in the preprocessing state
-    		// running      Live Events in the running state
-    		// post         Live Events in the postprocessing state
-    		// complete     Live Events in the complete state
-    		// cancelled    Live Events in the cancelled state
-    		// error        Live Events in the error state
-    		// archived     Live Events that have been archived
+    		/** Valores possíveis para filtro de JOB�s:
+    		pending: Jobs in the pending state 
+    		active: Jobs in the preprocessing, running or postprocessing state 
+    		pre: Jobs in the preprocessing state running Jobs in the running state 
+    		post: Jobs in the postprocessing state 
+    		complete: Jobs in the complete state 
+    		cancelled: Jobs in the cancelled state 
+    		error: Jobs in the error state 
+    		archived: Jobs that have been archived
+    		**/
     		return JobVOD::getElementalRest()->restGet($id, $filter);
     	}
     	
@@ -111,16 +113,16 @@
     		return $this->status == 'complete';
     	}
     	
-    	public function isStatusRunning() {
-    		return $this->status == 'running';
+    	public function isStatusCancelled() {
+    		return $this->status == 'cancelled';
     	}
 
     	public function isStatusError() {
     		return $this->status == 'error';
-    	}    	
+    	}    	    	
     	
     	public function isStatusArchived() {
-    		$job = JobVOD::getJobList($this->id, "filter-=archived");
+    		$job = JobVOD::getJobList($this->id, "filter=archived");
     		var_dump($job);
     		return $job->id == $this->id;
     	}
@@ -140,12 +142,12 @@
     	}
     	
     	public function cancel() {
-    		JobVOD::getElementalRest()->postRecord($this->id, "cancel");
+    		JobVOD::getElementalRest()->postRecord($this->id, "cancel", "<cancel></cancel>");
     		$this->refresh();
     	}
     	
     	public function archive() {
-    		JobVOD::getElementalRest()->postRecord($this->id, "archive");
+    		JobVOD::getElementalRest()->postRecord($this->id, "archive", "<archive></archive>");
     	}
     }
 ?>

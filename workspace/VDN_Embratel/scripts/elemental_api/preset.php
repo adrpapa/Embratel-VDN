@@ -6,17 +6,27 @@ class Preset {
 	public $framerate_num;
 	public $framerate_denom;
 	public $audio_bitrate;
+	
+	public function __construct($w,$h,$b,$fr_n,$fr_d,$ab) {
+		$this->width = $w;
+		$this->height = $h;
+		$this->bitrate = $b;
+		$this->framerate_denom = $fr_d;
+		$this->framerate_num = $fr_n;
+		$this->audio_bitrate = $ab;
+	}
 }
 
 class Presets {
 	protected $array_preset;
 	
 	public function __construct() {
-		$array_preset = array();
+		$this->array_preset = array();
 	}
 	
-	public function addPreset(Preset $pr) {
-		array_push($this->array_preset, $pr);
+	public function addPreset(Preset $pr,$stream_nb) {
+		if ( $stream_nb == 0 ) $stream_nb = 1;
+		$this->array_preset[ $stream_nb-1 ] = $pr;
 	}
 	
 	public function getPresets() {
@@ -24,25 +34,33 @@ class Presets {
 	}
 	
 	public function customizePresets( SimpleXMLElement $xml ) {	
-		$width         = $xml->xpath("/job/stream_assembly/video_description/width");
-		$height        = $xml->xpath("/job/stream_assembly/video_description/height");
-		$frm_denom     = $xml->xpath("/job/stream_assembly/video_description/h264_settings/framerate_denominator");
-		$frm_num       = $xml->xpath("/job/stream_assembly/video_description/h264_settings/framerate_numerator");
-		$audio_bitrate = $xml->xpath("/job/stream_assembly/audio_description/aac_settings/bitrate");
-		$bitrate       = $xml->xpath("/job/stream_assembly/video_description/h264_settings/bitrate");
-		$counter = 0;
+		$width         = $xml->xpath("/*/stream_assembly/video_description/width");
+		$height        = $xml->xpath("/*/stream_assembly/video_description/height");
+		$frm_denom     = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_denominator");
+		$frm_denom_nil = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_denominator/@nil");		
+		$frm_num       = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_numerator");
+		$frm_num_nil   = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_numerator/@nil");
+		$frm_source    = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_follow_source");
+		$audio_bitrate = $xml->xpath("/*/stream_assembly/audio_description/aac_settings/bitrate");
+		$bitrate       = $xml->xpath("/*/stream_assembly/video_description/h264_settings/bitrate");
 		
-		foreach ($this->array_preset as $k => $preset_obj) {
-			$bitrate[$counter][0]       = $preset_obj->bitrate;
-			$width[$counter][0]         = $preset_obj->width;
-			$height[$counter][0]        = $preset_obj->height;
-			$frm_denom[$counter][0]     = $preset_obj->framerate_denom;
-			$frm_num[$counter][0]       = $preset_obj->framerate_num;
-			$audio_bitrate[$counter][0] = $preset_obj->audio_bitrate;
-			$counter++;
-			if ( $counter >= count($bitrate) ) break;
+		foreach ($this->array_preset as $k => $preset_obj) {					
+			if ( is_null($preset_obj) ) {
+				continue;
+			}
+			
+			$bitrate[$k][0]       = $preset_obj->bitrate;
+			$width[$k][0]         = $preset_obj->width;
+			$height[$k][0]        = $preset_obj->height;
+			$frm_source[$k][0]    = "false";
+			$frm_denom[$k][0]     = $preset_obj->framerate_denom;
+			$frm_denom_nil[$k][0] = "false";
+			$frm_num[$k][0]       = $preset_obj->framerate_num;
+			$frm_num_nil[$k][0]   = "false";
+			$audio_bitrate[$k][0] = $preset_obj->audio_bitrate;
+			if ( $k >= count($bitrate) ) break;
 		}
 		
-		return $xml->asXML();
+		return $xml;
 	}
 }

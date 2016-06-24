@@ -1,6 +1,8 @@
 <?php
 require_once 'configConsts.php';
 
+// Classe que encapsula os dados de autenticação da API
+//
 class Auth {
 	protected $expires;
 	protected $auth_key;
@@ -37,7 +39,7 @@ class Auth {
 			throw new Exception('Error:createAuthKey() Login and API Key must not be null');
 		}
 		
-		return ($this->auth_key = md5($this->key . md5($url . $this->login . $this->key . $this->expires)) );
+		return ( $this->auth_key = md5($this->key . md5($url . $this->login . $this->key . $this->expires)) );
 	}
 	
 }
