@@ -3,9 +3,12 @@
 ** Classe base para todas as chamadas de API Elemental
 */
    require_once "configConsts.php";
+   require_once "auth.php";
 
    class ElementalRest {
-
+ 	
+   		public static $auth;
+   	
         public function __construct( $hostname, $apiEndpoint, $port=null, $protocol='http' ) {
             $credentials = "elemental:elemental";
             $this->uri = $protocol.'://'.$hostname;
@@ -13,7 +16,7 @@
                 $this->uri .= ':'.$port;
             }
 //             $this->uri = $baseURI.'/'.ConfigConsts::API_VERSION.'/api/'.'$apiEndpoint;
-            $this->uri .= '/'.'/api/'.$apiEndpoint;
+            $this->uri .= '/api/'.$apiEndpoint;
             $this->ch = curl_init();
             curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         }
@@ -21,7 +24,7 @@
         public function __destruct() {
             curl_close($this->ch);
         }
-        
+                  
         // Busca template para o evento 
         function getTemplate($templateID, $templateName) {
             $templateFilename = ConfigConsts::TEMPLATE_PATH.'/'.$templateName.'_'.$templateID.'.xml';
@@ -83,7 +86,17 @@
                 curl_setopt($this->ch, CURLOPT_VERBOSE, true);
             }
             $this->headers[] = "Accept: application/xml";
+           
+            // Define Authentication
+            if ( !is_null(ElementalRest::$auth) ) {
+            	ElementalRest::$auth->createAuthKey( chop(substr($urlFinal, strpos($urlFinal,'/api/')+4),'?'.$params) );
+            	$this->headers[] = "X-Auth-User: " . ElementalRest::$auth->getLogin();
+            	$this->headers[] = "X-Auth-Expires: " . ElementalRest::$auth->getExpires();
+            	$this->headers[] = "X-Auth-Key: " . ElementalRest::$auth->getAuthKey();
+            }
+
             curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->headers );
+            
             $data = curl_exec($this->ch);
             $httpRC = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
             if (curl_errno($this->ch)) {

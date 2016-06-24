@@ -15,10 +15,10 @@
 //     var_dump($cmd);
 //     var_dump($func);
 
-    @$id = NULL;
-    @$func = 'new';
+    @$id = 358;
+    @$func = 'del';
     @$filter = NULL;
-    @$cmd = NULL;
+    @$cmd = null;
     @$alvo = 'vod';
     $name = "Job Teste Ftl 1";
     $clientID = "Cliente1";
@@ -68,9 +68,32 @@
         return;
     }
     else {
+    	if( $cmd ){
+    		JobVOD::getElementalRest()->postRecord($id, $cmd);
+    		exit();
+    	}
+    	
     	switch( $func ) {
     		case 'new':
+    			ElementalRest::$auth = new Auth( 'elemental','elemental' );
     			$job = JobVOD::newJobVOD($name, "http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_1mb.mp4", $clientID, $level);
+    			break;    	
+    		case 'del':
+    				ElementalRest::$auth = new Auth( 'elemental','elemental' );
+    				JobVOD::delete($id);
+    				break;    			
+    		case 'list':
+    			ElementalRest::$auth = new Auth( 'elemental','elemental' );
+    			$jobs = JobVOD::getJobList($id, $filter);
+    			if($id) {
+    				print($jobs->asXml());
+    				printf("%s - %s %s\n",$jobs->id, $jobs->name, $jobs->status);
+    			} else {
+    				foreach ( $jobs->live_event as $job ) {
+    					$job = JobVOD::jobVODFromXML($job);
+    					printf("%02d - %-30s \t ===> %s\n",$job->id, $job->name, $job->status);
+    				}
+    			}
     			break;    			
     	}
     }
