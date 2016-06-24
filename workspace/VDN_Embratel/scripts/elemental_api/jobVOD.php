@@ -12,7 +12,7 @@
         /*
         ** cria objeto LiveEvent, e monta XML para inclusão do mesmo
         */
-    	public static function newJobVOD( $name, $file_input_uri, $clientID, $level, $presets=NULL ) {
+    	public static function newJobVOD( $name, $file_input_uri, $clientID, $level, Presets $presets=NULL ) {
     		$templateID = $level === 'premium'
     				? ConfigConsts::VOD_TEMPLATE_PREMIUM
     				: ConfigConsts::VOD_TEMPLATE_STANDARD;
@@ -24,9 +24,9 @@
     		if ( !is_null($presets) ) {
     			$job->xml = $presets->customizePresets( $job->xml );
     		}
-    		$job->xml->name = $name;
-    		$job->xml->file_input->uri = $file_input_uri;
-    		$job->xml->output_group->output->udp_settings->destination->uri = ConfigConsts::DELTA_WF_INCOMMING_URI . '/' . $clientID . '/' . $level;
+    		$job->xml->input->name = $name;
+    		$job->xml->input->file_input->uri = $file_input_uri;
+    		$job->xml->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WF_INCOMMING_URI . '/' . $clientID . '/' . $level;
     		print $job->xml->asXml().'\n';
     		$job->setPropertiesFromXML(JobVOD::getElementalRest()->postRecord(null, null, $job->xml));
     		return( $job );
@@ -62,7 +62,7 @@
     		}
     		return JobVOD::$elementaRest;
     	}
-    	
+    	   	
     	public static function getJobList( $id="", $filter="" ) {
     		// Valores possíveis para filtro de eventos Live:
     		// pending      Live Events in the pending state
@@ -107,13 +107,17 @@
     		return $this->status == 'pending';
     	}
     	
-    	public function isStatusCancelled() {
-    		return $this->status == 'cancelled';
+    	public function isStatusComplete() {
+    		return $this->status == 'complete';
     	}
     	
     	public function isStatusRunning() {
     		return $this->status == 'running';
     	}
+
+    	public function isStatusError() {
+    		return $this->status == 'error';
+    	}    	
     	
     	public function isStatusArchived() {
     		$job = JobVOD::getJobList($this->id, "filter-=archived");
@@ -133,15 +137,6 @@
     			$job = JobVOD::getJobVODById($id);
     		}
     		# LiveEvent::getElementalRest()->restDelete($liveEvent->id);
-    	}
-    	
-    	public function start() {
-    		JobVOD::getElementalRest()->postRecord($this->id, "start");
-    	}
-    	
-    	public function stop() {
-    		JobVOD::getElementalRest()->postRecord($this->id, "stop");
-    		$this->refresh();
     	}
     	
     	public function cancel() {

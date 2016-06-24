@@ -23,7 +23,7 @@ class Presets {
 		return $this->array_preset;
 	}
 	
-	public function customizePresets( $xml ) {
+	public function customizePresets( SimpleXMLElement $xml ) {	
 		$width         = $xml->xpath("/job/stream_assembly/video_description/width");
 		$height        = $xml->xpath("/job/stream_assembly/video_description/height");
 		$frm_denom     = $xml->xpath("/job/stream_assembly/video_description/h264_settings/framerate_denominator");
@@ -32,13 +32,13 @@ class Presets {
 		$bitrate       = $xml->xpath("/job/stream_assembly/video_description/h264_settings/bitrate");
 		$counter = 0;
 		
-		foreach ($this->array_preset as $k => $v) {
-			$bitrate[$counter][0]       = $v->bitrate;
-			$width[$counter][0]         = $v->width;
-			$height[$counter][0]        = $v->height;
-			$frm_denom[$counter][0]     = $v->framerate_denom;
-			$frm_num[$counter][0]       = $v->framerate_num;
-			$audio_bitrate[$counter][0] = $v->audio_bitrate;
+		foreach ($this->array_preset as $k => $preset_obj) {
+			$bitrate[$counter][0]       = $preset_obj->bitrate;
+			$width[$counter][0]         = $preset_obj->width;
+			$height[$counter][0]        = $preset_obj->height;
+			$frm_denom[$counter][0]     = $preset_obj->framerate_denom;
+			$frm_num[$counter][0]       = $preset_obj->framerate_num;
+			$audio_bitrate[$counter][0] = $preset_obj->audio_bitrate;
 			$counter++;
 			if ( $counter >= count($bitrate) ) break;
 		}
