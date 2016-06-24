@@ -15,8 +15,8 @@
 //     var_dump($cmd);
 //     var_dump($func);
 
-    @$id = 358;
-    @$func = 'del';
+    @$id = NULL;
+    @$func = 'new';
     @$filter = NULL;
     @$cmd = null;
     @$alvo = 'vod';
@@ -75,8 +75,15 @@
     	
     	switch( $func ) {
     		case 'new':
+    			// Create authentication object. Don´t create this object if you don´t need auth
+    			// Auth($login,$api-key)
     			ElementalRest::$auth = new Auth( 'elemental','elemental' );
-    			$job = JobVOD::newJobVOD($name, "http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_1mb.mp4", $clientID, $level);
+    			$presets = new Presets();
+    			// Presets(Preset,stream_number) -- stream_number can be 1,2,3....
+    			// Preset(width,height,bitrate(bit/s),framerate_numerator,framerate_denominator,audio_bitrate(bit/s)
+    			// To standard video presets, don´t pass $presets variable
+    			$presets->addPreset(new Preset(854,480,5000000,30000,1001,28000),2);
+    			$job = JobVOD::newJobVOD($name, "http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_1mb.mp4", $clientID, $level, $presets);
     			break;    	
     		case 'del':
     				ElementalRest::$auth = new Auth( 'elemental','elemental' );

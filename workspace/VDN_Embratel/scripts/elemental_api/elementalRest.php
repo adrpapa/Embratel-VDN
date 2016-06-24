@@ -7,7 +7,8 @@
 
    class ElementalRest {
  	
-   		public static $auth;
+	   	//Define authentication object. If null, no authentication is used
+   		public static $auth;	
    	
         public function __construct( $hostname, $apiEndpoint, $port=null, $protocol='http' ) {
             $credentials = "elemental:elemental";
@@ -58,6 +59,9 @@
                 $this->headers = Array("Content-Type: text/xml");
                 $this->headers[] = "Content-Length: ".strlen($content);
             }
+            else {
+            	$this->headers = Array();
+            }
             
             return $this->restCall($id, $command);
         }
@@ -89,6 +93,9 @@
            
             // Define Authentication
             if ( !is_null(ElementalRest::$auth) ) {
+            	if (! ElementalRest::$auth instanceof Auth ) { 
+            		throw new Exception('Error:restCall() Wrong auth type.Should be [Auth]'); 
+            	}
             	ElementalRest::$auth->createAuthKey( chop(substr($urlFinal, strpos($urlFinal,'/api/')+4),'?'.$params) );
             	$this->headers[] = "X-Auth-User: " . ElementalRest::$auth->getLogin();
             	$this->headers[] = "X-Auth-Expires: " . ElementalRest::$auth->getExpires();

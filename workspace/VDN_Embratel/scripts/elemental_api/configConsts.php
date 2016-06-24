@@ -33,11 +33,6 @@
         const DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE = 10;
         const DELTA_STD_VOD_OUTPUT_TEMPLATE = 10;
         const DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 10;
-        
-        // Auth
-        // Development Only
-        const TOKEN_EXPIRES_IN_SEC = 1200;
-        const LOGIN = 'elemental';
-        const API_KEY = 'elemental';
+
     }
 ?>
