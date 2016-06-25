@@ -1,0 +1,67 @@
+Sandbox Redeploy:
+
+
+**** Required Packages ***********************************************************************
+
+yum install php
+
+yum install mod_ssl
+
+wget http://download.apsstandard.org/php.runtime/aps-php-runtime-2.0-393.noarch.rpm
+rpm -ihv aps-php-runtime-2.0-393.noarch.rpm
+
+**********************************************************************************************
+
+# Criar alguns links para facilitar o dia-a-dia
+
+ln -s /usr/local/pem/APS/packages   packages
+ln -s /var/www/html/ebtvdn          www_ebtvdn 
+
+
+***** Apache configuration *******************************************************************
+
+vim /etc/httpd/conf.d/ssl.conf
+SSLVerifyClient optional_no_ca
+...
+<Files ~ "\.(cgi|shtml|phtml|php3?)$">
+    SSLOptions +StdEnvVars +ExportCertData
+</Files>
+
+
+**********************************************************************************************
+
+/etc/httpd/conf/httpd.conf:
+
+<Directory “var/www/html”>
+...
+    AllowOverride All
+...    
+   
+** New:
+
+Alias /packages/ "/var/www/packages/"
+<Directory "/var/www/packages">
+    Options Indexes MultiViews FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+</Directory>
+
+
+***** Apache Restart *************************************************************************
+
+service httpd restart
+
+**********************************************************************************************
+
+**********************************************************************************************
+
+### Entrar na web ui -> Settings -> System Properties e habilitar APS development mode
+
+**********************************************************************************************
+
+wget http://doc.apsstandard.org/2.1/_downloads/endpoint.sh
+
+chmod +x endpoint.sh
+
+
