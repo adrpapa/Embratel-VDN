@@ -6,25 +6,26 @@
     require_once "deltaOutputTemplate.php";
     require_once "deltaInput.php";
 
-//    parse_str(implode('&', array_slice($argv, 1)), $_GET);
-//    @$id = $_GET['id'];
-//    @$func = $_GET['func'];
-//    @$filter = $_GET['filter'];
-//    @$cmd = $_GET['cmd'];
-//    @$alvo = $_GET['alvo'];
-//     var_dump($cmd);
-//     var_dump($func);
+   parse_str(implode('&', array_slice($argv, 1)), $_GET);
+   @$id = $_GET['id'];
+   @$func = $_GET['func'];
+   @$filter = $_GET['filter'];
+   @$cmd = $_GET['cmd'];
+   @$alvo = $_GET['alvo'];
+    var_dump($cmd);
+    var_dump($func);
+   $type = "live";
 
-    @$id = 358;
-    @$func = 'del';
-    @$filter = NULL;
-    @$cmd = null;
-    @$alvo = 'vod';
+//     @$id = 358;
+//     @$func = 'del';
+//     @$filter = NULL;
+//     @$cmd = null;
+//     @$alvo = 'vod';
+//     $type = "vod";
+
     $name = "Job Teste Ftl 1";
     $clientID = "Cliente1";
     $level = "std";
-//    $type = "live";
-    $type = "vod";
 
     printf("\nUsando Codigo do Cliente=%s, Plano=%s, Tipo=%s, Label=%s\n\n", $clientID, $level, $type, $name);
     printf("\n\tAlvo=%s, Func=%s, cmd=%s\n\n", $alvo, $func, $cmd );

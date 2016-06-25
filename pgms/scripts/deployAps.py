@@ -55,15 +55,24 @@ def getTitle():
     els = driver.find_elements_by_id("title")
     return els[0].text if len(els) > 0 else ""
 
+
+
+def getByIdNowait(id):
+    try:
+        return driver.find_element_by_id(id);
+    except:
+        return None
+
 def getById(id):
-    #driver.find_element_by_id
     return WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, id)))
 
 
 def createResourceType():
-    #if getTitle() != 'Add New Resource Type':
-    goToResourceTypes()
-    getById("aps_packages_manage").click()
+    createBtn=getByIdNowait("aps_packages_manage")
+    if createBtn is None:
+        goToResourceTypes()
+        createBtn=getById("aps_packages_manage")
+    createBtn.click()
 
 def clickOnGlobalList(seq):
     gl=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "global_list")))
@@ -79,8 +88,7 @@ def clickOnGlobalListName(name):
     return False
 
 def createAppService(service, autoprovision=False):
-    if getTitle() != 'Add New Resource Type':
-        createResourceType()
+    createResourceType()
     clickOnGlobalList(1)
     selectResourceService(service, autoprovision)
 
@@ -118,18 +126,16 @@ def createServiceTemplate(name, autoprovisioning, services):
     getById("service_templates_create").click()
     getById("check_template_autoprovided").click()
     setResourceName(name, id="inp_template_name")
-    for s in services:
-        selectServiceTemplateResource(s)
+    selectServiceTemplateResource(services)
     submitForm()
     submitForm()
     submitForm()
 
-def selectServiceTemplateResource(name):
+def selectServiceTemplateResource(services):
     for row in getById("global_list").find_elements_by_tag_name("tr"):
         cells = row.find_elements_by_tag_name("td")
-        if len(cells) > 1 and cells[1].text == name:
+        if len(cells) > 1 and cells[1].text in services:
             cells[0].click()
-            return True
     return False
 
 def activateAndSubscribe(name):
@@ -149,7 +155,7 @@ def activateAndSubscribe(name):
 
 #def deleteAllResources():
 
-if True:
+if False:
     driver=webdriver.Chrome('/home/fastlane/Downloads/chromedriver')
 
     try:

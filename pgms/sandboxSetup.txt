@@ -1,9 +1,41 @@
 Sandbox Redeploy:
 
+
+**** Required Packages ***********************************************************************
+
+yum install php
+
+yum install mod_ssl
+
+rpm -ihv Downloads/apstools-2.2-248.noarch.rpm
+
+**********************************************************************************************
+
+
 ln -s /usr/local/pem/APS/packages   packages
 ln -s /var/www/html/vdn             www_ebtvdn 
 
+
+***** Apache configuration *******************************************************************
+
+vim /etc/httpd/conf.d/ssl.conf
+SSLVerifyClient optional_no_ca
+...
+<Files ~ "\.(cgi|shtml|phtml|php3?)$">
+    SSLOptions +StdEnvVars +ExportCertData
+</Files>
+
+
+**********************************************************************************************
+
 /etc/httpd/conf/httpd.conf:
+
+<Directory “var/www/html”>
+...
+    AllowOverride All
+...    
+   
+** New:
 
 Alias /packages/ "/var/www/packages/"
 <Directory "/var/www/packages">
@@ -12,6 +44,19 @@ Alias /packages/ "/var/www/packages/"
     Order allow,deny
     Allow from all
 </Directory>
+
+
+***** Apache Restart *************************************************************************
+
+service httpd restart
+
+**********************************************************************************************
+
+**********************************************************************************************
+
+Entrar em Settings -> System Properties e habilitar APS development mode
+
+**********************************************************************************************
 
 
 Endpoint configuration
