@@ -62,13 +62,8 @@
                 );
         }
 
-        public static $elementaRest = null;
-
         public static function getElementalRest() {
-            if (LiveEvent::$elementaRest == null){
-                LiveEvent::$elementaRest = new ElementalRest(ConfigConsts::LIVE_CONDUCTOR_HOST, 'live_events');
-            }
-            return LiveEvent::$elementaRest;
+            return new ElementalRest(ConfigConsts::LIVE_CONDUCTOR_HOST, 'live_events');
         }
 
         public static function getEventList( $id="", $filter="" ) {

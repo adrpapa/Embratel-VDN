@@ -69,8 +69,7 @@
             return $this->restCall( $id );
         }
 
-        function restCall( $id=null, $command=null, $params=null)
-        {
+        function restCall( $id=null, $command=null, $params=null){
             $urlFinal=$this->uri;
             if( $id ) {
                 $urlFinal .= '/'.$id;

@@ -163,6 +163,6 @@
         }
         return;
     }
-    throw new invalidargumentexception("\n\n***** Favor informar alvo=deltaot|live *****\n\n");
+    throw new invalidargumentexception("\n\n***** Favor informar alvo=deltaot|deltaif|live *****\n\n");
 
 ?>

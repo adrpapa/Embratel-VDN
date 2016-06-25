@@ -28,33 +28,32 @@
         //  $clientID: ID do cliente - será usado no nome do templa/te e nas URLs de output
         //  $type: live | vod
         //  $level: std | premium
+
         public static function newOutputTemplate( $clientID, $type, $level ) {
-        if( $type == 'live' ){
-            if( $level == 'premium') {
-                    $xml=DeltaOutputTemplate::getElementalRest()->getTemplate(
-                            ConfigConsts::DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE, "DeltaPremiumLiveOutputTemplate");                
+            if( $type == 'live' ){
+                if( $level == 'premium') {
+                    $templateId = ConfigConsts::DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE;
+                } else {
+                    $templateId = ConfigConsts::DELTA_STD_EVENT_OUTPUT_TEMPLATE;
+                }
             } else {
-                $xml=DeltaOutputTemplate::getElementalRest()->getTemplate(
-                        ConfigConsts::DELTA_STD_EVENT_OUTPUT_TEMPLATE, "DeltaStdLiveOutputTemplate");
+                if( $level == 'premium' ){
+                    $templateId = ConfigConsts::DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE;
+                } else {
+                    $templateId = ConfigConsts::DELTA_STD_VOD_OUTPUT_TEMPLATE;
+                }
             }
-        } else {
-            if( $level == 'premium' ){
-                $xml=DeltaOutputTemplate::getElementalRest()->getTemplate(
-                        ConfigConsts::DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE, "DeltaPremiumVODOutputTemplate");                
-            } else {
-                $xml=DeltaOutputTemplate::getElementalRest()->getTemplate(
-                        ConfigConsts::DELTA_STD_VOD_OUTPUT_TEMPLATE, "DeltaStdVODOutputTemplate");
-            }
-        }
+            $xml=DeltaOutputTemplate::getElementalRest()->getTemplate($templateId, "DeltaOutputTemplate");
             $axClientID = cleanClientID( $clientID );
-            $xml->name = $axClientID.'_'.$type;
+            $xml->name = $axClientID.'_'.$type.'_'.$level;
+
             //acerta custom url para cada output filter
             foreach( $xml->filter as $filter ){
                 if( (boolean)$filter->endpoint ) {
-                    $filter->output_url = $axClientID.'/'.$type.'/$fn$.$ex$';
+                    $filter->output_url = $axClientID.'/'.$type.'/'.$level.'/$fn$.$ex$';
                 }
             } 
-//             print($xml->/*asXml*/());
+//          print($xml->/*asXml*/());
             return new self(DeltaOutputTemplate::getElementalRest()->postRecord(null, null, $xml));
         }
 
@@ -84,8 +83,9 @@
         public static function getClientOutputTemplate( $clientID, $type, $level, $create=true ) {
             $outputTpl = null;
             $axClientID = cleanClientID( $clientID );
+            $templateName = $axClientID.'_'.$type.'_'.$level;
             foreach( DeltaOutputTemplate::getOutputTemplateList() as $xmlOutpTpl ){
-                if( $axClientID.'_'.$type === $xmlOutpTpl->name ) {
+                if( $templateName === $xmlOutpTpl->name ) {
                     return $xmlOutpTpl;
                 }
             }
@@ -127,13 +127,9 @@
             return $templates;
         }
 
-        protected static $elementalRest = null;
         public static function getElementalRest() {
-            if (DeltaOutputTemplate::$elementalRest == null){
-                DeltaOutputTemplate::$elementalRest = new ElementalRest($hostname=ConfigConsts::DELTA_HOST,
+            return new ElementalRest($hostname=ConfigConsts::DELTA_HOST,
                         $apiEndpoint='output_templates', $port=ConfigConsts::DELTA_PORT);
-            }
-            return DeltaOutputTemplate::$elementalRest;
         }
     }
 ?>

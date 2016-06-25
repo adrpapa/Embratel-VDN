@@ -1,3 +1,4 @@
+#!/usr/bin/env python3 
 # Chromedriver http://chromedriver.storage.googleapis.com/index.html?path=2.14/
 # pip3 install selenium
 # install phantomjs from software.opensuse.org/packages/phantomjs
@@ -155,7 +156,7 @@ def activateAndSubscribe(name):
 
 #def deleteAllResources():
 
-if False:
+if True:
     driver=webdriver.Chrome('/home/fastlane/Downloads/chromedriver')
 
     try:
