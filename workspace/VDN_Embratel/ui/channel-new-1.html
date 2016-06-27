@@ -41,7 +41,6 @@
 			/* Create widgets */
 			var widgets =
 				["aps/PageContainer", { id: "page" }, [
-					["aps/WizardControl", {steps: wizardControl }],
 					["aps/FieldSet", { id: "new1_general", title:  "General Configuration"  }, [
 						["aps/TextBox", { id: "new1_channelName", label: _("Channel Name"), value: at(model, "name"), required: true }],
 						["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") } ]
