@@ -39,14 +39,6 @@ def goToApsPackageList():
 def goToApsPackage(name):
     goToApsPackageList()
     clickOnGlobalList(1)
-    #while True:
-        #try:
-            #getById("global_list")[0].find_element_by_class_name("linkWrapper").click()
-            #break
-        #except:
-            #pass
-    #if getTitle() != name:
-        #raise Exception("Package "+name+" not found")
 
 def goToResourceTypes():
     goToApsPackage('VDN_Embratel')
