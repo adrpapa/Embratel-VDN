@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+			"dijit/registry",
+			"dojox/mvc/getPlainValue",
+			"aps/WizardData",
+			"dojox/mvc/at",
+			"aps/load",
+			"aps/Memory",
+			/* Include JSON file that defines the wizard steps */
+			"dojo/text!./job-wizard.json",
+			"dojox/mvc/getStateful",
+			"aps/ready!"
+		], function (registry, getPlainValue, wd, at, load, Memory, wizardControl, getStateful) {
+			wizardControl = JSON.parse(wizardControl);
+			wizardControl[0].active = true;
+			var job_new = {
+				aps: { type: "http://embratel.com.br/app/VDN_Embratel/job/1.0" },
+				name: "",
+				description: "",
+				screen_format: "16:9",
+				premium: false
+			};
+			/* Declare the data source */
+			var model = typeof aps.context.params.isNew === "undefined"? job_new: getStateful(wd.get());
+
+			var screen_formats = new Memory({
+				idProperty: "value",
+					data: [
+						{ value:"16:9",		label: "16:9" },
+						{ value: "4:3",		label: "4:3" },
+						{ value: "2.35:1",	label: "2.35:1" }
+					]
+				});
+
+			/* Create widgets */
+			var widgets =
+				["aps/PageContainer", { id: "page" }, [
+					["aps/FieldSet", { id: "new1_general", title:  "General Configuration"  }, [
+						["aps/TextBox", { id: "new1_jobName", label: _("Job Name"), value: at(model, "name"), required: true }],
+						["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") } ]
+					]],
+					["aps/FieldSet", { id: "new1_options", title:  "Job Configuration Options"  }, [
+						["aps/Select", { id: "new1_fmt", label: _( "Screen Format"),
+							value: at(model,"screen_format"), store: screen_formats }],
+						["aps/CheckBox", { id: "new1_premium", label: _("Premium Configuration Options?"), value: at(model, "premium") } ]
+					]]
+				]];
+			load(widgets).then(function(){
+				/* Create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("jobs");
+				};
+				aps.app.onNext = function() {
+					var page = registry.byId("page");
+					page.get("messageList").removeAll();
+
+					/* Validate the values assigned to widgets */
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+
+					/* Save the values in the client"s storage */
+					wd.put(getPlainValue(model));
+					/* and proceed to the next screen */
+					aps.apsc.gotoView("job-new-last");
+				};
+			});
+		}
+	);
+	</script>
+</head>
+<body>
+</body>
+</html>

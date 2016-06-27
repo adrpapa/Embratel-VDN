@@ -18,11 +18,12 @@ class cloud extends APS\ResourceBase {
 # Global connection settings will be configured by the provider
 # Must be forwarded to the app end-point to set the connection with the external system
 	/**
+
         * @type(string)
         * @title("Template Path")
         * @description("Path for all elemental default templates ")
         */
-        public $TEMPLATE_PATH = 'templates';
+        public $templates = $TEMPLATE_PATH = 'templates';
 
         /**
         * @type(string)
@@ -119,12 +120,12 @@ class cloud extends APS\ResourceBase {
         */
         public $DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 10;
         
-        /**
-        * @type(string)
-        * @title("APS API Version")
-        * @readonly
-        */
-        public $API_VERSION = 'v1';
+//         /**
+//         * @type(string)
+//         * @title("APS API Version")
+//         * @readonly
+//         */
+//         public $API_VERSION = 'v1';
         
         /**
         * @type(string)

@@ -53,12 +53,23 @@ class context extends \APS\ResourceBase
 	## Subset of attributes marked as read-only,
 	## which means only the application can change them.
 
+	
+	###############################################################################
+	# D E F I N I C O E S   P A R A   V O D
+	###############################################################################
 	/**
 	* @type(integer)
-	* @title("Delta VOD Standard Input Filter ID")
+	* @title("Delta VOD Standard Input Filter 4:3 ID")
 	* @readonly
 	*/
-	public $vodStandardInputFilter;
+	public $vodStandardInputFilter4x3;
+
+	/**
+	* @type(integer)
+	* @title("Delta VOD Standard Input Filter 16:9 ID")
+	* @readonly
+	*/
+	public $vodStandardInputFilter16x9;
 
 	/**
 	* @type(integer)
@@ -69,10 +80,17 @@ class context extends \APS\ResourceBase
 
 	/**
 	* @type(integer)
-	* @title("Delta VOD Premium Input Filter ID")
+	* @title("Delta VOD Premium Input Filter 4:3 ID")
 	* @readonly
 	*/
-	public $vodPremiumInputFilter;
+	public $vodPremiumInputFilter4x3;
+
+	/**
+	* @type(integer)
+	* @title("Delta VOD Premium Input Filter 16:9 ID")
+	* @readonly
+	*/
+	public $vodPremiumInputFilter16x9;
 
 	/**
 	* @type(integer)
@@ -81,12 +99,43 @@ class context extends \APS\ResourceBase
 	*/
 	public $vodPremiumOutputTemplate;
 
+	###############################################################################
+	# D E F I N I C O E S   P A R A   L I V E
+	###############################################################################
 	/**
 	* @type(integer)
-	* @title("Delta Liv Standard Output Template ID")
+	* @title("Delta Live Standard Input Filter 4:3 ID")
+	* @readonly
+	*/
+	public $liveStandardInputFilter4x3;
+
+	/**
+	* @type(integer)
+	* @title("Delta Live Standard Input Filter 16:9 ID")
+	* @readonly
+	*/
+	public $liveStandardInputFilter16x9;
+
+	/**
+	* @type(integer)
+	* @title("Delta Live Standard Output Template ID")
 	* @readonly
 	*/
 	public $liveStandardOutputTemplate;
+
+	/**
+	* @type(integer)
+	* @title("Delta Live Premium Input Filter 4:3 ID")
+	* @readonly
+	*/
+	public $livePremiumInputFilter4x3;
+
+	/**
+	* @type(integer)
+	* @title("Delta Live Premium Input Filter 16:9 ID")
+	* @readonly
+	*/
+	public $livePremiumInputFilter16x9;
 
 	/**
 	* @type(integer)
@@ -95,12 +144,17 @@ class context extends \APS\ResourceBase
 	*/
 	public $livePremiumOutputTemplate;
 
+
+	###############################################################################
+	# F U N C O E S   P A R A   I N S T A N C I A M E N T O   D E   C O N T E X T O
+	###############################################################################
+    
     public function provision() {
     	\APS\LoggerRegistry::get()->setLogFile("logs/context.log");
     	$clientid = sprintf("Client_%06d",$this->account->id);
     	\APS\LoggerRegistry::get()->info("Iniciando provisionamento de context para o cliente ".$clientid);
 
-        // Create output template for all options: Live / Vod Premium / Stde
+        // Create output template for all options: Live / Vod Premium / Std
     	$this->liveStandardOutputTemplate = DeltaOutputTemplate::getClientOutputTemplate($clientid, 'live', 'std')->id;
     	$this->livePremiumOutputTemplate = DeltaOutputTemplate::getClientOutputTemplate($clientid, 'live', 'premium' )->id;
 
@@ -110,10 +164,20 @@ class context extends \APS\ResourceBase
         
 
         // Create VOD input filters
-    	\APS\LoggerRegistry::get()->info("Criando os Delta Input Filters para o cliente ".$clientid);
-        $this->vodStandardInputFilter = DeltaInputFilter::getVodClientInputFilter( $clientid, 'std')->id;
-        $this->vodPremiumInputFilter = DeltaInputFilter::getVodClientInputFilter( $clientid, 'premium')->id;
-    	\APS\LoggerRegistry::get()->info("Delta Input Filters para o cliente $clientid Criandos");
+    	\APS\LoggerRegistry::get()->info("Criando os Delta Vod Input Filters para o cliente ".$clientid);
+        $this->vodStandardInputFilter4x3 = DeltaInputFilter::getVodClientInputFilter( $clientid, 'std','4x3')->id;
+        $this->vodStandardInputFilter16x9 = DeltaInputFilter::getVodClientInputFilter( $clientid, 'std', '16x9')->id;
+        $this->vodPremiumInputFilter4x3 = DeltaInputFilter::getVodClientInputFilter( $clientid, 'premium','4x3')->id;
+        $this->vodPremiumInputFilter16x9 = DeltaInputFilter::getVodClientInputFilter( $clientid, 'premium','16x9')->id;
+    	\APS\LoggerRegistry::get()->info("Delta Vod Input Filters para o cliente $clientid Criados");
+
+        // Create Live input filters
+    	\APS\LoggerRegistry::get()->info("Criando os Delta Live Input Filters para o cliente ".$clientid);
+        $this->liveStandardInputFilter4x3 = DeltaInputFilter::getLiveClientInputFilter( $clientid, 'std','4x3')->id;
+        $this->liveStandardInputFilter16x9 = DeltaInputFilter::getLiveClientInputFilter( $clientid, 'std', '16x9')->id;
+        $this->livePremiumInputFilter4x3 = DeltaInputFilter::getLiveClientInputFilter( $clientid, 'premium','4x3')->id;
+        $this->livePremiumInputFilter16x9 = DeltaInputFilter::getLiveClientInputFilter( $clientid, 'premium','16x9')->id;
+    	\APS\LoggerRegistry::get()->info("Delta Live Input Filters para o cliente $clientid Criados");
 
     	\APS\LoggerRegistry::get()->info("Encerrando provisionamento de context para o cliente ".$clientid);
 
@@ -125,10 +189,20 @@ class context extends \APS\ResourceBase
     	\APS\LoggerRegistry::get()->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
 
     	// Delete vod input filter
-    	\APS\LoggerRegistry::get()->info("Deletando Delta input filters para o cliente $clientid");
-    	DeltaInputFilter::delete($this->vodStandardInputFilter);
-    	DeltaInputFilter::delete($this->vodPremiumInputFilter);
-    	\APS\LoggerRegistry::get()->info("Delta input filters para o cliente $clientid Deletados");
+    	\APS\LoggerRegistry::get()->info("Deletando Delta Vod input filters para o cliente $clientid");
+    	DeltaInputFilter::delete($this->vodStandardInputFilter4x3);
+    	DeltaInputFilter::delete($this->vodStandardInputFilter16x9);
+    	DeltaInputFilter::delete($this->vodPremiumInputFilter4x3);
+    	DeltaInputFilter::delete($this->vodPremiumInputFilter16x9);
+    	\APS\LoggerRegistry::get()->info("Delta Vod input filters para o cliente $clientid Deletados");
+
+    	// Delete live input filter
+    	\APS\LoggerRegistry::get()->info("Deletando Delta Live input filters para o cliente $clientid");
+    	DeltaInputFilter::delete($this->liveStandardInputFilter4x3);
+    	DeltaInputFilter::delete($this->liveStandardInputFilter16x9);
+    	DeltaInputFilter::delete($this->livePremiumInputFilter4x3);
+    	DeltaInputFilter::delete($this->livePremiumInputFilter16x9);
+    	\APS\LoggerRegistry::get()->info("Delta Live input filters para o cliente $clientid Deletados");
 
     	//Delete output templates
     	\APS\LoggerRegistry::get()->info("Deletando Delta Output Templates para o cliente $clientid");

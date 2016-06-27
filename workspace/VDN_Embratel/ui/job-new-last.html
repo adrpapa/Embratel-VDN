@@ -12,7 +12,7 @@
             "dojox/mvc/getStateful",
             "dojox/mvc/getPlainValue",
             "aps/WizardData",
-            "dojo/text!./channel-wizard.json",
+            "dojo/text!./job-wizard.json",
             "./displayError.js",
             "dojox/mvc/at",
             "aps/ready!"
@@ -21,30 +21,21 @@
             wizardControl[1].active = true;
 
             var store = new Store({
-                    apsType: "http://embratel.com.br/app/VDN_Embratel/channel/1.0",
-                    target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/channels"
+                    apsType: "http://embratel.com.br/app/VDN_Embratel/job/1.0",
+                    target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/jobs"
                 }),
                 model = getStateful(wd.get());
 
             var widgets =
-                ["aps/PageContainer", { id: "page" }, 
-	                [
-		                ["aps/FieldSet", { title:  "Channel Configuration"  }, 
-			                [
-			                    ["aps/Output", { label: _("Channel Name"), value: at(model, "name") }],
-			                    ["aps/Output", { label: _("Description"), value: at(model, "description") }]
-			                ]
-		                ],
-		                ["aps/FieldSet", { title:  "Channel Options"  }, 
-			                [
-			                    ["aps/Select", { label: _( "Screen Format"), value: at(model,"screen_format"), disabled: true }],
-			                    ["aps/CheckBox", { label: _("Provide DVR Feature?"), checked: model.dvr, disabled: true } ],
-			                    ["aps/CheckBox", { label: _("Use HTTPS?"), checked: model.https, disabled: true } ],
-			                    ["aps/CheckBox", { label: _("Premium Configuration Options?"), checked: model.premium, disabled: true } ]
-			                ]
-			            ]
-		            ]
-                ];
+                ["aps/PageContainer", { id: "page" }, [
+                ["aps/FieldSet", { title:  "Job Configuration"  }, [
+                    ["aps/Output", { label: _("Job Name"), value: at(model, "name") }],
+                    ["aps/Output", { label: _("Description"), value: at(model, "description") }]]],
+                ["aps/FieldSet", { title:  "Job Options"  }, [
+                    ["aps/Select", { label: _( "Screen Format"), value: at(model,"screen_format"), disabled: true }],
+                    ["aps/CheckBox", { label: _("Premium Configuration Options?"), checked: at(model, "premium"), disabled: true } ]
+                ]]
+            ]];
             
             load(widgets).then(function(){
 	            /* Once the widgets are created, create handlers for the navigation buttons */
@@ -55,7 +46,7 @@
 	                    return;
 	                }
 	                when(store.put(getPlainValue(model)),
-	                    function(){ aps.apsc.gotoView("channels"); },
+	                    function(){ aps.apsc.gotoView("jobs"); },
 	                    displayError
 	                );
 	            };
