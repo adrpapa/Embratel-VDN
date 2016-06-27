@@ -40,16 +40,36 @@
             $xml=DeltaInputFilter::getElementalRest()->getTemplate(
                     ConfigConsts::DELTA_WF_INPUT_FILTER_TEMPLATE, "DeltaWFInputFilter");
             $axClientID = cleanClientID($clientID);
-            $xml->label = $axClientID.'_VOD';
+            $xml->label = $axClientID.'_vod_'.$level;
             $xml->filter_settings->incoming->uri = 
-                ConfigConsts::DELTA_WF_INCOMMING_URI.'/'.$axClientID.'/';
+                ConfigConsts::DELTA_WF_INCOMMING_URI.'/'.$axClientID.'/'.$level.'/';
             // busca o output template para eventos VOD do cliente - cria se não existir
             $outputTemplate = DeltaOutputTemplate::getClientOutputTemplate( $axClientID, 'vod', $level, true );
             $xml->filter_settings->template_id = $outputTemplate->id;
             print '\n\n'.$xml->asXml().'\n\n';
             return new self(DeltaInputFilter::getElementalRest()->postRecord(null, null, $xml));
         }
-        // 567161777222444 Raimara
+        
+        /*
+        ** Obtem / cria input filter para o cliente std/premium ($level)
+        ** Parametros:
+        **      $clientID
+        **      $level: std | premium
+        */
+        public static function getVodClientInputFilter( $clientID, $level, $create=true ) {
+            $axClientID = cleanClientID( $clientID );
+            $label = $axClientID.'_VOD_'.$level;
+            foreach( DeltaInputFilter::getInputFilterList() as $xmlInpFilter ){
+                if( $label === $xmlInpFilter->label ) {
+                    return $xmlInpFilter;
+                }
+            }
+            if( ! $create ) {
+                return null;
+            }
+            return DeltaInputFilter::newVodInputFilter($clientID, $level);
+        }
+        
         
         public function setPropertiesFromXML( $xml ) {
             $this->label = (string)$xml->label."";
@@ -90,14 +110,11 @@
             return $nextUdpPort + 1;
         }
 
-        public static $elementalRest = null;
-
         public static function getElementalRest() {
-            if (DeltaInputFilter::$elementalRest == null){
-                DeltaInputFilter::$elementalRest = new ElementalRest($hostname=ConfigConsts::DELTA_HOST,
+            return new ElementalRest($hostname=ConfigConsts::DELTA_HOST,
                         $apiEndpoint='input_filters', $port=ConfigConsts::DELTA_PORT);
-            }
-            return DeltaInputFilter::$elementalRest;
         }
     }
+//     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
+//     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
 ?>

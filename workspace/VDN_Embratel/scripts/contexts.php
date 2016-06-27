@@ -50,80 +50,93 @@ class context extends \APS\ResourceBase
 	*/
     public $account;
 
-	# Flag indicating if this is a premium subscription (comes from PBA?)
-	/**
-	* @type(boolean)
-	* @title("Premium")
-	*/
-
-	public $isPremium;
-
 	## Subset of attributes marked as read-only,
 	## which means only the application can change them.
 
 	/**
 	* @type(integer)
-	* @title("Delta Live Output Template ID")
+	* @title("Delta VOD Standard Input Filter ID")
 	* @readonly
 	*/
-	public $liveOutputTemplateID;
+	public $vodStandardInputFilter;
 
 	/**
 	* @type(integer)
-	* @title("Delta VOD Input Filter ID")
+	* @title("Delta VOD Standard Output Template ID")
 	* @readonly
 	*/
-	public $vodInputFilterID;
+	public $vodStandardOutputTemplate;
 
 	/**
 	* @type(integer)
-	* @title("Delta VOD Output Template ID")
+	* @title("Delta VOD Premium Input Filter ID")
 	* @readonly
 	*/
-	public $vodOutputTemplateID;
+	public $vodPremiumInputFilter;
+
+	/**
+	* @type(integer)
+	* @title("Delta VOD Premium Output Template ID")
+	* @readonly
+	*/
+	public $vodPremiumOutputTemplate;
+
+	/**
+	* @type(integer)
+	* @title("Delta Liv Standard Output Template ID")
+	* @readonly
+	*/
+	public $liveStandardOutputTemplate;
+
+	/**
+	* @type(integer)
+	* @title("Delta Live Premium Output Template ID")
+	* @readonly
+	*/
+	public $livePremiumOutputTemplate;
 
     public function provision() {
     	\APS\LoggerRegistry::get()->setLogFile("logs/context.log");
-    	\APS\LoggerRegistry::get()->debug("Iniciando provisionamento de context");
     	$clientid = sprintf("Client_%06d",$this->account->id);
-    	\APS\LoggerRegistry::get()->debug("Iniciando provisionamento de context para o cliente ".$clientid);
+    	\APS\LoggerRegistry::get()->info("Iniciando provisionamento de context para o cliente ".$clientid);
 
-        // Create Live output template
-    	$liveOutputTemplate = DeltaOutputTemplate::newOutputTemplate($clientid, 'live', 
-                $this->isPremium ? 'premium' : 'std');
-        $this->liveOutputTemplateID = $liveOutputTemplate->id;
-    	\APS\LoggerRegistry::get()->debug("Criado Delta Output Template para Live ID=".$this->liveOutputTemplateID);
-/*
-        // Create VOD input filter
-        $vodInputFilter = DeltaInputFilter::newVodInputFilter( $clientid, $this->isPremium? 'premium': 'std');
-        $this->vodInputFilterID = $vodInputFilter->id;
-    	\APS\LoggerRegistry::get()->debug("Criado Delta input filter para VOD ID=".$this->vodInputFilterID);
+        // Create output template for all options: Live / Vod Premium / Stde
+    	$this->liveStandardOutputTemplate = DeltaOutputTemplate::getClientOutputTemplate($clientid, 'live', 'std')->id;
+    	$this->livePremiumOutputTemplate = DeltaOutputTemplate::getClientOutputTemplate($clientid, 'live', 'premium' )->id;
 
-        // Create VOD output template
-        $vodOutputTemplate = DeltaOutputTemplate::newOutputTemplate($clientid, 'vod', 
-                $this->isPremium ? 'premium' : 'std');
-        $this->vodOutputTemplateID = $liveOutputTemplate->id;
-    	\APS\LoggerRegistry::get()->debug("Criado Delta Output Template para VOD ID=".$this->vodOutputTemplateID);
-*/
+    	$this->vodStandardOutputTemplate = DeltaOutputTemplate::getClientOutputTemplate($clientid, 'vod', 'std')->id;
+    	$this->vodPremiumOutputTemplate = DeltaOutputTemplate::getClientOutputTemplate($clientid, 'vod', 'premium' )->id;
+    	\APS\LoggerRegistry::get()->info("Criados os Delta Output Templates para o cliente ".$clientid);
+        
+
+        // Create VOD input filters
+    	\APS\LoggerRegistry::get()->info("Criando os Delta Input Filters para o cliente ".$clientid);
+        $this->vodStandardInputFilter = DeltaInputFilter::getVodClientInputFilter( $clientid, 'std')->id;
+        $this->vodPremiumInputFilter = DeltaInputFilter::getVodClientInputFilter( $clientid, 'premium')->id;
+    	\APS\LoggerRegistry::get()->info("Delta Input Filters para o cliente $clientid Criandos");
+
+    	\APS\LoggerRegistry::get()->info("Encerrando provisionamento de context para o cliente ".$clientid);
+
     }
     
     public function unprovision(){
     	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
     	$clientid = sprintf("Client_%06d",$this->account->id);
-    	\APS\LoggerRegistry::get()->debug("Iniciando desprovisionamento de context para o cliente ".$clientid);
+    	\APS\LoggerRegistry::get()->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
 
-    	//Delete Live output template
-    	\APS\LoggerRegistry::get()->debug("Deletando Delta Output Template para Live ID=".$this->liveOutputTemplateID);
-    	DeltaOutputTemplate::delete($this->liveOutputTemplateID);
-/*
     	// Delete vod input filter
-    	\APS\LoggerRegistry::get()->debug("Deletando Delta input filter para VOD ID=".$this->vodInputFilterID);
-    	DeltaInputFilter::delete($this->vodInputFilterID);
+    	\APS\LoggerRegistry::get()->info("Deletando Delta input filters para o cliente $clientid");
+    	DeltaInputFilter::delete($this->vodStandardInputFilter);
+    	DeltaInputFilter::delete($this->vodPremiumInputFilter);
+    	\APS\LoggerRegistry::get()->info("Delta input filters para o cliente $clientid Deletados");
 
-    	// Delete vod output template
-    	\APS\LoggerRegistry::get()->debug("Deletando Delta Output Template para VOD ID=".$this->vodOutputTemplateID);
-    	DeltaOutputTemplate::delete($this->vodOutputTemplateID);
-*/
+    	//Delete output templates
+    	\APS\LoggerRegistry::get()->info("Deletando Delta Output Templates para o cliente $clientid");
+    	DeltaOutputTemplate::delete($this->liveStandardOutputTemplate);
+    	DeltaOutputTemplate::delete($this->livePremiumOutputTemplate);
+    	DeltaOutputTemplate::delete($this->vodStandardOutputTemplate);
+    	DeltaOutputTemplate::delete($this->vodPremiumOutputTemplate);
+    	\APS\LoggerRegistry::get()->info("Delta Output Templates para o cliente $clientid Deletados");
     }
 }
 
