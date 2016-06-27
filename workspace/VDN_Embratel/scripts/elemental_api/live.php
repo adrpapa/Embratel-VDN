@@ -1,4 +1,5 @@
 <?php
+    #Teste Band
     require_once "configConsts.php";
     require_once "elementalRest.php";
     require_once "deltaInput.php";
