@@ -130,10 +130,10 @@ class channel extends \APS\ResourceBase {
 	public function provision() { 
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/channels.log");
-        \APS\LoggerRegistry::get()->debug("Iniciando provisionamento de canal ".$this->aps->id);
+        \APS\LoggerRegistry::get()->info("Iniciando provisionamento de canal ".$this->aps->id);
         $clientid = sprintf("Client_%06d",$this->context->account->id);
         $event = LiveEvent::newStandardLiveEvent( $this->aps->id, $clientid );
-		if( $this->context->premium ) {
+		if( $this->premium ) {
 			$event = LiveEvent::newPremiumLiveEvent( $this->aps->id, $clientid );
 		} else {
 			$event = LiveEvent::newStandardLiveEvent( $this->aps->id, $clientid );
@@ -147,12 +147,12 @@ class channel extends \APS\ResourceBase {
         $this->live_node = $event->live_node;
         $this->input_filter_id = $event->inputFilterID;
 
-        \APS\LoggerRegistry::get()->debug("live_event_id:" . $this->live_event_id );
-        \APS\LoggerRegistry::get()->debug("live_event_name:" . $this->live_event_name );
-        \APS\LoggerRegistry::get()->debug("state:" . $this->state );
-        \APS\LoggerRegistry::get()->debug("input_URI:" . $this->input_URI );
-        \APS\LoggerRegistry::get()->debug("delta_port:" . $this->delta_port );
-        \APS\LoggerRegistry::get()->debug("live_node:" . $this->live_node );
+        \APS\LoggerRegistry::get()->info("live_event_id:" . $this->live_event_id );
+        \APS\LoggerRegistry::get()->info("live_event_name:" . $this->live_event_name );
+        \APS\LoggerRegistry::get()->info("state:" . $this->state );
+        \APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
+        \APS\LoggerRegistry::get()->info("delta_port:" . $this->delta_port );
+        \APS\LoggerRegistry::get()->info("live_node:" . $this->live_node );
 
     }
 
@@ -179,26 +179,26 @@ class channel extends \APS\ResourceBase {
 
 	public function retrieve(){
     	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
-		\APS\LoggerRegistry::get()->debug("Entrando na função retrieve de canal");
+		\APS\LoggerRegistry::get()->info("Entrando na função retrieve de canal");
 
 	}
 
     public function upgrade(){
     	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
-		\APS\LoggerRegistry::get()->debug("Entrando na função upgrade de canal");
+		\APS\LoggerRegistry::get()->info("Entrando na função upgrade de canal");
 
 	}
 
     public function unprovision(){
     	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
         $clientid = sprintf("Client_%06d",$this->context->account->id);
-        \APS\LoggerRegistry::get()->debug(sprintf("Iniciando desprovisionamento para evento %s-%s do cliente %s",
+        \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento para evento %s-%s do cliente %s",
             $this->live_event_id, $this->live_event_name, $clientid));
-        \APS\LoggerRegistry::get()->debug(sprintf("Excluindo Input Filter %s",$this->input_filter_id));
+        \APS\LoggerRegistry::get()->info(sprintf("Excluindo Input Filter %s",$this->input_filter_id));
         DeltaInputFilter::delete($this->input_filter_id);
-        \APS\LoggerRegistry::get()->debug(sprintf("Excluindo LiveEvent %s",$this->live_event_id));
+        \APS\LoggerRegistry::get()->info(sprintf("Excluindo LiveEvent %s",$this->live_event_id));
         LiveEvent::delete($this->live_event_id);
-        \APS\LoggerRegistry::get()->debug(sprintf("Fim desprovisionamento para evento %s do cliente %s",
+        \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para evento %s do cliente %s",
                 $this->live_event_id, $clientid));
 	}
 }

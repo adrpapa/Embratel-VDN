@@ -1,4 +1,5 @@
 *.zip
+*.kate-swp
 com.parallels.aps.ide.usagedata.prefs
 templates
 workspace/.metadata
