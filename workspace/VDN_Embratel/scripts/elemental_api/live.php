@@ -4,6 +4,8 @@
     require_once "deltaInput.php";
     require_once "utils.php";
 
+    // Alteracoes feitas por Adriano
+    
     /*
     ** Classe que cria e controla live events
     */
