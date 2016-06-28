@@ -17,6 +17,9 @@ class Preset {
 	}
 }
 
+// Encapsula um conjunto de Presets
+// Permite customizar um XML de submit à partir de um conjunto de Presets
+//
 class Presets {
 	protected $array_preset;
 	
@@ -49,14 +52,17 @@ class Presets {
 				continue;
 			}
 			
+			// No framerate conversion from source ?
+			$follow_source = (is_null($preset_obj->framerate_denom) && is_null($preset_obj->framerate_num));
+			
 			$bitrate[$k][0]       = $preset_obj->bitrate;
 			$width[$k][0]         = $preset_obj->width;
 			$height[$k][0]        = $preset_obj->height;
-			$frm_source[$k][0]    = "false";
+			$frm_source[$k][0]    = $follow_source ? "true":"false";
 			$frm_denom[$k][0]     = $preset_obj->framerate_denom;
-			$frm_denom_nil[$k][0] = "false";
+			$frm_denom_nil[$k][0] = $follow_source ? "true":"false";
 			$frm_num[$k][0]       = $preset_obj->framerate_num;
-			$frm_num_nil[$k][0]   = "false";
+			$frm_num_nil[$k][0]   = $follow_source ? "true":"false";
 			$audio_bitrate[$k][0] = $preset_obj->audio_bitrate;
 			if ( $k >= count($bitrate) ) break;
 		}

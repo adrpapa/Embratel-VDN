@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
 	<buildpathentry kind="lib" path="workspace/oldpackages/VDN-1.0-1.app.zip"/>
-	<buildpathentry kind="src" path="pgms/phpApiCall"/>
 	<buildpathentry kind="lib" path="workspace/oldpackages/hello-1.0-1.app.zip"/>
-	<buildpathentry kind="lib" path="workspace/Mozy/apspackages/mozy_APS2-2.0-1.8.app.zip"/>
-	<buildpathentry kind="src" path="workspace/CloudBasic/scripts"/>
 	<buildpathentry kind="lib" path="workspace/oldpackages/CloudBasic-1.0-1.app.zip"/>
 	<buildpathentry kind="lib" path="workspace/oldpackages/starter-1.0-1.app.zip"/>
 	<buildpathentry kind="lib" path="workspace/oldpackages/mozy_APS2-2.0-1.8.app.zip"/>
 	<buildpathentry kind="lib" path="workspace/oldpackages/VDN_Embratel-v6.app.zip"/>
-	<buildpathentry kind="src" path="workspace/VDN_Embratel_frank/scripts"/>
 	<buildpathentry kind="lib" path="workspace/VDN_Embratel/apspackages/VDN_Embratel-1.0-1.app.zip"/>
 	<buildpathentry kind="lib" path="workspace/oldpackages/resmon-1.0-1.app.zip"/>
 	<buildpathentry kind="lib" path="workspace/VDN_Embratel_frank/apspackages/VDN_Embratel-1.0-1.app.zip"/>
-	<buildpathentry kind="src" path="workspace/Mozy/scripts"/>
 	<buildpathentry kind="lib" path="workspace/VDN_Embratel-1.0-1.app.zip"/>
 	<buildpathentry kind="src" path="workspace/VDN_Embratel/scripts"/>
 	<buildpathentry kind="lib" path="workspace/oldpackages/CloudBasicSample-1.0-1.app.zip"/>

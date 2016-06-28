@@ -55,14 +55,9 @@
     				JobVOD::getElementalRest()->restGet($id)
     				);
     	}
-    	
-    	public static $elementaRest = null;
-    	
+     	
     	public static function getElementalRest() {
-    		if (JobVOD::$elementaRest == null){
-    			JobVOD::$elementaRest = new ElementalRest(ConfigConsts::VOD_CONDUCTOR_HOST, 'jobs');
-    		}
-    		return JobVOD::$elementaRest;
+			return new ElementalRest(ConfigConsts::VOD_CONDUCTOR_HOST, 'jobs');
     	}
     	   	
     	public static function getJobList( $id="", $filter="" ) {

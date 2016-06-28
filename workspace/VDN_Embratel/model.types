@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="ASCII"?>
 <aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="VDN_Embratel">
-  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/context" version="1.0" relations="//@relations.0/@source //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source" name="context" implements="//@typesFromLibrary.0">
-    <properties name="isPremium" type="boolean"/>
-    <properties name="liveOutputTemplateID" type="integer" readonly="true"/>
-    <properties name="vodInputFilterID" type="integer" readonly="true"/>
-    <properties name="vodOutputTemplateID" type="integer" readonly="true"/>
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/job" version="1.0" relations="//@relations.0/@source" name="job" implements="//@typesFromLibrary.0">
+    <properties name="name" type="string" description="Job Name" required="true"/>
+    <properties name="description" type="string" description="Job Description" required="true"/>
+    <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
+    <properties name="premium" type="boolean" description="Allow transcoder fine-tuning and multiple transmux packaging"/>
+    <properties name="job_id" type="integer" description="Job ID in Elemental Server Conductor" readonly="true"/>
+    <properties name="job_name" type="string" description="Job Name in Elemental Server Conductor" readonly="true"/>
+    <properties name="input_filter_id" type="integer" description="Delta Input Filter ID" readonly="true"/>
+    <properties name="state" type="string" description="Job current state" readonly="true"/>
+    <properties name="input_URI" type="string" description="Job Input URI for video ingestion" readonly="true"/>
+    <properties name="server_node" type="string" description="Elemental Server node this job is assigned to" readonly="true"/>
   </internalTypes>
-  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/channel" version="1.0" relations="//@relations.1/@target" name="channel" implements="//@typesFromLibrary.0">
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/context" version="1.0" relations="//@relations.0/@target //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source //@relations.5/@source" name="context" implements="//@typesFromLibrary.0">
+    <properties name="vodStandardInputFilter" type="integer" readonly="true"/>
+    <properties name="vodStandardOutputTemplate" type="integer" readonly="true"/>
+    <properties name="vodPremiumInputFilter" type="integer" readonly="true"/>
+    <properties name="vodPremiumOutputTemplate" type="integer" readonly="true"/>
+    <properties name="liveStandardOutputTemplate" type="integer" readonly="true"/>
+    <properties name="livePremiumOutputTemplate" type="integer" readonly="true"/>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/channel" version="1.0" relations="//@relations.2/@target" name="channel" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="Channel Name" required="true"/>
     <properties name="description" type="string" description="Channel Description" required="true"/>
     <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
@@ -21,7 +35,7 @@
     <properties name="delta_port" type="integer" description="UDP Port used for communication with Elemental Delta" readonly="true"/>
     <properties name="live_node" type="string" description="Elemental Live node this channell is assigned to" readonly="true"/>
   </internalTypes>
-  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/cloud" version="1.0" relations="//@relations.2/@target" application="true" name="cloud" implements="//@typesFromLibrary.1">
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/cloud" version="1.0" relations="//@relations.3/@target" application="true" name="cloud" implements="//@typesFromLibrary.1">
     <properties name="TEMPLATE_PATH" type="string" description="Path for all elemental default templates "/>
     <properties name="LIVE_CONDUCTOR_HOST" type="string"/>
     <properties name="LIVE_TEMPLATE_STANDARD" type="integer" description="Live event that will be base of channels for new Standard subscriptions"/>
@@ -40,7 +54,7 @@
     <properties name="API_VERSION" type="string" readonly="true"/>
     <properties name="LIVE_NODE_URL" type="string" readonly="true"/>
   </internalTypes>
-  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/vps" version="1.0" relations="//@relations.0/@target" name="vps" implements="//@typesFromLibrary.0">
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/vps" version="1.0" relations="//@relations.1/@target" name="vps" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="Server Name"/>
     <properties name="description" type="string" description="Server Description"/>
     <properties name="state" type="string" description="Server State"/>
@@ -92,7 +106,7 @@
   <typesFromLibrary id="http://aps-standard.org/types/core/application" version="1.0" name="Application" implements="//@typesFromLibrary.0">
     <operations name="upgrade" verb="POST" path="/upgrade"/>
   </typesFromLibrary>
-  <typesFromLibrary id="http://aps-standard.org/types/core/subscription" version="1.0" relations="//@relations.3/@target" name="Subscription">
+  <typesFromLibrary id="http://aps-standard.org/types/core/subscription" version="1.0" relations="//@relations.4/@target" name="Subscription">
     <properties name="trial" type="boolean"/>
     <properties name="disabled" type="boolean"/>
     <properties name="name" type="string"/>
@@ -111,28 +125,32 @@
       <properties name="unit" type="string" required="true"/>
     </structures>
   </typesFromLibrary>
-  <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.4/@target" name="Account">
+  <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.5/@target" name="Account">
     <properties name="companyName" type="string" required="true"/>
     <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
   </typesFromLibrary>
   <relations>
-    <source type="//@internalTypes.0" name="vpses" collection="true"/>
-    <target type="//@internalTypes.3" name="context" required="true"/>
+    <source type="//@internalTypes.0" name="context" required="true"/>
+    <target type="//@internalTypes.1"/>
   </relations>
   <relations>
-    <source type="//@internalTypes.0" name="channels" collection="true"/>
-    <target type="//@internalTypes.1" name="context" required="true"/>
+    <source type="//@internalTypes.1" name="vpses" collection="true"/>
+    <target type="//@internalTypes.4" name="context" required="true"/>
   </relations>
   <relations>
-    <source type="//@internalTypes.0" name="cloud" required="true"/>
-    <target type="//@internalTypes.2" name="contexts" collection="true"/>
+    <source type="//@internalTypes.1" name="channels" collection="true"/>
+    <target type="//@internalTypes.2" name="context" required="true"/>
   </relations>
   <relations>
-    <source type="//@internalTypes.0" name="subscription" required="true"/>
+    <source type="//@internalTypes.1" name="cloud" required="true"/>
+    <target type="//@internalTypes.3" name="contexts" collection="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.1" name="subscription" required="true"/>
     <target type="//@typesFromLibrary.2"/>
   </relations>
   <relations>
-    <source type="//@internalTypes.0" name="account" required="true"/>
+    <source type="//@internalTypes.1" name="account" required="true"/>
     <target type="//@typesFromLibrary.3"/>
   </relations>
 </aps:APSPackage>
