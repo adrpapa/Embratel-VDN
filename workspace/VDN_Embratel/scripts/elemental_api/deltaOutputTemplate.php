@@ -25,11 +25,11 @@
         // A modalidade do plano (std/live) determina (através do template) 
         // a quantidade e formato dos output filters
         // Parametros: 
-        //  $clientID: ID do cliente - será usado no nome do templa/te e nas URLs de output
+        //  $clientID: ID do cliente - será usado no nome do template e nas URLs de output
         //  $type: live | vod
         //  $level: std | premium
 
-        public static function newOutputTemplate( $clientID, $type, $level ) {
+        public static function newOutputTemplate( $clientID, $type, $proto, $level ) {
             if( $type == 'live' ){
                 if( $level == 'premium') {
                     $templateId = ConfigConsts::DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE;
@@ -45,12 +45,12 @@
             }
             $xml=DeltaOutputTemplate::getElementalRest()->getTemplate($templateId, "DeltaOutputTemplate");
             $axClientID = cleanClientID( $clientID );
-            $xml->name = $axClientID.'_'.$type.'_'.$level;
+            $xml->name = $axClientID.'_'.$type.'_'.$proto.'_'.$level;
 
             //acerta custom url para cada output filter
             foreach( $xml->filter as $filter ){
                 if( (boolean)$filter->endpoint ) {
-                    $filter->output_url = $axClientID.'/'.$type.'/'.$level.'/$fn$.$ex$';
+                    $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/'.$level.'/$fn$.$ex$';
                 }
             } 
 //          print($xml->/*asXml*/());
@@ -64,7 +64,8 @@
             $this->name = (string)$xml->name;
             $this->xml = $xml;
             $this->href = (string)$xml['href'];
-            $this->id = end(explode('/', $xml['href']));
+            $vl_tmp = explode('/', $xml['href']);
+            $this->id = end( $vl_tmp );
             $this->filters = array();
             foreach( $xml->filter as $filter ){
                 $deltaOutputFilter = new DeltaOutputFilter($xml);
@@ -80,10 +81,10 @@
         **      $type: event | vod
         **      $level: std | premium
         */
-        public static function getClientOutputTemplate( $clientID, $type, $level, $create=true ) {
+        public static function getClientOutputTemplate( $clientID, $type, $proto, $level, $create=true ) {
             $outputTpl = null;
             $axClientID = cleanClientID( $clientID );
-            $templateName = $axClientID.'_'.$type.'_'.$level;
+            $templateName = $axClientID.'_'.$type.'_'.$proto.'_'.$level;
             foreach( DeltaOutputTemplate::getOutputTemplateList() as $xmlOutpTpl ){
                 if( $templateName === $xmlOutpTpl->name ) {
                     return $xmlOutpTpl;
@@ -92,16 +93,7 @@
             if( ! $create ) {
                 return null;
             }
-            return DeltaOutputTemplate::newOutputTemplate($clientID, $type, $level);
-        }
-        
-        public static function deleteClient($clientID, $type) {
-        
-            $outTemp = DeltaOutputTemplate::getClientOutputTemplate( $clientID, $type, null, $create=false );
-            if( $outTemp == null )
-                return false;
-//          printf("Deletando %s",$outTemp->id);
-            DeltaOutputTemplate::delete($outTemp->id);
+            return DeltaOutputTemplate::newOutputTemplate($clientID, $type, $proto, $level);
         }
         
         public static function delete($id) {

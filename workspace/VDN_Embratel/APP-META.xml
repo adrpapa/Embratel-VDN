@@ -1,6 +1,6 @@
 <application packaged="2016-06-16T10:37:18" version="2.0"
 	xmlns="http://aps-standard.org/ns/2">
-	<id>http://embratel.com.br/app/VDN_Embratel_Bandiera</id>
+	<id>http://embratel.com.br/app/VDN_Embratel</id>
 	<name>VDN_Embratel</name>
 	<version>1.0</version>
 	<release>1</release>

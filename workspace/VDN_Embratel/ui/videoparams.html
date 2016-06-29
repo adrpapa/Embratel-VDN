@@ -1,0 +1,98 @@
+function buildCombo(at, model, id, seq, res, valueArray, defaValue){
+    var options=[];
+    for( var chave in valueArray ){
+        var allowed=false;
+        for( var ix in valueArray[chave].allow ){
+            if( valueArray[chave].allow[ix] == res){
+                allowed=true;
+                break;
+            }
+        }
+        if( ! allowed )
+            continue;
+        if( valueArray[chave] == defaValue ){
+            alert(valueArray[chave].name + '==' + defaValue.name);
+            options.push({label:valueArray[chave].name, value:chave, selected:true, autoSize: false, size: 500 });
+        }
+        else {
+            options.push({label:valueArray[chave].name, value:chave});
+        }
+    }
+    return ["aps/Select",{id:id+'_'+seq, value: at(model,id+'_'+seq), options:options}];
+}
+
+
+require(["aps/load",
+         "aps/Memory",
+         "dojox/mvc/at",
+         "aps/WizardData",
+         "dojo/text!./frameRates.json",
+         "dojo/text!./videoBitRates.json",
+         "dojo/text!./audioBitRates.json",
+         "dojo/text!./resol4x3.json",
+         "dojo/text!./resol16x9.json",
+         "aps/ready!"],
+    function(load, Memory, at, WizardData, framRats, vidBitRats, audBitRats, resol4x3,resol16x9  ) {
+        "use strict";
+
+        var premiumParms = {
+            r4x3: [
+                { name:"Premium-4:3-1080p",  res:resol4x3.r1080p, vbr:vidBitRats.vbr5M,   fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-4:3-720p-1", res:resol4x3.r720p,  vbr:vidBitRats.vbr3_5M, fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-4:3-720p-2", res:resol4x3.r720p,  vbr:vidBitRats.vbr2M,   fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-4:3-480p-1", res:resol4x3.r480p,  vbr:vidBitRats.vbr1_2M, fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-4:3-480p-2", res:resol4x3.r480p,  vbr:vidBitRats.vbr800K, fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-4:3-360p-1", res:resol4x3.r360p,  vbr:vidBitRats.vbr650K, fr:framRats.fr15, abr:audBitRats.abr64K},
+                { name:"Premium-4:3-360p-2", res:resol4x3.r360p,  vbr:vidBitRats.vbr450K, fr:framRats.fr15, abr:audBitRats.abr64K},
+                { name:"Premium-4:3-240p",   res:resol4x3.r240p,  vbr:vidBitRats.vbr240K, fr:framRats.fr15, abr:audBitRats.abr64K}
+            ],
+            r16x9: [
+                { name:"Premium-16:9-1080p", res:resol16x9.r1080p,vbr:vidBitRats.vbr5M,   fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-16:9-720p-1",res:resol16x9.r720p, vbr:vidBitRats.vbr3_5M, fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-16:9-720p-2",res:resol16x9.r720p, vbr:vidBitRats.vbr2M,   fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-16:9-480p-1",res:resol16x9.r480p, vbr:vidBitRats.vbr1_2M, fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-16:9-480p-2",res:resol16x9.r480p, vbr:vidBitRats.vbr800K, fr:framRats.frfs, abr:audBitRats.abr96K},
+                { name:"Premium-16:9-360p-1",res:resol16x9.r360p, vbr:vidBitRats.vbr650K, fr:framRats.fr15, abr:audBitRats.abr64K},
+                { name:"Premium-16:9-360p-2",res:resol16x9.r360p, vbr:vidBitRats.vbr480K, fr:framRats.fr15, abr:audBitRats.abr64K},
+                { name:"Premium-16:9-240p",  res:resol16x9.r240p, vbr:vidBitRats.vbr250K, fr:framRats.fr15, abr:audBitRats.abr64K}
+            ]};
+
+        var model={};
+
+        var containers=[];
+
+        var params=premiumParms.r4x3;
+        var paramLength=params.length;
+
+        for( var i=0; i<paramLength; ++i ) {
+            var resolutions=[];
+            var variants = params[i].res.variants;
+            var varLen = variants.length;
+            for( var j=0; j<varLen; ++j ) {
+                var resText=variants[j].w + 'x' + variants[j].h;
+                resolutions.push({label:resText, value:resText});
+            }
+            var res=params[i].res.name;
+            var id="str_"+res+"_"+i;
+            containers.push(
+                ["aps/Container",{label:params[i].name},[
+                    ["aps/Output",{content:" Res:"}],
+                 
+                     ["aps/Select",{id:id, value: at(model,"res_"+id),options:resolutions}],
+                     ["aps/Output",{content:" FR:"}],
+                     buildCombo(at, model, "fr", i, res, framRats, params[i].fr),
+                     ["aps/Output",{content:" VBR:"}],
+					 buildCombo(at, model, "vbr", i, res, vidBitRats, params[i].vbr),
+                     ["aps/Output",{content:" ABR: "}],
+                     buildCombo(at, model, "abr", i, res, audBitRats, params[i].abr)
+                 ]]);
+        }
+        
+        load(["aps/PageContainer", [
+            ["aps/FieldSet", {
+                    title: "Premium Transcoder Parameter Customization",
+                    description: "Each stream may have its resolution, frame rate, video and audio bit rate modified."
+                }, containers
+           ]]]);
+    });
+

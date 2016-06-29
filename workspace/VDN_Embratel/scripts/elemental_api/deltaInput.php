@@ -36,29 +36,29 @@
         ** cria objeto DeltaInputFilter para VOD, e monta XML para inclusão do mesmo
         **
         */
-        public static function newVodInputFilter( $clientID, $level ) {
+        public static function newWfInputFilter( $clientID, $type, $proto, $level ) {
             $xml=DeltaInputFilter::getElementalRest()->getTemplate(
                     ConfigConsts::DELTA_WF_INPUT_FILTER_TEMPLATE, "DeltaWFInputFilter");
             $axClientID = cleanClientID($clientID);
-            $xml->label = $axClientID.'_vod_'.$level;
+            $xml->label = $axClientID.'_'.$type.'_'.$proto.'_'.$level;
             $xml->filter_settings->incoming->uri = 
-                ConfigConsts::DELTA_WF_INCOMMING_URI.'/'.$axClientID.'/'.$level.'/';
+                ConfigConsts::DELTA_WF_INCOMMING_URI.'/'.$axClientID.'/'.$type.'/'.$proto.'/'.$level.'/';
             // busca o output template para eventos VOD do cliente - cria se não existir
-            $outputTemplate = DeltaOutputTemplate::getClientOutputTemplate( $axClientID, 'vod', $level, true );
+            $outputTemplate = DeltaOutputTemplate::getClientOutputTemplate( $axClientID, $type, $proto, $level, true );
             $xml->filter_settings->template_id = $outputTemplate->id;
             print '\n\n'.$xml->asXml().'\n\n';
             return new self(DeltaInputFilter::getElementalRest()->postRecord(null, null, $xml));
         }
         
-        /*
+        /*ß
         ** Obtem / cria input filter para o cliente std/premium ($level)
         ** Parametros:
         **      $clientID
         **      $level: std | premium
         */
-        public static function getVodClientInputFilter( $clientID, $level, $create=true ) {
+        public static function getClientInputFilter( $clientID, $type, $proto, $level, $create=true ) {
             $axClientID = cleanClientID( $clientID );
-            $label = $axClientID.'_VOD_'.$level;
+            $label =  $axClientID.'_'.$type.'_'.$proto.'_'.$level;
             foreach( DeltaInputFilter::getInputFilterList() as $xmlInpFilter ){
                 if( $label === $xmlInpFilter->label ) {
                     return $xmlInpFilter;
@@ -67,7 +67,7 @@
             if( ! $create ) {
                 return null;
             }
-            return DeltaInputFilter::newVodInputFilter($clientID, $level);
+            return DeltaInputFilter::newWfInputFilter($clientID, $type, $proto, $level);
         }
         
         
@@ -77,9 +77,13 @@
             $this->href = (string)$xml['href'];
             $this->id = end(explode('/', $xml['href']));
             $this->udpPort = end(explode(':', $this->inputURI));
-            $this->storage_location = (string)$xml->filter_settings->storage_location;
             $this->template_id = (string)$xml->filter_settings->template_id;
-            $storageTokens = explode('/', trim($this->storage_location,'/'));
+            $this->storage_location = (string)$xml->filter_settings->storage_location;
+            $this->incoming_uri = (string)$xml->filter_settings->incoming->uri;
+            $storageTokens = explode('/', trim($this->incoming_uri,'/'));
+            if( count($storageTokens) < 2 ) {
+                $storageTokens = explode('/', trim($this->storage_location,'/'));
+            }
             $this->clientID = $storageTokens[count($this->clientID=$storageTokens)-2];
             print_r($this);
         }
@@ -115,6 +119,6 @@
                         $apiEndpoint='input_filters', $port=ConfigConsts::DELTA_PORT);
         }
     }
-     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
-     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
+//      DeltaInputFilter::getClientInputFilter( "Cliente_teste_Api", "vod", 'HTTP', "std", $create=true );
+//      DeltaInputFilter::getClientInputFilter( "Cliente_teste_Api", "vod", 'HTTPS', "premium", $create=true );
 ?>

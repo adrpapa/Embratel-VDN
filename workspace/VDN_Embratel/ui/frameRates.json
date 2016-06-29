@@ -1,0 +1,10 @@
+{
+    "frfs":   {"name": "Follow Source","numer":null,   "denom":null, "allow":["1080p","720p","480p","360p","240p"]},
+    "fr30":   {"name": "30",           "numer":30,     "denom":1,    "allow":["1080p","720p"]},
+    "fr2997": {"name": "29.97",        "numer":30000,  "denom":1001, "allow":["1080p","720p"]},
+    "fr25":   {"name": "25",           "numer":25,     "denom":1,    "allow":["1080p","720p","480p"]},
+    "fr24":   {"name": "24",           "numer":24,     "denom":1,    "allow":["1080p","720p","480p"]},
+    "fr2397": {"name": "23.976",       "numer":24000,  "denom":1001, "allow":["1080p","720p","480p"]},
+    "fr15":   {"name": "15",           "numer":15,     "denom":1,    "allow":["480p", "360p","240p"]},
+    "fr10":   {"name": "10",           "numer":10,     "denom":1,    "allow":["480p", "360p","240p"]}
+}

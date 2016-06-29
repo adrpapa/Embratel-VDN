@@ -17,7 +17,7 @@
 
     @$id = "363";
     @$func = 'del';
-    @$filter = NULL;
+    @$filter = NULLle;
     @$cmd = null;
     @$alvo = 'vod';
     $name = "Job Teste Ftl 1";

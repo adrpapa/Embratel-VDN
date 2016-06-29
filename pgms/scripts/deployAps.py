@@ -149,19 +149,25 @@ def activateAndSubscribe(name):
 #def deleteAllResources():
 
 if True:
-    driver=webdriver.Chrome('/home/fastlane/Downloads/chromedriver')
+    driver=webdriver.Chrome('/chromedriver/chromedriver')
 
     try:
-        driver.get("http://cdn.flts.apsdemo.org:8080/")
+        try:
+            driver.get("http://cdn.flts.apsdemo.org:8080/")
+            instance="cdn"
+        except:
+            driver.get("http://host1.apo.apsdemo.org:8080/")
+            instance="apo"
         assert 'Parallels® Automation' in driver.title
         login('admin','123@mudar')
 
-        services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 'VDN Virtual Private Server']
+        services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 'VDN Virtual Private Server', 'VDN Job Content']
 
         createAppReference(services[0])
         createAppService(services[1], True)
         createAppService(services[2])
         createAppService(services[3])
+        createAppService(services[4])
 
         createServiceTemplate(services[0], True, services)
         activateAndSubscribe(services[0])
@@ -169,7 +175,10 @@ if True:
         # logout from admin
         gotoFrame("topFrame")
         driver.find_element_by_id("topTxtLogout").click()
-        login('zedaesquina','123@mudar')
+        if instance == "cdn":
+            login('zedaesquina','123@mudar')
+        else
+            login('adrpapa','123@mudar')
         input("waiting for your tests...")
     finally:
         driver.close()
