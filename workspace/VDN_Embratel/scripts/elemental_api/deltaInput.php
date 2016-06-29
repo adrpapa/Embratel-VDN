@@ -77,9 +77,13 @@
             $this->href = (string)$xml['href'];
             $this->id = end(explode('/', $xml['href']));
             $this->udpPort = end(explode(':', $this->inputURI));
-            $this->storage_location = (string)$xml->filter_settings->storage_location;
             $this->template_id = (string)$xml->filter_settings->template_id;
-            $storageTokens = explode('/', trim($this->storage_location,'/'));
+            $this->storage_location = (string)$xml->filter_settings->storage_location;
+            $this->incoming_uri = (string)$xml->filter_settings->incoming->uri;
+            $storageTokens = explode('/', trim($this->incoming_uri,'/'));
+            if( count($storageTokens) < 2 ) {
+                $storageTokens = explode('/', trim($this->storage_location,'/'));
+            }
             $this->clientID = $storageTokens[count($this->clientID=$storageTokens)-2];
             print_r($this);
         }
@@ -115,6 +119,6 @@
                         $apiEndpoint='input_filters', $port=ConfigConsts::DELTA_PORT);
         }
     }
-//     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
-//     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
+     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
+     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
 ?>
