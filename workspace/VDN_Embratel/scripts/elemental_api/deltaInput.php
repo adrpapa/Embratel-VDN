@@ -119,6 +119,6 @@
                         $apiEndpoint='input_filters', $port=ConfigConsts::DELTA_PORT);
         }
     }
-     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
-     DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
+ //    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
+ //    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
 ?>
