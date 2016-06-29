@@ -152,7 +152,7 @@ if True:
     driver=webdriver.Chrome('/chromedriver/chromedriver')
 
     try:
-        driver.get("http://cdn.flts.apsdemo.org:8080/")
+        driver.get("http://host1.apo.apsdemo.org:8080/")
         assert 'Parallels® Automation' in driver.title
         login('admin','123@mudar')
 
@@ -170,7 +170,7 @@ if True:
         # logout from admin
         gotoFrame("topFrame")
         driver.find_element_by_id("topTxtLogout").click()
-        login('zedaesquina','123@mudar')
+        login('adrpapa','123@mudar')
         input("waiting for your tests...")
     finally:
         driver.close()

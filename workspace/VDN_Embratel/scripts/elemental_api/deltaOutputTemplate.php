@@ -64,7 +64,8 @@
             $this->name = (string)$xml->name;
             $this->xml = $xml;
             $this->href = (string)$xml['href'];
-            $this->id = end(explode('/', $xml['href']));
+            $vl_tmp = explode('/', $xml['href']);
+            $this->id = end( $vl_tmp );
             $this->filters = array();
             foreach( $xml->filter as $filter ){
                 $deltaOutputFilter = new DeltaOutputFilter($xml);

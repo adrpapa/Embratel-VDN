@@ -45,18 +45,18 @@
 					page = registry.byId("page");
 
 				/* Create a handler for the *New* button click */
-				registry.byId("jobl_new").on("click", function() {
+				registry.byId("job_new").on("click", function() {
 					/* Start the process of creating a VPS by going to the first screen */
 					aps.apsc.gotoView("job-new-1");
 				});
 
-				registry.byId("jobl_refresh").on("click", function() {
+				registry.byId("job_refresh").on("click", function() {
 					grid.refresh();
 				});
 
 				/* Create the on-click handler for the *Delete* button
 				*/
-				registry.byId("jobl_delete").on("click", function() {
+				registry.byId("job_delete").on("click", function() {
                     var self = this;
 					/* Get confirmation from the user for the delete operation */
                     if (!confirm("Are you sure you want delete this content?")) {

@@ -5,6 +5,7 @@
     <properties name="description" type="string" description="Job Description" required="true"/>
     <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
     <properties name="premium" type="boolean" description="Allow transcoder fine-tuning and multiple transmux packaging"/>
+    <properties name="https" type="boolean" description="Turn on HTTPS feature for live"/>
     <properties name="job_id" type="integer" description="Job ID in Elemental Server Conductor" readonly="true"/>
     <properties name="job_name" type="string" description="Job Name in Elemental Server Conductor" readonly="true"/>
     <properties name="input_filter_id" type="integer" description="Delta Input Filter ID" readonly="true"/>
@@ -117,7 +118,6 @@
       <properties name="title" type="string"/>
       <properties name="apsId" type="string"/>
       <properties name="apsType" type="string"/>
-      <properties name="applicationId" type="string"/>
       <properties name="property" type="string"/>
       <properties name="usage" type="integer"/>
       <properties name="limit" type="integer"/>
@@ -127,7 +127,7 @@
   </typesFromLibrary>
   <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.5/@target" name="Account">
     <properties name="companyName" type="string" required="true"/>
-    <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
+    <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.0#Address" required="true"/>
   </typesFromLibrary>
   <relations>
     <source type="//@internalTypes.0" name="context" required="true"/>
