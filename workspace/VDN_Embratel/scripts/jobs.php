@@ -119,25 +119,24 @@ class job extends \APS\ResourceBase {
 		\APS\LoggerRegistry::get()->info("Iniciando provisionamento de conteudo(job) ".$this->aps->id);
 		$clientid = sprintf("Client_%06d",$this->context->account->id);
 		\APS\LoggerRegistry::get()->info("Client: ".$clientid);
-		
-		
-		/***
+
 		$level = ($this->premium ? 'std' : 'prm');
 		
+		\APS\LoggerRegistry::get()->info("Definindo autenticacao...");
 		ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
+		\APS\LoggerRegistry::get()->info("--> Provisionando...");
 		$job = JobVOD::newJobVOD( $this->aps->id, $this->input_URI, $clientid, $level );
+		\APS\LoggerRegistry::get()->info("<-- Fim Provisionando");
 		
 		$this->job_id = $job->id;
 		$this->job_name = $job->name;
 		$this->state = $job->status;
 		$this->input_URI =  $job->inputURI;
-		$this->input_filter_id = $job->inputFilterID;
 		
 		\APS\LoggerRegistry::get()->info("job_id:" . $this->job_id );
 		\APS\LoggerRegistry::get()->info("job_name:" . $this->job_name );
 		\APS\LoggerRegistry::get()->info("state:" . $this->state );
 		\APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
-		***/
     }
 
     public function configure($new) {
@@ -162,6 +161,7 @@ class job extends \APS\ResourceBase {
     	
     	\APS\LoggerRegistry::get()->info(sprintf("Excluindo Job %s",$this->job_id));
 
+    	ElementalRest::$auth = new Auth( 'elemental','elemental' );
     	JobVOD::delete($this->job_id);
     	
     	\APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para job %s do cliente %s",
