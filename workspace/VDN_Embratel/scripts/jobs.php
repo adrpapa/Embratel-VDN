@@ -123,10 +123,17 @@ class job extends \APS\ResourceBase {
 		$level = ($this->premium ? 'std' : 'prm');
 		
 		\APS\LoggerRegistry::get()->info("Definindo autenticacao...");
-		ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
-		\APS\LoggerRegistry::get()->info("--> Provisionando...");
-		$job = JobVOD::newJobVOD( $this->aps->id, $this->input_URI, $clientid, $level );
-		\APS\LoggerRegistry::get()->info("<-- Fim Provisionando");
+		
+		try {
+			ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
+			\APS\LoggerRegistry::get()->info("--> Provisionando Job...");
+			$job = JobVOD::newJobVOD( $this->aps->id, $this->input_URI, $clientid, $level );
+		} catch (Exception $fault) {
+			$this->logger->info("Error while creating content job, :\n\t" . $fault->getMessage());
+			throw new Exception($fault->getMessage());
+		}		
+		
+		\APS\LoggerRegistry::get()->info("<-- Fim Provisionando Job");
 		
 		$this->job_id = $job->id;
 		$this->job_name = $job->name;
@@ -158,14 +165,31 @@ class job extends \APS\ResourceBase {
     	
     	\APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento para job %s-%s do cliente %s",
     			$this->job_id, $this->job_name, $clientid));
-    	
     	\APS\LoggerRegistry::get()->info(sprintf("Excluindo Job %s",$this->job_id));
 
-    	ElementalRest::$auth = new Auth( 'elemental','elemental' );
-    	JobVOD::delete($this->job_id);
+    	try {
+    		ElementalRest::$auth = new Auth( 'elemental','elemental' );
+    		JobVOD::delete($this->job_id);
+    	} catch (Exception $fault) {
+    		$this->logger->info("Error while deleting content job, :\n\t" . $fault->getMessage());
+    		throw new Exception($fault->getMessage());
+    	}    	
     	
     	\APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para job %s do cliente %s",
     			$this->job_id, $clientid));
 	}
+	
+    /**
+	* updateJobStatus
+	* @verb(POST)
+	* @path("/updateJobStatus")
+	* @param(string, query)
+	* @return(string, text/plain)
+	*/
+	public function updateJobStatus($json) {
+		\APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
+		\APS\LoggerRegistry::get()->info("Chamando updateJobStatus...");
+//		$this->retrieve();
+	}	
 }
 ?>
