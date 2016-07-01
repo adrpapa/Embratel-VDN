@@ -39,14 +39,16 @@
 			/* Create widgets */
 			var widgets =
 				["aps/PageContainer", { id: "page" }, [
-					["aps/FieldSet", { id: "new1_general", title:  "General Configuration"  }, [
-						["aps/TextBox", { id: "new1_jobName", label: _("Job Name"), value: at(model, "name"), required: true }],
-						["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") } ]
+					["aps/FieldSet", { id: "new_general", title:  "General Configuration"  }, [
+						["aps/TextBox", { id: "new_jobName", label: _("Job Name"), value: at(model, "name"), required: true }],						
+						["aps/TextBox", { id: "new_description", label: _("Description"), value: at(model, "description") } ],
+						["aps/TextBox", { id: "new_input_uri", label: _("Input URI"), value: at(model, "input_URI"), required: true } ]
 					]],
-					["aps/FieldSet", { id: "new1_options", title:  "Job Configuration Options"  }, [
-						["aps/Select", { id: "new1_fmt", label: _( "Screen Format"),
+					["aps/FieldSet", { id: "new_options", title:  "Job Configuration Options"  }, [
+						["aps/Select", { id: "new_fmt", label: _( "Screen Format"),
 							value: at(model,"screen_format"), store: screen_formats }],
-						["aps/CheckBox", { id: "new1_premium", label: _("Premium Configuration Options?"), value: at(model, "premium") } ]
+						["aps/CheckBox", { id: "new_https", label: _("Use HTTPS?"), value: at(model, "https") } ],							
+						["aps/CheckBox", { id: "new_premium", label: _("Premium Configuration Options?"), value: at(model, "premium") } ]
 					]]
 				]];
 			load(widgets).then(function(){

@@ -51,6 +51,13 @@ class job extends \APS\ResourceBase {
 	public $premium;
 
 	/**
+	 * @type("boolean")
+	 * @title("HTTPS")
+	 * @description("Turn on HTTPS feature for live")
+	 */
+	public $https;	
+	
+	/**
 	 * Readonly parameters obtained from Elemental Server
 	 */
 	 
@@ -111,6 +118,10 @@ class job extends \APS\ResourceBase {
 		$logger->setLogFile("logs/jobs.log");
 		\APS\LoggerRegistry::get()->info("Iniciando provisionamento de conteudo(job) ".$this->aps->id);
 		$clientid = sprintf("Client_%06d",$this->context->account->id);
+		\APS\LoggerRegistry::get()->info("Client: ".$clientid);
+		
+		
+		/***
 		$level = ($this->premium ? 'std' : 'prm');
 		
 		ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
@@ -126,6 +137,7 @@ class job extends \APS\ResourceBase {
 		\APS\LoggerRegistry::get()->info("job_name:" . $this->job_name );
 		\APS\LoggerRegistry::get()->info("state:" . $this->state );
 		\APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
+		***/
     }
 
     public function configure($new) {
