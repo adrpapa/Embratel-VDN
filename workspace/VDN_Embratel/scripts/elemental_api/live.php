@@ -22,8 +22,10 @@
             $liveEvent = new self();
             $liveEvent->name = cleanName($name);
             $liveEvent->clientID = cleanClientID($clientID);
-            $inputFilter = DeltaInputFilter::newUdpInputFilter($clientID, $liveEvent->name, $level);
-            $liveEvent->udpPort = $inputFilter->udpPort;  
+            // Input filter não usará mais UDP - já foi criado no context
+            // $inputFilter = DeltaInputFilter::newUdpInputFilter($clientID, $liveEvent->name, $level);
+            //$liveEvent->udpPort = $inputFilter->udpPort;
+            $liveEvent->udpPort = 171; // porta dummy... tem que acertar provisionamento de canal
         // TODO Calcular automaticamente o nó Live onde será gerado o evento
             $liveEvent->live_node = ConfigConsts::LIVE_NODE_URL;
             $liveEvent->inputURI = $liveEvent->live_node;

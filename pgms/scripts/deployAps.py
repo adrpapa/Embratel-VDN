@@ -161,13 +161,15 @@ if True:
         assert 'Parallels® Automation' in driver.title
         login('admin','123@mudar')
 
-        services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 'VDN Virtual Private Server', 'VDN Job Content']
+        services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 
+				  'VDN Virtual Private Server', 'VDN Job Content', 'VDN Video On Demand Content']
 
         createAppReference(services[0])
         createAppService(services[1], True)
         createAppService(services[2])
-        createAppService(services[3])
-        createAppService(services[4])
+        # createAppService(services[3])
+        # createAppService(services[4])
+        createAppService(services[5])
 
         createServiceTemplate(services[0], True, services)
         activateAndSubscribe(services[0])

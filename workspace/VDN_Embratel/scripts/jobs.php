@@ -21,7 +21,7 @@ class job extends \APS\ResourceBase {
 	public $context;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Name")
 	 * @description("Job Name")
 	 * @required
@@ -29,7 +29,7 @@ class job extends \APS\ResourceBase {
 	public $name;	
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Description")
 	 * @description("Job Description")
 	 * @required
@@ -37,21 +37,21 @@ class job extends \APS\ResourceBase {
 	public $description;	
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Screen Format")
 	 * @description("4:3 / 16:9 ?")
 	 */
 	public $screen_format;
 
 	/**
-	 * @type("boolean")
+	 * @type(boolean)
 	 * @title("Extended Configuration (Premium)")
 	 * @description("Allow transcoder fine-tuning and multiple transmux packaging")
 	 */
 	public $premium;
 
 	/**
-	 * @type("boolean")
+	 * @type(boolean)
 	 * @title("HTTPS")
 	 * @description("Turn on HTTPS feature for live")
 	 */
@@ -62,7 +62,7 @@ class job extends \APS\ResourceBase {
 	 */
 	 
 	/**
-	 * @type("integer")
+	 * @type(integer)
 	 * @title("Job ID")
 	 * @description("Job ID in Elemental Server Conductor")
 	 * @readonly
@@ -70,7 +70,7 @@ class job extends \APS\ResourceBase {
 	public $job_id;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Job name")
 	 * @description("Job Name in Elemental Server Conductor")
 	 * @readonly
@@ -78,7 +78,7 @@ class job extends \APS\ResourceBase {
 	public $job_name;
 
 	/**
-	 * @type("integer")
+	 * @type(integer)
 	 * @title("Delta Input Filter ID")
 	 * @description("Delta Input Filter ID")
 	 * @readonly
@@ -86,7 +86,7 @@ class job extends \APS\ResourceBase {
 	public $input_filter_id;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("State")
  	* @description("Job current state")
 	 * @readonly
@@ -94,7 +94,7 @@ class job extends \APS\ResourceBase {
 	public $state;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Input URI")
 	 * @description("Job Input URI for video ingestion")
 	 * @readonly
@@ -102,12 +102,44 @@ class job extends \APS\ResourceBase {
 	public $input_URI;
 	
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Server Node")
 	 * @description("Elemental Server node this job is assigned to")
 	 * @readonly
 	 */
 	public $server_node;
+	
+	/**
+	 * @type(string[])
+	 * @title("Resolutions")
+	 * @description("Array of Video Resolutions for the generated streams")
+	 * @readonly
+	 */
+	public $resolutions;
+	
+	/**
+	 * @type(string[])
+	 * @title("Frame Rates")
+	 * @description("Array of Frame Rates for the generated streams")
+	 * @readonly
+	 */
+	public $framerates;
+	
+	/**
+	 * @type(string[])
+	 * @title("Video Bitrates")
+	 * @description("Array of Video Bitrates for the generated streams")
+	 * @readonly
+	 */
+	public $video_bitrates;
+
+	/**
+	 * @type(string[])
+	 * @title("Audio Bitrates")
+	 * @description("Array of Audio Bitrates for the generated streams")
+	 * @readonly
+	 */
+	public $audio_bitrates;
 	
 #############################################################################################################################################
 ## Definition of the functions that will respond to the different CRUD operations

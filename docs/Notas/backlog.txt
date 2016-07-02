@@ -1,2 +1,5 @@
  Tratamento de live conductor
  tratamento de dvr
+ Acertar provisionamento de canais
+    confirmar se vai usar watch folder ou outro
+    acertar parâmetros na criação

@@ -24,19 +24,20 @@
 				screen_format: "16:9",
 				dvr: false,
 				https: false,
-				premium: false
-			};
+				premium: false,
+	            resolutions : [],
+	            framerates : [],
+	            video_bitrates : [],
+	            audio_bitrates : []
+};
 			/* Declare the data source */
 			var model = typeof aps.context.params.isNew === "undefined"? channel_new: getStateful(wd.get());
-            // model.type='live';
+
 			var screen_formats = new Memory({
 				idProperty: "value",
-					data: [
-						{ value:"16:9",		label: "16:9" },
-						{ value: "4:3",		label: "4:3" },
-						{ value: "2.35:1",	label: "2.35:1" }
-					]
-				});
+					data: [	{ value:"16:9",		label: "16:9" },
+							{ value: "4:3",		label: "4:3" } ]
+			});
 
 			/* Create widgets */
 			var widgets =

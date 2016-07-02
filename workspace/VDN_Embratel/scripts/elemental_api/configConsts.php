@@ -23,7 +23,7 @@
         const DELTA_PORT = '8080';
         
         const DELTA_UDP_INPUT_FILTER_TEMPLATE = 274;
-        const DELTA_WF_INPUT_FILTER_TEMPLATE = 42;
+        const DELTA_WF_INPUT_FILTER_TEMPLATE = 76;
 
         const DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive/live';
         const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/vod';

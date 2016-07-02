@@ -21,7 +21,7 @@ class channel extends \APS\ResourceBase {
 	public $context;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Name")
 	 * @description("Channel Name")
 	 * @required
@@ -29,7 +29,7 @@ class channel extends \APS\ResourceBase {
 	public $name;	
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Description")
 	 * @description("Channel Description")
 	 * @required
@@ -37,28 +37,28 @@ class channel extends \APS\ResourceBase {
 	public $description;	
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Screen Format")
 	 * @description("4:3 / 16:9 ?")
 	 */
 	public $screen_format;
 
 	/**
-	 * @type("boolean")
+	 * @type(boolean)
 	 * @title("DVR")
 	 * @description("Turn on DVR feature for live")
 	 */
 	public $dvr;
 
 	/**
-	 * @type("boolean")
+	 * @type(boolean)
 	 * @title("HTTPS")
 	 * @description("Turn on HTTPS feature for live")
 	 */
 	public $https;
 
 	/**
-	 * @type("boolean")
+	 * @type(boolean)
 	 * @title("Extended Configuration (Premium)")
 	 * @description("Allow transcoder fine-tuning and multiple transmux packaging")
 	 */
@@ -69,7 +69,7 @@ class channel extends \APS\ResourceBase {
 	 */
 	 
 	/**
-	 * @type("integer")
+	 * @type(integer)
 	 * @title("Live Event ID")
 	 * @description("Live Event ID in Elemental Live Conductor")
 	 * @readonly
@@ -77,7 +77,7 @@ class channel extends \APS\ResourceBase {
 	public $live_event_id;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Live Event name")
 	 * @description("Live Event Name in Elemental Live Conductor")
 	 * @readonly
@@ -85,7 +85,7 @@ class channel extends \APS\ResourceBase {
 	public $live_event_name;
 
 	/**
-	 * @type("integer")
+	 * @type(integer)
 	 * @title("Delta Input Filter ID")
 	 * @description("Delta Input Filter ID")
 	 * @readonly
@@ -93,7 +93,7 @@ class channel extends \APS\ResourceBase {
 	public $input_filter_id;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("State")
  	* @description("Live channel current state")
 	 * @readonly
@@ -101,14 +101,14 @@ class channel extends \APS\ResourceBase {
 	public $state;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Input URI")
 	 * @description("Live Channel Input URI for client's transmission")
 	 * @readonly
 	 */
 	public $input_URI;
 	/**
-	 * @type("integer")
+	 * @type(integer)
 	 * @title("Delta UDP Port")
 	 * @description("UDP Port used for communication with Elemental Delta")
 	 * @readonly
@@ -116,12 +116,52 @@ class channel extends \APS\ResourceBase {
 	public $delta_port;
 
 	/**
-	 * @type("string")
+	 * @type(string)
 	 * @title("Live Node")
 	 * @description("Elemental Live node this channell is assigned to")
 	 * @readonly
 	 */
 	public $live_node;
+	
+	/**
+	 * @type(string)
+	 * @title("Server Node")
+	 * @description("Elemental Server node this job is assigned to")
+	 * @readonly
+	 */
+	public $server_node;
+	
+	/**
+	 * @type(string[])
+	 * @title("Resolutions")
+	 * @description("Array of Video Resolutions for the generated streams")
+	 * @readonly
+	 */
+	public $resolutions;
+	
+	/**
+	 * @type(string[])
+	 * @title("Frame Rates")
+	 * @description("Array of Frame Rates for the generated streams")
+	 * @readonly
+	 */
+	public $framerates;
+	
+	/**
+	 * @type(string[])
+	 * @title("Video Bitrates")
+	 * @description("Array of Video Bitrates for the generated streams")
+	 * @readonly
+	 */
+	public $video_bitrates;
+
+	/**
+	 * @type(string[])
+	 * @title("Audio Bitrates")
+	 * @description("Array of Audio Bitrates for the generated streams")
+	 * @readonly
+	 */
+	public $audio_bitrates;
 	
 #############################################################################################################################################
 ## Definition of the functions that will respond to the different CRUD operations
