@@ -177,7 +177,7 @@ if True:
         driver.find_element_by_id("topTxtLogout").click()
         if instance == "cdn":
             login('zedaesquina','123@mudar')
-        else
+        else:
             login('adrpapa','123@mudar')
         input("waiting for your tests...")
     finally:

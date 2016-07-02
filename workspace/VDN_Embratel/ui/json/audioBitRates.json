@@ -8,4 +8,4 @@
     "abr64K":  {"name": "64Kbps",  "value":  "64000", "allow":["360p", "240p"]},
     "abr32K":  {"name": "32Kbps",  "value":  "32000", "allow":["360p", "240p"]},
     "abr24K":  {"name": "24Kbps",  "value":  "24000", "allow":["240p"]}
-};
+}

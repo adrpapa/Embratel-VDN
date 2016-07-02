@@ -29,10 +29,10 @@
         const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/vod';
         const DELTA_WF_INCOMMING_URI = '/data/server/drive/watchfolders';
         
-        const DELTA_STD_EVENT_OUTPUT_TEMPLATE = 10;
-        const DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE = 10;
-        const DELTA_STD_VOD_OUTPUT_TEMPLATE = 10;
-        const DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 10;
+        const DELTA_STD_EVENT_OUTPUT_TEMPLATE = 7;
+        const DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE = 8;
+        const DELTA_STD_VOD_OUTPUT_TEMPLATE = 1;
+        const DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 2;
 
     }
 ?>

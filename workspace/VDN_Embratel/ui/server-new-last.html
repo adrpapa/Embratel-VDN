@@ -4,18 +4,18 @@
 	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
 	<script>
 		require([
-			"aps/ResourceStore",
-			"dojo/when",
-			"dijit/registry",
-			"aps/load",
-			"aps/Memory",
-			"dojox/mvc/getStateful",
-			"dojox/mvc/getPlainValue",
-			"aps/WizardData",
-			"dojo/text!./channel-wizard.json",
-			"./displayError.js",
-			"dojox/mvc/at",
-			"aps/ready!"
+                          "aps/ResourceStore",
+                         "dojo/when",
+                        "dijit/registry",
+                          "aps/load",
+                          "aps/Memory",
+                    "dojox/mvc/getStateful",
+                    "dojox/mvc/getPlainValue",
+                          "aps/WizardData",
+             "dojo/text!./json/channel-wizard.json",
+                         "./js/displayError.js",
+                    "dojox/mvc/at",
+                          "aps/ready!"
 		], function (Store, when, registry, load, Memory, getStateful, getPlainValue, wd, wizardControl, displayError, at) {
 			wizardControl = JSON.parse(wizardControl);
 			wizardControl[1].active = true;

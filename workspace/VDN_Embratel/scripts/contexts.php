@@ -12,7 +12,7 @@ require_once "elemental_api/deltaOutputTemplate.php";
 ** Classe que associa um input filter ao 
 ** output template correspondente
 */
-class inOutPath {
+class InOutPath {
 	/**
 	 * @type("integer")
 	 * @title("Delta Input Filter ID")
@@ -29,18 +29,25 @@ class inOutPath {
 ** Classe que associa os caminhos de
 ** entrada / saída aos protocolos
 */
-class protoPaths {
+class ProtoPaths {
 	/**
-	 * @type("inOutPath")
+	 * @type("InOutPath")
 	 * @title("HTTP path")
 	 */
 	public $http;
 
 	/**
-	 * @type("inOutPath")
+	 * @type("InOutPath")
 	 * @title("HTTPS path")
 	 */
 	public $https;
+	/*
+	 * 
+	 */
+	public function __construct() {
+		$this->http = new InOutPath();
+		$this->https = new InOutPath();
+	}
 }
 
 /*
@@ -49,18 +56,25 @@ class protoPaths {
 ** templates para conteudos Standard e Premium
 ** utilizando transporte HTTP e HTTPS
 */
-class deltaPaths {
+class DeltaPaths {
 	/**
-	 * @type("protoPaths")
+	 * @type("ProtoPaths")
 	 * @title("Standard paths")
 	 */
 	public $standard;
 
 	/**
-	 * @type("protoPaths")
+	 * @type("ProtoPaths")
 	 * @title("Premium paths")
 	 */
 	public $premium;
+	/*
+	 * 
+	 */
+	public function __construct() {
+		$this->standard = new ProtoPaths();
+		$this->premium = new ProtoPaths();
+	}
 }
 
 /**
@@ -110,7 +124,7 @@ class context extends \APS\ResourceBase
 	## which means only the application can change them.
 
 	/**
-	* @type("deltaPaths")
+	* @type("DeltaPaths")
 	* @title("Delta objects used for VOD")
 	* @readonly
 	*/
@@ -118,7 +132,7 @@ class context extends \APS\ResourceBase
 
 
 	/**
-	* @type("deltaPaths")
+	* @type("DeltaPaths")
 	* @title("Delta objects used for Live events")
 	* @readonly
 	*/
@@ -135,14 +149,16 @@ class context extends \APS\ResourceBase
     	\APS\LoggerRegistry::get()->info("Iniciando provisionamento de context para o cliente ".$clientid);
 
         // Create output template for all options: Live/Vod Premium/Std http/https
+        $this->vodDeltaPaths = new DeltaPaths();
+        $this->liveDeltaPaths = new DeltaPaths();
     	$vodLiveArr = array('vod' => $this->vodDeltaPaths, 'live' => $this->liveDeltaPaths);
-    	foreach( $vodLiveArr as $type => &$vodLive ) {
+    	foreach( $vodLiveArr as $type => $vodLive ) {
             $stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
-            foreach( $stdPremArr as $level => &$stdPrem ) {
-                $httpHttpsArr = array('http' => $stdPremArr->http, 'https' => $stdPremArr->https );
-                foreach( $httpHttpsArr as $proto => &$path ) {
+            foreach( $stdPremArr as $level => $stdPrem ) {
+                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
+                foreach( $httpHttpsArr as $proto => $path ) {
+                    \APS\LoggerRegistry::get()->info("Criandos Input Filter e Output Template $clientid $proto $type $level");
                     $path->outputTemplate =
-                        \APS\LoggerRegistry::get()->info("Criandos Input Filter e Output Template $clientid_$proto_$type, $level");
                         DeltaOutputTemplate::getClientOutputTemplate($clientid, $type, $proto, $level )->id;
                     $path->inputFilter =
                         DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level )->id;
@@ -163,37 +179,14 @@ class context extends \APS\ResourceBase
     	foreach( $vodLiveArr as $type => &$vodLive ) {
             $stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
             foreach( $stdPremArr as $level => &$stdPrem ) {
-                $httpHttpsArr = array('http' => $stdPremArr->http, 'https' => $stdPremArr->https );
+                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
                 foreach( $httpHttpsArr as $proto => &$path ) {
-                    DeltaInputFilter::delete($path->outputTemplate);
+                    \APS\LoggerRegistry::get()->info("Removendo Input Filter e Output Template $clientid $proto $type $level");
+                    DeltaInputFilter::delete($path->inputFilter);
+                    DeltaOutputTemplate::delete($path->outputTemplate);
                 }
             }
     	}
-
-    	
-    	// Delete vod input filter
-    	\APS\LoggerRegistry::get()->info("Deletando Delta Vod input filters para o cliente $clientid");
-    	DeltaInputFilter::delete($this->vodStandardInputFilter4x3);
-    	DeltaInputFilter::delete($this->vodStandardInputFilter16x9);
-    	DeltaInputFilter::delete($this->vodPremiumInputFilter4x3);
-    	DeltaInputFilter::delete($this->vodPremiumInputFilter16x9);
-    	\APS\LoggerRegistry::get()->info("Delta Vod input filters para o cliente $clientid Deletados");
-
-    	// Delete live input filter
-    	\APS\LoggerRegistry::get()->info("Deletando Delta Live input filters para o cliente $clientid");
-    	DeltaInputFilter::delete($this->liveStandardInputFilter4x3);
-    	DeltaInputFilter::delete($this->liveStandardInputFilter16x9);
-    	DeltaInputFilter::delete($this->livePremiumInputFilter4x3);
-    	DeltaInputFilter::delete($this->livePremiumInputFilter16x9);
-    	\APS\LoggerRegistry::get()->info("Delta Live input filters para o cliente $clientid Deletados");
-
-    	//Delete output templates
-    	\APS\LoggerRegistry::get()->info("Deletando Delta Output Templates para o cliente $clientid");
-    	DeltaOutputTemplate::delete($this->liveStandardOutputTemplate);
-    	DeltaOutputTemplate::delete($this->livePremiumOutputTemplate);
-    	DeltaOutputTemplate::delete($this->vodStandardOutputTemplate);
-    	DeltaOutputTemplate::delete($this->vodPremiumOutputTemplate);
-    	\APS\LoggerRegistry::get()->info("Delta Output Templates para o cliente $clientid Deletados");
     }
 }
 

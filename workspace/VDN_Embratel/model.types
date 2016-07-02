@@ -14,12 +14,20 @@
     <properties name="server_node" type="string" description="Elemental Server node this job is assigned to" readonly="true"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDN_Embratel/context" version="1.0" relations="//@relations.0/@target //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source //@relations.5/@source" name="context" implements="//@typesFromLibrary.0">
-    <properties name="vodStandardInputFilter" type="integer" readonly="true"/>
-    <properties name="vodStandardOutputTemplate" type="integer" readonly="true"/>
-    <properties name="vodPremiumInputFilter" type="integer" readonly="true"/>
-    <properties name="vodPremiumOutputTemplate" type="integer" readonly="true"/>
-    <properties name="liveStandardOutputTemplate" type="integer" readonly="true"/>
-    <properties name="livePremiumOutputTemplate" type="integer" readonly="true"/>
+    <properties name="vodDeltaPaths" type="deltaPaths" readonly="true"/>
+    <properties name="liveDeltaPaths" type="deltaPaths" readonly="true"/>
+    <structures name="inOutPath">
+      <properties name="inputFilter" type="integer"/>
+      <properties name="outputTemplate" type="integer"/>
+    </structures>
+    <structures name="protoPaths">
+      <properties name="http" type="inOutPath"/>
+      <properties name="https" type="inOutPath"/>
+    </structures>
+    <structures name="deltaPaths">
+      <properties name="standard" type="protoPaths"/>
+      <properties name="premium" type="protoPaths"/>
+    </structures>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDN_Embratel/channel" version="1.0" relations="//@relations.2/@target" name="channel" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="Channel Name" required="true"/>
@@ -36,25 +44,7 @@
     <properties name="delta_port" type="integer" description="UDP Port used for communication with Elemental Delta" readonly="true"/>
     <properties name="live_node" type="string" description="Elemental Live node this channell is assigned to" readonly="true"/>
   </internalTypes>
-  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/cloud" version="1.0" relations="//@relations.3/@target" application="true" name="cloud" implements="//@typesFromLibrary.1">
-    <properties name="TEMPLATE_PATH" type="string" description="Path for all elemental default templates "/>
-    <properties name="LIVE_CONDUCTOR_HOST" type="string"/>
-    <properties name="LIVE_TEMPLATE_STANDARD" type="integer" description="Live event that will be base of channels for new Standard subscriptions"/>
-    <properties name="LIVE_TEMPLATE_PREMIUM" type="integer" description="Live event that will be base of channels for new  Premium subscriptions"/>
-    <properties name="DELTA_HOST" type="string"/>
-    <properties name="DELTA_PORT" type="string"/>
-    <properties name="DELTA_UDP_INPUT_FILTER_TEMPLATE" type="integer" description="UDP Input filter that will be base for channels subscriptions"/>
-    <properties name="DELTA_WF_INPUT_FILTER_TEMPLATE" type="integer" description="Watch folder input filter that will be base for VOD subscriptions"/>
-    <properties name="DELTA_LIVE_STORAGE_LOCATION" type="string" description="Path for live data storage in delta server"/>
-    <properties name="DELTA_VOD_STORAGE_LOCATION" type="string" description="Path for VOD storage in delta server"/>
-    <properties name="DELTA_WF_INCOMMING_URI" type="string" description="Base path for incomming VOD in delta server"/>
-    <properties name="DELTA_STD_EVENT_OUTPUT_TEMPLATE" type="integer" description="Output template that will be base for Live Standard subscriptions"/>
-    <properties name="DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE" type="integer" description="Output template that will be base for Live Premium subscriptions"/>
-    <properties name="DELTA_STD_VOD_OUTPUT_TEMPLATE" type="integer" description="Output template that will be base for VOD Standard subscriptions"/>
-    <properties name="DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE" type="integer" description="Output template that will be base for VOD Premium subscriptions"/>
-    <properties name="API_VERSION" type="string" readonly="true"/>
-    <properties name="LIVE_NODE_URL" type="string" readonly="true"/>
-  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDN_Embratel/cloud" version="1.0" relations="//@relations.3/@target" application="true" name="cloud" implements="//@typesFromLibrary.1"/>
   <internalTypes id="http://embratel.com.br/app/VDN_Embratel/vps" version="1.0" relations="//@relations.1/@target" name="vps" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="Server Name"/>
     <properties name="description" type="string" description="Server Description"/>
@@ -118,6 +108,7 @@
       <properties name="title" type="string"/>
       <properties name="apsId" type="string"/>
       <properties name="apsType" type="string"/>
+      <properties name="applicationId" type="string"/>
       <properties name="property" type="string"/>
       <properties name="usage" type="integer"/>
       <properties name="limit" type="integer"/>
@@ -127,7 +118,7 @@
   </typesFromLibrary>
   <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.5/@target" name="Account">
     <properties name="companyName" type="string" required="true"/>
-    <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.0#Address" required="true"/>
+    <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
   </typesFromLibrary>
   <relations>
     <source type="//@internalTypes.0" name="context" required="true"/>

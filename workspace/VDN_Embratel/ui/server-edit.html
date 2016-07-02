@@ -4,17 +4,17 @@
 	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
 	<script>
 		require([
-			"aps/ResourceStore",
-			"dijit/registry",
-			"dojo/when",
-			"dojox/mvc/getPlainValue",
-			"dojox/mvc/at",
-			"dojox/mvc/getStateful",
-			"aps/load",
-			"aps/PageContainer",
-			"aps/Memory",
-			"./displayError.js",
-			"aps/ready!"
+                  "aps/ResourceStore",
+                "dijit/registry",
+                 "dojo/when",
+            "dojox/mvc/getPlainValue",
+            "dojox/mvc/at",
+            "dojox/mvc/getStateful",
+                  "aps/load",
+                  "aps/PageContainer",
+                  "aps/Memory",
+                 "./js/displayError.js",
+                  "aps/ready!"
 		], function (Store, registry, when, getPlainValue, at, getStateful, load, PageContainer, Memory, displayError) {
 			var store = new Store({
 					target: "/aps/2/resources"

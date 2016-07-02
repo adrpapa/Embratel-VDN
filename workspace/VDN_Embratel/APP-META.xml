@@ -65,6 +65,36 @@ CISCO VDN para entrega distribuída de conteúdo
 		<navigation id="ccpebt" label="VDN Embratel">
 			<var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/1.0" />
 			<plugs-to id="http://www.aps-standard.org/ui/service" />
+            <item id="jobs" label="VOD Content">
+                <view id="jobs" label="Video on demand Contents">
+                    <view id="job-new-1" label="Submit Video">
+                        <controls>
+                            <cancel/>
+                            <next/>
+                        </controls>
+                    </view>
+                    <view id="videoparams" label="Transcoding Parameters">
+                        <controls>
+                            <prev/>
+                            <finish/>
+                        </controls>
+                    </view>
+                    <view id="job-new-last" label="Review">
+                        <controls>
+                            <prev/>
+                            <finish/>
+                        </controls>
+                    </view>
+                    <view id="job-info" label="Edit Content">
+                        <controls>
+                            <cancel />
+                            <submit />
+                        </controls>
+                        <var name="jobl"
+                            type-id="http://embratel.com.br/app/VDN_Embratel/job/1.0" />
+                    </view>	        			
+                </view>
+            </item>
 			<item id="channels" label="Live Channels">
 				<view id="channels" label="Live Channels">
 					<view id="channel-new-1" label="New Channel">
@@ -89,30 +119,6 @@ CISCO VDN para entrega distribuída de conteúdo
 					</view>
 				</view>
 			</item>
-	        	<item id="jobs" label="VOD Content">
-	        		<view id="jobs" label="Video on demand Contents">
-	        			<view id="job-new-1" label="Submit Video">
-	        				<controls>
-	        					<cancel/>
-	        					<next/>
-	        				</controls>
-	        			</view>
-	        			<view id="job-new-last" label="Review">
-	        				<controls>
-	        					<prev/>
-	        					<finish/>
-	        				</controls>
-	        			</view>
-						<view id="job-info" label="Edit Content">
-							<controls>
-								<cancel />
-								<submit />
-							</controls>
-							<var name="jobl"
-								type-id="http://embratel.com.br/app/VDN_Embratel/job/1.0" />
-						</view>	        			
-	        		</view>
-	        	</item>
 		</navigation>
 
 	</presentation>

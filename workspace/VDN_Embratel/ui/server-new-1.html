@@ -4,16 +4,16 @@
 	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
 	<script>
 		require([
-			"dijit/registry",
-			"dojox/mvc/getPlainValue",
-			"aps/WizardData",
-			"dojox/mvc/at",
-			"aps/load",
-			"aps/Memory",
-			/* Include JSON file that defines the wizard steps */
-			"dojo/text!./server-wizard.json",
-			"dojo/text!./newvps.json",
-			"aps/ready!"
+                "dijit/registry",
+            "dojox/mvc/getPlainValue",
+                  "aps/WizardData",
+            "dojox/mvc/at",
+                  "aps/load",
+                  "aps/Memory",
+        /* Include JSON file that defines the wizard steps */
+        "dojo/text!./json/server-wizard.json",
+        "dojo/text!./json/newvps.json",
+                     "aps/ready!"
 		], function (registry, getPlainValue, wd, at, load, Memory, wizardControl, newVPS) {
 			wizardControl = JSON.parse(wizardControl);
 			wizardControl[0].active = true;
