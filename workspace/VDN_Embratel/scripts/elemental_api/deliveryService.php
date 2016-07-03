@@ -43,13 +43,13 @@
         	$this->params = "&deliveryService=" . $this->deliveryService;
         	$this->params .= "&contentOrigin=" . $this->contentOrigin;
         	$this->params .= "&desc=" . urlencode($this->description);        	
-        	parent::create();
+        	return ( parent::create() );
         }
         
         public function delete() {
         	$this->action = "deleteDeliveryServices";
         	$this->params = "&deliveryService=" . $this->id;
-        	parent::delete();        	
+        	return ( parent::delete() );        	
         }
         
         public function update() {

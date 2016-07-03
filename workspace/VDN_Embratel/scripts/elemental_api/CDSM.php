@@ -70,14 +70,17 @@ abstract class CDSM {
 
 	public function create() {
 		$this->exec();
+		return( $this->getStatus() == "success" );
 	}
 
 	public function delete() {
 		$this->exec();
+		return( $this->getStatus() == "success" );
 	}
 
 	public function update() {
 		$this->exec();
+		return( $this->getStatus() == "success" );
 	}
 
 	public function exec() {

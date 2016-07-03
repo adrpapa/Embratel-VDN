@@ -59,7 +59,7 @@
         	$this->params .= "&TmpfsSize=" . $this->TmpfsSize;
         	$this->params .= "&OsHttpPort=" . $this->OsHttpPort;
         	$this->params .= "&ReadTimeout=" . $this->ReadTimeout;       	
-        	parent::create();
+        	return( parent::create() );
         }
         
         public function delete() {

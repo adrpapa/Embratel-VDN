@@ -43,13 +43,13 @@ class ContentOrigin extends CDSM {
 		$this->params .= "&origin=" . $this->origin;
 		$this->params .= "&fqdn=" . $this->fqdn;
 		$this->params .= "&description=" . urlencode($this->description);
-		parent::create();
+		return ( parent::create() );
 	}
 
 	public function delete() {
 		$this->action = "deleteContentOrigins";
 		$this->params = "&contentOrigin=" . $this->id;
-		parent::delete();
+		return ( parent::delete() );
 	}
 
 	public function update() {
