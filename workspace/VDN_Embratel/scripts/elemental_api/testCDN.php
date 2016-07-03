@@ -19,6 +19,9 @@ if ( $ds->create() ) {
 	print ("Sucesso!\n");
 	print ( $ds->getID() . "\n" );
 }
+else {
+	print("Falhou:".$ds->getMessage()."\n");
+}
 
 // SET UP DELIVERY SERVICE TO HTTPS
 $dsgs = new DeliveryServiceGenSettings($ds->getID(), "https");
@@ -32,7 +35,16 @@ if ( $dsgs->create() ) {
 if ( $ds->delete() ) {
 	print ("Sucesso!\n");
 }
+else {
+	print ("Falhou: ".$ds->getMessage()."\n");
+}
 
 $origin->delete();
 
+$ds = new DeliveryService("123456");
+if ( $ds->delete() ){
+	print("sucesso");
+} else {
+	print("Falhou:".$ds->getMessage());
+}
 ?>
