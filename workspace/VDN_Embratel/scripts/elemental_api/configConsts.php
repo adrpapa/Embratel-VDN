@@ -34,5 +34,10 @@
         const DELTA_STD_VOD_OUTPUT_TEMPLATE = 10;
         const DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 10;
 
+        //********** CDN ***********
+        const CDMS_ADDRESS = "192.118.77.183";
+        const CDMS_PORT = "8443";
+        const CDMS_USER = "admin";
+        const CDMS_PWD = "C1sc0CDN!x";
     }
 ?>

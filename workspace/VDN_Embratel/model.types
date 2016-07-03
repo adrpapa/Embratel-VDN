@@ -12,6 +12,7 @@
     <properties name="state" type="string" description="Job current state" readonly="true"/>
     <properties name="input_URI" type="string" description="Job Input URI for video ingestion" readonly="true"/>
     <properties name="server_node" type="string" description="Elemental Server node this job is assigned to" readonly="true"/>
+    <operations name="updateJobStatus" verb="POST" path="/updateJobStatus"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDN_Embratel/context" version="1.0" relations="//@relations.0/@target //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source //@relations.5/@source" name="context" implements="//@typesFromLibrary.0">
     <properties name="vodStandardInputFilter" type="integer" readonly="true"/>
