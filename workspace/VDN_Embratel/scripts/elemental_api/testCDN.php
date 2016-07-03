@@ -29,7 +29,10 @@ if ( $dsgs->create() ) {
 }
 	
 // DELETING..........
-$ds->delete();
+if ( $ds->delete() ) {
+	print ("Sucesso!\n");
+}
+
 $origin->delete();
 
 ?>
