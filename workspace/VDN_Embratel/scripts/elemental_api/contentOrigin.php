@@ -6,10 +6,8 @@ require_once "CDSM.php";
 // Permite criar e deletar CDMS Content Origin
 // **
 class ContentOrigin extends CDSM {
-	protected $origin;
-	protected $fqdn;
-	 
-	public function __construct( $id,$name=null,$origin=null,$fqdn=null,$description=null ) {
+
+	public function __construct( $name=null,$origin=null,$fqdn=null,$description=null ) {
 		$this->optional_params_names = array(
 				"contentBasedRouting",
 				"nasFile",
@@ -18,14 +16,20 @@ class ContentOrigin extends CDSM {
 				"httpAuthHeader",
 				"httpAuthSharedKey",
 				"httpAuthHeaderPrefix",
-				"httpAuthSharedSecKey"
+				"httpAuthSharedSecKey",
+				"name",		
+				"origin",	
+				"contentOrigin",
+				"fqdn",		
+				"description",	
+				"param"
 
 		);
-		$this->id = $id;
+		
 		$this->name = $name;
 		$this->origin = $origin;
 		$this->fqdn = $fqdn;
-		$this->description = $description;
+		$this->description = is_null($description) ? null:urlencode($description);
 
 		parent::__construct();
 		$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
@@ -38,22 +42,32 @@ class ContentOrigin extends CDSM {
 			throw new invalidargumentexception("ContentOrigin::create() Name,origin,fqdn and description must not be null");
 		}
 
+		$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
 		$this->action = "createContentOrigin";
-		$this->params = "&name=" . $this->name;
-		$this->params .= "&origin=" . $this->origin;
-		$this->params .= "&fqdn=" . $this->fqdn;
-		$this->params .= "&description=" . urlencode($this->description);
+
 		return ( parent::create() );
 	}
 
-	public function delete() {
+	public function delete($id) {
+		$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
 		$this->action = "deleteContentOrigins";
-		$this->params = "&contentOrigin=" . $this->id;
-		return ( parent::delete() );
+		$this->contentOrigin=$id;
+		return ( parent::delete($id) );
 	}
 
-	public function update() {
+	public function update($id) {
+		$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
+		$this->action = "modifyContentOrigin";
+		$this->contentOrigin=$id;
+		return ( parent::update($id) );		
 	}
+	
+	public function get($name) {
+		$this->taskAPI = "com.cisco.unicorn.ui.ListApiServlet";
+		$this->action = "getContentOrigins";
+		$this->param  = $name;
+		return ( parent::get($name) );
+	}	
 }
 
 ?>

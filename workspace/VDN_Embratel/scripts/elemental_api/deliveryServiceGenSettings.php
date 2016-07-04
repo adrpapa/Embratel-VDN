@@ -6,16 +6,8 @@
     // Permite customizar um Delivery Service
     // **
     class DeliveryServiceGenSettings extends CDSM {
-    	protected $deliveryService;
-    	protected $Bitrate;
-    	protected $OsProtocol;
-    	protected $StreamingProtocol;
-    	protected $HashLevel;
-    	protected $TmpfsSize;
-    	protected $OsHttpPort;
-    	protected $ReadTimeout;
-    	
-        public function __construct( $id,$protocol="http",$Bitrate="1000",$HashLevel="0",
+
+        public function __construct( $deliveryService=null,$protocol="http",$Bitrate="1000",$HashLevel="0",
                                      $TmpfsSize="2",$OsHttpPort="80",$ReadTimeout="5") {
                                 	
         	$this->optional_params_names = array(
@@ -35,10 +27,18 @@
         			"QuotaUsageReport",
         			"genericSessionTrack",
         			"hssSessionTrack",
-        			"hlsSessionTrack"
+        			"hlsSessionTrack",
+        			"deliveryService",
+        			"Bitrate",
+        			"HashLevel",
+        			"OsProtocol",
+        			"StreamingProtocol",
+        			"TmpfsSize",
+        			"OsHttpPort",
+        			"ReadTimeout"
         	);        	
         	parent::__construct();
-        	$this->id = $id;
+        	$this->deliveryService = $deliveryService;
 			$this->Bitrate = $Bitrate;
 			$this->OsProtocol=($protocol == "http" ? "0":"1");
 			$this->StreamingProtocol=($protocol == "http" ? "0":"1");
@@ -50,22 +50,33 @@
         }
              
         public function create() {      	
+        	if ( is_null($this->deliveryService) ||
+        			is_null($this->Bitrate) ||
+        			is_null($this->OsProtocol) ||
+        			is_null($this->StreamingProtocol) ||
+        			is_null($this->HashLevel) ||
+        			is_null($this->TmpfsSize) ||
+        			is_null($this->OsHttpPort) ||
+        			is_null($this->ReadTimeout) )
+        		{
+        			throw new invalidargumentexception("DeliveryServiceGenSettings::create() parameters required must not be null");
+        		}
+        		
         	$this->action = "createDeliveryServiceGenSettings";
-        	$this->params = "&deliveryService=" . $this->id;
-        	$this->params .= "&Bitrate=" . $this->Bitrate;
-        	$this->params .= "&OsProtocol=" . $this->OsProtocol;
-        	$this->params .= "&StreamingProtocol=" . $this->StreamingProtocol;
-        	$this->params .= "&HashLevel=" . $this->HashLevel;
-        	$this->params .= "&TmpfsSize=" . $this->TmpfsSize;
-        	$this->params .= "&OsHttpPort=" . $this->OsHttpPort;
-        	$this->params .= "&ReadTimeout=" . $this->ReadTimeout;       	
+
         	return( parent::create() );
         }
         
-        public function delete() {
+        public function delete($id) {
+        	$this->action = "deleteDeliveryServiceGenSettings";
+        	$this->deliveryService = $id;
+        	return ( parent::delete($id) );        	
         }
         
-        public function update() {
+        public function update($id) {
+        	$this->action = "modifyDeliveryServiceGenSettings";
+        	$this->deliveryService = $id;     
+        	return ( parent::update($id) );
         }        
     }
 ?>

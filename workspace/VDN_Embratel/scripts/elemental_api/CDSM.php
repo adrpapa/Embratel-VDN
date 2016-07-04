@@ -7,9 +7,7 @@ require_once "elementalRest.php";
 // Encapsula as funcionalidades principais para manutenção de Service no CDMS
 // **
 abstract class CDSM {
-	protected $id;
-	protected $name;
-	protected $description;
+	public    $id;
 	protected $status;
 	protected $message;
 	protected $cdmAddress = ConfigConsts::CDMS_ADDRESS;
@@ -73,16 +71,21 @@ abstract class CDSM {
 		return( $this->getStatus() == "success" );
 	}
 
-	public function delete() {
+	public function delete($key) {
 		$this->exec();
 		return( $this->getStatus() == "success" );
 	}
 
-	public function update() {
+	public function update($key) {
 		$this->exec();
 		return( $this->getStatus() == "success" );
 	}
 
+	public function get($key) {
+		$this->exec();
+		return( $this->getStatus() == "success" );		
+	}
+	
 	public function exec() {
 		$optional_params = "";
 		foreach ($this->optional_params_names as $k => $v) {
@@ -93,8 +96,8 @@ abstract class CDSM {
 			
 		$credentials = $this->userName . ':' . $this->password;
 		$this->urlString = "https://" . $this->cdmAddress . ":" . $this->cdmPort . "/servlet/";
-		$this->urlString .= $this->taskAPI . "?action=" . $this->action . $this->params . $optional_params;
-			
+		$this->urlString .= $this->taskAPI . "?action=" . $this->action . $optional_params;
+		
 		try {
 			$curl_obj = new ElementalRest($this->cdmAddress,'servlet');
 			$curl_obj->uri = $this->urlString;
