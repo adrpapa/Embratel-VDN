@@ -16,8 +16,8 @@
         const LIVE_TEMPLATE_PREMIUM = 13;
         const LIVE_NODE_URL = 'rtmp://localhost:1935/';
 
-        const VOD_TEMPLATE_STANDARD = 356;
-        const VOD_TEMPLATE_PREMIUM = 356;        
+        const VOD_TEMPLATE_STANDARD = 75;
+        const VOD_TEMPLATE_PREMIUM = 75;        
         
         const DELTA_HOST = '201.31.12.36';
         const DELTA_PORT = '8080';
@@ -34,5 +34,10 @@
         const DELTA_STD_VOD_OUTPUT_TEMPLATE = 1;
         const DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 2;
 
+        //********** CDN ***********
+        const CDMS_ADDRESS = "192.118.77.183";
+        const CDMS_PORT = "8443";
+        const CDMS_USER = "admin";
+        const CDMS_PWD = "C1sc0CDN!";
     }
 ?>

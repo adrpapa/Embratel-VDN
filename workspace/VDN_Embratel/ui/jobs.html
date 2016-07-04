@@ -5,13 +5,14 @@
 	<script>
 		require([
                    "aps/ResourceStore",
+                   "aps/xhr",
                   "dojo/when",
                  "dijit/registry",
                    "aps/load",
                   "./js/displayError.js",
             "dojo/_base/array",
                    "aps/ready!"
-		], function (Store, when, registry, load, displayError, arr) {
+		], function (Store, xhr, when, registry, load, displayError, arr) {
 			/* Create the data store */
 			var store = new Store({
 				apsType: "http://embratel.com.br/app/VDN_Embratel/job/1.0",
@@ -40,19 +41,36 @@
 					]]
 				]]
 			]]).then(function(){
-				/* Once the widgets are created, create the widget processing logic */
-				var grid = registry.byId("jobl_grid"),
-					page = registry.byId("page");
+					/* Once the widgets are created, create the widget processing logic */
+					var grid = registry.byId("jobl_grid"),
+						page = registry.byId("page");
+	
+					/* Create a handler for the *New* button click */
+					registry.byId("job_new").on("click", function() {
+						/* Start the process of creating a VPS by going to the first screen */
+						aps.apsc.gotoView("job-new-1");
+					});
 
-				/* Create a handler for the *New* button click */
-				registry.byId("job_new").on("click", function() {
-					/* Start the process of creating a VPS by going to the first screen */
-					aps.apsc.gotoView("job-new-1");
-				});
-
-				registry.byId("job_refresh").on("click", function() {
-					grid.refresh();
-				});
+// 					registry.byId("job_refresh").on("click", function() {
+// 						var job_ids = null;
+// 						var dataStoreGrid = store.data;
+// 						dataStoreGrid.forEach(function(items){
+// 							job_ids = [items.job_id];
+// 	                    });
+// 						job_ids = JSON.stringify(job_ids);
+// 						when(xhr("/aps/2/resources/" + model.aps.id + "/updateJobStatus", {method: "POST", handleAs: "text",
+// 						query: {json: job_ids}}),
+// 							function (res) {
+// 							},
+// 							function (error) {
+//                                 aps.apsc.cancelProcessing();
+//                                 asemail.cancel();
+//                                 return;
+//                             }
+// 						);
+//					
+//						grid.refresh();
+//				});
 
 				/* Create the on-click handler for the *Delete* button
 				*/

@@ -21,7 +21,7 @@
             $this->ch = curl_init();
             curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         }
-        
+      
         public function __destruct() {
             curl_close($this->ch);
         }
@@ -41,6 +41,21 @@
             return simplexml_load_file($templateFilename);
         }
 
+        function restCDSM($credentials) {
+			$this->headers = array(
+					"Content-type: text/xml;charset=\"utf-8\"",
+					"Accept: text/xml",
+					"Cache-Control: no-cache",
+					"Pragma: no-cache",
+					"Authorization: Basic " . $credentials
+			);
+			
+			curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+			curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+			
+			return $this->restCall();
+        }
+        
         function restGet( $id=null, $params=null){
             $this->headers = Array();
             return $this->restCall( $id, null, $params );

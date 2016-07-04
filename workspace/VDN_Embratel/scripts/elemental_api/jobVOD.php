@@ -80,7 +80,7 @@
     	
     	public function setPropertiesFromXML( $event ) {
     		$this->name = $event->name."";
-    		$this->inputURI = $event->input->network_input->uri."";
+    		$this->inputURI = $event->input->file_input->uri."";
     		// Extraimos o cliente da uri ex: rtmp://localhost:1935/sgr/sgrstream
     		$toks = explode(':',$this->inputURI);
     		if( count($toks) > 2 ) {
@@ -117,7 +117,7 @@
     	}    	    	
     	
     	public function isStatusArchived() {
-    		$job = JobVOD::getJobList($this->id, "filter=archived");
+    		$job = JobVOD::getJobList(null, "filter=archived");
     		var_dump($job);
     		return $job->id == $this->id;
     	}
@@ -125,14 +125,20 @@
     	public static function delete($id) {
     		$job = JobVOD::getJobVODById($id);
     		printf("%s - %s %s\n",$job->id, $job->name, $job->status);
+    		
     		while($job->isStatusPending()) {
     			$job->cancel();
     			$job = JobVOD::getJobVODById($id);
     		}
+    		
+    		$job->archive();
+    		
+    		/**
     		while(! $job->isStatusArchived() ) {
     			$job->archive();
     			$job = JobVOD::getJobVODById($id);
     		}
+    		**/
     		# LiveEvent::getElementalRest()->restDelete($liveEvent->id);
     	}
     	
@@ -145,4 +151,7 @@
     		JobVOD::getElementalRest()->postRecord($this->id, "archive", "<archive></archive>");
     	}
     }
+    
+//    ElementalRest::$auth = new Auth( 'elemental','elemental' );
+//    JobVOD::delete("76");    
 ?>

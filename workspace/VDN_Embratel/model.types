@@ -16,6 +16,7 @@
     <properties name="framerates" type="array" description="Array of Frame Rates for the generated streams" readonly="true"/>
     <properties name="video_bitrates" type="array" description="Array of Video Bitrates for the generated streams" readonly="true"/>
     <properties name="audio_bitrates" type="array" description="Array of Audio Bitrates for the generated streams" readonly="true"/>
+    <operations name="updateJobStatus" verb="POST" path="/updateJobStatus"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDN_Embratel/context" version="1.0" relations="//@relations.0/@target //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source //@relations.5/@source" name="context" implements="//@typesFromLibrary.0">
     <properties name="vodDeltaPaths" type="DeltaPaths" readonly="true"/>
