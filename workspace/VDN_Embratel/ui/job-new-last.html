@@ -26,8 +26,8 @@
 				"use strict";
 				
 				var store = new Store({
-					apsType: "http://embratel.com.br/app/VDN_Embratel/vod/1.0",
-					target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/channels"
+					apsType: "http://embratel.com.br/app/VDN_Embratel/job/1.0",
+					target: "/aps/2/resources/"
 					}),
 					model = getStateful(wd.get());
 
@@ -44,7 +44,7 @@
 							return;
 						}
 						when(store.put(getPlainValue(model)),
-							function(){ aps.apsc.gotoView("vods"); },
+							function(){ aps.apsc.gotoView("jobs"); },
 							displayError
 						);
 					};

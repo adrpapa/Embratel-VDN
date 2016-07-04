@@ -172,6 +172,14 @@ class channel extends \APS\ResourceBase {
 		$logger->setLogFile("logs/channels.log");
         \APS\LoggerRegistry::get()->info("Iniciando provisionamento de canal ".$this->aps->id);
         $clientid = sprintf("Client_%06d",$this->context->account->id);
+        \APS\LoggerRegistry::get()->info($this);
+	}
+
+	public function renamed_to_inhibit_call_of_provision() { 
+		$logger = \APS\LoggerRegistry::get();
+		$logger->setLogFile("logs/channels.log");
+        \APS\LoggerRegistry::get()->info("Iniciando provisionamento de canal ".$this->aps->id);
+        $clientid = sprintf("Client_%06d",$this->context->account->id);
         $event = LiveEvent::newStandardLiveEvent( $this->aps->id, $clientid );
 		if( $this->premium ) {
 			$event = LiveEvent::newPremiumLiveEvent( $this->aps->id, $clientid );

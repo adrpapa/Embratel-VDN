@@ -4,8 +4,7 @@ if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
 require_once "aps/2/runtime.php";
 require_once "elemental_api/jobVOD.php";
-require_once "elemental_api/deltaOutputTemplate.php";
-require_once "elemental_api/deltaInput.php";
+require_once "elemental_api/preset.php";
 
 /**
  * @type("http://embratel.com.br/app/VDN_Embratel/job/1.0")
@@ -153,9 +152,14 @@ class job extends \APS\ResourceBase {
 		\APS\LoggerRegistry::get()->info("Client: ".$clientid);
 		
 		
-		/***
 		$level = ($this->premium ? 'std' : 'prm');
-		
+		$presets = new Presets();
+		for($i=0;i<count($this->resolutions);$i++ ) {
+			$presets->addPreset(new Preset($this->resolutions[$i],
+					$this->video_bitrates[$i],$this->framerates[$i],
+					$this->audio_bitrates[$i]),i);
+		}
+
 		ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
 		$job = JobVOD::newJobVOD( $this->aps->id, $this->input_URI, $clientid, $level );
 		
@@ -169,7 +173,6 @@ class job extends \APS\ResourceBase {
 		\APS\LoggerRegistry::get()->info("job_name:" . $this->job_name );
 		\APS\LoggerRegistry::get()->info("state:" . $this->state );
 		\APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
-		***/
     }
 
     public function configure($new) {

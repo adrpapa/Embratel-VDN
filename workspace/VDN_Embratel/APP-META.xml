@@ -65,8 +65,8 @@ CISCO VDN para entrega distribuída de conteúdo
 		<navigation id="ccpebt" label="VDN Embratel">
 			<var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/1.0" />
 			<plugs-to id="http://www.aps-standard.org/ui/service" />
-			<item id="vods" label="VOD Content">
-				<view id="vods" label="VOD COntent">
+			<item id="jobs" label="VOD Content">
+				<view id="jobs" label="VOD COntent">
 					<view id="job-new-1" label="New Content">
 						<controls>
 							<cancel />
@@ -84,8 +84,8 @@ CISCO VDN para entrega distribuída de conteúdo
 							<cancel />
 							<submit />
 						</controls>
-						<var name="vod"
-							type-id="http://embratel.com.br/app/VDN_Embratel/vod/1.0" />
+						<var name="job"
+							type-id="http://embratel.com.br/app/VDN_Embratel/job/1.0" />
 					</view>
 				</view>
 			</item>
@@ -162,14 +162,6 @@ CISCO VDN para entrega distribuída de conteúdo
 		<presentation>
 			<name>VDN Job Content</name>
 			<summary>VDN Job Content</summary>
-		</presentation>
-	</service>	
-
-	<service id="vods">
-		<code engine="php" path="scripts/vods.php" />
-		<presentation>
-			<name>VDN Video On Demand Content</name>
-			<summary>VOD Content</summary>
 		</presentation>
 	</service>	
 </application>

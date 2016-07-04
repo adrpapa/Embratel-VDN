@@ -7,19 +7,29 @@ class Preset {
 	public $framerate_denom;
 	public $audio_bitrate;
 	
-	public function __construct($w,$h,$b,$fr_n,$fr_d,$ab) {
-		$this->width = $w;
-		$this->height = $h;
-		$this->bitrate = $b;
-		$this->framerate_denom = $fr_d;
-		$this->framerate_num = $fr_n;
-		$this->audio_bitrate = $ab;
+	public function __construct($resol,$bitrate,$framerate,$abitrate) {
+		$wh = explode('x', $resol);
+		$this->width = $wh[0];
+		$this->height = $wh[1];
+		$this->bitrate = $bitrate;
+		if( $framerate == 'FS' ) {
+			$this->framerate_denom = null;
+			$this->framerate_num = null;
+		} else {
+			$numdenom= explode('/', $framerate);
+			$this->framerate_denom = $numdenom[0];
+			$this->framerate_num = $numdenom[1];
+		}
+		$this->audio_bitrate = $abitrate;
 	}
 }
 
 // Encapsula um conjunto de Presets
 // Permite customizar um XML de submit à partir de um conjunto de Presets
 //
+// $presets = new Presets();
+// $presets->addPreset(new Preset("1024","768","5000"),3);
+
 class Presets {
 	protected $array_preset;
 	

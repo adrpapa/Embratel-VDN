@@ -14,22 +14,23 @@ define(["dojox/mvc/at"],
 					// model will hold defaults/selected for parms(parm) of each stream(ix)
 					model[parm][ix]="";
 					var options=[];
-					// traverse json object where property names (chave) will be used as values for select widget
+					// traverse json object creating select widget with name/value
 					// this property is another JS object with a property "name" for human readable lables
 					for( var chave in valueArray )
 					{
-						if( valueArray[chave] == defaValue )
+						var obj = valueArray[chave];
+						if( obj == defaValue )
 						{
-							options.push({label:valueArray[chave].name, value:chave, selected:true });
-							model[parm][ix]=chave;
+							options.push({label: obj.name, value:obj.value, selected:true });
+							model[parm][ix]=obj.value;
 						}
 						else
 						{
-							for( var i in valueArray[chave].allow )
+							for( var i in obj.allow )
 							{
-								if( valueArray[chave].allow[i] == res)
+								if( obj.allow[i] == res)
 								{
-									options.push({label:valueArray[chave].name, value:chave});
+									options.push({label:obj.name, value:obj.value});
 									break;
 								}
 							}
@@ -96,7 +97,7 @@ define(["dojox/mvc/at"],
 		    }
 		
 		    var paramLength=params.length;
-		    // loop pelos formatos de saida (5/std 8xPremjhgfj)
+		    // loop pelos formatos de saida (5xstd 8xPrem)
 		    // armazena resolução/framerate/bitrate A/V em objetos 
 		    var containers=[], resText;
 			model["resolutions"] = [];
