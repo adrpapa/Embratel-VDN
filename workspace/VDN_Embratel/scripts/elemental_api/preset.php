@@ -17,8 +17,8 @@ class Preset {
 			$this->framerate_num = null;
 		} else {
 			$numdenom= explode('/', $framerate);
-			$this->framerate_denom = $numdenom[0];
-			$this->framerate_num = $numdenom[1];
+			$this->framerate_num = $numdenom[0];
+			$this->framerate_denom = $numdenom[1];
 		}
 		$this->audio_bitrate = $abitrate;
 	}
@@ -46,7 +46,7 @@ class Presets {
 		return $this->array_preset;
 	}
 	
-	public function customizePresets( SimpleXMLElement $xml ) {	
+	public function customizePresets( $name, SimpleXMLElement $xml ) {	
 		$width         = $xml->xpath("/*/stream_assembly/video_description/width");
 		$height        = $xml->xpath("/*/stream_assembly/video_description/height");
 		$frm_denom     = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_denominator");
@@ -54,8 +54,11 @@ class Presets {
 		$frm_num       = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_numerator");
 		$frm_num_nil   = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_numerator/@nil");
 		$frm_source    = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_follow_source");
+		$gop_size      = $xml->xpath("/*/stream_assembly/video_description/h264_settings/gop_size");
 		$audio_bitrate = $xml->xpath("/*/stream_assembly/audio_description/aac_settings/bitrate");
 		$bitrate       = $xml->xpath("/*/stream_assembly/video_description/h264_settings/bitrate");
+
+		$name_modifier = $xml->xpath("/*/output_group/output/name_modifier");
 		
 		foreach ($this->array_preset as $k => $preset_obj) {					
 			if ( is_null($preset_obj) ) {
@@ -63,17 +66,24 @@ class Presets {
 			}
 			
 			// No framerate conversion from source ?
-			$follow_source = (is_null($preset_obj->framerate_denom) && is_null($preset_obj->framerate_num));
+			if(is_null($preset_obj->framerate_denom) && is_null($preset_obj->framerate_num)) {
+				$follow_source = true;
+			}
+			else {
+				$gop_size[$k][0]    = round($preset_obj->framerate_num/$preset_obj->framerate_denom) * 3;
+			}
 			
 			$bitrate[$k][0]       = $preset_obj->bitrate;
 			$width[$k][0]         = $preset_obj->width;
 			$height[$k][0]        = $preset_obj->height;
 			$frm_source[$k][0]    = $follow_source ? "true":"false";
+			$frm_num[$k][0]       = $preset_obj->framerate_num;
 			$frm_denom[$k][0]     = $preset_obj->framerate_denom;
 			$frm_denom_nil[$k][0] = $follow_source ? "true":"false";
-			$frm_num[$k][0]       = $preset_obj->framerate_num;
 			$frm_num_nil[$k][0]   = $follow_source ? "true":"false";
 			$audio_bitrate[$k][0] = $preset_obj->audio_bitrate;
+
+			$name_modifier[$k][0] = $name.'_'.$k;
 			if ( $k >= count($bitrate) ) break;
 		}
 		

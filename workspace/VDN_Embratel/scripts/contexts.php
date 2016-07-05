@@ -151,7 +151,7 @@ class context extends \APS\ResourceBase
         // Create output template for all options: Live/Vod Premium/Std http/https
         $this->vodDeltaPaths = new DeltaPaths();
         $this->liveDeltaPaths = new DeltaPaths();
-    	$vodLiveArr = array('vod' => $this->vodDeltaPaths, 'live' => $this->liveDeltaPaths);
+    	$vodLiveArr = array('vod' => $this->vodDeltaPaths); #, 'live' => $this->liveDeltaPaths);
     	foreach( $vodLiveArr as $type => $vodLive ) {
             $stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
             foreach( $stdPremArr as $level => $stdPrem ) {

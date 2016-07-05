@@ -164,12 +164,12 @@ if True:
         services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 
 				  'VDN Virtual Private Server', 'VDN Job Content', 'VDN Job Content']
 
-        #createAppReference(services[0])
-        #createAppService(services[1], True)
-        #createAppService(services[2])
-        ## createAppService(services[3])
-        ## createAppService(services[4])
-        #createAppService(services[5])
+        createAppReference(services[0])
+        createAppService(services[1], True)
+        createAppService(services[2])
+        # createAppService(services[3])
+        # createAppService(services[4])
+        createAppService(services[5])
 
         createServiceTemplate(services[0], True, services)
         activateAndSubscribe(services[0])

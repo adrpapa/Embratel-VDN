@@ -9,15 +9,16 @@
         const TEMPLATE_PATH = 'templates';
 
         const API_VERSION = 'v1';
-        const LIVE_CONDUCTOR_HOST = '201.31.12.4';
+        #const LIVE_CONDUCTOR_HOST = '201.31.12.4';
+        const LIVE_CONDUCTOR_HOST = '201.31.12.26';
         const VOD_CONDUCTOR_HOST  = '201.31.12.7';
         
         const LIVE_TEMPLATE_STANDARD = 13;
         const LIVE_TEMPLATE_PREMIUM = 13;
         const LIVE_NODE_URL = 'rtmp://localhost:1935/';
 
-        const VOD_TEMPLATE_STANDARD = 75;
-        const VOD_TEMPLATE_PREMIUM = 75;        
+        const VOD_TEMPLATE_STANDARD = 95;
+        const VOD_TEMPLATE_PREMIUM = 95;        
         
         const DELTA_HOST = '201.31.12.36';
         const DELTA_PORT = '8080';

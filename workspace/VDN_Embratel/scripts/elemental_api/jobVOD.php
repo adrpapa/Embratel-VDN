@@ -1,4 +1,5 @@
 <?php
+	require_once "aps/2/runtime.php";
     require_once "configConsts.php";
     require_once "elementalRest.php";
     require_once "deltaInput.php";
@@ -13,7 +14,8 @@
         ** cria objeto JOB, e monta XML para inclusão do mesmo
         */
     	public static function newJobVOD( $name, $file_input_uri, $clientID, $level, Presets $presets=NULL ) {
-    		$templateID = $level === 'premium'
+			\APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
+			$templateID = $level === 'premium'
     				? ConfigConsts::VOD_TEMPLATE_PREMIUM
     				: ConfigConsts::VOD_TEMPLATE_STANDARD;
     	
@@ -21,13 +23,13 @@
     		$job->name = cleanName($name);
     		$job->clientID = cleanClientID($clientID);
     		$job->xml = JobVOD::getElementalRest()->getTemplate($templateID, "ElementalVOD");
-    		if ( !is_null($presets) ) {
-    			$job->xml = $presets->customizePresets( $job->xml );
-    		}
     		$job->xml->input->name = $name;
     		$job->xml->input->file_input->uri = $file_input_uri;
+    		if ( !is_null($presets) ) {
+    			$job->xml = $presets->customizePresets( $job->name, $job->xml );
+    		}
     		$job->xml->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WF_INCOMMING_URI . '/' . $clientID . '/' . $level;
-    		print $job->xml->asXml().'\n';
+    		\APS\LoggerRegistry::get()->info( $job->xml->asXml().'\n');
     		$job->setPropertiesFromXML(JobVOD::getElementalRest()->postRecord(null, null, $job->xml));
     		return( $job );
     	}    	
@@ -153,5 +155,6 @@
     }
     
 //    ElementalRest::$auth = new Auth( 'elemental','elemental' );
-//    JobVOD::delete("76");    
+//	$status=JobVOD::getElementalRest()->restCall($id=95);
+//	print_r(output_group$status);
 ?>
