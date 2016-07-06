@@ -167,7 +167,7 @@ class job extends \APS\ResourceBase {
 // 		try {
 // 			ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
 // 			\APS\LoggerRegistry::get()->info("--> Provisionando Job...");
- 			$job = JobVOD::newJobVOD( $this->aps->id, $this->input_URI, $clientid, $level, $presets );
+ 			$job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets );
 // 		} catch (Exception $fault) {
 // 			\APS\LoggerRegistry::get()->error("Error while creating content job, :\n\t" . $fault->getMessage());
 // 			throw new Exception($fault->getMessage());

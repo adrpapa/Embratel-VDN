@@ -54,6 +54,7 @@ class Presets {
 		$frm_num       = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_numerator");
 		$frm_num_nil   = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_numerator/@nil");
 		$frm_source    = $xml->xpath("/*/stream_assembly/video_description/h264_settings/framerate_follow_source");
+		$gop_mode      = $xml->xpath("/*/stream_assembly/video_description/h264_settings/gop_mode");
 		$gop_size      = $xml->xpath("/*/stream_assembly/video_description/h264_settings/gop_size");
 		$audio_bitrate = $xml->xpath("/*/stream_assembly/audio_description/aac_settings/bitrate");
 		$bitrate       = $xml->xpath("/*/stream_assembly/video_description/h264_settings/bitrate");
@@ -68,9 +69,12 @@ class Presets {
 			// No framerate conversion from source ?
 			if(is_null($preset_obj->framerate_denom) && is_null($preset_obj->framerate_num)) {
 				$follow_source = true;
+				$gop_mode[$k][0]    = "follow";
 			}
 			else {
-				$gop_size[$k][0]    = round($preset_obj->framerate_num/$preset_obj->framerate_denom) * 3;
+				$follow_source = false;
+				$gop_mode[$k][0]    = "fixed";
+				$gop_size[$k][0]    = (round($preset_obj->framerate_num/$preset_obj->framerate_denom) * 3).'.0';
 			}
 			
 			$bitrate[$k][0]       = $preset_obj->bitrate;
