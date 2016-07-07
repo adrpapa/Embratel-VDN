@@ -2,6 +2,26 @@
 require_once "deliveryService.php";
 require_once "contentOrigin.php";
 require_once "DeliveryServiceGenSettings.php";
+require_once "fileMgmt.php";
+
+/**
+$rule = new FileMgmt("20","url-teste-api","upload");
+if( $rule->create() ) {
+	print("Sucesso!\n");
+	print( $rule->getID() . "\n");	
+}
+**/
+
+$origin = new ContentOrigin();
+$origin->get("teste-rule");
+
+// GET DELIVERY ID
+$ds = new DeliveryService();
+$ds->get($origin->getID().":"."ds-teste-rule");
+print( $ds->getID() );
+if ( $ds->applyRuleFile($ds->getID(),"FileInfo_1927") ) {
+	print("Sucesso!\n");
+}
 
 // CREATE CONTENT ORIGIN
 $origin = new ContentOrigin("delta-customer10","customer10.dominio.com","customer10.csn.cdn.cisco.com","Isto e um teste de API");

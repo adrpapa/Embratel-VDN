@@ -41,19 +41,63 @@
             return simplexml_load_file($templateFilename);
         }
 
-        function restCDSM($credentials) {
-			$this->headers = array(
-					"Content-type: text/xml;charset=\"utf-8\"",
-					"Accept: text/xml",
-					"Cache-Control: no-cache",
-					"Pragma: no-cache",
-					"Authorization: Basic " . $credentials
-			);
+        function restCDSM($credentials,$data=null) {
+			if( $data ){
+				$this->curl_custom_postfields($data);
+			}			
+			else {
+				$this->headers = array(
+						"Content-type: text/xml;charset=\"utf-8\"",
+						"Accept: text/xml",
+						"Cache-Control: no-cache",
+						"Pragma: no-cache"
+				);				
+			}
 			
+			$this->headers[] = "Authorization: Basic " . $credentials;
+			curl_setopt($this->ch, CURLOPT_POST, 1);
 			curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 			curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 			
 			return $this->restCall();
+        }
+        
+        function curl_custom_postfields($data) {
+        	// invalid characters for "name" and "filename"
+        	static $disallow = array("\0", "\"", "\r", "\n");
+
+        	// build file parameters
+        	$k = "0";
+        	$v = "templates/rule-url-rwr.xml";
+
+        	$v = call_user_func("end", explode(DIRECTORY_SEPARATOR, $v));
+        	$k = str_replace($disallow, "_", $k);
+        	$v = str_replace($disallow, "_", $v);
+        	$body[] = implode("\r\n", array(
+        			"Content-Disposition: form-data; name=\"{$k}\"; filename=\"{$v}\"",
+        			"Content-Type: application/octet-stream",
+        			"",
+        			$data,
+        	));
+        
+        	// generate safe boundary
+        	do {
+        		$boundary = "---------------------" . md5(mt_rand() . microtime());
+        	} while (preg_grep("/{$boundary}/", $body));
+        
+        	// add boundary for each parameters
+        	array_walk($body, function (&$part) use ($boundary) {
+        		$part = "--{$boundary}\r\n{$part}";
+        	});
+        
+        	// add final boundary
+        	$body[] = "--{$boundary}--";
+        	$body[] = "";
+        	// set options
+        	
+        	curl_setopt($this->ch, CURLOPT_POSTFIELDS, implode("\r\n", $body));
+        	$this->headers[] = "Expect: 100-continue";
+        	$this->headers[] = "Content-Type: multipart/form-data; boundary={$boundary}";
         }
         
         function restGet( $id=null, $params=null){

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+                  "aps/ResourceStore",
+                "dijit/registry",
+                 "dojo/when",
+            "dojox/mvc/getPlainValue",
+            "dojox/mvc/at",
+            "dojox/mvc/getStateful",
+                  "aps/load",
+                  "aps/PageContainer",
+                  "aps/Memory",
+                 "./js/displayError.js",
+                  "aps/ready!"
+		], function (Store, registry, when, getPlainValue, at, getStateful, load, PageContainer, Memory, displayError) {
+			var store = new Store({
+					target: "/aps/2/resources"
+				}),
+				model;
+
+			/* Getting Job properties */
+			store.get(aps.context.vars.cdn.aps.id).then(function(object){
+				/* Collect the Job properties in the model */
+				model = getStateful(object);
+				/* and create the widgets */
+	            var widgets =
+	                ["aps/PageContainer", { id: "page" }, [
+	                    ["aps/FieldSet", { id: "new1_general", title:  "CDN Configuration"  }, [
+	                        ["aps/TextBox", { id: "new1_cdnName", label: _("Name"), value: at(model, "name"), required: true }],
+	                        ["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") }]
+	                    ]],
+                        ["aps/FieldSet", { id: "new1_info", title:  "CDN Information"  }, [
+                            ["aps/Output", { id: "new1_delivery_service_id", label: _("Delivery Service Id"), value: at(model, "delivery_service_id")}],
+                            ["aps/Output", { id: "new1_content_origin_id", label: _("Content Origin Id"), value: at(model, "content_origin_id")}],
+                            ["aps/Output", { id: "new1_origin_domain", label: _("Origin Domain"), value: at(model, "origin_domain")}],
+                            ["aps/Output", { id: "new1_origin_server", label: _("Origin Server"), value: at(model, "origin_server")}],
+                            ["aps/Output", { id: "new1_origin_path",   label: _("Origin Path"), value: at(model, "origin_path")}]
+                        ]]
+	            ]];
+				return load(widgets);
+			}).then(function(){
+				/* Once the widgets are created, create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("cdns");
+				};
+
+				aps.app.onSubmit = function() {
+					var page = registry.byId("page");
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+					when(store.put(getPlainValue(model)),
+						function() {
+							aps.apsc.gotoView("cdns");
+						},
+						displayError
+					);
+			   };
+			}).otherwise(displayError);
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

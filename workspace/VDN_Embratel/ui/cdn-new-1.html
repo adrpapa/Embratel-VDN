@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+                "dijit/registry",
+            "dojox/mvc/getPlainValue",
+                  "aps/WizardData",
+            "dojox/mvc/at",
+                  "aps/load",
+                  "aps/Memory",
+            "dojox/mvc/getStateful",
+                  "aps/ready!"
+		], function (registry, getPlainValue, wd, at, load, Memory, getStateful) {
+			var cdn_new = {
+				aps: { type: "http://embratel.com.br/app/VDN_Embratel/cdn/1.0" },
+				name: "",
+				description: "",
+				origin_domain: "",
+				origin_server: "",
+				origin_path: "",
+				https: false,
+	            live : false
+			};
+			/* Declare the data source */
+			var model = typeof aps.context.params.isNew === "undefined"? cdn_new: getStateful(wd.get());
+            
+			/* Create widgets */
+			var widgets =
+				["aps/PageContainer", { id: "page" }, [
+					["aps/FieldSet", { id: "new_general", title:  "General Configuration"  }, [
+						["aps/TextBox", { id: "new_cdnName", label: _("Name"), value: at(model, "name"), required: true }],
+						["aps/TextBox", { id: "new_description", label: _("Description"), value: at(model, "description") } ],
+						["aps/TextBox", { id: "origin_domain", label: _("Origin Domain"), value: at(model, "origin_domain"), required: true } ],
+						["aps/TextBox", { id: "origin_server", label: _("Origin Server"), value: at(model, "origin_server"), required: true } ],
+						["aps/TextBox", { id: "origin_path",   label: _("Origin Path"), value: at(model, "origin_path"), required: true } ]
+					]],
+					["aps/FieldSet", { id: "new_options", title:  "CDN Options"  }, [
+						["aps/CheckBox", { id: "new_https", label: _("Use HTTPS?"), checked: at(model, "https") } ],
+						["aps/CheckBox", { id: "new_live", label: _("Live?"), checked: at(model, "live") } ]
+					]]
+				]];
+			load(widgets).then(function(){
+				/* Create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+					aps.apsc.gotoView("cdns");
+				};
+				aps.app.onNext = function() {
+					var page = registry.byId("page");
+					page.get("messageList").removeAll();
+
+					/* Validate the values assigned to widgets */
+					if (!page.validate()) {
+						aps.apsc.cancelProcessing();
+						return;
+					}
+
+					/* Save the values in the client"s storage */
+					wd.put(getPlainValue(model));
+					/* and proceed to the next screen */
+					aps.apsc.gotoView("cdn-new-last");
+				};
+			});
+		}
+	);
+	</script>
+</head>
+<body>
+</body>
+</html>

@@ -49,7 +49,7 @@
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";      	
         }
              
-        public function create() {      	
+        public function create($data=null) {      	
         	if ( is_null($this->deliveryService) ||
         			is_null($this->Bitrate) ||
         			is_null($this->OsProtocol) ||
@@ -64,7 +64,7 @@
         		
         	$this->action = "createDeliveryServiceGenSettings";
 
-        	return( parent::create() );
+        	return( parent::create($data) );
         }
         
         public function delete($id) {
