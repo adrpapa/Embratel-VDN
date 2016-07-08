@@ -25,7 +25,8 @@
         			"deliveryService",
         			"contentOrigin",		
         			"desc",
-        			"param"					        			
+        			"param",
+        			"ruleFile"
         	);        	
         	parent::__construct();
         	$this->deliveryService = $deliveryService;
@@ -34,7 +35,7 @@
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";      	
         }
          
-        public function create() {
+        public function create($data=null) {
         	if ( is_null($this->deliveryService) || is_null($this->contentOrigin) || is_null($this->desc) )
         	{
         		throw new invalidargumentexception("DeliveryService::create() deliveryService,contentOrigin and description must not be null");
@@ -42,7 +43,7 @@
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
         	$this->action = "createDeliveryService";
 
-        	return ( parent::create() );
+        	return ( parent::create($data) );
         }
         
         public function delete($id) {
@@ -57,7 +58,7 @@
         	$this->action = "modifyDeliveryService";
         	$this->deliveryService = $id;
         	return ( parent::update($id) );        	
-        }        
+        }                      
         
         public function get($name) {
         	$this->taskAPI = "com.cisco.unicorn.ui.ListApiServlet";
@@ -65,5 +66,13 @@
         	$this->param  = $name;
         	return ( parent::get($name) );
         }        
+        
+        public function applyRuleFile($id,$rule_id) {
+        	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
+        	$this->action = "applyRuleFile";
+        	$this->deliveryService = $id;
+        	$this->ruleFile = $rule_id;
+        	return ( parent::update($id) );  
+        }
     }
 ?>

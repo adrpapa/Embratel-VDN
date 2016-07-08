@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+                   "aps/ResourceStore",
+                   "aps/xhr",
+                  "dojo/when",
+                 "dijit/registry",
+                   "aps/load",
+                  "./js/displayError.js",
+            "dojo/_base/array",
+                   "aps/ready!"
+		], function (Store, xhr, when, registry, load, displayError, arr) {
+			/* Create the data store */
+			var store = new Store({
+				apsType: "http://embratel.com.br/app/VDN_Embratel/cdn/1.0",
+				target: "/aps/2/resources/"
+			});
+
+			/* Create widgets */
+			load(["aps/PageContainer", { id: "page" }, [
+				["aps/Grid", {
+					id:                "cdnl_grid",
+					store:             store,
+				    selectionMode:     "multiple",
+					apsResourceViewId: "cdn-info",
+					columns:           [
+						{ field: "name",         name: "Name",          filter: { title: "Name" }, type: "resourceName" },
+						{ field: "origin_domain",name: "Origin Domain" },
+						{ field: "origin_server",name: "Origin Server" },
+						{ field: "origin_path",  name: "Origin Path"}
+					]
+			    }, [
+                    ["aps/Toolbar", [
+						["aps/ToolbarButton", { id: "cdn_new",        iconClass: "sb-add-new",        label: "New" }],
+						// Declare a button with CSS class sb-service-start and label Start.
+						// It will be enabled only if at least one string is selected
+                        ["aps/ToolbarButton", { id: "cdn_delete",     iconClass: "sb-delete",         label: "Delete",    requireItems:   true }],
+						["aps/ToolbarButton", { id: "cdn_refresh",    iconClass: "sb-refresh",        label: "Refresh",   autoBusy:       false }]
+					]]
+				]]
+			]]).then(function(){
+					/* Once the widgets are created, create the widget processing logic */
+					var grid = registry.byId("cdnl_grid"),
+						page = registry.byId("page");
+	
+					/* Create a handler for the *New* button click */
+					registry.byId("cdn_new").on("click", function() {
+						/* Start the process of creating a VPS by going to the first screen */
+						aps.apsc.gotoView("cdn-new-1");
+					});
+
+// 					registry.byId("job_refresh").on("click", function() {
+// 						var job_ids = null;
+// 						var dataStoreGrid = store.data;
+// 						dataStoreGrid.forEach(function(items){
+// 							job_ids = [items.job_id];
+// 	                    });
+// 						job_ids = JSON.stringify(job_ids);
+// 						when(xhr("/aps/2/resources/" + model.aps.id + "/updateJobStatus", {method: "POST", handleAs: "text",
+// 						query: {json: job_ids}}),
+// 							function (res) {
+// 							},
+// 							function (error) {
+//                                 aps.apsc.cancelProcessing();
+//                                 asemail.cancel();
+//                                 return;
+//                             }
+// 						);
+//					
+//						grid.refresh();
+//				});
+
+				/* Create the on-click handler for the *Delete* button
+				*/
+				registry.byId("cdn_delete").on("click", function() {
+                    var self = this;
+					/* Get confirmation from the user for the delete operation */
+                    if (!confirm("Are you sure you want delete this CDN configuration ?")) {
+                        self.cancel();
+                        return;
+                    }
+					var sel = grid.get("selectionArray"),
+					counter = sel.length;
+
+					/* Clear the current messages on the screen */
+					page.get("messageList").removeAll();
+
+					arr.forEach(sel, function(cdnlId){
+						console.log("I'm trying to delete CDN with id = [" + cdnlId + "]");
+
+						/* Remove the VPS from the APS controller DB */
+						when(store.remove(cdnlId),
+							 /* If success, process the next VPS until the list is empty */
+							function(){
+								console.log("CDN with id = [" + cdnlId + "] removed");
+								sel.splice(sel.indexOf(cdnlId),1);
+								grid.refresh();
+								if (--counter === 0) { self.cancel(); }
+							},
+							/* If failure, call the error handler */
+							function(e){
+								displayError(e);
+                                if (--counter === 0) { self.cancel(); }
+							}
+						);
+					});
+				});
+			});
+        });
+	</script>
+</head>
+<body>
+</body>
+</html>

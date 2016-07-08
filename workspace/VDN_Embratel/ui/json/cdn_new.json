@@ -1,0 +1,10 @@
+{
+	"aps": {
+		"type": "http://embratel.com.br/app/VDN_Embratel/cdn/1.0"
+	},
+	"name": "",
+	"description": "",
+	"origin_domain": "",
+	"origin_server": "",
+	"origin_path": ""
+}

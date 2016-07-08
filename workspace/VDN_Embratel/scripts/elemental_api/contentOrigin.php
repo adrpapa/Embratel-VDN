@@ -35,7 +35,7 @@ class ContentOrigin extends CDSM {
 		$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
 	}
 
-	public function create() {
+	public function create($data=null) {
 		if ( is_null($this->name) || is_null($this->origin) || is_null($this->fqdn) ||
 				is_null($this->description) )
 		{
@@ -45,7 +45,7 @@ class ContentOrigin extends CDSM {
 		$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
 		$this->action = "createContentOrigin";
 
-		return ( parent::create() );
+		return ( parent::create($data) );
 	}
 
 	public function delete($id) {

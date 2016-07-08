@@ -112,7 +112,31 @@ CISCO VDN para entrega distribuída de conteúdo
 							type-id="http://embratel.com.br/app/VDN_Embratel/channel/1.0" />
 					</view>
 				</view>
-			</item>
+			</item>		
+			<item id="cdns" label="CDN Standalone">
+				<view id="cdns" label="CDN">
+					<view id="cdn-new-1" label="New Content">
+						<controls>
+							<cancel />
+							<next />
+						</controls>
+					</view>
+					<view id="cdn-new-last" label="Review">
+						<controls>
+							<prev />
+							<finish />
+						</controls>
+					</view>
+					<view id="cdn-info" label="Edit Content">
+						<controls>
+							<cancel />
+							<submit />
+						</controls>
+						<var name="cdnl"
+							type-id="http://embratel.com.br/app/VDN_Embratel/cdn/1.0" />
+					</view>
+				</view>
+			</item>						
 		</navigation>
 
 	</presentation>
@@ -164,4 +188,12 @@ CISCO VDN para entrega distribuída de conteúdo
 			<summary>VDN Job Content</summary>
 		</presentation>
 	</service>	
+	
+	<service id="cdns">
+		<code engine="php" path="scripts/cdns.php" />
+		<presentation>
+			<name>Content Delivery Network</name>
+			<summary>Content Delivery Network</summary>
+		</presentation>
+	</service>		
 </application>

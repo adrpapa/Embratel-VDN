@@ -15,8 +15,8 @@ abstract class CDSM {
 	protected $taskAPI;
 	protected $action;
 	protected $urlString;
-	protected $userName = ConfigConsts::CDMS_USER;
-	protected $password = ConfigConsts::CDMS_PWD;
+	protected $cdmUserName = ConfigConsts::CDMS_USER;
+	protected $cdmPassword = ConfigConsts::CDMS_PWD;
 	protected $params;
 	protected $optional_params_names;
 
@@ -26,18 +26,21 @@ abstract class CDSM {
 
 	protected function setInternalStatus($xml_result) {
 		if ( count($xml_result->xpath("/*/message/@status")) > 0 ) {
-			$this->status = $xml_result->xpath("/*/message/@status")[0];
+			$r = $this->status = $xml_result->xpath("/*/message/@status");
+			$this->status = $r[0];
 			$this->setStatus( $this->status->__toString() );
 		}
 		if ( count($xml_result->xpath("/*/message/@message")) > 0 ) {
-			$this->message = $xml_result->xpath("/*/message/@message")[0];
+			$r = $xml_result->xpath("/*/message/@message");
+			$this->message = $r[0];
 			$this->setMessage( $this->message->__toString() );
 		}
 	}
 
 	protected function setInternalID($xml_result) {
 		if ( count($xml_result->xpath("/*/record/@Id")) > 0 ) {
-			$this->id = $xml_result->xpath("/*/record/@Id")[0];
+			$r = $xml_result->xpath("/*/record/@Id");
+			$this->id = $r[0];
 			$this->setID( $this->id->__toString() );
 		}
 	}
@@ -66,8 +69,8 @@ abstract class CDSM {
 		return $this->message;
 	}
 
-	public function create() {
-		$this->exec();
+	public function create($data=null) {
+		$this->exec($data);
 		return( $this->getStatus() == "success" );
 	}
 
@@ -86,7 +89,7 @@ abstract class CDSM {
 		return( $this->getStatus() == "success" );		
 	}
 	
-	public function exec() {
+	public function exec($data=null) {
 		$optional_params = "";
 		foreach ($this->optional_params_names as $k => $v) {
 			if ( isset($this->{$v}) && !is_null($this->{$v}) ) {
@@ -94,14 +97,14 @@ abstract class CDSM {
 			}
 		}
 			
-		$credentials = $this->userName . ':' . $this->password;
+		$credentials = $this->cdmUserName . ':' . $this->cdmPassword;
 		$this->urlString = "https://" . $this->cdmAddress . ":" . $this->cdmPort . "/servlet/";
 		$this->urlString .= $this->taskAPI . "?action=" . $this->action . $optional_params;
 		
 		try {
 			$curl_obj = new ElementalRest($this->cdmAddress,'servlet');
 			$curl_obj->uri = $this->urlString;
-			$xml_result = $curl_obj->restCDSM( base64_encode($credentials) );
+			$xml_result = $curl_obj->restCDSM( base64_encode($credentials),$data );
 		} catch(Exception $ex) { 
 			print("ops something didn´t work as we expected.... sorry.To help you: ".$ex->getMessage());
 		}
