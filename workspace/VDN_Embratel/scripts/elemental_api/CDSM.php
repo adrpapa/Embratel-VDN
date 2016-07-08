@@ -26,18 +26,21 @@ abstract class CDSM {
 
 	protected function setInternalStatus($xml_result) {
 		if ( count($xml_result->xpath("/*/message/@status")) > 0 ) {
-			$this->status = $xml_result->xpath("/*/message/@status")[0];
+			$r = $this->status = $xml_result->xpath("/*/message/@status");
+			$this->status = $r[0];
 			$this->setStatus( $this->status->__toString() );
 		}
 		if ( count($xml_result->xpath("/*/message/@message")) > 0 ) {
-			$this->message = $xml_result->xpath("/*/message/@message")[0];
+			$r = $xml_result->xpath("/*/message/@message");
+			$this->message = $r[0];
 			$this->setMessage( $this->message->__toString() );
 		}
 	}
 
 	protected function setInternalID($xml_result) {
 		if ( count($xml_result->xpath("/*/record/@Id")) > 0 ) {
-			$this->id = $xml_result->xpath("/*/record/@Id")[0];
+			$r = $xml_result->xpath("/*/record/@Id");
+			$this->id = $r[0];
 			$this->setID( $this->id->__toString() );
 		}
 	}

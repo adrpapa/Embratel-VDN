@@ -3,6 +3,10 @@
 if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
 require_once "aps/2/runtime.php";
+require_once "elemental_api/deliveryService.php";
+require_once "elemental_api/contentOrigin.php";
+require_once "elemental_api/deliveryServiceGenSettings.php";
+require_once "elemental_api/fileMgmt.php";
 
 /**
  * @type("http://embratel.com.br/app/VDN_Embratel/cdn/1.0")
@@ -94,7 +98,24 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/cdns.log");
 		\APS\LoggerRegistry::get()->info("Iniciando provisionamento do CDN... ".$this->aps->id);
-		\APS\LoggerRegistry::get()->info("<-- Fim Provisionando CDN");
+		
+		// CREATE CONTENT ORIGIN
+		$origin = new ContentOrigin("origin-".$this->name,$this->origin_server,$this->origin_domain,$this->description);
+		if ( !$origin->create() ) {
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
+		}
+		else {
+			// CREATE DELIVERY SERVICE
+			$ds = new DeliveryService("ds-".$this->name,$origin->getID(),$this->description);
+			if ( !$ds->create() ) {
+				\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
+			}
+			
+			$this->delivery_service_id = $ds->getID();
+			$this->content_origin_id = $origin->getID();
+		}
+		
+		\APS\LoggerRegistry::get()->info("<-- Fim Provisionando CDN.Delivery Service ID:".$this->delivery_service_id.".Content Origin ID:".$this->content_origin_id);
     }
 
     public function configure($new) {
