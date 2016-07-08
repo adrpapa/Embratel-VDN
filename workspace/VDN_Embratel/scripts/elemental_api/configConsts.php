@@ -29,6 +29,7 @@
         const DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive/live';
         const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/vod';
         const DELTA_WF_INCOMMING_URI = '/data/server/drive/watchfolders';
+        const DELTA_WEBDAV_STORAGE_LOCATION = '/data/server/drive/';
         
         const DELTA_STD_EVENT_OUTPUT_TEMPLATE = 7;
         const DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE = 8;

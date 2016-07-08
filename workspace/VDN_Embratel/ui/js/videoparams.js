@@ -41,7 +41,7 @@ define(["dojox/mvc/at"],
 				},
 				premiumParms =
 				{
-					r4x3: [
+					r4x3_rafa: [
 		                { name:"Premium-4:3-1080p",  res:resol4x3.r1080p, vbr:vidBitRats.vbr5M,   fr:framRats.frfs, abr:audBitRats.abr96K},
 		                { name:"Premium-4:3-720p-1", res:resol4x3.r720p,  vbr:vidBitRats.vbr3_5M, fr:framRats.frfs, abr:audBitRats.abr96K},
 		                { name:"Premium-4:3-720p-2", res:resol4x3.r720p,  vbr:vidBitRats.vbr2M,   fr:framRats.frfs, abr:audBitRats.abr96K},
@@ -51,7 +51,7 @@ define(["dojox/mvc/at"],
 		                { name:"Premium-4:3-360p-2", res:resol4x3.r360p,  vbr:vidBitRats.vbr480K, fr:framRats.fr15, abr:audBitRats.abr64K},
 		                { name:"Premium-4:3-240p",   res:resol4x3.r240p,  vbr:vidBitRats.vbr250K, fr:framRats.fr15, abr:audBitRats.abr64K}
 		            ],
-		            r16x9: [
+		            r16x9_rafa: [
 		                { name:"Premium-16:9-1080p", res:resol16x9.r1080p,vbr:vidBitRats.vbr5M,   fr:framRats.frfs, abr:audBitRats.abr96K},
 		                { name:"Premium-16:9-720p-1",res:resol16x9.r720p, vbr:vidBitRats.vbr3_5M, fr:framRats.frfs, abr:audBitRats.abr96K},
 		                { name:"Premium-16:9-720p-2",res:resol16x9.r720p, vbr:vidBitRats.vbr2M,   fr:framRats.frfs, abr:audBitRats.abr96K},
@@ -60,21 +60,41 @@ define(["dojox/mvc/at"],
 		                { name:"Premium-16:9-360p-1",res:resol16x9.r360p, vbr:vidBitRats.vbr650K, fr:framRats.fr15, abr:audBitRats.abr64K},
 		                { name:"Premium-16:9-360p-2",res:resol16x9.r360p, vbr:vidBitRats.vbr480K, fr:framRats.fr15, abr:audBitRats.abr64K},
 		                { name:"Premium-16:9-240p",  res:resol16x9.r240p, vbr:vidBitRats.vbr250K, fr:framRats.fr15, abr:audBitRats.abr64K}
+		            ],
+					r4x3: [
+		                { name:"Premium-4:3-1080p",  res:resol4x3.r1080p, vbr:vidBitRats.vbr5M,   fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Premium-4:3-720p-1", res:resol4x3.r720p,  vbr:vidBitRats.vbr3_5M, fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Premium-4:3-720p-2", res:resol4x3.r720p,  vbr:vidBitRats.vbr2M,   fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Premium-4:3-480p-1", res:resol4x3.r480p,  vbr:vidBitRats.vbr1_2M, fr:framRats.fr25, abr:audBitRats.abr96K},
+		                { name:"Premium-4:3-480p-2", res:resol4x3.r480p,  vbr:vidBitRats.vbr800K, fr:framRats.fr25, abr:audBitRats.abr96K},
+		                { name:"Premium-4:3-360p-1", res:resol4x3.r360p,  vbr:vidBitRats.vbr650K, fr:framRats.fr15, abr:audBitRats.abr64K},
+		                { name:"Premium-4:3-360p-2", res:resol4x3.r360p,  vbr:vidBitRats.vbr480K, fr:framRats.fr15, abr:audBitRats.abr64K},
+		                { name:"Premium-4:3-240p",   res:resol4x3.r240p,  vbr:vidBitRats.vbr250K, fr:framRats.fr15, abr:audBitRats.abr64K}
+		            ],
+		            r16x9: [
+		                { name:"Premium-16:9-1080p", res:resol16x9.r1080p,vbr:vidBitRats.vbr5M,   fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Premium-16:9-720p-1",res:resol16x9.r720p, vbr:vidBitRats.vbr3_5M, fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Premium-16:9-720p-2",res:resol16x9.r720p, vbr:vidBitRats.vbr2M,   fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Premium-16:9-480p-1",res:resol16x9.r480p, vbr:vidBitRats.vbr1_2M, fr:framRats.fr25, abr:audBitRats.abr96K},
+		                { name:"Premium-16:9-480p-2",res:resol16x9.r480p, vbr:vidBitRats.vbr800K, fr:framRats.fr25, abr:audBitRats.abr96K},
+		                { name:"Premium-16:9-360p-1",res:resol16x9.r360p, vbr:vidBitRats.vbr650K, fr:framRats.fr15, abr:audBitRats.abr64K},
+		                { name:"Premium-16:9-360p-2",res:resol16x9.r360p, vbr:vidBitRats.vbr480K, fr:framRats.fr15, abr:audBitRats.abr64K},
+		                { name:"Premium-16:9-240p",  res:resol16x9.r240p, vbr:vidBitRats.vbr250K, fr:framRats.fr15, abr:audBitRats.abr64K}
 		            ]
 				},
 		        standardParms =
 		        {
 		            r4x3: [
-		                { name:"Standard-4:3-1080p", res:resol4x3.r1080p, vbr:vidBitRats.vbr3_2M, fr:framRats.frfs, abr:audBitRats.abr96K},
-		                { name:"Standard-4:3-720p",  res:resol4x3.r720p,  vbr:vidBitRats.vbr1_8M, fr:framRats.frfs, abr:audBitRats.abr96K},
-		                { name:"Standard-4:3-480p",  res:resol4x3.r480p,  vbr:vidBitRats.vbr1M,   fr:framRats.frfs, abr:audBitRats.abr96K},
+		                { name:"Standard-4:3-1080p", res:resol4x3.r1080p, vbr:vidBitRats.vbr3_2M, fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Standard-4:3-720p",  res:resol4x3.r720p,  vbr:vidBitRats.vbr1_8M, fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Standard-4:3-480p",  res:resol4x3.r480p,  vbr:vidBitRats.vbr1M,   fr:framRats.fr25, abr:audBitRats.abr96K},
 		                { name:"Standard-4:3-360p",  res:resol4x3.r360p,  vbr:vidBitRats.vbr650K, fr:framRats.fr15, abr:audBitRats.abr64K},
 		                { name:"Standard-4:3-240p",  res:resol4x3.r240p,  vbr:vidBitRats.vbr250K, fr:framRats.fr15, abr:audBitRats.abr64K}
 		            ],
 		            r16x9: [
-		                { name:"Standard-16:9-1080p", res:resol16x9.r1080p,vbr:vidBitRats.vbr3_2M, fr:framRats.frfs, abr:audBitRats.abr96K},
-		                { name:"Standard-16:9-720p",  res:resol16x9.r720p, vbr:vidBitRats.vbr1_8M, fr:framRats.frfs, abr:audBitRats.abr96K},
-		                { name:"Standard-16:9-480p",  res:resol16x9.r480p, vbr:vidBitRats.vbr1M,   fr:framRats.frfs, abr:audBitRats.abr96K},
+		                { name:"Standard-16:9-1080p", res:resol16x9.r1080p,vbr:vidBitRats.vbr3_2M, fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Standard-16:9-720p",  res:resol16x9.r720p, vbr:vidBitRats.vbr1_8M, fr:framRats.fr30, abr:audBitRats.abr96K},
+		                { name:"Standard-16:9-480p",  res:resol16x9.r480p, vbr:vidBitRats.vbr1M,   fr:framRats.fr25, abr:audBitRats.abr96K},
 		                { name:"Standard-16:9-360p",  res:resol16x9.r360p, vbr:vidBitRats.vbr650K, fr:framRats.fr15, abr:audBitRats.abr64K},
 		                { name:"Standard-16:9-240p",  res:resol16x9.r240p, vbr:vidBitRats.vbr250K, fr:framRats.fr15, abr:audBitRats.abr64K}
 		            ]
@@ -120,7 +140,7 @@ define(["dojox/mvc/at"],
                         ["aps/Select",{id:"res_"+i, value: at(model["resolutions"],i),
                         disabled:disabled, options:resolutions}],
 		                ["aps/Output",{content:" FR:"}],
-		                buildCombo(model, "framerates", i, res, framRats, params[i].fr, disabled),
+		                buildCombo(model, "framerates", i, res, framRats, params[i].fr, false),
 		                ["aps/Output",{content:" VBR:"}],
 		                buildCombo(model, "video_bitrates", i, res, vidBitRats, params[i].vbr, disabled),
 		                ["aps/Output",{content:" ABR: "}],

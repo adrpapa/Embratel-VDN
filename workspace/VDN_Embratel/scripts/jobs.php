@@ -192,17 +192,17 @@ class job extends \APS\ResourceBase {
 		$jobstatus = JobVOD::getStatus($this->job_id);
 		\APS\LoggerRegistry::get()->info("Called provisionAsync for job id=".$this->job_id);
  		\APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
- 		$this->state = $jobstatus->status.'';
-		if( $this->state == 'complete' || $this->state == 'error' || $this->state == 'cancelled') {
+		if( $jobstatus->status == 'complete' || $jobstatus->status == 'error' || $jobstatus->status == 'cancelled') {
+			$this->state = $jobstatus->status.'';
 			return;
 		}
 		$this->retry +=1; // Increment the retry counter
-		if ($this->retry < 5) {
-// 			$this->state = "running";
+		if ($this->retry < 6) {
+			$this->state = $jobstatus->status.'';
 			throw new \Rest\Accepted($this, "Job status=".'$jobstatus->status' , 10); // Return "202 Accepted"
 		}
-		\APS\LoggerRegistry::get()->info("$this->job_id timed out!x");
-		$this->state == "timeout";
+		$this->state = "timed out";
+		\APS\LoggerRegistry::get()->info("Job $this->job_id timed out!");
 	}
 
     public function configure($new) {

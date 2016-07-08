@@ -38,8 +38,8 @@ class Presets {
 	}
 	
 	public function addPreset(Preset $pr,$stream_nb) {
-		if ( $stream_nb == 0 ) $stream_nb = 1;
-		$this->array_preset[ $stream_nb-1 ] = $pr;
+// 		if ( $stream_nb == 0 ) $stream_nb = 1;
+		$this->array_preset[ $stream_nb ] = $pr;
 	}
 	
 	public function getPresets() {
@@ -87,8 +87,8 @@ class Presets {
 			$frm_num_nil[$k][0]   = $follow_source ? "true":"false";
 			$audio_bitrate[$k][0] = $preset_obj->audio_bitrate;
 
-			$name_modifier[$k][0] = $name.'_'.$k;
-			if ( $k >= count($bitrate) ) break;
+			$name_modifier[$k][0] = "_$k";
+			if ( $k >= ( count($bitrate) - 1) ) break;
 		}
 		
 		return $xml;

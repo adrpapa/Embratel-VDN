@@ -119,6 +119,9 @@
             curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->headers );
             
             $data = curl_exec($this->ch);
+            if( ConfigConsts::debug ) {
+                var_dump($data);
+            }
             $httpRC = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
             if (curl_errno($this->ch)) {
                 print("\nERRO na execução do CURL\n");
@@ -128,7 +131,10 @@
                 $errMsg = sprintf( "HTTP Error: %s\nData: %s", $httpRC, $data);
                 try {
                     $xml=simplexml_load_string($data);
-                    $errMsg = sprintf( "Erro na chamada da API: %s\n", $xml->error);
+                    $errMsg = "Erro na chamada da API:\n";
+                    foreach( $xml->error as $err ){
+						$errMsg .= $err."\n";
+					}
                 } catch(Exception $ex) {
                 }
                 throw new invalidargumentexception( $errMsg );

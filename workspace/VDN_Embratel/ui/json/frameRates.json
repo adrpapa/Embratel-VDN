@@ -1,5 +1,5 @@
 {
-    "frfs":   {"name": "Follow Source","value":"FS",        "allow":["1080p","720p","480p","360p","240p"]},
+    "frfs":   {"name": "Follow Source","value":"FS",        "allow":[]},
     "fr30":   {"name": "30",           "value":"30/1",      "allow":["1080p","720p"]},
     "fr2997": {"name": "29.97",        "value":"30000/1001","allow":["1080p","720p"]},
     "fr25":   {"name": "25",           "value":"25/1",      "allow":["1080p","720p","480p"]},

@@ -28,7 +28,7 @@
     		if ( !is_null($presets) ) {
     			$job->xml = $presets->customizePresets( $job->name, $job->xml );
     		}
-    		$job->xml->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WF_INCOMMING_URI . '/' . $clientID . '/' . $level;
+    		$job->xml->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WF_INCOMMING_URI . '/' . $clientID .'/';
     		\APS\LoggerRegistry::get()->info( $job->xml->asXml().'\n');
     		$job->setPropertiesFromXML(JobVOD::getElementalRest()->postRecord(null, null, $job->xml));
     		return( $job );
