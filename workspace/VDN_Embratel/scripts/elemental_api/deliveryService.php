@@ -1,5 +1,6 @@
 <?php
     require_once "CDSM.php";
+    require_once "serviceEngine.php";
 
     // ** Class DeliveryService
     // Permite criar e excluir CDMS Delivery Service
@@ -26,7 +27,9 @@
         			"contentOrigin",		
         			"desc",
         			"param",
-        			"ruleFile"
+        			"ruleFile",
+        			"contentAcquirer",
+        			"se"
         	);        	
         	parent::__construct();
         	$this->deliveryService = $deliveryService;
@@ -67,12 +70,31 @@
         	return ( parent::get($name) );
         }        
         
-        public function applyRuleFile($id,$rule_id) {
+        public function applyRuleFile($rule_id) {
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
         	$this->action = "applyRuleFile";
-        	$this->deliveryService = $id;
+        	$this->deliveryService = $this->id;
         	$this->ruleFile = $rule_id;
-        	return ( parent::update($id) );  
+        	return ( parent::update(null) );  
+        }
+        
+        public function assignSEs() {
+        	$se = new ServiceEngine();
+        	if ( $se->get(null) ) {
+        		$list_ses = $se->getID();
+        	}
+        	else {
+        		return false;
+        	}
+        	
+        	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
+        	$this->action = "assignSEs";
+        	$this->deliveryService = $this->id;
+        	if ( !$se->get( $se->getContentAcquirer() ) ) return false;
+        	$this->contentAcquirer = $se->getID();
+        	$this->se = $list_ses;
+        	
+        	return ( parent::update(null) );
         }
     }
 ?>

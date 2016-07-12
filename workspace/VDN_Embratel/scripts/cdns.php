@@ -103,12 +103,30 @@ class cdn extends \APS\ResourceBase {
 		$origin = new ContentOrigin("origin-".$this->name,$this->origin_server,$this->origin_domain,$this->description);
 		if ( !$origin->create() ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
+			throw new \Exception("Can't create content origin:" . $origin->getMessage(), 501);
 		}
 		else {
 			// CREATE DELIVERY SERVICE
 			$ds = new DeliveryService("ds-".$this->name,$origin->getID(),$this->description);
+			$ds->live = ($this->live ? "true":"false");
 			if ( !$ds->create() ) {
+				// ** Rollback
+				$origin->delete( $origin->getID() );
+				// **
 				\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
+				throw new \Exception("Can't create delivery service:" . $ds->getMessage(), 502);
+			}
+			else {
+				// CUSTOMIZE PROTOCOL: HTTP or HTTPS
+				$dsgs = new DeliveryServiceGenSettings($ds->getID(), ($this->https ? "https" : "http") );
+				if ( !$dsgs->create() ) {
+					// ** Rollback
+					$origin->delete( $origin->getID() );
+					$ds->delete( $ds->getID() );
+					// **
+					\APS\LoggerRegistry::get()->info("cdns:provisioning() Error customizing delivery service: " . $dsgs->getMessage());
+					throw new \Exception("Can't customize delivery service:" . $dsgs->getMessage(), 503);						
+				}
 			}
 			
 			$this->delivery_service_id = $ds->getID();

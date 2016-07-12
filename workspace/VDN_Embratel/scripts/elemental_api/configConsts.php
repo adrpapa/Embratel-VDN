@@ -4,7 +4,7 @@
 */
     class ConfigConsts {
         
-        const debug = false;
+        const debug = true;
         
         const TEMPLATE_PATH = 'templates';
 
