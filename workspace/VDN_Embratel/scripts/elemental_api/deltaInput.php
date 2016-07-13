@@ -33,6 +33,42 @@
         }
 
         /*
+        ** cria objeto DeltaInputFilter para WebDav
+        **
+        */
+        public static function newWebDavInputFilter( $clientID, $name, $dvr=false, $live=true ) {
+            $axClientID = cleanClientID($clientID);
+            $axName = cleanClientID($name);
+            $input_filter = new SimpleXMLElement("<input_filter></input_filter>");
+			$input_filter->addAttribute('product',"Delta");
+			$input_filter->addAttribute('version', "1.6.1.34713");
+			$input_filter->addChild('filter_type','webdav_input');
+            $input_filter->addChild('label', $axClientID.'_'.$name);
+            $baseloc = ConfigConsts::DELTA_WEBDAV_STORAGE_LOCATION.$axClientID;
+            $settings = $input_filter->addChild("filter_settings");
+            $settings->addChild("webdav_user_id", 1);
+
+            if( $live ) {
+				$settings->template_id = '';
+				$settings->content_window_type = 'keep_seconds';
+				$settings->seconds_to_keep = $dvr ? 7200 : 120;
+				$settings->storage_location = "$baseloc/live/$axName/";
+				$settings->relative_uri="$axClientID/live/$axName";
+				$settings->vod_content = "false";
+			} else {
+				$settings->template_id = '';
+				$settings->content_window_type = 'keep_all';
+				$settings->storage_location = "$baseloc/vod";
+				$settings->relative_uri="$axClientID/vod/$axName";
+				$settings->vod_content = "true";
+			}
+            $deltaInputFilter = DeltaInputFilter::getElementalRest()->postRecord(null, null, $input_filter);
+            if(ConfigConsts::debug)
+				echo $deltaInputFilter->asXML();
+            return new self($deltaInputFilter);
+        }
+        
+        /*
         ** cria objeto DeltaInputFilter para VOD, e monta XML para inclusão do mesmo
         **
         */
@@ -50,7 +86,7 @@
             return new self(DeltaInputFilter::getElementalRest()->postRecord(null, null, $xml));
         }
         
-        /*ß
+        /*
         ** Obtem / cria input filter para o cliente std/premium ($level)
         ** Parametros:
         **      $clientID
@@ -72,12 +108,15 @@
         
         
         public function setPropertiesFromXML( $xml ) {
+			$this->filter_type = $xml->filter_type."";
             $this->label = (string)$xml->label."";
-            $this->inputURI = (string)$xml->filter_settings->udp_input->uri;
+            //$this->inputURI = (string)$xml->filter_settings->udp_input->uri;
             $this->href = (string)$xml['href'];
             $this->id = end(explode('/', $xml['href']));
-            $this->udpPort = end(explode(':', $this->inputURI));
-            $this->template_id = (string)$xml->filter_settings->template_id;
+            //$this->udpPort = end(explode(':', $this->inputURI));
+            //$this->template_id = (string)$xml->filter_settings->template_id;
+            $this->content_window_type = (string)$xml->filter_settings->content_window_type;
+            $this->seconds_to_keep = (string)$xml->filter_settings->seconds_to_keep;
             $this->storage_location = (string)$xml->filter_settings->storage_location;
             $this->incoming_uri = (string)$xml->filter_settings->incoming->uri;
             $storageTokens = explode('/', trim($this->incoming_uri,'/'));
@@ -119,6 +158,7 @@
                         $apiEndpoint='input_filters', $port=ConfigConsts::DELTA_PORT);
         }
     }
- //    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
- //    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
+//    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
+//    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
+//		DeltaInputFilter::newWebDavInputFilter( "Cliente_teste_Api", "channel01" )
 ?>
