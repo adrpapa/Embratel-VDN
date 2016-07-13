@@ -16,7 +16,8 @@
 			/* Create the data store */
 			var store = new Store({
 				apsType: "http://embratel.com.br/app/VDN_Embratel/job/1.0",
-				target: "/aps/2/resources/"
+				target: "/aps/2/resources/",
+				baseQuery: "ne(state,'cancelled')"
 			});
 
 			/* Create widgets */
@@ -87,15 +88,15 @@
 					/* Clear the current messages on the screen */
 					page.get("messageList").removeAll();
 
-					arr.forEach(sel, function(joblId){
-						console.log("I'm trying to delete Job with id = [" + joblId + "]");
+					arr.forEach(sel, function(contentID){
+						console.log("I'm trying to delete Content with id = [" + contentID + "]");
 
 						/* Remove the VPS from the APS controller DB */
-						when(store.remove(joblId),
+						when(store.remove(contentID),
 							 /* If success, process the next VPS until the list is empty */
 							function(){
-								console.log("Job with id = [" + joblId + "] removed");
-								sel.splice(sel.indexOf(joblId),1);
+								console.log("Job with id = [" + contentID + "] removed");
+								sel.splice(sel.indexOf(contentID),1);
 								grid.refresh();
 								if (--counter === 0) { self.cancel(); }
 							},

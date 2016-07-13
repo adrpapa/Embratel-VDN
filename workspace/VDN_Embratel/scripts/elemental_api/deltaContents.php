@@ -39,5 +39,5 @@
                         $apiEndpoint='contents', $port=ConfigConsts::DELTA_PORT);
         }
     }
-	DeltaContents::getContentsByFolder('/data/server/drive/watchfolders/Cliente1/')
+// 	DeltaContents::getContentsByFolder('/data/server/drive/watchfolders/Cliente1/')
 ?>
