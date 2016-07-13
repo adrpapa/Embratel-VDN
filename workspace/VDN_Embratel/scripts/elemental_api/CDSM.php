@@ -39,9 +39,13 @@ abstract class CDSM {
 
 	protected function setInternalID($xml_result) {
 		if ( count($xml_result->xpath("/*/record/@Id")) > 0 ) {
+			$array_ids = array();
 			$r = $xml_result->xpath("/*/record/@Id");
-			$this->id = $r[0];
-			$this->setID( $this->id->__toString() );
+			foreach( $r as $k=>$v ) {
+				$array_ids[] = $v[0][0]->__toString();
+			}
+			$this->id = implode(',',$array_ids);
+			$this->setID( $this->id );
 		}
 	}
 

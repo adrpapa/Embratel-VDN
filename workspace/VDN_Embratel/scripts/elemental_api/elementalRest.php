@@ -68,7 +68,7 @@
 
         	// build file parameters
         	$k = "0";
-        	$v = "templates/rule-url-rwr.xml";
+        	$v = ConfigConsts::TEMPLATE_PATH . "/rule-url-rwr.xml";
 
         	$v = call_user_func("end", explode(DIRECTORY_SEPARATOR, $v));
         	$k = str_replace($disallow, "_", $k);
@@ -165,6 +165,7 @@
             $data = curl_exec($this->ch);
             if( ConfigConsts::debug ) {
                 var_dump($data);
+                print( $data );
             }
             $httpRC = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
             if (curl_errno($this->ch)) {
