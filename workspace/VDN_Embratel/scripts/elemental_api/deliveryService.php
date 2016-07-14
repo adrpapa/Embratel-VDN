@@ -73,7 +73,7 @@
         public function applyRuleFile($rule_id) {
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
         	$this->action = "applyRuleFile";
-        	$this->deliveryService = $this->id;
+        	$this->deliveryService = $this->getID();
         	$this->ruleFile = $rule_id;
         	return ( parent::update(null) );  
         }
@@ -89,7 +89,7 @@
         	
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
         	$this->action = "assignSEs";
-        	$this->deliveryService = $this->id;
+        	$this->deliveryService = $this->getID();
         	if ( !$se->get( $se->getContentAcquirer() ) ) return false;
         	$this->contentAcquirer = $se->getID();
         	$this->se = $list_ses;

@@ -52,6 +52,10 @@
         }
         
         public function update($id) {
+        	$this->action = "modifyFile";
+        	$this->id     = $id;
+        	
+        	return( parent::update($data) );
         }        
         
         public function createUrlRewriteRule($domain,$path,$protocol="http") {
@@ -76,6 +80,29 @@
         	
         	return( $this->create( $xml_rule->asxml() ) );
         }
+
+        public function updateUrlRewriteRule($domain,$path,$protocol="http") {
+        	$xml_rule = $this->getXML();
+        	 
+        	if( ConfigConsts::debug ) {
+        		print( $xml_rule );
+        	}
+        	 
+        	//REGSUB = "<protocol>://(.*.<domain>)/(.*)"
+        	//rewrite-url = "<protocol>://$1/<path>/$2"
+        	 
+        	$regsub      = $xml_rule->xpath("/CDSRules/Rule_Actions/Rule_UrlRewrite/@regsub");
+        	$rewrite_url = $xml_rule->xpath("/CDSRules/Rule_Actions/Rule_UrlRewrite/@rewrite-url");
+        	 
+        	$regsub[0][0]      = $protocol . "://(.*." . $domain . ")/(.*)";
+        	$rewrite_url[0][0] = $protocol . "://$1/" . $path . "/$2";
+        
+        	if( ConfigConsts::debug ) {
+        		print( $xml_rule );
+        	}
+        	 
+        	return( $this->update( $xml_rule->asxml() ) );
+        }        
         
         protected function getXML() {
         	$templateFilename = ConfigConsts::TEMPLATE_PATH.'/rule-url-rwr.xml';

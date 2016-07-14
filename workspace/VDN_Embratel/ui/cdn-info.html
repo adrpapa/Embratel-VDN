@@ -30,14 +30,15 @@
 	                ["aps/PageContainer", { id: "page" }, [
 	                    ["aps/FieldSet", { id: "new1_general", title:  "CDN Configuration"  }, [
 	                        ["aps/TextBox", { id: "new1_cdnName", label: _("Name"), value: at(model, "name"), required: true }],
-	                        ["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") }]
-	                    ]],
-                        ["aps/FieldSet", { id: "new1_info", title:  "CDN Information"  }, [
-                            ["aps/Output", { id: "new1_delivery_service_id", label: _("Delivery Service Id"), value: at(model, "delivery_service_id")}],
-                            ["aps/Output", { id: "new1_content_origin_id", label: _("Content Origin Id"), value: at(model, "content_origin_id")}],
-                            ["aps/Output", { id: "new1_origin_domain", label: _("Origin Domain"), value: at(model, "origin_domain")}],
+	                        ["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description")}],
+	                        ["aps/Output", { id: "new1_alias", label: _("Alias"), value: at(model, "alias")}],
                             ["aps/Output", { id: "new1_origin_server", label: _("Origin Server"), value: at(model, "origin_server")}],
-                            ["aps/Output", { id: "new1_origin_path",   label: _("Origin Path"), value: at(model, "origin_path")}]
+                            ["aps/Output", { id: "new1_origin_path",   label: _("Origin Path"), value: at(model, "origin_path")}],
+                            ["aps/Output", { id: "new1_origin_domain", label: _("Origin Domain"), value: at(model, "origin_domain")}]
+	                    ]],
+                        ["aps/FieldSet", { id: "new1_options", title:  "CDN Options"  }, [
+                            ["aps/CheckBox", { id: "new1_https", label: _("Use HTTPS?"), checked: at(model, "https") } ],
+							["aps/CheckBox", { id: "new1_live", label: _("Live?"), checked: at(model, "live") } ]
                         ]]
 	            ]];
 				return load(widgets);

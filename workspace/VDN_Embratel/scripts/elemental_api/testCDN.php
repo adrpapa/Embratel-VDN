@@ -5,134 +5,114 @@ require_once "deliveryServiceGenSettings.php";
 require_once "fileMgmt.php";
 require_once "serviceEngine.php";
 
-$name = "customer10";
+$origin=null;
+$ds=null;
+$dsgs=null;
+$rule=null;
 
-/**
-$se = new ServiceEngine();
-if ( !$se->get(null) ) {
-	print("falhou.".$se->getMessage());
-}
-if ( !$se->get( $se->getContentAcquirer() ) ){
-	print("falhou.".$se->getMessage());
-}
-****************/
+provision();
+unprovision();
 
-$name = "customer10";
-//name,origin,fqdn,description
-$origin = new ContentOrigin("co-".$name,$name.".obj.osp.embratelcloud.com.br",$name.".csi.cds.cisco.com","Content Origin Customer:".$name);
-if ( $origin->create() ) {
-	print("Sucesso criando content origin: ".$origin->getID()."\n");
-}
-else {
-	print("Falhou:".$origin->getMessage()."\n");
-	exit(1);
-}
+function provision() {
+	$alias = "eventoteste";
+	$subscription = "10001";
+	$custom_name   = $alias . "-" . $subscription;
+	$custom_domain = $alias . "." . $subscription;
+	$origin_domain = $custom_domain . ".csi.cds.cisco.com";
+	$origin_server = $custom_name . ".obj.osp.embratelcloud.com.br";
 
-// Name,origin,description
-$ds = new DeliveryService("ds-".$name,$origin->getID(),"Delivery Service Customer:".$name);
-if ( $ds->create() ) {
-	print ("Sucesso criando delivery service!\n");
-	print ( $ds->getID() . "\n" );
-}
-else {
-	print("Falhou:".$ds->getMessage()."\n");
-	$origin->delete( $origin->getID() );
-	exit(1);
+    // CREATE CONTENT ORIGIN
+	$origin = new ContentOrigin("co-".$custom_name,$origin_server,$origin_domain,"co-".$custom_name);
+	if ( !$origin->create() ) {
+		print("Error:".$origin->getMessage());
+	}
+
+	// CREATE DELIVERY SERVICE
+	$ds = createDeliveryService($origin,$custom_name);
+
+	// CREATE DELIVERY SERVICE GENERAL SETTINGS
+	$dsgs = createDeliveryServiceGenSettings($origin,$ds);
+
+	// ASSIGN RULE TO DELIVERY SERVICE
+	$rule = asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain);
+
 }
 
-// SET UP DELIVERY SERVICE TO HTTPS
-$dsgs = new DeliveryServiceGenSettings($ds->getID(), "https");
-if ( $dsgs->create() ) {
-	print ("Sucesso criando delivery service settings!\n");
-	print ( $dsgs->getMessage()."\n" );
-	print ( $dsgs->getID()."\n" );
-}
-else {
-	print("Falhou:".$dsgs->getMessage()."\n");
-	$ds->delete( $ds->getID() );
-	$origin->delete( $origin->getID() );
-	exit(1);
-}
-
-// SET UP SERVICE ENGINES AND CONTENT ACQUIRER
-if ( $ds->assignSEs() ) {
-	print("Sucesso associando service enginess\n");
-}
-else {
-	print("Falhou:".$ds->getMessage()."\n");
+function unprovision(){	 
+	$rule = new FileMgmt();
+	$rule->delete( $rule->getID() );
+	 
+	$dsgs = new DeliveryServiceGenSettings();
 	$dsgs->delete( $dsgs->getID() );
+	 
+	$ds = new DeliveryService();
 	$ds->delete( $ds->getID() );
+	 
+	$origin = new ContentOrigin();
 	$origin->delete( $origin->getID() );
-	exit(1);
 }
 
-// CREATE RULE
-$rule = new FileMgmt("20",$name."-url-rwr-rule","upload");
-if( $rule->createUrlRewriteRule($name.".csi.cds.cisco.com","v1/AUTH_906b88ad732c4d39907987f1ad054814/elemental") ) {
-	print("Sucesso!\n");
-	print( $rule->getID() . "\n");
-}
-else {
-	$dsgs->delete( $dsgs->getID() );
-	$ds->delete( $ds->getID() );
-	$origin->delete( $origin->getID() );
-	exit(1);	
+/*********************************************************************
+ * Custom Functions
+ * Functions to create delivery service, content origin and rule file
+ *********************************************************************
+ */
+function createDeliveryService($origin,$custom_name) {
+	$ds = new DeliveryService("ds-".$custom_name,$origin->getID(),"ds-".$custom_name);
+	$ds->live = "false"; //($this->live ? "true":"false");
+	if ( !$ds->create() ) {
+		print("Error:".$ds->getMessage());
+		// Rollback
+		if ( !is_null($origin) ) $origin->delete( $origin->getID() );
+	}
+
+	// ASSIGN SEs
+	if ( !$ds->assignSEs() ) {
+		// Rollback
+		print("Error:".$ds->getMessage());
+		if ( !is_null($ds) ) $ds->delete( $ds->getID() );
+		if ( !is_null($origin) ) $origin->delete( $origin->getID() );
+		//
+	}
+
+	return $ds;
 }
 
-// ASSIGN RULE
-if ( $ds->applyRuleFile( $rule->getID() ) ) {
-	print("Sucesso!\n");
-}
-else {
-	$dsgs->delete( $dsgs->getID() );
-	$ds->delete( $ds->getID() );
-	$origin->delete( $origin->getID() );
-	exit(1);	
-}
+function createDeliveryServiceGenSettings($origin,$ds) {
+	// CUSTOMIZE PROTOCOL: HTTP or HTTPS
+	$dsgs = new DeliveryServiceGenSettings($ds->getID(), "http" );
+	if ( !$dsgs->create() ) {
+		// Rollback
+		print("Error:".$dsgs->getMessage());
+		if ( !is_null($ds) ) $ds->delete( $ds->getID() );
+		if ( !is_null($origin) ) $origin->delete( $origin->getID() );
+		//
+	}
 
-// DELETE ALL..........
-$dsgs->delete( $dsgs->getID() );
-$ds->delete( $ds->getID() );
-$origin->delete( $origin->getID() );
-$rule->delete( $rule->getID() );
-
-/*******************************************************
-// GET CONTENT ORIGIN ID
-$origin = new ContentOrigin();
-$origin->get("delta-customer10");
-
-// GET DELIVERY ID
-$ds = new DeliveryService();
-$ds->get($origin->getID().":"."ds-customer10");
-print( $ds->getID() );
-
-// UPDATING.........
-$ds->sessionQuota = "2000";
-if ( $ds->update($ds->getID()) ) {
-	print ("Sucesso!\n");
-}
-else {
-	print ("Falhou: ".$ds->getMessage()."\n");
+	return $dsgs;
 }
 
+function asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain) {
+	$rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
+	if( !$rule->createUrlRewriteRule($origin_domain,"videos/teste") ) {
+		// Rollback
+		print("Error:".$rule->getMessage());
+		if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
+		if ( !is_null($ds) ) $ds->delete( $ds->getID() );
+		if ( !is_null($origin) ) $origin->delete( $origin->getID() );
+		//
+	}
 
-// DELETING..........
+	if ( !$ds->applyRuleFile( $rule->getID() ) ) {
+		// Rollback
+		if ( !is_null($rule) ) $rule->delete( $rule->getID() );
+		if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
+		if ( !is_null($ds) ) $ds->delete( $ds->getID() );
+		if ( !is_null($origin) ) $origin->delete( $origin->getID() );
+		//
+	}
 
-// DELETING DELIVERY SERVICE...
-if ( $ds->delete($ds->getID()) ) {
-	print ("Sucesso!\n");
+	return $rule;
 }
-else {
-	print ("Falhou: ".$ds->getMessage()."\n");
-}
-
-// DELETING CONTENT ORIGIN......
-if ( $origin->delete($origin->getID()) ) {
-	print ("Sucesso!\n");
-}
-else {
-	print ("Falhou: ".$origin->getMessage()."\n");
-}
-*******************************************************/
 
 ?>

@@ -40,7 +40,8 @@ class cdn extends \APS\ResourceBase {
 	/**
 	 * @type(string)
 	 * @title("Alias")
-	 * @description("CDN Alias")
+	 * @description("CDN Alias-only characters and numbers are allowed")
+	 * @pattern("^[a-zA-Z0-9_]*$")
 	 * @required
 	 */
 	public $alias;	
@@ -129,8 +130,9 @@ class cdn extends \APS\ResourceBase {
 		$logger->setLogFile("logs/cdns.log");
 		\APS\LoggerRegistry::get()->info("Iniciando provisionamento do CDN... ".$this->aps->id);
 		
-		$custom_name = $this->alias . "." . $this->context->subscription->id;
-		$origin_domain = $custom_name . "." . ConfigConsts::CDMS_DOMAIN;
+		$custom_name   = $this->alias . "-" . $this->context->subscription->id;
+		$custom_domain = $this->alias . "." . $this->context->subscription->id;
+		$origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;
 		
 		\APS\LoggerRegistry::get()->info("--> ORIGIN DOMAIN: " . $origin_domain);
 

@@ -7,9 +7,9 @@ require_once "elementalRest.php";
 // Encapsula as funcionalidades principais para manutenção de Service no CDMS
 // **
 abstract class CDSM {
-	public    $id;
-	protected $status;
-	protected $message;
+	protected $internal_id;
+	protected $internal_status;
+	protected $internal_message;
 	protected $cdmAddress = ConfigConsts::CDMS_ADDRESS;
 	protected $cdmPort = ConfigConsts::CDMS_PORT;
 	protected $taskAPI;
@@ -26,14 +26,12 @@ abstract class CDSM {
 
 	protected function setInternalStatus($xml_result) {
 		if ( count($xml_result->xpath("/*/message/@status")) > 0 ) {
-			$r = $this->status = $xml_result->xpath("/*/message/@status");
-			$this->status = $r[0];
-			$this->setStatus( $this->status->__toString() );
+			$r = $xml_result->xpath("/*/message/@status");
+			$this->setStatus( $r[0]->__toString() );
 		}
 		if ( count($xml_result->xpath("/*/message/@message")) > 0 ) {
 			$r = $xml_result->xpath("/*/message/@message");
-			$this->message = $r[0];
-			$this->setMessage( $this->message->__toString() );
+			$this->setMessage( $r[0]->__toString() );
 		}
 	}
 
@@ -44,33 +42,32 @@ abstract class CDSM {
 			foreach( $r as $k=>$v ) {
 				$array_ids[] = $v[0][0]->__toString();
 			}
-			$this->id = implode(',',$array_ids);
-			$this->setID( $this->id );
+			$this->setID( implode(',',$array_ids) );
 		}
 	}
 
 	protected function setMessage($message) {
-		$this->message = $message;
+		$this->internal_message = $message;
 	}
 	
 	protected function setStatus($status) {
-		$this->status = $status;
+		$this->internal_status = $status;
 	}
 	
 	public function setID($id) {
-		$this->id = $id;
+		$this->internal_id = $id;
 	}
 	
 	public function getID() {
-		return $this->id;
+		return $this->internal_id;
 	}
 
 	public function getStatus() {
-		return $this->status;
+		return $this->internal_status;
 	}
 
 	public function getMessage() {
-		return $this->message;
+		return $this->internal_message;
 	}
 
 	public function create($data=null) {
@@ -113,14 +110,18 @@ abstract class CDSM {
 			print("ops something didn´t work as we expected.... sorry.To help you: ".$ex->getMessage());
 		}
 			
+		$this->unsetParams();
+		
 		$this->setInternalStatus($xml_result);
 		$this->setInternalID($xml_result);
-			
+	}
+	
+	protected function unsetParams() {
 		foreach ($this->optional_params_names as $k => $v) {
 			if ( isset($this->{$v}) && !is_null($this->{$v}) ) {
 				unset($this->{$v});
 			}
-		}
+		}		
 	}
 }
 
