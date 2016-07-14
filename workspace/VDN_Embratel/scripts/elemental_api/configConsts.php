@@ -6,7 +6,7 @@
         
         const debug = true;
         
-        const TEMPLATE_PATH = 'templates';
+        const TEMPLATE_PATH = '/root/www_ebtvdn/elemental_api/templates';
 
         const API_VERSION = 'v1';
         #const LIVE_CONDUCTOR_HOST = '201.31.12.4';

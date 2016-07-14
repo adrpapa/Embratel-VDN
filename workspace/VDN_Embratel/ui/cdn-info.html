@@ -22,7 +22,7 @@
 				model;
 
 			/* Getting Job properties */
-			store.get(aps.context.vars.cdn.aps.id).then(function(object){
+			store.get(aps.context.vars.cdnl.aps.id).then(function(object){
 				/* Collect the Job properties in the model */
 				model = getStateful(object);
 				/* and create the widgets */
@@ -31,9 +31,9 @@
 	                    ["aps/FieldSet", { id: "new1_general", title:  "CDN Configuration"  }, [
 	                        ["aps/TextBox", { id: "new1_cdnName", label: _("Name"), value: at(model, "name"), required: true }],
 	                        ["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description")}],
-	                        ["aps/Output", { id: "new1_alias", label: _("Alias"), value: at(model, "alias")}],
-                            ["aps/Output", { id: "new1_origin_server", label: _("Origin Server"), value: at(model, "origin_server")}],
-                            ["aps/Output", { id: "new1_origin_path",   label: _("Origin Path"), value: at(model, "origin_path")}],
+	                        ["aps/TextBox", { id: "new1_alias", label: _("Alias"), value: at(model, "alias")}],
+                            ["aps/TextBox", { id: "new1_origin_server", label: _("Origin Server"), value: at(model, "origin_server")}],
+                            ["aps/TextBox", { id: "new1_origin_path",   label: _("Origin Path"), value: at(model, "origin_path")}],
                             ["aps/Output", { id: "new1_origin_domain", label: _("Origin Domain"), value: at(model, "origin_domain")}]
 	                    ]],
                         ["aps/FieldSet", { id: "new1_options", title:  "CDN Options"  }, [

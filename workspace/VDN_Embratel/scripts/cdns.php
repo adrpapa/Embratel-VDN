@@ -130,8 +130,8 @@ class cdn extends \APS\ResourceBase {
 		$logger->setLogFile("logs/cdns.log");
 		\APS\LoggerRegistry::get()->info("Iniciando provisionamento do CDN... ".$this->aps->id);
 		
-		$custom_name   = $this->alias . "-" . $this->context->subscription->id;
-		$custom_domain = $this->alias . "." . $this->context->subscription->id;
+		$custom_name   = $this->alias . "-" . $this->context->account->id;
+		$custom_domain = $this->alias . "." . $this->context->account->id;
 		$origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;
 		
 		\APS\LoggerRegistry::get()->info("--> ORIGIN DOMAIN: " . $origin_domain);
@@ -150,40 +150,40 @@ class cdn extends \APS\ResourceBase {
 		
 		// CREATE DELIVERY SERVICE
 		try {
-			$this->logger->info("--> Creating DS");
+			\APS\LoggerRegistry::get()->info("--> Creating DS");
 			$ds = $this->createDeliveryService($origin,$custom_name);
-			$this->logger->info("<-- End Creating DS");		
+			\APS\LoggerRegistry::get()->info("<-- End Creating DS");		
 		} catch (Exception $fault) {
-			$this->logger->info("Error creating DS");
+			\APS\LoggerRegistry::get()->info("Error creating DS");
 			throw new Exception($fault->getMessage());
 		}		
 
 		// CREATE DELIVERY SERVICE GENERAL SETTINGS
 		try {
-			$this->logger->info("--> Creating General Settings DS");
+			\APS\LoggerRegistry::get()->info("--> Creating General Settings DS");
 			$dsgs = $this->createDeliveryServiceGenSettings($origin,$ds);
-			$this->logger->info("<-- End General Settings DS");
+			\APS\LoggerRegistry::get()->info("<-- End General Settings DS");
 		} catch (Exception $fault) {
-			$this->logger->info("Error creating General Settings DS");
+			\APS\LoggerRegistry::get()->info("Error creating General Settings DS");
 			throw new Exception($fault->getMessage());
 		}
 		
 		// ASSIGN RULE TO DELIVERY SERVICE
 		try {
-			$this->logger->info("--> Assign Rule");
+			\APS\LoggerRegistry::get()->info("--> Assign Rule");
 			$rule = $this->asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain);
-			$this->logger->info("<-- End Rule");
+			\APS\LoggerRegistry::get()->info("<-- End Rule");
 		} catch (Exception $fault) {
-			$this->logger->info("Error assign Rule");
+			\APS\LoggerRegistry::get()->info("Error assign Rule");
 			throw new Exception($fault->getMessage());
 		}		
 		
 		// SUCCESS: UPDATE APS RESOURCES
 		//*****************************************
-		$this->content_origin_id = $origin->getID();
-		$this->delivery_service_id = $ds->getID();
-		$this->delivery_service_gen_settings_id = $dsgs->getID();
-		$this->rule_url_rwr_file_id = $rule->getID();
+		if ( !is_null($origin) ) $this->content_origin_id = $origin->getID();
+		if ( !is_null($ds) )     $this->delivery_service_id = $ds->getID();
+		if ( !is_null($dsgs) )   $this->delivery_service_gen_settings_id = $dsgs->getID();
+		if ( !is_null($rule) )   $this->rule_url_rwr_file_id = $rule->getID();
 		$this->origin_domain = $origin_domain;
 		//*****************************************
 		
@@ -233,6 +233,7 @@ class cdn extends \APS\ResourceBase {
 		if ( !$ds->create() ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
 			// Rollback
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$origin->getID()."]");
 			if ( !is_null($origin) ) $origin->delete( $origin->getID() );
 			// 
 			throw new \Exception("Can't create delivery service:" . $ds->getMessage(), 502);
@@ -242,6 +243,7 @@ class cdn extends \APS\ResourceBase {
 		if ( !$ds->assignSEs() ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error assigning SEs to Delivery Service: " . $ds->getMessage());
 			// Rollback
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$ds->getID()."].[".$origin->getID()."]");
 			if ( !is_null($ds) ) $ds->delete( $ds->getID() );
 			if ( !is_null($origin) ) $origin->delete( $origin->getID() );			
 			//
@@ -253,10 +255,18 @@ class cdn extends \APS\ResourceBase {
 	
 	function createDeliveryServiceGenSettings($origin,$ds) {
 		// CUSTOMIZE PROTOCOL: HTTP or HTTPS
+		
+		if ( $this->live ) return;	// Precisa confirmar isso....
+		
 		$dsgs = new DeliveryServiceGenSettings($ds->getID(), ($this->https ? "https" : "http") );
+		
+		$dsgs->HttpExtAllow = "true";
+		$dsgs->HttpExt      = urlencode("asf none nsc wma wmv nsclog");
+		
 		if ( !$dsgs->create() ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error customizing delivery service: " . $dsgs->getMessage());
 			// Rollback
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$ds->getID()."].[".$origin->getID()."]");
 			if ( !is_null($ds) ) $ds->delete( $ds->getID() );
 			if ( !is_null($origin) ) $origin->delete( $origin->getID() );
 			//			
@@ -271,6 +281,7 @@ class cdn extends \APS\ResourceBase {
 		if( !$rule->createUrlRewriteRule($origin_domain,$this->origin_path) ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating rule to Delivery Service: " . $rule->getMessage());
 			// Rollback
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
 			if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
 			if ( !is_null($ds) ) $ds->delete( $ds->getID() );
 			if ( !is_null($origin) ) $origin->delete( $origin->getID() );
@@ -281,6 +292,7 @@ class cdn extends \APS\ResourceBase {
 		if ( !$ds->applyRuleFile( $rule->getID() ) ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error applying rule to Delivery Service: " . $ds->getMessage());
 			// Rollback
+				\APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$rule->getID()."][".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
 			if ( !is_null($rule) ) $rule->delete( $rule->getID() );
 			if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
 			if ( !is_null($ds) ) $ds->delete( $ds->getID() );
