@@ -41,5 +41,6 @@
         const CDMS_PORT = "8443";
         const CDMS_USER = "admin";
         const CDMS_PWD = "C1sc0CDN!";
+        const CDMS_DOMAIN = "csi.cds.cisco.com";
     }
 ?>
