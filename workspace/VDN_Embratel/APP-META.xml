@@ -33,61 +33,46 @@ CISCO VDN para entrega distribuída de conteúdo
 			<category>Streaming Infrastructure/Management</category>
 		</categories>
 
-		<navigation id="ccp" label="VPS Management">
-			<var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/1.0" />
-			<plugs-to id="http://www.aps-standard.org/ui/service" />
-			<item id="servers" label="VPS Servers">
-				<view id="servers" label="Servers">
-					<view id="server-new-1" label="New VPS step 1">
-						<controls>
-							<cancel />
-							<next />
-						</controls>
-					</view>
-					<view id="server-new-last" label="Review">
-						<controls>
-							<prev />
-							<finish />
-						</controls>
-					</view>
-					<view id="server-edit" label="Edit VPS">
-						<controls>
-							<cancel />
-							<submit />
-						</controls>
-						<var name="vps" type-id="http://embratel.com.br/app/VDN_Embratel/vps/1.0" />
-					</view>
-				</view>
-			</item>
-		</navigation>
-
-
 		<navigation id="ccpebt" label="VDN Embratel">
 			<var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/1.0" />
 			<plugs-to id="http://www.aps-standard.org/ui/service" />
-			<item id="jobs" label="VOD Content">
-				<view id="jobs" label="VOD COntent">
-					<view id="job-new-1" label="New Content">
-						<controls>
-							<cancel />
-							<next />
-						</controls>
+			
+			<item id="vod" label="VOD">
+				<item id="jobs" label="Jobs">
+					<view id="jobs" label="Jobs">
+						<view id="job-new-1" label="Submit New Content">
+							<controls>
+								<cancel />
+								<next />
+							</controls>
+						</view>
+						<view id="job-new-last" label="Transcoder Parameters">
+							<controls>
+								<prev />
+								<finish />
+							</controls>
+						</view>
+						<view id="job-info" label="Job Information">
+							<controls>
+								<cancel />
+								<submit />
+							</controls>
+							<var name="job"
+								type-id="http://embratel.com.br/app/VDN_Embratel/job/1.0" />
+						</view>
 					</view>
-					<view id="job-new-last" label="Transcoder Parameters">
-						<controls>
-							<prev />
-							<finish />
-						</controls>
+				</item>
+				<item id="contents" label="VOD Contents">
+					<view id="contents" label="VOD Contents">
+						<view id="content-info" label="Content Information">
+							<controls>
+								<cancel label="Back to Contents list"/>
+							</controls>
+							<var name="content"
+								type-id="http://embratel.com.br/app/VDN_Embratel/vod/1.0" />
+						</view>
 					</view>
-					<view id="job-info" label="Content Information">
-						<controls>
-							<cancel />
-							<submit />
-						</controls>
-						<var name="job"
-							type-id="http://embratel.com.br/app/VDN_Embratel/job/1.0" />
-					</view>
-				</view>
+				</item>
 			</item>
 			<item id="channels" label="Live Channels">
 				<view id="channels" label="Live Channels">
@@ -115,7 +100,7 @@ CISCO VDN para entrega distribuída de conteúdo
 			</item>		
 			<item id="cdns" label="CDN Standalone">
 				<view id="cdns" label="CDN">
-					<view id="cdn-new-1" label="New Content">
+					<view id="cdn-new-1" label="New Delivery Service">
 						<controls>
 							<cancel />
 							<next />
@@ -127,7 +112,7 @@ CISCO VDN para entrega distribuída de conteúdo
 							<finish />
 						</controls>
 					</view>
-					<view id="cdn-info" label="Edit Content">
+					<view id="cdn-info" label="Edit Delivery Service">
 						<controls>
 							<cancel />
 							<submit />
@@ -172,20 +157,19 @@ CISCO VDN para entrega distribuída de conteúdo
 		</presentation>
 	</service>
 
-	<service id="vpses">
-		
-		<code engine="php" path="scripts/vpses.php" />
+	<service id="vods">
+		<code engine="php" path="scripts/vods.php" />
 		<presentation>
-			<name>VDN Virtual Private Server</name>
-			<summary>Cloud virtual private server</summary>
+			<name>VDN Content</name>
+			<summary>VDN Content</summary>
 		</presentation>
-	</service>
+	</service>	
 	
 	<service id="jobs">
 		<code engine="php" path="scripts/jobs.php" />
 		<presentation>
-			<name>VDN Job Content</name>
-			<summary>VDN Job Content</summary>
+			<name>VDN Job</name>
+			<summary>VDN Job</summary>
 		</presentation>
 	</service>	
 	

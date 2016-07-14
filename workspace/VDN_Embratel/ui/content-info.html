@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+	<script>
+		require([
+                  "aps/ResourceStore",
+                "dijit/registry",
+                 "dojo/when",
+            "dojox/mvc/getPlainValue",
+            "dojox/mvc/at",
+            "dojox/mvc/getStateful",
+                  "aps/load",
+                  "aps/PageContainer",
+                  "aps/Memory",
+                 "./js/displayError.js",
+                  "aps/ready!"
+		], function (Store, registry, when, getPlainValue, at, getStateful, load, PageContainer, Memory, displayError) {
+			var store = new Store({
+					target: "/aps/2/resources"
+				}),
+				model;
+
+			/* Getting Job properties */
+			store.get(aps.context.vars.content.aps.id).then(function(object){
+				/* Collect the Job properties in the model */
+				model = getStateful(object);
+				/* and create the widgets */
+	            var widgets =
+	                ["aps/PageContainer", { id: "page" }, [
+	                    ["aps/FieldSet", { id: "title", title:  "Content Information"  }, [
+	                        ["aps/TextBox", { id: "name", label: _("Content Name"), value: at(model, "name") }],
+	                        ["aps/TextBox", { id: "path", label: _("Path"), value: at(model, "path") }]
+	                    ]]
+	            ]];
+				return load(widgets);
+			}).then(function(){
+				/* Once the widgets are created, create handlers for the navigation buttons */
+				aps.app.onCancel = function() {
+						aps.apsc.gotoView("contents");
+					};
+				}).otherwise(displayError);
+			} // End-Function
+		); // End-Require
+	</script>
+</head>
+<body>
+</body>
+</html>

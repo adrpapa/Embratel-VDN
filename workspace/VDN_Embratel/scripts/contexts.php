@@ -95,6 +95,16 @@ class context extends \APS\ResourceBase
 	 */
 	public $channels;
 	
+	/**
+	 * @link("http://embratel.com.br/app/VDN_Embratel/job/1.0[]")
+	 */
+	public $jobs;
+	
+	/**
+	 * @link("http://embratel.com.br/app/VDN_Embratel/vod/1.0[]")
+	 */
+	public $vods;
+	
 	## Strong relation (link) to the application instance
 	/**
 	* @link("http://embratel.com.br/app/VDN_Embratel/cloud/1.0")

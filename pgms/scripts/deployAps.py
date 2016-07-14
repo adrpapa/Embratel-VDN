@@ -103,7 +103,7 @@ def submitForm():
 def selectResourceService(service, autoprovision):
     setResourceName(service)
     if not clickOnGlobalListName(service):
-        raise Exception("Service "+service+" Not founfd in list")
+        raise Exception("Service "+service+" Not found in list")
     if autoprovision:
         getById("check_rt_autoprovision").click()
     submitForm()
@@ -162,7 +162,7 @@ if True:
         login('admin','123@mudar')
 
         services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 
-				  'VDN Virtual Private Server', 'VDN Job Content', 'VDN Job Content']
+				  'VDN Content', 'VDN Job', 'Content Delivery Network']
 
         createAppReference(services[0])
         createAppService(services[1], True)
