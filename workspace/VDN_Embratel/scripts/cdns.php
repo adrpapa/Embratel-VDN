@@ -191,7 +191,35 @@ class cdn extends \APS\ResourceBase {
     }
 
     public function configure($new) {
-
+    	$logger = \APS\LoggerRegistry::get();
+    	$logger->setLogFile("logs/cdns.log");
+    	\APS\LoggerRegistry::get()->info("Iniciando updating do CDN... ".$this->aps->id);    	 
+ 
+    	$custom_name   = $new->alias . "-" . $this->context->account->id;
+    	$custom_domain = $new->alias . "." . $this->context->account->id;
+    	$origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;    	
+    	
+    	\APS\LoggerRegistry::get()->info("New Domain:".$origin_domain);
+    	
+    	$origin = new ContentOrigin("co-".$custom_name,$new->origin_server,$origin_domain,$new->description);
+    	if ( !$origin->update($this->content_origin_id) ) {
+    		\APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating Content Origin: " . $origin->getMessage());
+    		throw new \Exception("Can't update content origin:" . $origin->getMessage(), 501);    		
+    	}
+    	
+    	$ds = new DeliveryService("ds-".$custom_name,$this->content_origin_id,$new->description);
+    	if ( !$ds->update($this->delivery_service_id) ) {
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating Delivery Service: " . $ds->getMessage());
+			throw new \Exception("Can't update delivery service:" . $ds->getMessage(), 502);    		
+    	}
+    	
+    	$rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
+    	if( !$rule->updateUrlRewriteRule($this->rule_url_rwr_file_id,$origin_domain,$new->origin_path) ) {
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating rule to Delivery Service: " . $rule->getMessage());
+			throw new \Exception("Can't update rule to delivery service:" . $rule->getMessage(), 505);
+    	}
+    	
+    	\APS\LoggerRegistry::get()->info("Fim updating do CDN... ".$this->aps->id);
     }
 
 	public function retrieve(){

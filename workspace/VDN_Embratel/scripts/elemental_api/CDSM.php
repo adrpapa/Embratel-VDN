@@ -80,8 +80,8 @@ abstract class CDSM {
 		return( $this->getStatus() == "success" );
 	}
 
-	public function update($key) {
-		$this->exec();
+	public function update($key,$data=null) {
+		$this->exec($data);
 		return( $this->getStatus() == "success" );
 	}
 

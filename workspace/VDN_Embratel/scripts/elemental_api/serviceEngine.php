@@ -37,7 +37,7 @@ class ServiceEngine extends CDSM {
 	public function delete($id) {
 	}
 	
-	public function update($id) {
+	public function update($id,$data=null) {
 	}
 	
 	public function get($name) {
