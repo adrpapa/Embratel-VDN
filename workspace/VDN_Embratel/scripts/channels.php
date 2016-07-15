@@ -2,7 +2,7 @@
 
 if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
-require_once "aps/2/runtime.php";
+#require_once "aps/2/runtime.php";
 require_once "elemental_api/live.php";
 require_once "elemental_api/deltaOutputTemplate.php";
 require_once "elemental_api/deltaInput.php";
@@ -170,15 +170,7 @@ class channel extends \APS\ResourceBase {
 	public function provision() { 
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/channels.log");
-        \APS\LoggerRegistry::get()->info("Iniciando provisionamento de canal ".$this->aps->id);
-        $clientid = sprintf("Client_%06d",$this->context->account->id);
-        \APS\LoggerRegistry::get()->info($this);
-	}
-
-	public function renamed_to_inhibit_call_of_provision() { 
-		$logger = \APS\LoggerRegistry::get();
-		$logger->setLogFile("logs/channels.log");
-        \APS\LoggerRegistry::get()->info("Iniciando provisionamento de canal ".$this->aps->id);
+        $logger->info("Iniciando provisionamento de canal ".$this->aps->id);
         $clientid = sprintf("Client_%06d",$this->context->account->id);
         $event = LiveEvent::newStandardLiveEvent( $this->aps->id, $clientid );
 		if( $this->premium ) {
@@ -195,12 +187,12 @@ class channel extends \APS\ResourceBase {
         $this->live_node = $event->live_node;
         $this->input_filter_id = $event->inputFilterID;
 
-        \APS\LoggerRegistry::get()->info("live_event_id:" . $this->live_event_id );
-        \APS\LoggerRegistry::get()->info("live_event_name:" . $this->live_event_name );
-        \APS\LoggerRegistry::get()->info("state:" . $this->state );
-        \APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
-        \APS\LoggerRegistry::get()->info("delta_port:" . $this->delta_port );
-        \APS\LoggerRegistry::get()->info("live_node:" . $this->live_node );
+        $logger->info("live_event_id:" . $this->live_event_id );
+        $logger->info("live_event_name:" . $this->live_event_name );
+        $logger->info("state:" . $this->state );
+        $logger->info("input_URI:" . $this->input_URI );
+        $logger->info("delta_port:" . $this->delta_port );
+        $logger->info("live_node:" . $this->live_node );
 
     }
 
