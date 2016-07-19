@@ -153,6 +153,23 @@ class context extends \APS\ResourceBase
 	*/
 	public $liveDeltaPaths;
 
+	/**********************************************************
+	 *********************** COUNTERS *************************
+	 **********************************************************/
+	
+	/**
+	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+	 * @description("Total Traffic HTTP in Gigabytes")
+	 * @unit("gb")
+	 */
+	public $httpTrafficInGB;
+	
+	/**
+	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+	 * @description("Total Traffic HTTPS in Gigabytes")
+	 * @unit("gb")
+	 */
+	public $http_s_TrafficInGB;	
 
 	###############################################################################
 	# F U N C O E S   P A R A   I N S T A N C I A M E N T O   D E   C O N T E X T O
@@ -202,6 +219,27 @@ class context extends \APS\ResourceBase
                 }
             }
     	}
+    }
+    
+    public function retrieve() {
+    	error_log("Fetching resource usage");
+    	## Connect to the APS controller
+    	$apsc = \APS\Request::getController();
+    	
+    	## Reset the local variables
+    	$httpTraffic = $this->httpTrafficInGB->usage;
+    	$http_s_Traffic = 0;
+    	
+    	## Collect resource usage from all CDNs
+    	foreach ( $this->cdns as $cdn ) {
+    		$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
+    				$apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
+    		$usage = json_decode($usage);
+    		$httpTraffic = $httpTraffic + $usage->httpTrafficActualUsage;
+    	}    	
+    	
+    	## Update the APS resource counters
+    	$this->httpTrafficInGB->usage = $httpTraffic;
     }
 }
 

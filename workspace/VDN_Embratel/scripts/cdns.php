@@ -41,7 +41,6 @@ class cdn extends \APS\ResourceBase {
 	 * @type(string)
 	 * @title("Alias")
 	 * @description("CDN Alias-only characters and numbers are allowed")
-	 * @pattern("^[a-zA-Z0-9_]*$")
 	 * @required
 	 */
 	public $alias;	
@@ -120,6 +119,24 @@ class cdn extends \APS\ResourceBase {
 	 * @readonly
 	 */
 	public $origin_domain;	
+	
+	/*****************************************************
+	 **************** METRIC PROPERTIES ******************
+	 *****************************************************/
+	
+	/**
+	 * @type("number")
+	 * @title("Traffic HTTP actual usage")
+	 * @description("Traffic HTTP actual usage")
+	 */
+	public $httpTrafficActualUsage;
+
+	/**
+	 * @type("number")
+	 * @title("Traffic HTTPS actual usage")
+	 * @description("Traffic HTTPS actual usage")
+	 */
+	public $http_s_TrafficActualUsage;	
 	
 #############################################################################################################################################
 ## Definition of the functions that will respond to the different CRUD operations
@@ -330,6 +347,26 @@ class cdn extends \APS\ResourceBase {
 		}		
 		
 		return $rule;
+	}
+	
+	/**
+	 * Update traffic usage
+	 * @verb(GET)
+	 * @path("/updateResourceUsage")
+	 */
+	public function updateResourceUsage () {	
+		error_log("Updating resource usage in VPS, ID: ".$this->aps->id);
+		$usage = array();
+		
+		## Calculate the resource usage properties
+		$this->httpTrafficActualUsage = 5.5;
+		$usage['httpTrafficActualUsage'] = $this->httpTrafficActualUsage;
+		
+		## Save resource usage in the APS controller
+		$apsc = \APS\Request::getController();
+		$apsc->updateResource($this);
+		
+		return $usage;
 	}
 }
 ?>

@@ -187,7 +187,7 @@
             $xml=null;
             try {
                 if( trim($data."") ) {
-                    $xml = simplexml_load_string($data);
+                    $xml = simplexml_load_string( utf8_encode($data) );
                 }
             } catch(Exception $ex) {
                 throw new Exception("Error: Cannot create simplexml object from data returned".PHP_EOL.$data);
