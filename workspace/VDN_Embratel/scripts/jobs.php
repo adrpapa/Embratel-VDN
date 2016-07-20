@@ -94,6 +94,14 @@ class job extends \APS\ResourceBase {
 
 	/**
 	 * @type(string)
+	 * @title("Info")
+	 * @description("Message")
+	 * @readonly
+	 */
+	public $info;
+
+	/**
+	 * @type(string)
 	 * @title("Input URI")
 	 * @description("Job Input URI for video ingestion")
 	 */
@@ -164,7 +172,6 @@ class job extends \APS\ResourceBase {
 		\APS\LoggerRegistry::get()->info("Client: ".$clientid);
 		\APS\LoggerRegistry::get()->info("Definindo autenticacao...");
 		
-		$level = ($this->premium ? 'std' : 'prm');
  		$presets = new Presets();
  		for($i=0;$i<count($this->resolutions);$i++ ) {
  			$presets->addPreset(new Preset($this->resolutions[$i],
@@ -172,6 +179,7 @@ class job extends \APS\ResourceBase {
  					$this->audio_bitrates[$i]),$i);
  		}
 
+		$level = ($this->premium ? 'std' : 'prm');
 // 		try {
 // 			ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
 // 			\APS\LoggerRegistry::get()->info("--> Provisionando Job...");
@@ -202,6 +210,7 @@ class job extends \APS\ResourceBase {
  		\APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
 		if( $jobstatus->status == 'complete' || $jobstatus->status == 'error' || $jobstatus->status == 'cancelled') {
 			$this->state = $jobstatus->status.'';
+			$this->info = $jobstatus;
 			return;
 		}
 		$this->retry +=1; // Increment the retry counter

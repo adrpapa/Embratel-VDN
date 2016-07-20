@@ -17,7 +17,7 @@
 			var store = new Store({
 				apsType: "http://embratel.com.br/app/VDN_Embratel/job/1.0",
 				target: "/aps/2/resources/",
-				baseQuery: "ne(state,'cancelled')"
+				baseQuery: "out(state,(cancelled))"
 			});
 
 			/* Create widgets */
@@ -57,21 +57,20 @@
 // 						var dataStoreGrid = store.data;
 // 						dataStoreGrid.forEach(function(items){
 // 							job_ids = [items.job_id];
-// 	                    });
+// 						});
 // 						job_ids = JSON.stringify(job_ids);
 // 						when(xhr("/aps/2/resources/" + model.aps.id + "/updateJobStatus", {method: "POST", handleAs: "text",
 // 						query: {json: job_ids}}),
 // 							function (res) {
 // 							},
 // 							function (error) {
-//                                 aps.apsc.cancelProcessing();
-//                                 asemail.cancel();
-//                                 return;
-//                             }
+// 								aps.apsc.cancelProcessing();
+// 								asemail.cancel();
+// 								return;
+// 							}
 // 						);
-//					
-//						grid.refresh();
-//				});
+// 						grid.refresh();
+// 					});
 
 				/* Create the on-click handler for the *Delete* button
 				*/

@@ -15,37 +15,26 @@
         */
     	public static function newJobVOD( $name, $file_input_uri, $clientID, $level, Presets $presets=NULL ) {
 			\APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
-			$templateID = $level === 'premium'
-    				? ConfigConsts::VOD_TEMPLATE_PREMIUM
-    				: ConfigConsts::VOD_TEMPLATE_STANDARD;
-    	
-    		$job = new self();
-    		$job->name = cleanName($name);
-    		$job->clientID = cleanClientID($clientID);
-    		$job->xml = JobVOD::getElementalRest()->getTemplate($templateID, "ElementalVOD");
-    		$job->xml->input->name = $name;
-    		$job->xml->input->file_input->uri = $file_input_uri;
+			$axCli = cleanClientID($clientID);
+			$axNam = cleanName($name);
+			$axVideoName = pathinfo($file_input_uri, PATHINFO_FILENAME);
+			
+			$tpl = ConfigConsts::TEMPLATE_PATH."/jobs_".$level.".xml";
+			if( ! file_exists($tpl) )
+				throw new Exception("File $tpl does not exist \n");
+			$job = simplexml_load_file($tpl);
+    		$job->input->name = $name;
+    		$job->input->file_input->uri = $file_input_uri;
     		if ( !is_null($presets) ) {
-    			$job->xml = $presets->customizePresets( $job->name, $job->xml );
+    			$job = $presets->customizePresets( $job->name, $job );
     		}
-    		$job->xml->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WF_INCOMMING_URI . '/' . $clientID .'/';
-    		\APS\LoggerRegistry::get()->info( $job->xml->asXml().'\n');
-    		$job->setPropertiesFromXML(JobVOD::getElementalRest()->postRecord(null, null, $job->xml));
-    		return( $job );
+    		$job->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WF_INCOMMING_URI . '/' . $clientID .'/'.$axVideoName.'/';
+    		\APS\LoggerRegistry::get()->info( $job->asXml().'\n');
+    		$jobVOD = new self();
+    		$jobVOD->setPropertiesFromXML(JobVOD::getElementalRest()->postRecord(null, null, $job));
+    		return( $jobVOD );
     	}    	
 
-    	// cria objeto JOB para perfil Standard, e monta XML para inclusão do mesmo
-    	//
-    	public static function newStandardJobVOD( $name, $file_input_uri, $clientID ) {
-    		return JobVOD::newJobVOD( $name, $file_input_uri, $clientID, 'std' );
-    	}
-    	
-    	// cria objeto JOB para perfil Premium, e monta XML para inclusão do mesmo
-    	//
-    	public static function newPremiumJobVOD( $name, $file_input_uri, $clientID ) {
-    		return JobVOD::newJobVOD( $name, $file_input_uri, $clientID, 'prm' );
-    	}
-    	
     	public static function jobVODFromXML( $xml_job ) {
     		$job = new self();
     		$job->setPropertiesFromXML( $xml_job );
@@ -157,4 +146,9 @@
 //    ElementalRest::$auth = new Auth( 'elemental','elemental' );
 //	$status=JobVOD::getElementalRest()->restCall($id=95);
 //	print_r(output_group$status);
+
+
+// 	$jobVOD = JobVOD::newJobVOD( 'big_buck_bunny', 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4',
+// 				   'Client_000004', 'std' );
+// 	print_r($jobVOD);
 ?>

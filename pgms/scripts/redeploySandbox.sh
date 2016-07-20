@@ -13,3 +13,27 @@ service pemui start
 service httpd start
 
 
+
+
+[root@pba ~]# 
+service pba stop
+service postgresql-9.1 restart
+
+
+
+[root@mn ~]# 
+service pemui stop
+service pem stop
+service postgresql-9.1 restart
+
+
+[root@mn ~]# 
+su  postgres -c 'cat ~/originalPostgres.pgdump|psql'
+service pem start
+service pemui start
+service httpd start
+
+
+
+[root@pba ~]# 
+su  postgres -c 'cat ~/originalPostgres.pgdump|psql'

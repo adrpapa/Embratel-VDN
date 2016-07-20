@@ -2,10 +2,11 @@
 
 if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
-#require_once "aps/2/runtime.php";
+require_once "aps/2/runtime.php";
 require_once "elemental_api/live.php";
 require_once "elemental_api/deltaOutputTemplate.php";
 require_once "elemental_api/deltaInput.php";
+require_once "elemental_api/preset.php";
 
 /**
  * @type("http://embratel.com.br/app/VDN_Embratel/channel/1.0")
@@ -172,18 +173,21 @@ class channel extends \APS\ResourceBase {
 		$logger->setLogFile("logs/channels.log");
         $logger->info("Iniciando provisionamento de canal ".$this->aps->id);
         $clientid = sprintf("Client_%06d",$this->context->account->id);
-        $event = LiveEvent::newStandardLiveEvent( $this->aps->id, $clientid );
-		if( $this->premium ) {
-			$event = LiveEvent::newPremiumLiveEvent( $this->aps->id, $clientid );
-		} else {
-			$event = LiveEvent::newStandardLiveEvent( $this->aps->id, $clientid );
-		}
+
+		$level = ($this->premium ? 'std' : 'prm');
+ 		$presets = new Presets();
+ 		for($i=0;$i<count($this->resolutions);$i++ ) {
+ 			$presets->addPreset(new Preset($this->resolutions[$i],
+ 					$this->video_bitrates[$i],$this->framerates[$i],
+ 					$this->audio_bitrates[$i]),$i);
+ 		}
+
+        $event = LiveEvent::newLiveEvent( $this->aps->id, $clientid, $level, $presets );
         
         $this->live_event_id = $event->id;
         $this->live_event_name = $event->name;
         $this->state = $event->status;
         $this->input_URI =  $event->inputURI;
-        $this->delta_port = $event->udpPort;
         $this->live_node = $event->live_node;
         $this->input_filter_id = $event->inputFilterID;
 
