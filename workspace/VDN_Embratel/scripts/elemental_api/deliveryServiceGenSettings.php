@@ -48,7 +48,7 @@
         	parent::__construct();
         	
         	$this->internal_deliveryService = $deliveryService;
-        	$this->internal_protocol=($protocol == "http" ? "0":"1");
+        	$this->internal_protocol = $protocol;
         	$this->internal_Bitrate = $Bitrate;
         	$this->internal_HashLevel = $HashLevel;
         	$this->internal_TmpfsSize = $TmpfsSize;
