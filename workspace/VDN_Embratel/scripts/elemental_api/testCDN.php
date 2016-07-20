@@ -10,12 +10,17 @@ $ds=null;
 $dsgs=null;
 $rule=null;
 
-provision();
-unprovision();
+$origin_id=null;
+$ds_id=null;
+$dsgs_id = null;
+$rule_id=null;
+
+//provision();
+configure("Channel_2153","DsvcGenSettings_2154","WebSite_2151","FileInfo_2155");
 
 function provision() {
 	$alias = "eventoteste";
-	$subscription = "10001";
+	$subscription = "10008";
 	$custom_name   = $alias . "-" . $subscription;
 	$custom_domain = $alias . "." . $subscription;
 	$origin_domain = $custom_domain . ".csi.cds.cisco.com";
@@ -27,29 +32,64 @@ function provision() {
 		print("Error:".$origin->getMessage());
 	}
 
+	$origin_id = $origin->getID();
+	
 	// CREATE DELIVERY SERVICE
 	$ds = createDeliveryService($origin,$custom_name);
 
+	$ds_id = $ds->getID();
+	
 	// CREATE DELIVERY SERVICE GENERAL SETTINGS
 	$dsgs = createDeliveryServiceGenSettings($origin,$ds);
 
+	$dsgs_id = $dsgs->getID();
+	
 	// ASSIGN RULE TO DELIVERY SERVICE
 	$rule = asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain);
 
+	$rule_id = $rule->getID();
+	
+	//unprovision($ds_id,$dsgs_id,$origin_id,$rule_id);
+	configure($ds_id,$dsgs_id,$origin_id,$rule_id);
 }
 
-function unprovision(){	 
-	$rule = new FileMgmt();
-	$rule->delete( $rule->getID() );
+function unprovision($ds_id,$dsgs_id,$origin_id,$rule_id){	 
+	$rule_del = new FileMgmt();
+	$rule_del->delete( $rule_id );
 	 
-	$dsgs = new DeliveryServiceGenSettings();
-	$dsgs->delete( $dsgs->getID() );
+	$dsgs_del = new DeliveryServiceGenSettings();
+	$dsgs_del->delete( $dsgs_id );
 	 
-	$ds = new DeliveryService();
-	$ds->delete( $ds->getID() );
+	$ds_del = new DeliveryService();
+	$ds_del->delete( $ds_id );
 	 
-	$origin = new ContentOrigin();
-	$origin->delete( $origin->getID() );
+	$origin_del = new ContentOrigin();
+	$origin_del->delete( $origin_id );
+}
+
+function configure($ds_id=null,$dsgs_id=null,$origin_id=null,$rule_id=null) {
+	
+	$alias = "eventotesteupd";
+	$subscription = "10008";
+	$custom_name   = $alias . "-" . $subscription;
+	$custom_domain = $alias . "." . $subscription;
+	$origin_domain = $custom_domain . ".csi.cds.cisco.com";
+	$origin_server = $custom_name . ".obj.osp.embratelcloud.com.br";
+	
+	$origin = new ContentOrigin("co-".$custom_name,$origin_server,$origin_domain,"co-".$custom_name);
+	if ( !$origin->update($origin_id) ) {
+		print("Error:".$origin->getMessage());
+	}	
+	
+	$ds = new DeliveryService("ds-".$custom_name,"WebSite_2151","ds-".$custom_name);
+	if ( !$ds->update($ds_id) ) {
+		print("Error:".$ds->getMessage());
+	}	
+	
+	$rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
+	if( !$rule->updateUrlRewriteRule($rule_id,$origin_domain,"videos/teste") ) {
+		print("Error:".$rule->getMessage());
+	}	
 }
 
 /*********************************************************************

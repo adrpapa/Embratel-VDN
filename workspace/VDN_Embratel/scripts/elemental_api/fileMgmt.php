@@ -8,6 +8,8 @@
     class FileMgmt extends CDSM {
 
     	protected $internal_file_type;
+    	protected $internal_dest_name;
+    	protected $internal_import_method;
     	
         public function __construct( $file_type="20",$dest_name=null,$import_method="upload" ) {
                                 	
@@ -25,22 +27,28 @@
         	);        	
         	parent::__construct();
         	$this->internal_file_type = $file_type;
+        	$this->internal_dest_name = $dest_name;
+        	$this->internal_import_method = $import_method;
+        	
         	$this->fileType = $file_type;
         	$this->destName = $dest_name;
         	$this->importMethod = $import_method;
         	$this->taskAPI = "com.cisco.unicorn.ui.FileMgmtApiServlet";      	
         }
              
-        public function create($data=null) {      	
-        	if ( is_null($this->fileType) ||
-        			is_null($this->destName) ||
-        			is_null($this->importMethod) )
-        		{
-        			throw new invalidargumentexception("FileMgmt::create() parameters required must not be null");
-        		}
-        		
+        public function create($data=null) {      
         	$this->action = "registerFile";
+        	$this->fileType = $this->internal_file_type;
+        	$this->destName = $this->internal_dest_name;
+        	$this->importMethod = $this->internal_import_method;
 
+        	if ( is_null($this->fileType) ||
+        		 is_null($this->destName) ||
+        		 is_null($this->importMethod) )
+        	{
+        		throw new invalidargumentexception("FileMgmt::create() parameters required must not be null");
+        	}        	
+        	
         	return( parent::create( $data ) );
         }
         
@@ -51,11 +59,14 @@
         	return( parent::delete( $id ) );
         }
         
-        public function update($id) {
+        public function update($id,$data=null) {
         	$this->action = "modifyFile";
+        	$this->fileType = $this->internal_file_type;
+        	$this->destName = $this->internal_dest_name;
+        	$this->importMethod = $this->internal_import_method;        	
         	$this->id     = $id;
         	
-        	return( parent::update($data) );
+        	return( parent::update($id,$data) );
         }        
         
         public function createUrlRewriteRule($domain,$path,$protocol="http") {
@@ -81,7 +92,7 @@
         	return( $this->create( $xml_rule->asxml() ) );
         }
 
-        public function updateUrlRewriteRule($domain,$path,$protocol="http") {
+        public function updateUrlRewriteRule($id,$domain,$path,$protocol="http") {
         	$xml_rule = $this->getXML();
         	 
         	if( ConfigConsts::debug ) {
@@ -101,7 +112,7 @@
         		print( $xml_rule );
         	}
         	 
-        	return( $this->update( $xml_rule->asxml() ) );
+        	return( $this->update($id,$xml_rule->asxml()) );
         }        
         
         protected function getXML() {

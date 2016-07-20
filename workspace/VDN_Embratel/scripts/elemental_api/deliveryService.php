@@ -7,6 +7,10 @@
     // **
     class DeliveryService extends CDSM {
 
+    	protected $internal_delivery_service;
+    	protected $internal_content_origin;
+    	protected $internal_description;
+    	
         public function __construct( $deliveryService=null,$contentOrigin=null,$description=null ) {
         	$this->optional_params_names = array(
         			"weakCert",
@@ -24,6 +28,7 @@
         			"bandQuotaAugBuf",
         			"storagePriorityClass",
         			"deliveryService",
+        			"deliveryServiceName",
         			"contentOrigin",		
         			"desc",
         			"param",
@@ -32,20 +37,29 @@
         			"se"
         	);        	
         	parent::__construct();
+        	$this->internal_delivery_service = $deliveryService;
+        	$this->internal_content_origin = $contentOrigin;
+        	$this->internal_description = is_null($description) ? null:urlencode($description);
+        	/**
         	$this->deliveryService = $deliveryService;
         	$this->contentOrigin = $contentOrigin;     
         	$this->desc = is_null($description) ? null:urlencode($description);
+        	**/
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";      	
         }
          
-        public function create($data=null) {
+        public function create($data=null) {        	
+        	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
+        	$this->action = "createDeliveryService";
+        	$this->deliveryService = $this->internal_delivery_service;
+        	$this->contentOrigin = $this->internal_content_origin;
+        	$this->desc = $this->internal_description;
+
         	if ( is_null($this->deliveryService) || is_null($this->contentOrigin) || is_null($this->desc) )
         	{
         		throw new invalidargumentexception("DeliveryService::create() deliveryService,contentOrigin and description must not be null");
         	}        	
-        	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
-        	$this->action = "createDeliveryService";
-
+        	
         	return ( parent::create($data) );
         }
         
@@ -56,11 +70,14 @@
         	return ( parent::delete($id) );        	
         }
         
-        public function update($id) {
+        public function update($id,$data=null) {
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
         	$this->action = "modifyDeliveryService";
         	$this->deliveryService = $id;
-        	return ( parent::update($id) );        	
+        	$this->deliveryServiceName = $this->internal_delivery_service;
+        	//$this->contentOrigin = $this->internal_content_origin;
+        	$this->desc = $this->internal_description;        	
+        	return ( parent::update($id,$data) );        	
         }                      
         
         public function get($name) {
@@ -75,7 +92,7 @@
         	$this->action = "applyRuleFile";
         	$this->deliveryService = $this->getID();
         	$this->ruleFile = $rule_id;
-        	return ( parent::update(null) );  
+        	return ( parent::update(null,null) );  
         }
         
         public function assignSEs() {

@@ -41,7 +41,6 @@ class cdn extends \APS\ResourceBase {
 	 * @type(string)
 	 * @title("Alias")
 	 * @description("CDN Alias-only characters and numbers are allowed")
-	 * @pattern("^[a-zA-Z0-9_]*$")
 	 * @required
 	 */
 	public $alias;	
@@ -121,6 +120,24 @@ class cdn extends \APS\ResourceBase {
 	 */
 	public $origin_domain;	
 	
+	/*****************************************************
+	 **************** METRIC PROPERTIES ******************
+	 *****************************************************/
+	
+	/**
+	 * @type("number")
+	 * @title("Traffic HTTP actual usage")
+	 * @description("Traffic HTTP actual usage")
+	 */
+	public $httpTrafficActualUsage;
+
+	/**
+	 * @type("number")
+	 * @title("Traffic HTTPS actual usage")
+	 * @description("Traffic HTTPS actual usage")
+	 */
+	public $http_s_TrafficActualUsage;	
+	
 #############################################################################################################################################
 ## Definition of the functions that will respond to the different CRUD operations
 #############################################################################################################################################
@@ -191,7 +208,35 @@ class cdn extends \APS\ResourceBase {
     }
 
     public function configure($new) {
-
+    	$logger = \APS\LoggerRegistry::get();
+    	$logger->setLogFile("logs/cdns.log");
+    	\APS\LoggerRegistry::get()->info("Iniciando updating do CDN... ".$this->aps->id);    	 
+ 
+    	$custom_name   = $new->alias . "-" . $this->context->account->id;
+    	$custom_domain = $new->alias . "." . $this->context->account->id;
+    	$origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;    	
+    	
+    	\APS\LoggerRegistry::get()->info("New Domain:".$origin_domain);
+    	
+    	$origin = new ContentOrigin("co-".$custom_name,$new->origin_server,$origin_domain,$new->description);
+    	if ( !$origin->update($this->content_origin_id) ) {
+    		\APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating Content Origin: " . $origin->getMessage());
+    		throw new \Exception("Can't update content origin:" . $origin->getMessage(), 501);    		
+    	}
+    	
+    	$ds = new DeliveryService("ds-".$custom_name,$this->content_origin_id,$new->description);
+    	if ( !$ds->update($this->delivery_service_id) ) {
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating Delivery Service: " . $ds->getMessage());
+			throw new \Exception("Can't update delivery service:" . $ds->getMessage(), 502);    		
+    	}
+    	
+    	$rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
+    	if( !$rule->updateUrlRewriteRule($this->rule_url_rwr_file_id,$origin_domain,$new->origin_path) ) {
+			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating rule to Delivery Service: " . $rule->getMessage());
+			throw new \Exception("Can't update rule to delivery service:" . $rule->getMessage(), 505);
+    	}
+    	
+    	\APS\LoggerRegistry::get()->info("Fim updating do CDN... ".$this->aps->id);
     }
 
 	public function retrieve(){
@@ -302,6 +347,26 @@ class cdn extends \APS\ResourceBase {
 		}		
 		
 		return $rule;
+	}
+	
+	/**
+	 * Update traffic usage
+	 * @verb(GET)
+	 * @path("/updateResourceUsage")
+	 */
+	public function updateResourceUsage () {	
+		error_log("Updating resource usage in VPS, ID: ".$this->aps->id);
+		$usage = array();
+		
+		## Calculate the resource usage properties
+		$this->httpTrafficActualUsage = 5.5;
+		$usage['httpTrafficActualUsage'] = $this->httpTrafficActualUsage;
+		
+		## Save resource usage in the APS controller
+		$apsc = \APS\Request::getController();
+		$apsc->updateResource($this);
+		
+		return $usage;
 	}
 }
 ?>

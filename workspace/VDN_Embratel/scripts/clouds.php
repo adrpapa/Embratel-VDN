@@ -80,7 +80,7 @@ class cloud extends APS\ResourceBase {
 */
 
 # Functions to process CRUD operations:
-/* Commented out since we don't need to redefine the parent operations
+/* Commented out since we don't need to redefine the parent operations */
 	public function provision() {  // create new instance
 	# Declaration is needed
 	}
@@ -91,9 +91,8 @@ class cloud extends APS\ResourceBase {
 	public function retrieve() { // get data
 	}
 	
-	public function unprovision() { delete object
+	public function unprovision() { 
 	}
-*/
 # Custom functions should be declared here
 
 }

@@ -7,6 +7,7 @@ require_once "elementalRest.php";
 // Encapsula as funcionalidades principais para manutenção de Service no CDMS
 // **
 abstract class CDSM {
+	protected $xml_result;
 	protected $internal_id;
 	protected $internal_status;
 	protected $internal_message;
@@ -24,21 +25,21 @@ abstract class CDSM {
 		$this->urlString = "https://" . $this->cdmAddress . ":" . $this->cdmPort . "/servlet/";
 	}
 
-	protected function setInternalStatus($xml_result) {
-		if ( count($xml_result->xpath("/*/message/@status")) > 0 ) {
-			$r = $xml_result->xpath("/*/message/@status");
+	protected function setInternalStatus() {
+		if ( count($this->xml_result->xpath("/*/message/@status")) > 0 ) {
+			$r = $this->xml_result->xpath("/*/message/@status");
 			$this->setStatus( $r[0]->__toString() );
 		}
-		if ( count($xml_result->xpath("/*/message/@message")) > 0 ) {
-			$r = $xml_result->xpath("/*/message/@message");
+		if ( count($this->xml_result->xpath("/*/message/@message")) > 0 ) {
+			$r = $this->xml_result->xpath("/*/message/@message");
 			$this->setMessage( $r[0]->__toString() );
 		}
 	}
 
-	protected function setInternalID($xml_result) {
-		if ( count($xml_result->xpath("/*/record/@Id")) > 0 ) {
+	protected function setInternalID() {
+		if ( count($this->xml_result->xpath("/*/record/@Id")) > 0 ) {
 			$array_ids = array();
-			$r = $xml_result->xpath("/*/record/@Id");
+			$r = $this->xml_result->xpath("/*/record/@Id");
 			foreach( $r as $k=>$v ) {
 				$array_ids[] = $v[0][0]->__toString();
 			}
@@ -46,6 +47,19 @@ abstract class CDSM {
 		}
 	}
 
+	public function searchFieldValue($field_name,$value) {
+		if ( count($this->xml_result->xpath("/*/record")) > 0 ) {
+			$array_rec = array();
+			$r = $this->xml_result->xpath("/*/record");
+			foreach( $r as $k=>$v ) {
+				if ( isset($v[0][$field_name]) && $v[0][$field_name]->__toString() == $value ) {
+					return $v;
+				}
+			}
+		}
+		return null;
+	}	
+	
 	protected function setMessage($message) {
 		$this->internal_message = $message;
 	}
@@ -80,8 +94,8 @@ abstract class CDSM {
 		return( $this->getStatus() == "success" );
 	}
 
-	public function update($key) {
-		$this->exec();
+	public function update($key,$data=null) {
+		$this->exec($data);
 		return( $this->getStatus() == "success" );
 	}
 
@@ -105,15 +119,15 @@ abstract class CDSM {
 		try {
 			$curl_obj = new ElementalRest($this->cdmAddress,'servlet');
 			$curl_obj->uri = $this->urlString;
-			$xml_result = $curl_obj->restCDSM( base64_encode($credentials),$data );
+			$this->xml_result = $curl_obj->restCDSM( base64_encode($credentials),$data );
 		} catch(Exception $ex) { 
 			print("ops something didn´t work as we expected.... sorry.To help you: ".$ex->getMessage());
 		}
 			
 		$this->unsetParams();
 		
-		$this->setInternalStatus($xml_result);
-		$this->setInternalID($xml_result);
+		$this->setInternalStatus();
+		$this->setInternalID();
 	}
 	
 	protected function unsetParams() {
