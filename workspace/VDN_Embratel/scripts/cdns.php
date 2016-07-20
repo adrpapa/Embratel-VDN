@@ -339,10 +339,10 @@ class cdn extends \APS\ResourceBase {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error applying rule to Delivery Service: " . $ds->getMessage());
 			// Rollback
 				\APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$rule->getID()."][".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
-			if ( !is_null($rule) ) $rule->delete( $rule->getID() );
 			if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
 			if ( !is_null($ds) ) $ds->delete( $ds->getID() );
 			if ( !is_null($origin) ) $origin->delete( $origin->getID() );
+			if ( !is_null($rule) ) $rule->delete( $rule->getID() );			
 			//
 			throw new \Exception("Can't apply rule to delivery service:" . $ds->getMessage(), 506);
 		}		
