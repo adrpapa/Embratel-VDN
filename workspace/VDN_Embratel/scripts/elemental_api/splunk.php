@@ -35,12 +35,12 @@ class SplunkStats {
 		$splunkStats = new self();
 		$splunkStats->lastResultTime = $lastResultTime;
 		$splunkStats->gigaTransfered = 0;
-		$billingLogPath = ConfigConsts::BILLING_LOG_PATH."/".date('Y',$current_ts)."/".date('m',$current_ts);
+		$billingLogPath = ConfigConsts::BILLING_LOG_PATH.date_format( $current_ts, "/Y/m/");
 		if (!file_exists($billingLogPath)) {
 			mkdir($billingLogPath, 0755, true);
 }
-		$billingLog = ConfigConsts::BILLING_LOG_PATH."/".$clientID."_splunk.".log;
-		$billingFail =  ConfigConsts::BILLING_LOG_PATH."/".$clientID."_splunk_error.".log;
+		$billingLog = $billingLogPath.$clientID."_splunk.log";
+		$billingFail = $billingLogPath.$clientID."_splunk_error.log";
 		file_put_contents($billingLog, date_format( $current_ts, "c") . " debug... Lookup Billing ".$deliveryService." last result time:".$lastResultTime."\n", FILE_APPEND);
 		while( $diff > 5 ){
 			// decidimos qual o intervalo a utilizar - 10min, 1hora ou 24horas

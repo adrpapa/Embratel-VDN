@@ -230,7 +230,7 @@ class context extends \APS\ResourceBase
     	
     	## Reset the local variables
     	$httpTraffic = $this->httpTrafficInGB->usage;
-    	$http_s_Traffic = $this->http_s_TrafficInGB->usage;;
+    	$http_s_Traffic = $this->http_s_TrafficInGB->usage;
     	
     	## Collect resource usage from all CDNs
     	foreach ( $this->cdns as $cdn ) {
