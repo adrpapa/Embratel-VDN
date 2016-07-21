@@ -28,7 +28,10 @@ service postgresql-9.1 restart
 
 
 [root@mn ~]# 
-su  postgres -c 'cat ~/originalPostgres.pgdump|psql'
+su  postgres -c 'dropdb plesk'
+su  postgres -c 'cat ~postgres/pleskd.pgdump|psql'
+
+depois:
 service pem start
 service pemui start
 service httpd start
@@ -36,4 +39,9 @@ service httpd start
 
 
 [root@pba ~]# 
-su  postgres -c 'cat ~/originalPostgres.pgdump|psql'
+su  postgres -c 'dropdb pba'
+su  postgres -c 'cat ~postgres/pba.pgdump|psql'
+
+depois:
+service pba start
+
