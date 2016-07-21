@@ -259,10 +259,7 @@ class cdn extends \APS\ResourceBase {
     	$logger = \APS\LoggerRegistry::get();
     	$logger->setLogFile("logs/cdns.log");
     	\APS\LoggerRegistry::get()->info("Iniciando des-provisionamento do CDN... ".$this->aps->id);
-    	
-    	$rule = new FileMgmt();
-    	$rule->delete( $this->rule_url_rwr_file_id );
-    	
+    	 	
     	$dsgs = new DeliveryServiceGenSettings();
     	$dsgs->delete( $this->delivery_service_gen_settings_id );
     	
@@ -271,6 +268,9 @@ class cdn extends \APS\ResourceBase {
     	
     	$origin = new ContentOrigin();
     	$origin->delete( $this->content_origin_id );
+    	
+    	$rule = new FileMgmt();
+    	$rule->delete( $this->rule_url_rwr_file_id );    	
     	
     	\APS\LoggerRegistry::get()->info("<-- Fim DES-Provisionando CDN");    	    	
 	}
@@ -331,6 +331,7 @@ class cdn extends \APS\ResourceBase {
 	
 	function asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain) {
 		$rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
+		
 		if( !$rule->createUrlRewriteRule($origin_domain,$this->origin_path) ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating rule to Delivery Service: " . $rule->getMessage());
 			// Rollback
@@ -346,10 +347,10 @@ class cdn extends \APS\ResourceBase {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error applying rule to Delivery Service: " . $ds->getMessage());
 			// Rollback
 				\APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$rule->getID()."][".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
-			if ( !is_null($rule) ) $rule->delete( $rule->getID() );
 			if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
 			if ( !is_null($ds) ) $ds->delete( $ds->getID() );
 			if ( !is_null($origin) ) $origin->delete( $origin->getID() );
+			if ( !is_null($rule) ) $rule->delete( $rule->getID() );			
 			//
 			throw new \Exception("Can't apply rule to delivery service:" . $ds->getMessage(), 506);
 		}		

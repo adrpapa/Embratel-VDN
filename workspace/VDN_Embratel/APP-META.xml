@@ -103,13 +103,7 @@ CISCO VDN para entrega distribuída de conteúdo
 					<view id="cdn-new-1" label="New Delivery Service">
 						<controls>
 							<cancel />
-							<next />
-						</controls>
-					</view>
-					<view id="cdn-new-last" label="Review">
-						<controls>
-							<prev />
-							<finish />
+							<submit />
 						</controls>
 					</view>
 					<view id="cdn-info" label="Edit Delivery Service">
