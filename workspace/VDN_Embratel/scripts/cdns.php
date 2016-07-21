@@ -29,14 +29,14 @@ class cdn extends \APS\ResourceBase {
 	 * @description("CDN Name")
 	 * @required
 	 */
-	public $name;	
+	public $name;
 
 	/**
 	 * @type(string)
 	 * @title("Description")
 	 * @description("CDN Description")
 	 */
-	public $description;	
+	public $description;
 
 	/**
 	 * @type(string)
@@ -44,7 +44,7 @@ class cdn extends \APS\ResourceBase {
 	 * @description("CDN Alias-only characters and numbers are allowed")
 	 * @required
 	 */
-	public $alias;	
+	public $alias;
 	
 	/**
 	 * @type(string)
@@ -74,7 +74,7 @@ class cdn extends \APS\ResourceBase {
 	 * @title("Live")
 	 * @description("Turn on Live Delivery Service")
 	 */
-	public $live;	
+	public $live;
 	
 	
 	/*******************************************
@@ -176,7 +176,7 @@ class cdn extends \APS\ResourceBase {
 		// CREATE DELIVERY SERVICE
 		try {
 			\APS\LoggerRegistry::get()->info("--> Creating DS");
-			$ds = $this->createDeliveryService($origin,$custom_name);
+			$ds = $this->createDeliveryService($origin,"ds-".$custom_name);
 			\APS\LoggerRegistry::get()->info("<-- End Creating DS");		
 		} catch (Exception $fault) {
 			\APS\LoggerRegistry::get()->info("Error creating DS");
@@ -281,7 +281,7 @@ class cdn extends \APS\ResourceBase {
 	 *********************************************************************
 	 */
 	function createDeliveryService($origin,$custom_name) {
-		$ds = new DeliveryService("ds-".$custom_name,$origin->getID(),$this->description);
+		$ds = new DeliveryService($custom_name,$origin->getID(),$this->description);
 		$ds->live = ($this->live ? "true":"false");
 		if ( !$ds->create() ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
@@ -363,19 +363,23 @@ class cdn extends \APS\ResourceBase {
 	 * @verb(GET)
 	 * @path("/updateResourceUsage")
 	 */
-	public function updateResourceUsage () {	
-		error_log("Updating resource usage in VPS, ID: ".$this->aps->id);
+	public function updateResourceUsage () {
+		$logger = \APS\LoggerRegistry::get();
+    	$logger->setLogFile("logs/cdns.log");
 		$usage = array();
-		$splunkStats = SplunkStats::getBilling($this->context->account->id, $this->delivery_service_id, $this->newestSplunkData);
+		$clientID = $this->context->account->id;
+		$dsName = "ds-" . $this->alias . "-" . $clientID;
+		$logger->info("Updating resource usage for delivery service: ".$dsName);
+		$splunkStats = SplunkStats::getBilling($clientID, $dsName, $this->newestSplunkData);
 		$this->newestSplunkData = $splunkStats->lastResultTime;
-		
+		$logger->info(var_dump($splunkStats));
 		## Calculate the resource usage properties
 		$this->httpTrafficActualUsage += $splunkStats->gigaTransfered;
 		if( $this->https ) {
-			$this->$http_s_TrafficActualUsage += $splunkStats->gigaTransfered;
+			$this->http_s_TrafficActualUsage += $splunkStats->gigaTransfered;
 		}
-		$usage['httpsTrafficActualUsage'] = $this->httpTrafficActualUsage;
-		$usage['httpTrafficActualUsage'] = $this->$http_s_TrafficActualUsage;
+		$usage['httpTrafficActualUsage'] = $this->httpTrafficActualUsage;
+		$usage['httpsTrafficActualUsage'] = $this->http_s_TrafficActualUsage;
 		
 		## Save resource usage in the APS controller
 		$apsc = \APS\Request::getController();

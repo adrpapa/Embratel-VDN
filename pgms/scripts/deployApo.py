@@ -163,13 +163,14 @@ if True:
         login('admin','123@mudar')
 
         services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 
-				  'VDN Content', 'VDN Job', 'Content Delivery Network']
+				  'VDN Content', 'VDN Job', 'Content Delivery Network',
+			'httpTrafficInGB', 'http_s_TrafficInGB']
 
         createAppReference(services[0])
         createAppService(services[1], True)
         createAppService(services[2])
-        # createAppService(services[3])
-        # createAppService(services[4])
+        createAppService(services[3])
+        createAppService(services[4])
         createAppService(services[5])
 
         createServiceTemplate(services[0], True, services)

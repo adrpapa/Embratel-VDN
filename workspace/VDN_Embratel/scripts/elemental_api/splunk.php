@@ -35,8 +35,12 @@ class SplunkStats {
 		$splunkStats = new self();
 		$splunkStats->lastResultTime = $lastResultTime;
 		$splunkStats->gigaTransfered = 0;
-		$billingLog = ConfigConsts::BILLING_LOG_PATH."/splunk_"."_"."_"."_".$clientID.".log";
-		$billingFail = ConfigConsts::BILLING_LOG_PATH."/splunk_"."_"."_"."_".$clientID."_error.log";
+		$billingLogPath = ConfigConsts::BILLING_LOG_PATH."/".date('Y',$current_ts)."/".date('m',$current_ts);
+		if (!file_exists($billingLogPath)) {
+			mkdir($billingLogPath, 0755, true);
+}
+		$billingLog = ConfigConsts::BILLING_LOG_PATH."/".$clientID."_splunk.".log;
+		$billingFail =  ConfigConsts::BILLING_LOG_PATH."/".$clientID."_splunk_error.".log;
 		file_put_contents($billingLog, date_format( $current_ts, "c") . " debug... Lookup Billing ".$deliveryService." last result time:".$lastResultTime."\n", FILE_APPEND);
 		while( $diff > 5 ){
 			// decidimos qual o intervalo a utilizar - 10min, 1hora ou 24horas
@@ -67,8 +71,6 @@ class SplunkStats {
 			echo sprintf($urlMask, $timeRange, $bucketSize, $deliveryService)."\n";
 			$data = curl_exec($curl_obj->ch);
 			// TODO Quebrar log por data..
-			$billingLog = ConfigConsts::BILLING_LOG_PATH."/splunk_"."_"."_"."_".$clientID.".log";
-			$billingFail = ConfigConsts::BILLING_LOG_PATH."/splunk_"."_"."_"."_".$clientID."_error.log";
 			
 			if( ! isset($data) || $data == '"None"' || $data == '""') {
 				file_put_contents($billingFail, date_format( $current_ts, "c")

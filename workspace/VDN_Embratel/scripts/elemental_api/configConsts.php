@@ -8,7 +8,7 @@
         
         const TEMPLATE_PATH = 'templates';
 //         const BILLING_LOG_PATH = 'logs';
-        const BILLING_LOG_PATH = '/home/fastlane/Embratel/workspace/VDN_Embratel/logs';
+        const BILLING_LOG_PATH = 'logs';
 
         const API_VERSION = 'v1';
         #const LIVE_CONDUCTOR_HOST = '201.31.12.4';

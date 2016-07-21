@@ -222,24 +222,30 @@ class context extends \APS\ResourceBase
     }
     
     public function retrieve() {
-    	error_log("Fetching resource usage");
+		\APS\LoggerRegistry::get()->setLogFile("logs/context.log");
+    	\APS\LoggerRegistry::get()->info(sprintf("Fetching resource usage. Current values: http=%f https=%f",
+				$this->httpTrafficInGB->usage, $this->http_s_TrafficInGB->usage));
     	## Connect to the APS controller
     	$apsc = \APS\Request::getController();
     	
     	## Reset the local variables
     	$httpTraffic = $this->httpTrafficInGB->usage;
-    	$http_s_Traffic = 0;
+    	$http_s_Traffic = $this->http_s_TrafficInGB->usage;;
     	
     	## Collect resource usage from all CDNs
     	foreach ( $this->cdns as $cdn ) {
     		$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
     				$apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
     		$usage = json_decode($usage);
-    		$httpTraffic = $httpTraffic + $usage->httpTrafficActualUsage;
+    		$httpTraffic += $usage->httpTrafficActualUsage;
+    		$http_s_Traffic += $usage->httpsTrafficActualUsage;
     	}    	
     	
     	## Update the APS resource counters
     	$this->httpTrafficInGB->usage = $httpTraffic;
+		$this->http_s_TrafficInGB->usage = $http_s_Traffic;
+    	\APS\LoggerRegistry::get()->info(sprintf("Resource usage after update: http=%f https=%f",
+				$this->httpTrafficInGB->usage, $this->http_s_TrafficInGB->usage));
     }
 }
 
