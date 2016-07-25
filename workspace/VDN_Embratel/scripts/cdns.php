@@ -373,16 +373,19 @@ class cdn extends \APS\ResourceBase {
 		$splunkStats = SplunkStats::getBilling($clientID, $dsName, $this->newestSplunkData);
 		$this->newestSplunkData = $splunkStats->lastResultTime;
 		$logger->info(var_dump($splunkStats));
+		
 		## Calculate the resource usage properties
 		$this->httpTrafficActualUsage += $splunkStats->gigaTransfered;
+		# Save counters to return to caller
 		$usage['httpTrafficActualUsage'] = $splunkStats->gigaTransfered;
+		
 		if( $this->https ) {
 			$this->http_s_TrafficActualUsage += $splunkStats->gigaTransfered;
 			$usage['httpsTrafficActualUsage'] = $splunkStats->gigaTransfered;
 		} else {
-			$usage['httpsTrafficActualUsage'] = $splunkStats->gigaTransfered;
+			$usage['httpsTrafficActualUsage'] = 0;
 		}
-		
+
 		## Save resource usage in the APS controller
 		$apsc = \APS\Request::getController();
 		$apsc->updateResource($this);

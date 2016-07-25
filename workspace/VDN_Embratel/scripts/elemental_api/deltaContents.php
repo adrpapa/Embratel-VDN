@@ -25,8 +25,11 @@
         public static function getContentsByFolder( $folder ) {
 			$allContent=[];
             foreach( DeltaContents::getElementalRest()->restGet() as $xmlContent ){
-                $allContent[] = new DeltaContents($xmlContent);
+				if( strpos( $xmlContent->path, $folder) !== FALSE ) {
+					$allContent[] = $xmlContent;
+				}
 			}
+			return $allContent;
         }
         
         public static function delete($id) {
@@ -40,4 +43,7 @@
         }
     }
 // 	DeltaContents::getContentsByFolder('/data/server/drive/watchfolders/Cliente1/')
+// 	foreach( DeltaContents::getContentsByFolder("/data/server/drive/watchfolders/Cliente1/") as $content ) {
+// 		var_dump($content);
+// 	}
 ?>

@@ -23,11 +23,9 @@ class SplunkStats {
 				. ConfigConsts::SPLUNK_ENDPOINT
 				. ConfigConsts::SPLUNK_QUERY;
 		$current_ts = date_create();
-		if($lastResultTime == null) {
-			$last_ts = clone $current_ts;
-			$last_ts->modify('-7 day');
-		}
-		else {
+		$last_ts = clone $current_ts;
+		$last_ts->modify('-7 day');
+		if($lastResultTime != null) {
 			$last_ts = $lastResultTime == null ?  : date_create($lastResultTime);
 		}
 		$diff = ($current_ts->getTimestamp() - $last_ts->getTimestamp())/60;
@@ -38,7 +36,7 @@ class SplunkStats {
 		$billingLogPath = ConfigConsts::BILLING_LOG_PATH.date_format( $current_ts, "/Y/m/");
 		if (!file_exists($billingLogPath)) {
 			mkdir($billingLogPath, 0755, true);
-}
+		}
 		$billingLog = $billingLogPath.$clientID."_splunk.log";
 		$billingFail = $billingLogPath.$clientID."_splunk_error.log";
 		file_put_contents($billingLog, date_format( $current_ts, "c") . " debug... Lookup Billing ".$deliveryService." last result time:".$lastResultTime."\n", FILE_APPEND);
