@@ -236,6 +236,7 @@ class cdn extends \APS\ResourceBase {
     	$custom_name   = $new->alias . "-" . $this->context->account->id;
     	$custom_domain = $new->alias . "." . $this->context->account->id;
     	$origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;    	
+    	$ds_name       = "ds-".$custom_name;
     	
     	\APS\LoggerRegistry::get()->info("New Domain:".$origin_domain);
     	
@@ -248,11 +249,13 @@ class cdn extends \APS\ResourceBase {
     	}
     	
     	if ( !is_null($this->delivery_service_id) ) {
-	    	$ds = new DeliveryService("ds-".$custom_name,$this->content_origin_id,$new->description);
+	    	$ds = new DeliveryService($ds_name,$this->content_origin_id,$new->description);
 	    	if ( !$ds->update($this->delivery_service_id) ) {
 				\APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating Delivery Service: " . $ds->getMessage());
 				throw new \Exception("Can't update delivery service:" . $ds->getMessage(), 502);    		
 	    	}
+	    	
+	    	$this->delivery_service_name = $ds_name;
     	}
     	
     	if ( !is_null($this->rule_url_rwr_file_id) ) {
@@ -262,6 +265,8 @@ class cdn extends \APS\ResourceBase {
 				throw new \Exception("Can't update rule to delivery service:" . $rule->getMessage(), 505);
 	    	}
     	}
+    	
+    	$this->origin_domain = $origin_domain;
     	
     	\APS\LoggerRegistry::get()->info("Fim updating do CDN... ".$this->aps->id);
     }
