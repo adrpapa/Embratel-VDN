@@ -32,5 +32,5 @@ grep -q $DNS /etc/resolv.conf || {
 	cat /etc/resolv.conf >> /tmp/resolv.conf;
 	mv /tmp/resolv.conf /etc/resolv.conf;
 }
-dig +noall +answer cdn.flts.apsdemo.org
+dig +noall +answer host1.apo.apsdemo.org
 

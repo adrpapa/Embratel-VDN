@@ -21,8 +21,8 @@ class vod extends \APS\ResourceBase {
 	/**
 	 * @type(integer)
 	 * @title("Content ID")
-	 * @description("Content ID")
-	 * @required
+	 * @description("Content ID in Elemental Delta")
+	 * @readonly
 	 */
 	public $content_id;
 
@@ -30,9 +30,9 @@ class vod extends \APS\ResourceBase {
 	 * @type(string)
 	 * @title("Content Name")
 	 * @description("Content Name")
-	 * @required
+	 * @readonly
 	 */
-	public $name;
+	public $content_name;
 
 	/**
 	 * @type(string)
@@ -42,13 +42,31 @@ class vod extends \APS\ResourceBase {
 	 */
 	public $path;
 
+
+
 	/**
-	 * @link("http://embratel.com.br/app/VDN_Embratel/job/1.0")
-	 * @title("Job")
-	 * @description("Job that submitted this content")
+	 * @type(boolean)
+	 * @title("HTTPS")
+	 * @description("Turn on HTTPS feature for live")
 	 * @readonly
 	 */
-	public $job;
+	public $https;	
+	
+	/**
+	 * @type(integer)
+	 * @title("Job ID")
+	 * @description("ID of job that submitted this content")
+	 * @readonly
+	 */
+	public $job_id;
+
+	/**
+	 * @type(string)
+	 * @title("Input URI")
+	 * @description("Job Input URI for video ingestion")
+	 * @readonly
+	 */
+	public $input_URI;
 
 #############################################################################################################################################
 ## Definition of the functions that will respond to the different CRUD operations

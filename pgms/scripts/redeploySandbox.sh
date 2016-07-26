@@ -15,9 +15,6 @@ service httpd start
 
 
 
-[root@pba ~]# 
-service pba stop
-service postgresql-9.1 restart
 
 
 
@@ -26,14 +23,22 @@ service pemui stop
 service pem stop
 service postgresql-9.1 restart
 
+su  postgres -c 'dropdb plesk'
+su  postgres -c 'cat ~postgres/pleskd.pgdump|psql'
 
-[root@mn ~]# 
-su  postgres -c 'cat ~/originalPostgres.pgdump|psql'
+depois:
 service pem start
 service pemui start
 service httpd start
 
 
-
 [root@pba ~]# 
-su  postgres -c 'cat ~/originalPostgres.pgdump|psql'
+service pba stop
+/etc/init.d/postgresql restart
+
+su  postgres -c 'dropdb pba'
+su  postgres -c 'cat ~postgres/pba.pgdump|psql'
+
+depois:
+service pba start
+

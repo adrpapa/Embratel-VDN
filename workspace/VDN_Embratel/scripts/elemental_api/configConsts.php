@@ -4,22 +4,19 @@
 */
     class ConfigConsts {
         
-        const debug = true;
+        const debug = false;
         
         const TEMPLATE_PATH = 'templates';
+//         const BILLING_LOG_PATH = 'logs';
+        const BILLING_LOG_PATH = 'logs';
 
         const API_VERSION = 'v1';
         #const LIVE_CONDUCTOR_HOST = '201.31.12.4';
         const LIVE_CONDUCTOR_HOST = '201.31.12.26';
         const VOD_CONDUCTOR_HOST  = '201.31.12.7';
         
-        const LIVE_TEMPLATE_STANDARD = 13;
-        const LIVE_TEMPLATE_PREMIUM = 13;
         const LIVE_NODE_URL = 'rtmp://localhost:1935/';
 
-        const VOD_TEMPLATE_STANDARD = 95;
-        const VOD_TEMPLATE_PREMIUM = 95;        
-        
         const DELTA_HOST = '201.31.12.36';
         const DELTA_PORT = '8080';
         
@@ -42,5 +39,10 @@
         const CDMS_USER = "admin";
         const CDMS_PWD = "C1sc0CDN!";
         const CDMS_DOMAIN = "csi.cds.cisco.com";
-    }
+        
+        //********* Splunk *********
+        const SPLUNK_ADDRESS = '192.118.76.206';
+        const SPLUNK_ENDPOINT = '/splunkApp/en-US/custom/CDN_Usage_Reporting/cdnusage/metric_data';
+        const SPLUNK_QUERY = '?metric=cdn_ds_bytes_delivered&time_range=%s&span=%s&delivery_service=%s&time_format';
+	}
 ?>

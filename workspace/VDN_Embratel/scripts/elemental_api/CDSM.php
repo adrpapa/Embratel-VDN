@@ -121,7 +121,7 @@ abstract class CDSM {
 			$curl_obj->uri = $this->urlString;
 			$this->xml_result = $curl_obj->restCDSM( base64_encode($credentials),$data );
 		} catch(Exception $ex) { 
-			print("ops something didn´t work as we expected.... sorry.To help you: ".$ex->getMessage());
+			print("ops something didn't work as we expected.... sorry.To help you: ".$ex->getMessage());
 		}
 			
 		$this->unsetParams();

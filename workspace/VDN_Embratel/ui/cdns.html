@@ -4,14 +4,14 @@
 	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
 	<script>
 		require([
-                  "aps/ResourceStore",
-                  "aps/xhr",
-                  "dojo/when",
-                  "dijit/registry",
-                  "aps/load",
-                  "./js/displayError.js",
-            	  "dojo/_base/array",
-                  "aps/ready!"
+			"aps/ResourceStore",
+			"aps/xhr",
+			"dojo/when",
+			"dijit/registry",
+			"aps/load",
+			"./js/displayError.js",
+			"dojo/_base/array",
+			"aps/ready!"
 		], function (Store, xhr, when, registry, load, displayError, arr) {
 			/* Create the data store */
 			var store = new Store({
@@ -80,10 +80,10 @@
 				registry.byId("cdn_delete").on("click", function() {
                     var self = this;
 					/* Get confirmation from the user for the delete operation */
-                    if (!confirm("Are you sure you want delete this CDN configuration ?")) {
-                        self.cancel();
-                        return;
-                    }
+					if (!confirm("Are you sure you want delete this CDN configuration ?")) {
+						self.cancel();
+						return;
+					}
 					var sel = grid.get("selectionArray"),
 					counter = sel.length;
 
@@ -105,13 +105,13 @@
 							/* If failure, call the error handler */
 							function(e){
 								displayError(e);
-                                if (--counter === 0) { self.cancel(); }
+								if (--counter === 0) { self.cancel(); }
 							}
 						);
 					});
 				});
 			});
-        });
+		});
 	</script>
 </head>
 <body>

@@ -7,6 +7,7 @@ require_once "elemental_api/deliveryService.php";
 require_once "elemental_api/contentOrigin.php";
 require_once "elemental_api/deliveryServiceGenSettings.php";
 require_once "elemental_api/fileMgmt.php";
+require_once "elemental_api/splunk.php";
 
 /**
  * @type("http://embratel.com.br/app/VDN_Embratel/cdn/1.0")
@@ -28,14 +29,14 @@ class cdn extends \APS\ResourceBase {
 	 * @description("CDN Name")
 	 * @required
 	 */
-	public $name;	
+	public $name;
 
 	/**
 	 * @type(string)
 	 * @title("Description")
 	 * @description("CDN Description")
 	 */
-	public $description;	
+	public $description;
 
 	/**
 	 * @type(string)
@@ -43,7 +44,7 @@ class cdn extends \APS\ResourceBase {
 	 * @description("CDN Alias-only characters and numbers are allowed")
 	 * @required
 	 */
-	public $alias;	
+	public $alias;
 	
 	/**
 	 * @type(string)
@@ -73,7 +74,7 @@ class cdn extends \APS\ResourceBase {
 	 * @title("Live")
 	 * @description("Turn on Live Delivery Service")
 	 */
-	public $live;	
+	public $live;
 	
 	
 	/*******************************************
@@ -138,6 +139,13 @@ class cdn extends \APS\ResourceBase {
 	 */
 	public $http_s_TrafficActualUsage;	
 	
+	/**
+	 * @type("string")
+	 * @title("Timestamp of last result from splunk")
+	 * @description("Timestamp of last result from splunk")
+	 */
+	public $newestSplunkData;
+	
 #############################################################################################################################################
 ## Definition of the functions that will respond to the different CRUD operations
 #############################################################################################################################################
@@ -150,6 +158,7 @@ class cdn extends \APS\ResourceBase {
 		$custom_name   = $this->alias . "-" . $this->context->account->id;
 		$custom_domain = $this->alias . "." . $this->context->account->id;
 		$origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;
+		$this->httpTrafficActualUsage = 0;
 		
 		\APS\LoggerRegistry::get()->info("--> ORIGIN DOMAIN: " . $origin_domain);
 
@@ -164,11 +173,10 @@ class cdn extends \APS\ResourceBase {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
 			throw new \Exception("Can't create content origin:" . $origin->getMessage(), 501);
 		}
-		
 		// CREATE DELIVERY SERVICE
 		try {
 			\APS\LoggerRegistry::get()->info("--> Creating DS");
-			$ds = $this->createDeliveryService($origin,$custom_name);
+			$ds = $this->createDeliveryService($origin,"ds-".$custom_name);
 			\APS\LoggerRegistry::get()->info("<-- End Creating DS");		
 		} catch (Exception $fault) {
 			\APS\LoggerRegistry::get()->info("Error creating DS");
@@ -279,7 +287,7 @@ class cdn extends \APS\ResourceBase {
 	 *********************************************************************
 	 */
 	function createDeliveryService($origin,$custom_name) {
-		$ds = new DeliveryService("ds-".$custom_name,$origin->getID(),$this->description);
+		$ds = new DeliveryService($custom_name,$origin->getID(),$this->description);
 		$ds->live = ($this->live ? "true":"false");
 		if ( !$ds->create() ) {
 			\APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
@@ -361,14 +369,29 @@ class cdn extends \APS\ResourceBase {
 	 * @verb(GET)
 	 * @path("/updateResourceUsage")
 	 */
-	public function updateResourceUsage () {	
-		error_log("Updating resource usage in VPS, ID: ".$this->aps->id);
+	public function updateResourceUsage () {
+		$logger = \APS\LoggerRegistry::get();
+    	$logger->setLogFile("logs/cdns.log");
 		$usage = array();
+		$clientID = $this->context->account->id;
+		$dsName = "ds-" . $this->alias . "-" . $clientID;
+		$logger->info("Updating resource usage for delivery service: ".$dsName);
+		$splunkStats = SplunkStats::getBilling($clientID, $dsName, $this->newestSplunkData);
+		$this->newestSplunkData = $splunkStats->lastResultTime;
+		$logger->info(var_dump($splunkStats));
 		
 		## Calculate the resource usage properties
-		$this->httpTrafficActualUsage = 5.5;
-		$usage['httpTrafficActualUsage'] = $this->httpTrafficActualUsage;
+		$this->httpTrafficActualUsage += $splunkStats->gigaTransfered;
+		# Save counters to return to caller
+		$usage['httpTrafficActualUsage'] = $splunkStats->gigaTransfered;
 		
+		if( $this->https ) {
+			$this->http_s_TrafficActualUsage += $splunkStats->gigaTransfered;
+			$usage['httpsTrafficActualUsage'] = $splunkStats->gigaTransfered;
+		} else {
+			$usage['httpsTrafficActualUsage'] = 0;
+		}
+
 		## Save resource usage in the APS controller
 		$apsc = \APS\Request::getController();
 		$apsc->updateResource($this);

@@ -160,16 +160,16 @@ class context extends \APS\ResourceBase
 	/**
 	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
 	 * @description("Total Traffic HTTP in Gigabytes")
-	 * @unit("gb")
+	 * @unit("kb")
 	 */
-	public $httpTrafficInGB;
+	public $VDN_HTTP_Traffic;
 	
 	/**
 	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
 	 * @description("Total Traffic HTTPS in Gigabytes")
-	 * @unit("gb")
+	 * @unit("kb")
 	 */
-	public $http_s_TrafficInGB;	
+	public $VDN_HTTPS_Traffic;	
 
 	###############################################################################
 	# F U N C O E S   P A R A   I N S T A N C I A M E N T O   D E   C O N T E X T O
@@ -209,37 +209,43 @@ class context extends \APS\ResourceBase
         // Delete output template for all options: Live/Vod Premium/Std http/https
     	$vodLiveArr = array('vod' => $this->vodDeltaPaths, 'live' => $this->liveDeltaPaths);
     	foreach( $vodLiveArr as $type => &$vodLive ) {
-            $stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
-            foreach( $stdPremArr as $level => &$stdPrem ) {
-                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
-                foreach( $httpHttpsArr as $proto => &$path ) {
-                    \APS\LoggerRegistry::get()->info("Removendo Input Filter e Output Template $clientid $proto $type $level");
-                    DeltaInputFilter::delete($path->inputFilter);
-                    DeltaOutputTemplate::delete($path->outputTemplate);
-                }
-            }
-    	}
+			$stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
+			foreach( $stdPremArr as $level => &$stdPrem ) {
+				$httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
+				foreach( $httpHttpsArr as $proto => &$path ) {
+					\APS\LoggerRegistry::get()->info("Removendo Input Filter e Output Template $clientid $proto $type $level");
+					DeltaInputFilter::delete($path->inputFilter);
+					DeltaOutputTemplate::delete($path->outputTemplate);
+				}
+			}
+		}
     }
     
     public function retrieve() {
-    	error_log("Fetching resource usage");
+		\APS\LoggerRegistry::get()->setLogFile("logs/context.log");
+    	\APS\LoggerRegistry::get()->info(sprintf("Fetching resource usage. Current values: http=%f https=%f",
+				$this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
     	## Connect to the APS controller
     	$apsc = \APS\Request::getController();
     	
     	## Reset the local variables
-    	$httpTraffic = $this->httpTrafficInGB->usage;
-    	$http_s_Traffic = 0;
-    	
+    	$httpTraffic = $this->VDN_HTTP_Traffic->usage;
+    	$http_s_Traffic = $this->VDN_HTTPS_Traffic->usage;
+
     	## Collect resource usage from all CDNs
     	foreach ( $this->cdns as $cdn ) {
     		$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
     				$apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
     		$usage = json_decode($usage);
-    		$httpTraffic = $httpTraffic + $usage->httpTrafficActualUsage;
+    		$httpTraffic +=  $usage->httpTrafficActualUsage * 1000000; // convert GB to MB
+    		$http_s_Traffic += $usage->httpsTrafficActualUsage * 1000000; // convert GB to MB
     	}    	
     	
     	## Update the APS resource counters
-    	$this->httpTrafficInGB->usage = $httpTraffic;
+    	$this->VDN_HTTP_Traffic->usage = round($httpTraffic, 0);
+		$this->VDN_HTTPS_Traffic->usage = round($http_s_Traffic, 0);
+    	\APS\LoggerRegistry::get()->info(sprintf("Resource usage after update: http=%f https=%f",
+				$this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
     }
 }
 
