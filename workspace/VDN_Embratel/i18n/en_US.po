@@ -1,0 +1,356 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#, fuzzy
+msgid ""
+msgstr "Project-Id-Version: VDN_Embratel-1.0-1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-26 13:14-0300\n"
+"PO-Revision-Date: 2016-07-26 13:14-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: English <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# @generated
+#: APP-META.xml:18
+msgid "APS para suportar venda de infraestrutura para provedores de conteúdo.\n"
+"Permite configurar os back-ends:\n"
+"Elemental server - para encoding de conteúdo estático\n"
+"Elemental live - para streaming ao vivo\n"
+"Elemental delta para empacotamento\n"
+"CISCO VDN para entrega distribuída de conteúdo"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:42
+#: ui/cdn-new-1.html:58
+#: ui/cdn-new-last.html:35
+msgid "Alias"
+msgstr ""
+
+# @generated
+#: APP-META.xml:69
+msgid "Back to Contents list"
+msgstr ""
+
+# @generated
+#: APP-META.xml:102
+msgid "CDN"
+msgstr ""
+
+# @generated
+#: APP-META.xml:101
+msgid "CDN Standalone"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:33
+#: ui/channel-new-1.html:46
+msgid "Channel Name"
+msgstr ""
+
+# @generated
+#: APP-META.xml:173
+#: APP-META.xml:174
+msgid "Content Delivery Network"
+msgstr ""
+
+# @generated
+#: APP-META.xml:67
+msgid "Content Information"
+msgstr ""
+
+# @generated
+#: ui/content-info.html:32
+#: ui/job-new-1.html:42
+msgid "Content Name"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:67
+#: ui/cdn-new-1.html:83
+#: ui/cdn-new-last.html:34
+#: ui/channel-info.html:34
+#: ui/channel-new-1.html:47
+#: ui/job-info.html:33
+#: ui/job-new-1.html:43
+msgid "Description"
+msgstr ""
+
+# @generated
+#: APP-META.xml:91
+msgid "Edit Channel"
+msgstr ""
+
+# @generated
+#: APP-META.xml:109
+msgid "Edit Delivery Service"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:42
+msgid "Elemental Live Node"
+msgstr ""
+
+# @generated
+#: ui/job-info.html:40
+msgid "Elemental Server Node"
+msgstr ""
+
+# @generated
+#: APP-META.xml:17
+msgid "Elemental Server/Live/Delta plugin for parallels"
+msgstr ""
+
+# @generated
+#: APP-META.xml:9
+msgid "Embratel"
+msgstr ""
+
+# @generated
+#: APP-META.xml:13
+msgid "Fastlane"
+msgstr ""
+
+# @generated
+#: APP-META.xml:28
+msgid "Initial release."
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:40
+#: ui/job-info.html:39
+#: ui/job-new-1.html:44
+msgid "Input URI"
+msgstr ""
+
+# @generated
+#: ui/job-info.html:38
+msgid "Job Id"
+msgstr ""
+
+# @generated
+#: APP-META.xml:55
+msgid "Job Information"
+msgstr ""
+
+# @generated
+#: ui/job-info.html:32
+msgid "Job Name"
+msgstr ""
+
+# @generated
+#: APP-META.xml:41
+#: APP-META.xml:42
+msgid "Jobs"
+msgstr ""
+
+# @generated
+#: APP-META.xml:77
+#: APP-META.xml:78
+msgid "Live Channels"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:39
+msgid "Live Event Id"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:75
+#: ui/cdn-new-1.html:90
+#: ui/cdn-new-last.html:41
+msgid "Live?"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:34
+#: ui/cdn-new-1.html:50
+#: ui/cdn-new-last.html:33
+#: ui/js/videoparams.js:164
+msgid "Name"
+msgstr ""
+
+# @generated
+#: APP-META.xml:79
+msgid "New Channel"
+msgstr ""
+
+# @generated
+#: APP-META.xml:103
+msgid "New Delivery Service"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:58
+#: ui/cdn-new-1.html:74
+#: ui/cdn-new-last.html:37
+msgid "Origin Path"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:50
+#: ui/cdn-new-1.html:66
+#: ui/cdn-new-last.html:36
+msgid "Origin Server"
+msgstr ""
+
+# @generated
+#: ui/content-info.html:33
+msgid "Path"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:54
+#: ui/job-new-1.html:50
+msgid "Premium Configuration Options?"
+msgstr ""
+
+# @generated
+#: ui/js/videoparams.js:154
+msgid "Premium Transcoder Parameter Customization"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:43
+#: ui/job-info.html:41
+msgid "Profile ID"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:52
+msgid "Provide DVR Feature?"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:106
+msgid "Required fields have to be filled"
+msgstr ""
+
+# @generated
+#: ui/js/videoparams.js:159
+msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will be used in transcoding."
+msgstr ""
+
+# @generated
+#: APP-META.xml:85
+msgid "Review"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:38
+#: ui/channel-new-1.html:50
+#: ui/job-info.html:37
+#: ui/job-new-1.html:47
+msgid "Screen Format"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:71
+msgid "Service Routing Domain Name"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:37
+#: ui/job-info.html:36
+msgid "State"
+msgstr ""
+
+# @generated
+#: APP-META.xml:43
+msgid "Submit New Content"
+msgstr ""
+
+# @generated
+#: APP-META.xml:49
+#: ui/js/videoparams.js:158
+msgid "Transcoder Parameters"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:41
+msgid "UDP Delta Port"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:74
+#: ui/cdn-new-1.html:89
+#: ui/cdn-new-last.html:40
+#: ui/channel-new-1.html:53
+#: ui/job-new-1.html:49
+msgid "Use HTTPS?"
+msgstr ""
+
+# @generated
+#: APP-META.xml:134
+msgid "VDN  Embratel  global configuration variables"
+msgstr ""
+
+# @generated
+#: APP-META.xml:141
+msgid "VDN  Embratel Management"
+msgstr ""
+
+# @generated
+#: APP-META.xml:133
+msgid "VDN  Embratel globals"
+msgstr ""
+
+# @generated
+#: APP-META.xml:157
+#: APP-META.xml:158
+msgid "VDN Content"
+msgstr ""
+
+# @generated
+#: APP-META.xml:36
+msgid "VDN Embratel"
+msgstr ""
+
+# @generated
+#: APP-META.xml:142
+msgid "VDN Embratel environment"
+msgstr ""
+
+# @generated
+#: APP-META.xml:165
+#: APP-META.xml:166
+msgid "VDN Job"
+msgstr ""
+
+# @generated
+#: APP-META.xml:149
+#: APP-META.xml:150
+msgid "VDN Live Channels"
+msgstr ""
+
+# @generated
+#: APP-META.xml:40
+msgid "VOD"
+msgstr ""
+
+# @generated
+#: APP-META.xml:65
+#: APP-META.xml:66
+msgid "VOD Contents"
+msgstr ""
+
+# @generated
+#: ui/js/videoparams.js:155
+msgid "You may change each stream's Resolution, Frame Rate, Video Bit Rate and Audio Bit Rate for the transcoder."
+msgstr ""
+
+# @generated
+#: APP-META.xml:10
+msgid "https://embratel.com.br"
+msgstr ""
+
+# @generated
+#: APP-META.xml:14
+msgid "https://flts.com.br"
+msgstr ""

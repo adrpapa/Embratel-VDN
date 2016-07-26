@@ -120,6 +120,14 @@ class cdn extends \APS\ResourceBase {
 	 * @readonly
 	 */
 	public $origin_domain;	
+
+	/**
+	 * @type(string)
+	 * @title("Delivery Service Name")
+	 * @description("Delivery Service Name")
+	 * @readonly
+	 */
+	public $delivery_service_name;	
 	
 	/*****************************************************
 	 **************** METRIC PROPERTIES ******************
@@ -158,7 +166,9 @@ class cdn extends \APS\ResourceBase {
 		$custom_name   = $this->alias . "-" . $this->context->account->id;
 		$custom_domain = $this->alias . "." . $this->context->account->id;
 		$origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;
-		$this->httpTrafficActualUsage = 0;
+		$ds_name       = "ds-".$custom_name;
+		$this->httpTrafficActualUsage    = 0;
+		$this->http_s_TrafficActualUsage = 0;
 		
 		\APS\LoggerRegistry::get()->info("--> ORIGIN DOMAIN: " . $origin_domain);
 
@@ -176,7 +186,7 @@ class cdn extends \APS\ResourceBase {
 		// CREATE DELIVERY SERVICE
 		try {
 			\APS\LoggerRegistry::get()->info("--> Creating DS");
-			$ds = $this->createDeliveryService($origin,"ds-".$custom_name);
+			$ds = $this->createDeliveryService($origin,$ds_name);
 			\APS\LoggerRegistry::get()->info("<-- End Creating DS");		
 		} catch (Exception $fault) {
 			\APS\LoggerRegistry::get()->info("Error creating DS");
@@ -206,7 +216,10 @@ class cdn extends \APS\ResourceBase {
 		// SUCCESS: UPDATE APS RESOURCES
 		//*****************************************
 		if ( !is_null($origin) ) $this->content_origin_id = $origin->getID();
-		if ( !is_null($ds) )     $this->delivery_service_id = $ds->getID();
+		if ( !is_null($ds) ) {
+			$this->delivery_service_id   = $ds->getID();
+			$this->delivery_service_name = $ds_name;
+		}
 		if ( !is_null($dsgs) )   $this->delivery_service_gen_settings_id = $dsgs->getID();
 		if ( !is_null($rule) )   $this->rule_url_rwr_file_id = $rule->getID();
 		$this->origin_domain = $origin_domain;
@@ -266,17 +279,25 @@ class cdn extends \APS\ResourceBase {
     	$logger->setLogFile("logs/cdns.log");
     	\APS\LoggerRegistry::get()->info("Iniciando des-provisionamento do CDN... ".$this->aps->id);
     	 	
-    	$dsgs = new DeliveryServiceGenSettings();
-    	$dsgs->delete( $this->delivery_service_gen_settings_id );
+    	if ( !is_null($this->delivery_service_gen_settings_id) ) {
+	    	$dsgs = new DeliveryServiceGenSettings();
+	    	$dsgs->delete( $this->delivery_service_gen_settings_id );
+    	}
     	
-    	$ds = new DeliveryService();
-    	$ds->delete( $this->delivery_service_id );
+    	if ( !is_null($this->delivery_service_id) ) {
+	    	$ds = new DeliveryService();
+	    	$ds->delete( $this->delivery_service_id );
+    	}
     	
-    	$origin = new ContentOrigin();
-    	$origin->delete( $this->content_origin_id );
+    	if ( !is_null($this->content_origin_id) ) {
+	    	$origin = new ContentOrigin();
+	    	$origin->delete( $this->content_origin_id );
+    	}
     	
-    	$rule = new FileMgmt();
-    	$rule->delete( $this->rule_url_rwr_file_id );    	
+    	if ( !is_null($this->rule_url_rwr_file_id) ) {
+	    	$rule = new FileMgmt();
+	    	$rule->delete( $this->rule_url_rwr_file_id );    	
+    	}
     	
     	\APS\LoggerRegistry::get()->info("<-- Fim DES-Provisionando CDN");    	    	
 	}
