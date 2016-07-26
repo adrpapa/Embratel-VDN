@@ -117,6 +117,14 @@ class channel extends \APS\ResourceBase {
 	public $delta_port;
 
 	/**
+	 * @type(number)
+	 * @title("saved encoding time")
+	 * @description("Last encoding reported to billing")
+	 * @readonly
+	 */
+	public $saved_encoding_time;
+
+	/**
 	 * @type(string)
 	 * @title("Live Node")
 	 * @description("Elemental Live node this channell is assigned to")
@@ -221,10 +229,13 @@ class channel extends \APS\ResourceBase {
         $this->state = $event->status;
     }
 
-	public function retrieve(){
-    	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
-		\APS\LoggerRegistry::get()->info("Entrando na função retrieve de canal");
-
+	/**
+	 * Update traffic usage
+	 * @verb(GET)
+	 * @path("/updateResourceUsage")
+	 */
+	public function updateResourceUsage () {
+		$usage = array();
 	}
 
     public function upgrade(){
@@ -244,6 +255,23 @@ class channel extends \APS\ResourceBase {
         LiveEvent::delete($this->live_event_id);
         \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para evento %s do cliente %s",
                 $this->live_event_id, $clientid));
+	}
+
+	/**
+	 * Update live encoding time / DVR time
+	 * @verb(GET)
+	 * @path("/updateLiveUsage")
+	 */
+	public function updateLiveUsage () {
+		$usage = array();
+		$current_time = 0; // Obter running time do live event
+		$elapsed_time = $current_time - $this->saved_encoding_time;
+		$usage["$VDN_Live_Encoding_Minutes"] = $elapsed_time;
+		if( $this->DVR ) {
+			$usage["$VDN_Live_DVR_Minutes"] = $elapsed_time;
+		}
+		$this->saved_encoding_time = $elapsed_time;
+		return $usage;
 	}
 }
 ?>
