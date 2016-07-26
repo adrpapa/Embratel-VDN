@@ -229,15 +229,6 @@ class channel extends \APS\ResourceBase {
         $this->state = $event->status;
     }
 
-	/**
-	 * Update traffic usage
-	 * @verb(GET)
-	 * @path("/updateResourceUsage")
-	 */
-	public function updateResourceUsage () {
-		$usage = array();
-	}
-
     public function upgrade(){
     	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
 		\APS\LoggerRegistry::get()->info("Entrando na função upgrade de canal");
