@@ -285,27 +285,32 @@ class context extends \APS\ResourceBase
 		}    	
 	
 		## update  Job encoding minutes
-		$VDN_VOD_Encoding_Minutes = $this->VDN_VOD_Encoding_Minutes;
-		foreach ( $this->jobs as $job ) {
-			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
-					$apsc->getIo()->resourcePath($job->aps->id, 'updateResourceUsage'));
-			$usage = json_decode($usage);
-			$VDN_VOD_Encoding_Minutes += $usage->VDN_VOD_Encoding_Minutes;
-		}
+// 		foreach ( $this->jobs as $job ) {
+// 			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
+// 					$apsc->getIo()->resourcePath($job->aps->id, 'updateResourceUsage'));
+// 			$usage = json_decode($usage);
+// 			$VDN_VOD_Encoding_Minutes += $usage->VDN_VOD_Encoding_Minutes;
+// 		}
 
+		$VDN_VOD_Encoding_Minutes = $this->VDN_VOD_Encoding_Minutes;
 		$VDN_VOD_Storage_MbH = 0;
-		$VDN_Live_Encoding_Minutes = $this->VDN_Live_Encoding_Minutes;
 		foreach ( $this->vods as $vod ) {
 			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
-					$apsc->getIo()->resourcePath($vod->aps->id, 'updateResourceUsage'));
+					$apsc->getIo()->resourcePath($vod->aps->id, 'updateVodUsage'));
 			$usage = json_decode($usage);
 			$VDN_VOD_Storage_MbH += $usage->VDN_VOD_Storage_MbH;
 			$VDN_Live_Encoding_Minutes += $usage->VDN_Live_Encoding_Minutes;
 		}
 
-
-$VDN_Live_DVR_Minutes = $this->VDN_Live_DVR_Minutes;
-    	
+		$VDN_Live_Encoding_Minutes = $this->VDN_Live_Encoding_Minutes;
+		$VDN_Live_DVR_Minutes = $this->VDN_Live_DVR_Minutes;
+		foreach ( $this->channels as $channel ) {
+			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
+					$apsc->getIo()->resourcePath($channel->aps->id, 'updateLiveUsage'));
+			$usage = json_decode($usage);
+			$VDN_Live_Encoding_Minutes += $usage->VDN_Live_Encoding_Minutes;
+			$VDN_Live_DVR_Minutes += $usage->VDN_Live_DVR_Minutes;
+		}
     	## Update the APS resource counters
     	$this->VDN_HTTP_Traffic->usage = round($httpTraffic, 0);
 		$this->VDN_HTTPS_Traffic->usage = round($http_s_Traffic, 0);
