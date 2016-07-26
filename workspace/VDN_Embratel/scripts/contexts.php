@@ -145,18 +145,14 @@ class context extends \APS\ResourceBase
 	*/
 	public $vodDeltaPaths;
 
-
-	/**
-	* @type("DeltaPaths")
-	* @title("Delta objects used for Live events")
-	* @readonly
-	*/
-	public $liveDeltaPaths;
-
 	/**********************************************************
-	 *********************** COUNTERS *************************
+	 ******************* BILLING COUNTERS *********************
 	 **********************************************************/
 	
+	/**********************************************************
+	 ************************** CDN ***************************
+	 **********************************************************/
+
 	/**
 	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
 	 * @description("Total Traffic HTTP in Gigabytes")
@@ -169,46 +165,93 @@ class context extends \APS\ResourceBase
 	 * @description("Total Traffic HTTPS in Gigabytes")
 	 * @unit("kb")
 	 */
-	public $VDN_HTTPS_Traffic;	
+	public $VDN_HTTPS_Traffic;
+	
+	/**********************************************************
+	 ************************** VOD ***************************
+	 **********************************************************/
+
+	/**
+	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+	 * @description("VOD Encoding time in minutes")
+	 * @unit("unit")
+	 */
+	public $VDN_VOD_Encoding_Minutes;
+	
+	/**
+	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+	 * @description("Encoding time in minutes")
+	 * @unit("mb-h")
+	 */
+	public $VDN_VOD_Storage_MbH;
+	
+	/**********************************************************
+	 ************************** DVR ***************************
+	 **********************************************************/
+
+	/**
+	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+	 * @description("Live encoding time in minutes")
+	 * @unit("unit")
+	 */
+	public $VDN_Live_Encoding_Minutes;
+	
+	/**
+	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+	 * @description("Live encoding time in minutes")
+	 * @unit("unit")
+	 */
+	public $VDN_Live_DVR_Minutes;
+	
+	
 
 	###############################################################################
 	# F U N C O E S   P A R A   I N S T A N C I A M E N T O   D E   C O N T E X T O
 	###############################################################################
     
-    public function provision() {
-    	\APS\LoggerRegistry::get()->setLogFile("logs/context.log");
-    	$clientid = sprintf("Client_%06d",$this->account->id);
-    	\APS\LoggerRegistry::get()->info("Iniciando provisionamento de context para o cliente ".$clientid);
+	public function provision() {
+		\APS\LoggerRegistry::get()->setLogFile("logs/context.log");
+		$clientid = sprintf("Client_%06d",$this->account->id);
+		\APS\LoggerRegistry::get()->info("Iniciando provisionamento de context para o cliente ".$clientid);
 
-        // Create output template for all options: Live/Vod Premium/Std http/https
-        $this->vodDeltaPaths = new DeltaPaths();
-        $this->liveDeltaPaths = new DeltaPaths();
-    	$vodLiveArr = array('vod' => $this->vodDeltaPaths); #, 'live' => $this->liveDeltaPaths);
-    	foreach( $vodLiveArr as $type => $vodLive ) {
-            $stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
-            foreach( $stdPremArr as $level => $stdPrem ) {
-                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
-                foreach( $httpHttpsArr as $proto => $path ) {
-                    \APS\LoggerRegistry::get()->info("Criandos Input Filter e Output Template $clientid $proto $type $level");
-                    $path->outputTemplate =
-                        DeltaOutputTemplate::getClientOutputTemplate($clientid, $type, $proto, $level )->id;
-                    $path->inputFilter =
-                        DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level )->id;
-                }
-            }
-    	}
-        \APS\LoggerRegistry::get()->info("Encerrando provisionamento de context para o cliente ".$clientid);
+		// Initialize counters
+		$this->VDN_VOD_Encoding_Minutes = 0;
+		$this->VDN_VOD_Storage_MbH = 0;
+		$this->VDN_Live_Encoding_Minutes = 0;
+		$this->VDN_Live_DVR_Minutes = 0;
+		
+		// Create output template for all options: Live/Vod Premium/Std http/https
+		$this->vodDeltaPaths = new DeltaPaths();
+		$vodLiveArr = array('vod' => $this->vodDeltaPaths);
+		foreach( $vodLiveArr as $type => $vodLive ) {
+			$stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
+			foreach( $stdPremArr as $level => $stdPrem ) {
+				$httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
+				foreach( $httpHttpsArr as $proto => $path ) {
+					\APS\LoggerRegistry::get()->info("Criandos Input Filter e Output Template $clientid $proto $type $level");
+					/*
+						Delta Input filters e output templates estão sendo criados aqui, mas se desejado
+						podemos usar essa estrutura para verificar se já existe, e criá-los à medida que
+						forem necessários
+					*/
+					$path->outputTemplate =
+						DeltaOutputTemplate::getClientOutputTemplate($clientid, $type, $proto, $level )->id;
+					$path->inputFilter =
+						DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level )->id;
+				}
+			}
+		}
+		\APS\LoggerRegistry::get()->info("Encerrando provisionamento de context para o cliente ".$clientid);
+	}
 
-    }
-    
-    public function unprovision(){
-    	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
-    	$clientid = sprintf("Client_%06d",$this->account->id);
-    	\APS\LoggerRegistry::get()->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
+	public function unprovision(){
+		\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
+		$clientid = sprintf("Client_%06d",$this->account->id);
+		\APS\LoggerRegistry::get()->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
 
-        // Delete output template for all options: Live/Vod Premium/Std http/https
-    	$vodLiveArr = array('vod' => $this->vodDeltaPaths, 'live' => $this->liveDeltaPaths);
-    	foreach( $vodLiveArr as $type => &$vodLive ) {
+		// Delete output template for all options: Live/Vod Premium/Std http/https
+		$vodLiveArr = array('vod' => $this->vodDeltaPaths);
+		foreach( $vodLiveArr as $type => &$vodLive ) {
 			$stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
 			foreach( $stdPremArr as $level => &$stdPrem ) {
 				$httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
@@ -219,33 +262,61 @@ class context extends \APS\ResourceBase
 				}
 			}
 		}
-    }
+	}
     
-    public function retrieve() {
+	public function retrieve() {
 		\APS\LoggerRegistry::get()->setLogFile("logs/context.log");
-    	\APS\LoggerRegistry::get()->info(sprintf("Fetching resource usage. Current values: http=%f https=%f",
+		\APS\LoggerRegistry::get()->info(sprintf("Fetching resource usage. Current values: http=%f https=%f",
 				$this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
-    	## Connect to the APS controller
-    	$apsc = \APS\Request::getController();
-    	
-    	## Reset the local variables
-    	$httpTraffic = $this->VDN_HTTP_Traffic->usage;
-    	$http_s_Traffic = $this->VDN_HTTPS_Traffic->usage;
+		## Connect to the APS controller
+		$apsc = \APS\Request::getController();
+		
+		## Reset the local variables
+		$httpTraffic = $this->VDN_HTTP_Traffic->usage;
+		$http_s_Traffic = $this->VDN_HTTPS_Traffic->usage;
 
-    	## Collect resource usage from all CDNs
-    	foreach ( $this->cdns as $cdn ) {
-    		$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
-    				$apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
-    		$usage = json_decode($usage);
-    		$httpTraffic +=  $usage->httpTrafficActualUsage * 1000000; // convert GB to MB
-    		$http_s_Traffic += $usage->httpsTrafficActualUsage * 1000000; // convert GB to MB
-    	}    	
+		## Collect resource usage from all CDNs
+		foreach ( $this->cdns as $cdn ) {
+			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
+					$apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
+			$usage = json_decode($usage);
+			$httpTraffic +=  $usage->httpTrafficActualUsage * 1000000; // convert GB to MB
+			$http_s_Traffic += $usage->httpsTrafficActualUsage * 1000000; // convert GB to MB
+		}    	
+	
+		## update  Job encoding minutes
+		$VDN_VOD_Encoding_Minutes = $this->VDN_VOD_Encoding_Minutes;
+		foreach ( $this->jobs as $job ) {
+			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
+					$apsc->getIo()->resourcePath($job->aps->id, 'updateResourceUsage'));
+			$usage = json_decode($usage);
+			$VDN_VOD_Encoding_Minutes += $usage->VDN_VOD_Encoding_Minutes;
+		}
+
+		$VDN_VOD_Storage_MbH = 0;
+		$VDN_Live_Encoding_Minutes = $this->VDN_Live_Encoding_Minutes;
+		foreach ( $this->vods as $vod ) {
+			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
+					$apsc->getIo()->resourcePath($vod->aps->id, 'updateResourceUsage'));
+			$usage = json_decode($usage);
+			$VDN_VOD_Storage_MbH += $usage->VDN_VOD_Storage_MbH;
+			$VDN_Live_Encoding_Minutes += $usage->VDN_Live_Encoding_Minutes;
+		}
+
+
+$VDN_Live_DVR_Minutes = $this->VDN_Live_DVR_Minutes;
     	
     	## Update the APS resource counters
     	$this->VDN_HTTP_Traffic->usage = round($httpTraffic, 0);
 		$this->VDN_HTTPS_Traffic->usage = round($http_s_Traffic, 0);
     	\APS\LoggerRegistry::get()->info(sprintf("Resource usage after update: http=%f https=%f",
 				$this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
+
+		$this->VDN_VOD_Encoding_Minutes = $VDN_VOD_Encoding_Minutes;
+		$this->VDN_VOD_Storage_MbH = $VDN_VOD_Storage_MbH;
+		$this->VDN_Live_Encoding_Minutes = $VDN_Live_Encoding_Minutes;
+		$this->VDN_Live_DVR_Minutes = $VDN_Live_DVR_Minutes;
+
     }
 }
 

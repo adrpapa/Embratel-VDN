@@ -15,7 +15,7 @@ define(["dojox/mvc/at"],
 					model[parm][ix]="";
 					var options=[];
 					// traverse json object creating select widget with name/value
-					// this property is another JS object with a property "name" for human readable lables
+					// this property is another JS object with a property "name" for human readable labels
 					for( var chave in valueArray )
 					{
 						var obj = valueArray[chave];

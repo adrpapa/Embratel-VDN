@@ -17,7 +17,7 @@
 				aps: { type: "http://embratel.com.br/app/VDN_Embratel/job/1.0" },
 				name: "",
 				description: "",
-				input_URI: "",
+				input_URI: [""],
 				screen_format: "16:9",
 				https: false,
 				premium: false,
@@ -41,7 +41,7 @@
 					["aps/FieldSet", { id: "new_general", title:  "General Configuration"  }, [
 						["aps/TextBox", { id: "new_jobName", label: _("Content Name"), value: at(model, "name"), required: true }],
 						["aps/TextBox", { id: "new_description", label: _("Description"), value: at(model, "description") } ],
-						["aps/TextBox", { id: "new_input_uri", label: _("Input URI"), value: at(model, "input_URI"), required: true } ]
+						["aps/TextBox", { id: "new_input_uri", label: _("Input URI"), value: at(model["input_URI"], 0), required: true } ]
 					]],
 					["aps/FieldSet", { id: "new_options", title:  "Transcoder Options"  }, [
 						["aps/Select", { id: "new_fmt", label: _( "Screen Format"),
