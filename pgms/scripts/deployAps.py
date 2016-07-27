@@ -68,7 +68,7 @@ def createResourceType():
     createBtn.click()
 
 def clickOnGlobalList(seq):
-    gl=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "global_list")))
+    gl=WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "global_list")))
     while len(gl.find_elements_by_tag_name("tr")) < seq:
         trs=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "tr")))
     gl.find_elements_by_tag_name("tr")[seq].find_element_by_tag_name("span").click()
@@ -84,6 +84,12 @@ def createAppService(service, autoprovision=False):
     createResourceType()
     clickOnGlobalList(1)
     selectResourceService(service, autoprovision)
+    submitForm()
+
+def createResourceCounter(counter, type):
+    createResourceType()
+    clickOnGlobalList(type)
+    selectResourceService(counter, False)
 
 def createAppReference(service):
     if getTitle() != 'Add New Resource Type':
@@ -106,7 +112,6 @@ def selectResourceService(service, autoprovision):
         raise Exception("Service "+service+" Not found in list")
     if autoprovision:
         getById("check_rt_autoprovision").click()
-    submitForm()
     submitForm()
     return
 
@@ -146,31 +151,33 @@ def activateAndSubscribe(name):
     submitForm()
     driver.find_element_by_class_name("action").click()
 
+driver=webdriver.Chrome('/chromedriver/chromedriver')
 #def deleteAllResources():
-
 if True:
-    driver=webdriver.Chrome('/chromedriver/chromedriver')
 
     try:
-        try:
-            driver.get("http://host1.apo.apsdemo.org:8080/")
-            # driver.get("http://cdn.flts.apsdemo.org:8080/")
-            instance="cdn"
-        except:
-            driver.get("http://host1.apo.apsdemo.org:8080/")
-            instance="apo"
+        driver.get("http://cdn.flts.apsdemo.org:8080/")
+        instance="cdn"
         assert 'Parallels® Automation' in driver.title
         login('admin','123@mudar')
 
-        services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 
-				  'VDN Content', 'VDN Job', 'Content Delivery Network']
+        services=['VDN Embratel globals', 'VDN Embratel Management',   'VDN Live Channels', 
+                  'VDN Content',          'VDN Job',                   'Content Delivery Network',
+                  'VDN_HTTP_Traffic',     'VDN_HTTPS_Traffic',         'VDN_VOD_Encoding_Minutes', 
+                  'VDN_VOD_Storage_MbH',  'VDN_Live_Encoding_Minutes', 'VDN_Live_DVR_Minutes']
 
         createAppReference(services[0])
         createAppService(services[1], True)
         createAppService(services[2])
-        # createAppService(services[3])
-        # createAppService(services[4])
+        createAppService(services[3])
+        createAppService(services[4])
         createAppService(services[5])
+        createResourceCounter(services[6],3)
+        createResourceCounter(services[7],3)
+        createResourceCounter(services[8],4)
+        createResourceCounter(services[9],5)
+        createResourceCounter(services[10],4)
+        createResourceCounter(services[11],4)
 
         createServiceTemplate(services[0], True, services)
         activateAndSubscribe(services[0])

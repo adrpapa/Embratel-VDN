@@ -224,7 +224,7 @@ class context extends \APS\ResourceBase
 		$this->vodDeltaPaths = new DeltaPaths();
 		$vodLiveArr = array('vod' => $this->vodDeltaPaths);
 		foreach( $vodLiveArr as $type => $vodLive ) {
-			$stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
+			$stdPremArr = array( 'std' => $vodLive->standard, 'prm' => $vodLive->premium );
 			foreach( $stdPremArr as $level => $stdPrem ) {
 				$httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
 				foreach( $httpHttpsArr as $proto => $path ) {
@@ -235,7 +235,7 @@ class context extends \APS\ResourceBase
 						forem necessários
 					*/
 					$path->outputTemplate =
-						DeltaOutputTemplate::getClientOutputTemplate($clientid, $type, $proto, $level )->id;
+// 						DeltaOutputTemplate::getClientOutputTemplate($clientid, $type, $proto, $level )->id;
 					$path->inputFilter =
 						DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level )->id;
 				}
@@ -252,7 +252,7 @@ class context extends \APS\ResourceBase
 		// Delete output template for all options: Live/Vod Premium/Std http/https
 		$vodLiveArr = array('vod' => $this->vodDeltaPaths);
 		foreach( $vodLiveArr as $type => &$vodLive ) {
-			$stdPremArr = array( 'std' => $vodLive->standard, 'premium' => $vodLive->premium );
+			$stdPremArr = array( 'std' => $vodLive->standard, 'prm' => $vodLive->premium );
 			foreach( $stdPremArr as $level => &$stdPrem ) {
 				$httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
 				foreach( $httpHttpsArr as $proto => &$path ) {
@@ -280,8 +280,8 @@ class context extends \APS\ResourceBase
 			$usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
 					$apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
 			$usage = json_decode($usage);
-			$httpTraffic +=  $usage->httpTrafficActualUsage * 1000000; // convert GB to MB
-			$http_s_Traffic += $usage->httpsTrafficActualUsage * 1000000; // convert GB to MB
+			$httpTraffic +=  $usage->httpTrafficActualUsage * 1024 * 1024; // convert GB to MB
+			$http_s_Traffic += $usage->httpsTrafficActualUsage * 1024 * 1024; // convert GB to MB
 		}    	
 	
 		## update  Job encoding minutes

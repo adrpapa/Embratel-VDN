@@ -27,39 +27,42 @@
         // Parametros: 
         //  $clientID: ID do cliente - será usado no nome do template e nas URLs de output
         //  $type: live | vod
-        //  $level: std | premium
+        //  $level: std | prm
 
         public static function newOutputTemplate( $clientID, $type, $proto, $level ) {
+/*
             if( $type == 'live' ){
-                if( $level == 'premium') {
+                if( $level == 'prm') {
                     $templateId = ConfigConsts::DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE;
                 } else {
                     $templateId = ConfigConsts::DELTA_STD_EVENT_OUTPUT_TEMPLATE;
                 }
             } else {
-                if( $level == 'premium' ){
+                if( $level == 'prm' ){
                     $templateId = ConfigConsts::DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE;
                 } else {
                     $templateId = ConfigConsts::DELTA_STD_VOD_OUTPUT_TEMPLATE;
                 }
-            }
-            $xml=DeltaOutputTemplate::getElementalRest()->getTemplate($templateId, "DeltaOutputTemplate");
+            }*/
+
+            $tpl = ConfigConsts::TEMPLATE_PATH."/DeltaOutput_".$level."_".$proto.".xml";
+            if( ! file_exists($tpl) )
+                throw new Exception("File $tpl does not exist \n");
+            $xml = simplexml_load_file($tpl);
+            //$xml=DeltaOutputTemplate::getElementalRest()->getTemplate($templateId, "DeltaOutputTemplate");
             $axClientID = cleanClientID( $clientID );
             $xml->name = $axClientID.'_'.$type.'_'.$proto.'_'.$level;
 
+			print($xml->asXml()); //$xml->asXml());
             //acerta custom url para cada output filter
             foreach( $xml->filter as $filter ){
                 if( (boolean)$filter->endpoint ) {
-                    $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/'.$level.'/$fn$.$ex$';
+                    $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/'.$level.'/$fn';
                 }
             } 
-//          print($xml->/*asXml*/());
             return new self(DeltaOutputTemplate::getElementalRest()->postRecord(null, null, $xml));
         }
 
-        
-        // 567161777222444 Raimara
-        
         public function setPropertiesFromXML( $xml ) {
             $this->name = (string)$xml->name;
             $this->xml = $xml;
@@ -75,11 +78,11 @@
         }
 
         /*
-        ** Obtem / cria output template para o cliente std/premium ($level)
+        ** Obtem / cria output template para o cliente std/prm ($level)
         ** Parametros:
         **      $clientID
         **      $type: event | vod
-        **      $level: std | premium
+        **      $level: std | prm
         */
         public static function getClientOutputTemplate( $clientID, $type, $proto, $level, $create=true ) {
             $outputTpl = null;
@@ -124,4 +127,18 @@
                         $apiEndpoint='output_templates', $port=ConfigConsts::DELTA_PORT);
         }
     }
+// $clientid="Client101010";
+// $type="vod";
+// $proto="http";
+// $level="std";
+// DeltaOutputTemplate::getCli
+
+
+/*
+curl -H"Accept: text/xml" http://201.31.12.36:8080/api/output_templates/1?clean=true > /var/www/html/ebtvdn/templates/DeltaOutput_std_http.xml
+curl -H"Accept: text/xml" http://201.31.12.36:8080/api/output_templates/2?clean=true > /var/www/html/ebtvdn/templates/DeltaOutput_prm_http.xml
+curl -H"Accept: text/xml" http://201.31.12.36:8080/api/output_templates/3?clean=true > /var/www/html/ebtvdn/templates/DeltaOutput_std_https.xml
+curl -H"Accept: text/xml" http://201.31.12.36:8080/api/output_templates/4?clean=true > /var/www/html/ebtvdn/templates/DeltaOutput_prm_https.xml
+*/
+
 ?>

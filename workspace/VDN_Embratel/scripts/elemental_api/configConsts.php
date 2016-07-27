@@ -11,18 +11,19 @@
         const BILLING_LOG_PATH = 'logs';
 
         const API_VERSION = 'v1';
-        #const LIVE_CONDUCTOR_HOST = '201.31.12.4';
-        const LIVE_CONDUCTOR_HOST = '201.31.12.26';
-        const VOD_CONDUCTOR_HOST  = '201.31.12.7';
-        
+
+        const LIVE_CONDUCTOR_HOST = '201.31.12.40';
         const LIVE_NODE_URL = 'rtmp://localhost:1935/';
 
+        const VOD_CONDUCTOR_HOST  = '201.31.12.26';
+        const VOD_WF_OUTRGOING_URI='/mnt/delta/drive/watchfolders/';
+        
         const DELTA_HOST = '201.31.12.36';
         const DELTA_PORT = '8080';
-        
+/*        
         const DELTA_UDP_INPUT_FILTER_TEMPLATE = 274;
         const DELTA_WF_INPUT_FILTER_TEMPLATE = 76;
-
+*/
         const DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive/live';
         const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/vod';
         const DELTA_WF_INCOMMING_URI = '/data/server/drive/watchfolders';

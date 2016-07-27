@@ -156,18 +156,19 @@ class job extends \APS\ResourceBase {
 		\APS\LoggerRegistry::get()->info("Client: ".$clientid);
 		\APS\LoggerRegistry::get()->info("Definindo autenticacao...");
 		
- 		$presets = new Presets();
- 		for($i=0;$i<count($this->resolutions);$i++ ) {
- 			$presets->addPreset(new Preset($this->resolutions[$i],
- 					$this->video_bitrates[$i],$this->framerates[$i],
- 					$this->audio_bitrates[$i]),$i);
- 		}
-
-		$level = ($this->premium ? 'std' : 'prm');
+		$presets = new Presets();
+		for($i=0;$i<count($this->resolutions);$i++ ) {
+			$presets->addPreset(new Preset($this->resolutions[$i],
+					$this->video_bitrates[$i],$this->framerates[$i],
+					$this->audio_bitrates[$i]),$i);
+		}
+		\APS\LoggerRegistry::get()->info(var_dump($this));
+		$level = ($this->premium ? 'prm' : 'std');
+		$protocol = ($this->https ? 'https' : 'http');
 // 		try {
 // 			ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
-// 			\APS\LoggerRegistry::get()->info("--> Provisionando Job...");
- 			$job = JobVOD::newJobVOD( $this->name, $this->input_URI[0], $clientid, $level, $presets );
+			\APS\LoggerRegistry::get()->info("--> Provisionando Job level=".$level." protocol=".$protocol);
+			$job = JobVOD::newJobVOD( $this->name, $this->input_URI[0], $clientid, $level, $presets, $protocol );
 // 		} catch (Exception $fault) {
 // 			\APS\LoggerRegistry::get()->error("Error while creating content job, :\n\t" . $fault->getMessage());
 // 			throw new Exception($fault->getMessage());
@@ -194,7 +195,7 @@ class job extends \APS\ResourceBase {
  		\APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
 		if( $jobstatus->status == 'complete' || $jobstatus->status == 'error' || $jobstatus->status == 'cancelled') {
 			$this->state = $jobstatus->status.'';
-			$this->info = $jobstatus;
+// 			$this->info = $jobstatus;
 			return;
 		}
 		$this->retry +=1; // Increment the retry counter
@@ -247,4 +248,7 @@ class job extends \APS\ResourceBase {
 		return $usage;
 	}
 }
+/*
+	http://www.html5videoplayer.net/videos/toystory.mp4
+*/
 ?>

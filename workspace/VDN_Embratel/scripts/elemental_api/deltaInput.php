@@ -13,26 +13,6 @@
         }
 
         /*
-        ** cria objeto DeltaInputFilter para Live, e monta XML para inclusão do mesmo
-        **
-        */
-        public static function newUdpInputFilter( $clientID, $label, $level ) {
-            $xml=DeltaInputFilter::getElementalRest()->getTemplate(
-                    ConfigConsts::DELTA_UDP_INPUT_FILTER_TEMPLATE, "DeltaUDPInputFilter");
-            $axClientID = cleanClientID($clientID);
-            $axLabel = cleanName($label);
-            $xml->label = $axLabel;
-            $xml->filter_settings->storage_location = 
-                ConfigConsts::DELTA_LIVE_STORAGE_LOCATION.'/'.$axClientID.'/'.$axLabel.'/';
-            // busca o output template para eventos live do cliente - cria se não existir
-            $outputTemplate = DeltaOutputTemplate::getClientOutputTemplate( $axClientID, 'live', $level, true );
-            $xml->filter_settings->template_id = $outputTemplate->id;
-            $xml->filter_settings->udp_input->uri = 'udp://127.0.0.1:'
-                    .DeltaInputFilter::getNextAvilableUdpPort();
-            return new self(DeltaInputFilter::getElementalRest()->postRecord(null, null, $xml));
-        }
-
-        /*
         ** cria objeto DeltaInputFilter para WebDav
         **
         */
@@ -73,12 +53,16 @@
         **
         */
         public static function newWfInputFilter( $clientID, $type, $proto, $level ) {
-            $xml=DeltaInputFilter::getElementalRest()->getTemplate(
-                    ConfigConsts::DELTA_WF_INPUT_FILTER_TEMPLATE, "DeltaWFInputFilter");
+            $tpl = ConfigConsts::TEMPLATE_PATH."/DeltaWFInputFilter.xml";
+            if( ! file_exists($tpl) )
+                throw new Exception("File $tpl does not exist \n");
+            $xml = simplexml_load_file($tpl);
+
             $axClientID = cleanClientID($clientID);
             $xml->label = $axClientID.'_'.$type.'_'.$proto.'_'.$level;
             $xml->filter_settings->incoming->uri = 
                 ConfigConsts::DELTA_WF_INCOMMING_URI.'/'.$axClientID.'/'.$type.'/'.$proto.'/'.$level.'/';
+            $xml->filter_settings->search_subfolders = "true";
             // busca o output template para eventos VOD do cliente - cria se não existir
             $outputTemplate = DeltaOutputTemplate::getClientOutputTemplate( $axClientID, $type, $proto, $level, true );
             $xml->filter_settings->template_id = $outputTemplate->id;
@@ -86,19 +70,40 @@
             return new self(DeltaInputFilter::getElementalRest()->postRecord(null, null, $xml));
         }
         
+//         /*
+//         ** cria objeto DeltaInputFilter para Live, e monta XML para inclusão do mesmo
+//         **
+//         */
+//         public static function newUdpInputFilter( $clientID, $label, $level ) {
+//             $xml=DeltaInputFilter::getElementalRest()->getTemplate(
+//                     ConfigConsts::DELTA_UDP_INPUT_FILTER_TEMPLATE, "DeltaUDPInputFilter");
+//             $axClientID = cleanClientID($clientID);
+//             $axLabel = cleanName($label);
+//             $xml->label = $axLabel;
+//             $xml->filter_settings->storage_location = 
+//                 ConfigConsts::DELTA_LIVE_STORAGE_LOCATION.'/'.$axClientID.'/'.$axLabel.'/';
+//             // busca o output template para eventos live do cliente - cria se não existir
+//             $outputTemplate = DeltaOutputTemplate::getClientOutputTemplate( $axClientID, 'live', $level, true );
+//             $xml->filter_settings->template_id = $outputTemplate->id;
+//             $xml->filter_settings->udp_input->uri = 'udp://127.0.0.1:'
+//                     .DeltaInputFilter::getNextAvilableUdpPort();
+//             return new self(DeltaInputFilter::getElementalRest()->postRecord(null, null, $xml));
+//         }
+
         /*
-        ** Obtem / cria input filter para o cliente std/premium ($level)
+        ** Obtem / cria input filter para o cliente std/prm ($level)
         ** Parametros:
         **      $clientID
-        **      $level: std | premium
+        **      $level: std | prm
         */
         public static function getClientInputFilter( $clientID, $type, $proto, $level, $create=true ) {
             $axClientID = cleanClientID( $clientID );
             $label =  $axClientID.'_'.$type.'_'.$proto.'_'.$level;
             foreach( DeltaInputFilter::getInputFilterList() as $xmlInpFilter ){
-                if( $label === $xmlInpFilter->label ) {
+                if( $label == $xmlInpFilter->label ) {
                     return $xmlInpFilter;
                 }
+                echo "$label # $xmlInpFilter->label\n";
             }
             if( ! $create ) {
                 return null;
@@ -159,6 +164,6 @@
         }
     }
 //    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
-//    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "premium", $create=true );
+//    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "prm", $create=true );
 //		DeltaInputFilter::newWebDavInputFilter( "Cliente_teste_Api", "channel01" )
 ?>
