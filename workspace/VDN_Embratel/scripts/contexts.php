@@ -155,14 +155,14 @@ class context extends \APS\ResourceBase
 
 	/**
 	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
-	 * @description("Total Traffic HTTP in Gigabytes")
+	 * @description("VDN Total Traffic HTTP")
 	 * @unit("kb")
 	 */
 	public $VDN_HTTP_Traffic;
 	
 	/**
 	 * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
-	 * @description("Total Traffic HTTPS in Gigabytes")
+	 * @description("VDN Total Traffic HTTPS")
 	 * @unit("kb")
 	 */
 	public $VDN_HTTPS_Traffic;
