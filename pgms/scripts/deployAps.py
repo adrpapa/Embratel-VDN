@@ -130,6 +130,9 @@ def createServiceTemplate(name, autoprovisioning, services):
     submitForm()
 
 def selectServiceTemplateResource(services):
+    # select 100 on page
+    linkWrappers=driver.find_elements_by_class_name("linkWrapper")
+    linkWrappers[len(linkWrappers)-1].click()
     for row in getById("global_list").find_elements_by_tag_name("tr"):
         cells = row.find_elements_by_tag_name("td")
         if len(cells) > 1 and cells[1].text in services:
@@ -166,18 +169,18 @@ if True:
                   'VDN_HTTP_Traffic',     'VDN_HTTPS_Traffic',         'VDN_VOD_Encoding_Minutes', 
                   'VDN_VOD_Storage_MbH',  'VDN_Live_Encoding_Minutes', 'VDN_Live_DVR_Minutes']
 
-        createAppReference(services[0])
-        createAppService(services[1], True)
-        createAppService(services[2])
-        createAppService(services[3])
-        createAppService(services[4])
-        createAppService(services[5])
-        createResourceCounter(services[6],3)
-        createResourceCounter(services[7],3)
-        createResourceCounter(services[8],4)
-        createResourceCounter(services[9],5)
-        createResourceCounter(services[10],4)
-        createResourceCounter(services[11],4)
+        #createAppReference(services[0])
+        #createAppService(services[1], True)
+        #createAppService(services[2])
+        #createAppService(services[3])
+        #createAppService(services[4])
+        #createAppService(services[5])
+        #createResourceCounter(services[6],3)
+        #createResourceCounter(services[7],3)
+        #createResourceCounter(services[8],4)
+        #createResourceCounter(services[9],5)
+        #createResourceCounter(services[10],4)
+        #createResourceCounter(services[11],4)
 
         createServiceTemplate(services[0], True, services)
         activateAndSubscribe(services[0])

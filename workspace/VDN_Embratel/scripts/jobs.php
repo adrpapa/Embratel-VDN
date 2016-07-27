@@ -195,13 +195,13 @@ class job extends \APS\ResourceBase {
  		\APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
 		if( $jobstatus->status == 'complete' || $jobstatus->status == 'error' || $jobstatus->status == 'cancelled') {
 			$this->state = $jobstatus->status.'';
-// 			$this->info = $jobstatus;
+			$this->info = $jobstatus->asXml();
 			return;
 		}
 		$this->retry +=1; // Increment the retry counter
-		if ($this->retry < 6) {
+		if( $jobstatus->status == 'running' || $this->retry < ConfigConsts::VOD_STATUS_RETRY_COUNT) {
 			$this->state = $jobstatus->status.'';
-			throw new \Rest\Accepted($this, "Job status=".'$jobstatus->status' , 10); // Return "202 Accepted"
+			throw new \Rest\Accepted($this, "Job status=".'$jobstatus->status' , ConfigConsts::VOD_STATUS_UPDATE_INTERVAL); // Return "202 Accepted"
 		}
 		$this->state = "timed out";
 		\APS\LoggerRegistry::get()->info("Job $this->job_id timed out!");

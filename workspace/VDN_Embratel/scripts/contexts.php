@@ -234,10 +234,10 @@ class context extends \APS\ResourceBase
 						podemos usar essa estrutura para verificar se já existe, e criá-los à medida que
 						forem necessários
 					*/
-					$path->outputTemplate =
 // 						DeltaOutputTemplate::getClientOutputTemplate($clientid, $type, $proto, $level )->id;
-					$path->inputFilter =
-						DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level )->id;
+					$inputFilter=DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level );
+					$path->inputFilter = $inputFilter->id;
+					$path->outputTemplate = $inputFilter->template_id;
 				}
 			}
 		}
@@ -321,7 +321,7 @@ class context extends \APS\ResourceBase
 		$this->VDN_VOD_Storage_MbH = $VDN_VOD_Storage_MbH;
 		$this->VDN_Live_Encoding_Minutes = $VDN_Live_Encoding_Minutes;
 		$this->VDN_Live_DVR_Minutes = $VDN_Live_DVR_Minutes;
-
+		print_r($this);
     }
 }
 

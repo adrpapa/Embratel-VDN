@@ -103,7 +103,7 @@
                 if( $label == $xmlInpFilter->label ) {
                     return $xmlInpFilter;
                 }
-                echo "$label # $xmlInpFilter->label\n";
+//                 echo "$label # $xmlInpFilter->label\n";
             }
             if( ! $create ) {
                 return null;
@@ -119,7 +119,7 @@
             $this->href = (string)$xml['href'];
             $this->id = end(explode('/', $xml['href']));
             //$this->udpPort = end(explode(':', $this->inputURI));
-            //$this->template_id = (string)$xml->filter_settings->template_id;
+            $this->template_id = $xml->filter_settings->template_id."";
             $this->content_window_type = (string)$xml->filter_settings->content_window_type;
             $this->seconds_to_keep = (string)$xml->filter_settings->seconds_to_keep;
             $this->storage_location = (string)$xml->filter_settings->storage_location;
@@ -133,7 +133,12 @@
         }
 
         public static function delete($id) {
-            DeltaInputFilter::getElementalRest()->restDelete($id);
+            try {
+                DeltaInputFilter::getElementalRest()->restDelete($id);
+            }
+            catch(Exception $fault) {
+                print_r($fault);
+            }
         }
 
         public static function deleteClientFilters($clientID) {

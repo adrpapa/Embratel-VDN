@@ -17,6 +17,9 @@
 
         const VOD_CONDUCTOR_HOST  = '201.31.12.26';
         const VOD_WF_OUTRGOING_URI='/mnt/delta/drive/watchfolders/';
+        // jab status update interval in seconds
+        const VOD_STATUS_UPDATE_INTERVAL = 30;
+        const VOD_STATUS_RETRY_COUNT = 300;
         
         const DELTA_HOST = '201.31.12.36';
         const DELTA_PORT = '8080';
