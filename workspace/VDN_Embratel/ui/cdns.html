@@ -54,6 +54,10 @@
 						aps.apsc.gotoView("cdn-new-1");
 					});
 
+					registry.byId("cdn_refresh").on("click", function() {
+						grid.refresh();
+					});					
+					
 // 					registry.byId("job_refresh").on("click", function() {
 // 						var job_ids = null;
 // 						var dataStoreGrid = store.data;
