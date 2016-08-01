@@ -171,10 +171,6 @@ class job extends \APS\ResourceBase {
 //             ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
             \APS\LoggerRegistry::get()->info("--> Provisionando Job level=".$level." protocol=".$protocol);
             $job = JobVOD::newJobVOD( $this->name, $this->input_URI[0], $clientid, $level, $presets, $protocol );
-//             $job = new stdClass();
-//             $job->id = 163;
-//             $job->name = "Dummy";
-//             $job->status = "complete";
 //         } catch (Exception $fault) {
 //             \APS\LoggerRegistry::get()->error("Error while creating content job, :\n\t" . $fault->getMessage());
 //             throw new Exception($fault->getMessage());
@@ -182,8 +178,6 @@ class job extends \APS\ResourceBase {
 
         $this->job_id = $job->id;
         $this->job_name = $job->name;
-        $this->state = $job->status;
-        $this->state = "submitted";
         $this->state = $job->status;
         
         \APS\LoggerRegistry::get()->info("job_id:" . $this->job_id );
@@ -269,11 +263,11 @@ class job extends \APS\ResourceBase {
 
         try {
             ElementalRest::$auth = new Auth( 'elemental','elemental' );
-    //     		JobVOD::delete($this->job_id);
+    //     JobVOD::delete($this->job_id);
         } catch (Exception $fault) {
             $this->logger->info("Error while deleting content job, :\n\t" . $fault->getMessage());
             throw new Exception($fault->getMessage());
-        }    	
+        }
         
         \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para job %s do cliente %s",
                 $this->job_id, $clientid));
