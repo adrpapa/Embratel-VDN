@@ -16,9 +16,10 @@
         const LIVE_NODE_URL = 'rtmp://localhost:1935/';
 
         const VOD_CONDUCTOR_HOST  = '201.31.12.26';
-        const VOD_WF_OUTRGOING_URI='/mnt/delta/drive/watchfolders/';
+        const VOD_WF_MOUNT_POINT = '/mnt/delta';
+        const VOD_WF_OUTRGOING_URI='/mnt/delta/drive/watchfolders';
         // jab status update interval in seconds
-        const VOD_STATUS_UPDATE_INTERVAL = 30;
+        const VOD_STATUS_UPDATE_INTERVAL = 10;
         const VOD_STATUS_RETRY_COUNT = 300;
         
         const DELTA_HOST = '201.31.12.36';
@@ -30,13 +31,15 @@
         const DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive/live';
         const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/vod';
         const DELTA_WF_INCOMMING_URI = '/data/server/drive/watchfolders';
-        const DELTA_WEBDAV_STORAGE_LOCATION = '/data/server/drive/';
-        
+        const DELTA_WEBDAV_STORAGE_LOCATION = '/data/server/drive';
+        const DELTA_MOUNT_POINT = '/data/server';
+
+/*        
         const DELTA_STD_EVENT_OUTPUT_TEMPLATE = 7;
         const DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE = 8;
         const DELTA_STD_VOD_OUTPUT_TEMPLATE = 1;
         const DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 2;
-
+*/
         //********** CDN ***********
         const CDMS_ADDRESS = "192.118.77.183";
         const CDMS_PORT = "8443";

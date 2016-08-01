@@ -1,115 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
-	<script>
-		require([
-                   "aps/ResourceStore",
-                   "aps/xhr",
-                  "dojo/when",
-                 "dijit/registry",
-                   "aps/load",
-                  "./js/displayError.js",
+    <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+    <script>
+        require([
+                    "aps/ResourceStore",
+                    "aps/xhr",
+                    "dojo/when",
+                    "dijit/registry",
+                    "aps/load",
+                    "./js/displayError.js",
             "dojo/_base/array",
-                   "aps/ready!"
-		], function (Store, xhr, when, registry, load, displayError, arr) {
-			/* Create the data store */
-			var store = new Store({
-				apsType: "http://embratel.com.br/app/VDN_Embratel/vod/1.0",
-				target: "/aps/2/resources/"
-			});
+                    "aps/ready!"
+        ], function (Store, xhr, when, registry, load, displayError, arr) {
+            /* Create the data store */
+            var store = new Store({
+                apsType: "http://embratel.com.br/app/VDN_Embratel/vod/1.0",
+                target: "/aps/2/resources/"
+            });
 
-			/* Create widgets */
-			load(["aps/PageContainer", { id: "page" }, [
-				["aps/Grid", {
-					id:                "contents",
-					store:             store,
-				    selectionMode:     "multiple",
-					apsResourceViewId: "content-info",
-					columns:           [
-						{ field: "name",         name: "Name",  filter: { title: "Name" }, type: "resourceName" },
-						{ field: "id",           name: "ID",    filter: { title: "State" } },
-						{ field: "input_URI",    name: "Input URI"}
-					]
-			    }, [
+            /* Create widgets */
+            load(["aps/PageContainer", { id: "page" }, [
+                ["aps/Grid", {
+                    id:                "contents",
+                    store:             store,
+                    selectionMode:     "multiple",
+                    apsResourceViewId: "content-info",
+                    columns:           [
+                        { field: "content_name", name: "Name",  filter: { title: "Name" }, sortable: true, type: "resourceName" },
+                        { field: "content_storage_size", name: "Size" },
+                        { field: "content_time_length", name: "Duration(mmm:ss)",
+                            renderCell:
+                                function(object, data){
+                                    var totalSec = Math.round(data/1000, 10);
+                                    var minutes = "000" + Math.round( totalSec / 60 );
+                                    var seconds = "0" + totalSec % 60;
+                                    var resultado = minutes.substr(minutes.length -3);
+                                    resultado += ":" + seconds.substr(seconds.length -2);
+                                    return resultado;
+                                }
+                        }
+                    ]
+                }, [
                     ["aps/Toolbar", [
-						["aps/ToolbarButton", { id: "job_new",        iconClass: "sb-add-new",        label: "New" }],
-						// Declare a button with CSS class sb-service-start and label Start.
-						// It will be enabled only if at least one string is selected
+                        ["aps/ToolbarButton", { id: "job_new",        iconClass: "sb-add-new",        label: "New" }],
+                        // Declare a button with CSS class sb-service-start and label Start.
+                        // It will be enabled only if at least one string is selected
                         ["aps/ToolbarButton", { id: "delete",     iconClass: "sb-delete",         label: "Delete",    requireItems:   true }],
-						["aps/ToolbarButton", { id: "refresh",    iconClass: "sb-refresh",        label: "Refresh",   autoBusy:       false }]
-					]]
-				]]
-			]]).then(function(){
-					/* Once the widgets are created, create the widget processing logic */
-					var grid = registry.byId("jobl_grid"),
-						page = registry.byId("page");
-	
-					/* Create a handler for the *New* button click */
-					registry.byId("job_new").on("click", function() {
-						/* Start the process of creating a VPS by going to the first screen */
-						aps.apsc.gotoView("job-new-1");
-					});
+                        ["aps/ToolbarButton", { id: "refresh",    iconClass: "sb-refresh",        label: "Refresh",   autoBusy:       false }]
+                    ]]
+                ]]
+            ]]).then(function(){
+                    /* Once the widgets are created, create the widget processing logic */
+                    var grid = registry.byId("contents"),
+                        page = registry.byId("page");
 
-					registry.byId("refresh").on("click", function() {
-// 						var job_ids = null;
-// 						var dataStoreGrid = store.data;
-// 						dataStoreGrid.forEach(function(items){
-// 							job_ids = [items.job_id];
-// 	                    });
-// 						job_ids = JSON.stringify(job_ids);
-// 						when(xhr("/aps/2/resources/" + model.aps.id + "/updateJobStatus", {method: "POST", handleAs: "text",
-// 						query: {json: job_ids}}),
-// 							function (res) {
-// 							},
-// 							function (error) {
-//                                 aps.apsc.cancelProcessing();
-//                                 asemail.cancel();
-//                                 return;
-//                             }
-// 						);
-//					
-//						grid.refresh();
-				});
+                    /* Create a handler for the *New* button click */
+                    registry.byId("job_new").on("click", function() {
+                        /* Start the process of creating a VPS by going to the first screen */
+                        aps.apsc.gotoView("job-new-1");
+                    });
 
-				/* Create the on-click handler for the *Delete* button
-				*/
-				registry.byId("delete").on("click", function() {
+                    registry.byId("refresh").on("click", function() {
+//                     var job_ids = null;
+//                     var dataStoreGrid = store.data;
+//                     dataStoreGrid.forEach(function(items){
+//                         job_ids = [items.job_id];
+//                     });
+//                     job_ids = JSON.stringify(job_ids);
+//                     when(xhr("/aps/2/resources/" + model.aps.id + "/updateJobStatus", {method: "POST", handleAs: "text",
+//                     query: {json: job_ids}}),
+//                         function (res) {
+//                         },
+//                         function (error) {
+//                             aps.apsc.cancelProcessing();
+//                             asemail.cancel();
+//                             return;
+//                         }
+//                     );
+//                 
+//                     grid.refresh();
+                });
+
+                /* Create the on-click handler for the *Delete* button
+                */
+                registry.byId("delete").on("click", function() {
                     var self = this;
-					/* Get confirmation from the user for the delete operation */
+                    /* Get confirmation from the user for the delete operation */
                     if (!confirm("Are you sure you want delete this content?")) {
                         self.cancel();
                         return;
                     }
-					var sel = grid.get("selectionArray"),
-					counter = sel.length;
+                    var sel = grid.get("selectionArray"),
+                    counter = sel.length;
 
-					/* Clear the current messages on the screen */
-					page.get("messageList").removeAll();
+                    /* Clear the current messages on the screen */
+                    page.get("messageList").removeAll();
 
-					arr.forEach(sel, function(joblId){
-						console.log("I'm trying to delete Job with id = [" + joblId + "]");
+                    arr.forEach(sel, function(id){
+                        console.log("I'm trying to delete Content with id = [" + id + "]");
 
-						/* Remove the VPS from the APS controller DB */
-						when(store.remove(joblId),
-							 /* If success, process the next VPS until the list is empty */
-							function(){
-								console.log("Job with id = [" + joblId + "] removed");
-								sel.splice(sel.indexOf(joblId),1);
-								grid.refresh();
-								if (--counter === 0) { self.cancel(); }
-							},
-							/* If failure, call the error handler */
-							function(e){
-								displayError(e);
+                        /* Remove the VPS from the APS controller DB */
+                        when(store.remove(id),
+                                /* If success, process the next VPS until the list is empty */
+                            function(){
+                                console.log("Content with id = [" + id + "] removed");
+                                sel.splice(sel.indexOf(id),1);
+                                grid.refresh();
                                 if (--counter === 0) { self.cancel(); }
-							}
-						);
-					});
-				});
-			});
+                            },
+                            /* If failure, call the error handler */
+                            function(e){
+                                displayError(e);
+                                if (--counter === 0) { self.cancel(); }
+                            }
+                        );
+                    });
+                });
+            });
         });
-	</script>
+    </script>
 </head>
 <body>
 </body>

@@ -41,10 +41,10 @@
             //acerta custom url para cada output filter
             foreach( $xml->filter as $filter ){
                 if( (boolean)$filter->endpoint ) {
-                    $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/'.$level.'/$fn$';
+                    $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/$fn$';
                 }
             } 
-            print($xml->asXml()); //$xml->asXml());
+//             print($xml->asXml());
             return new self(DeltaOutputTemplate::getElementalRest()->postRecord(null, null, $xml));
         }
 
@@ -59,8 +59,8 @@
                 $deltaOutputFilter = new DeltaOutputFilter($xml);
                 $this->filters[$deltaOutputFilter->id]=$deltaOutputFilter;
             }
-            print($xml->asXml());
-            print_r($this);
+//             print($xml->asXml());
+//             print_r($this);
         }
 
         /*

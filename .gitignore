@@ -2,7 +2,6 @@
 *.kate-swp
 *.~lock*
 com.parallels.aps.ide.usagedata.prefs
-templates
 workspace/.metadata
 .directory
 *logs
