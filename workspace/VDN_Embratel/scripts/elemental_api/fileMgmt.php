@@ -116,7 +116,7 @@
         }        
         
         protected function getXML() {
-        	$templateFilename = ConfigConsts::TEMPLATE_PATH.'/rule-url-rwr.xml';
+        	$templateFilename = dirname(__FILE__) . '/' . ConfigConsts::TEMPLATE_PATH . '/rule-url-rwr.xml';
         	
         	if ( file_exists($templateFilename) ) {
         		$xml = simplexml_load_file($templateFilename);

@@ -86,11 +86,6 @@ class DeltaPaths {
 class context extends \APS\ResourceBase
 {
 	/**
-	 * @link("http://embratel.com.br/app/VDN_Embratel/vps/1.0[]")
-	 */
-	public $vpses;	
-	
-	/**
 	 * @link("http://embratel.com.br/app/VDN_Embratel/channel/1.0[]")
 	 */
 	public $channels;
