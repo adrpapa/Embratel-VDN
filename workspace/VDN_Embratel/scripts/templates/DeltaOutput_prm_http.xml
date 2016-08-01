@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<output_template href="/output_templates/2" product="Delta" version="1.7.1.40992">
+  <name>Sample-VOD-PRM</name>
+<filter href="/output_template/2/filters/10" product="Delta" version="1.7.1.40992">
+  <name>filter_10</name>
+  <parent_filter></parent_filter>
+  <endpoint>true</endpoint>
+  <output_url>customer1/vod/content-name</output_url>
+  <filter_type>hls_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <segment_duration>10</segment_duration>
+    <index_duration>60</index_duration>
+    <playlist_type>VOD</playlist_type>
+    <avail_trigger>all</avail_trigger>
+    <ad_markers>none</ad_markers>
+    <broadcast_time>false</broadcast_time>
+    <ignore_web_delivery_allowed>false</ignore_web_delivery_allowed>
+    <ignore_no_regional_blackout>false</ignore_no_regional_blackout>
+    <enable_blackout>false</enable_blackout>
+    <enable_network_end_blackout>false</enable_network_end_blackout>
+    <network_id/>
+    <include_program_date_time>false</include_program_date_time>
+    <program_date_time_interval>600</program_date_time_interval>
+  </filter_settings>
+</filter>
+<filter href="/output_template/2/filters/16" product="Delta" version="1.7.1.40992">
+  <name>filter_16</name>
+  <parent_filter></parent_filter>
+  <endpoint>true</endpoint>
+  <output_url>customer1/vod/content-name</output_url>
+  <filter_type>hds_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <fragment_duration>10</fragment_duration>
+    <index_duration>60</index_duration>
+    <external_bootstrap>true</external_bootstrap>
+    <avail_trigger>all</avail_trigger>
+    <ad_markers>none</ad_markers>
+    <broadcast_time>false</broadcast_time>
+    <ignore_web_delivery_allowed>false</ignore_web_delivery_allowed>
+    <ignore_no_regional_blackout>false</ignore_no_regional_blackout>
+    <absolute_timestamps>false</absolute_timestamps>
+  </filter_settings>
+</filter>
+<filter href="/output_template/2/filters/17" product="Delta" version="1.7.1.40992">
+  <name>filter_17</name>
+  <parent_filter></parent_filter>
+  <endpoint>true</endpoint>
+  <output_url>customer1/vod/content-name</output_url>
+  <filter_type>mss_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <fragment_duration>2</fragment_duration>
+    <index_duration>60</index_duration>
+    <enable_events>true</enable_events>
+  </filter_settings>
+</filter>
+<filter href="/output_template/2/filters/18" product="Delta" version="1.7.1.40992">
+  <name>filter_18</name>
+  <parent_filter></parent_filter>
+  <endpoint>true</endpoint>
+  <output_url>customer1/vod/content-name</output_url>
+  <filter_type>dash_iso_package</filter_type>
+  <use_default_stream_sets>true</use_default_stream_sets>
+  <filter_settings>
+    <fragment_duration>2</fragment_duration>
+    <index_duration>60</index_duration>
+    <hbbtv></hbbtv>
+    <min_update_period>30</min_update_period>
+    <min_buffer_time>30</min_buffer_time>
+    <suggested_presentation_delay>25</suggested_presentation_delay>
+  </filter_settings>
+</filter>
+</output_template>

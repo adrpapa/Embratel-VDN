@@ -1,0 +1,8 @@
+<SESettings>
+	<content-acquirer>cld-il-se01</content-acquirer>
+	<service_engines>
+		<SE enable="true">cld-il-se01</SE>
+		<SE enable="true">cust-cdn-se05</SE> 
+		<SE enable="true">cust-cdn-se06</SE>
+	</service_engines>
+</SESettings>

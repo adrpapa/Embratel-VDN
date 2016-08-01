@@ -32,7 +32,7 @@
 			*/
     		$job->output_group->apple_live_group_settings->destination->uri = 
 					ConfigConsts::VOD_WF_OUTRGOING_URI . '/' . $clientID .'/vod/'.$protocol."/".$level."/".$axVideoName.'/';
-			print($job->asXml);
+// 			print($job->asXml);
 			$jobVOD = new self();
 			$jobVOD->setPropertiesFromXML(JobVOD::getElementalRest()->postRecord(null, null, $job));
 			return( $jobVOD );

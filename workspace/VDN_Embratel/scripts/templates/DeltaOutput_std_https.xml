@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<output_template href="/output_templates/3" product="Delta" version="1.7.1.40992">
+  <name>Sample-LIVE-STD-CRIPT</name>
+<filter href="/output_template/3/filters/137" product="Delta" version="1.7.1.40992">
+  <name>filter_137</name>
+  <parent_filter></parent_filter>
+  <endpoint>true</endpoint>
+  <output_url>customer1/live-std-1-s/event-name</output_url>
+  <filter_type>hls_encryption</filter_type>
+  <filter_settings>
+    <encryption_type>AES-128</encryption_type>
+    <key_rotation_count>3</key_rotation_count>
+    <iv_follows_segment_number>true</iv_follows_segment_number>
+    <constant_iv/>
+    <key_format/>
+    <key_format_versions/>
+    <key_id/>
+    <keyprovider_type>self_generated</keyprovider_type>
+    <server_url/>
+    <service_id/>
+    <content_key_base64/>
+    <content_key_hex/>
+    <license_url/>
+    <ui_license_url/>
+    <custom_attributes/>
+    <repeat_ext_x_key>true</repeat_ext_x_key>
+    <keyprovider_settings>
+      <common_key>true</common_key>
+      <key_prefix>https://secure.</key_prefix>
+    </keyprovider_settings>
+  </filter_settings>
+</filter>
+</output_template>

@@ -20,31 +20,31 @@
             $axClientID = cleanClientID($clientID);
             $axName = cleanClientID($name);
             $input_filter = new SimpleXMLElement("<input_filter></input_filter>");
-			$input_filter->addAttribute('product',"Delta");
-			$input_filter->addAttribute('version', "1.6.1.34713");
-			$input_filter->addChild('filter_type','webdav_input');
+            $input_filter->addAttribute('product',"Delta");
+            $input_filter->addAttribute('version', "1.6.1.34713");
+            $input_filter->addChild('filter_type','webdav_input');
             $input_filter->addChild('label', $axClientID.'_'.$name);
             $baseloc = ConfigConsts::DELTA_WEBDAV_STORAGE_LOCATION.$axClientID;
             $settings = $input_filter->addChild("filter_settings");
             $settings->addChild("webdav_user_id", 1);
 
             if( $live ) {
-				$settings->template_id = '';
-				$settings->content_window_type = 'keep_seconds';
-				$settings->seconds_to_keep = $dvr ? 7200 : 120;
-				$settings->storage_location = "$baseloc/live/$axName/";
-				$settings->relative_uri="$axClientID/live/$axName";
-				$settings->vod_content = "false";
-			} else {
-				$settings->template_id = '';
-				$settings->content_window_type = 'keep_all';
-				$settings->storage_location = "$baseloc/vod";
-				$settings->relative_uri="$axClientID/vod/$axName";
-				$settings->vod_content = "true";
-			}
+                $settings->template_id = '';
+                $settings->content_window_type = 'keep_seconds';
+                $settings->seconds_to_keep = $dvr ? 7200 : 120;
+                $settings->storage_location = "$baseloc/live/$axName/";
+                $settings->relative_uri="$axClientID/live/$axName";
+                $settings->vod_content = "false";
+            } else {
+                $settings->template_id = '';
+                $settings->content_window_type = 'keep_all';
+                $settings->storage_location = "$baseloc/vod";
+                $settings->relative_uri="$axClientID/vod/$axName";
+                $settings->vod_content = "true";
+            }
             $deltaInputFilter = DeltaInputFilter::getElementalRest()->postRecord(null, null, $input_filter);
             if(ConfigConsts::debug)
-				echo $deltaInputFilter->asXML();
+                echo $deltaInputFilter->asXML();
             return new self($deltaInputFilter);
         }
         
@@ -66,7 +66,7 @@
             // busca o output template para eventos VOD do cliente - cria se não existir
             $outputTemplate = DeltaOutputTemplate::getClientOutputTemplate( $axClientID, $type, $proto, $level, true );
             $xml->filter_settings->template_id = $outputTemplate->id;
-            print '\n\n'.$xml->asXml().'\n\n';
+//             print '\n\n'.$xml->asXml().'\n\n';
             return new self(DeltaInputFilter::getElementalRest()->postRecord(null, null, $xml));
         }
         
@@ -103,7 +103,7 @@
                 if( $label == $xmlInpFilter->label ) {
                     return $xmlInpFilter;
                 }
-                echo "$label # $xmlInpFilter->label\n";
+//                 echo "$label # $xmlInpFilter->label\n";
             }
             if( ! $create ) {
                 return null;
@@ -113,13 +113,13 @@
         
         
         public function setPropertiesFromXML( $xml ) {
-			$this->filter_type = $xml->filter_type."";
+            $this->filter_type = $xml->filter_type."";
             $this->label = (string)$xml->label."";
             //$this->inputURI = (string)$xml->filter_settings->udp_input->uri;
             $this->href = (string)$xml['href'];
             $this->id = end(explode('/', $xml['href']));
             //$this->udpPort = end(explode(':', $this->inputURI));
-            //$this->template_id = (string)$xml->filter_settings->template_id;
+            $this->template_id = $xml->filter_settings->template_id."";
             $this->content_window_type = (string)$xml->filter_settings->content_window_type;
             $this->seconds_to_keep = (string)$xml->filter_settings->seconds_to_keep;
             $this->storage_location = (string)$xml->filter_settings->storage_location;
@@ -129,11 +129,16 @@
                 $storageTokens = explode('/', trim($this->storage_location,'/'));
             }
             $this->clientID = $storageTokens[count($this->clientID=$storageTokens)-2];
-            print_r($this);
+//             print_r($this);
         }
 
         public static function delete($id) {
-            DeltaInputFilter::getElementalRest()->restDelete($id);
+            try {
+                DeltaInputFilter::getElementalRest()->restDelete($id);
+            }
+            catch(Exception $fault) {
+                print_r($fault);
+            }
         }
 
         public static function deleteClientFilters($clientID) {
@@ -165,5 +170,5 @@
     }
 //    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "std", $create=true );
 //    DeltaInputFilter::getVodClientInputFilter( "Cliente_teste_Api", "prm", $create=true );
-//		DeltaInputFilter::newWebDavInputFilter( "Cliente_teste_Api", "channel01" )
+//    DeltaInputFilter::newWebDavInputFilter( "Cliente_teste_Api", "channel01" )
 ?>

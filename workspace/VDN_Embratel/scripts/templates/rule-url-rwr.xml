@@ -1,0 +1,13 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>NET</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "elemental">
+<UrlRegex>.*(\.m3u8)|(\.ts)|(\.vtt)|(\.f4m)|(\.ism)|(\.mpd)|(\.mp4)</UrlRegex>
+</PatternListGrp>
+</Rule_Patterns>
+<Rule_Actions>
+<Rule_UrlRewrite matchGroup = "elemental" protocol = "http" regsub = "http://(.*.testerule.csi.cds.cisco.com)/(.*)" rewrite-url = "http://$1/v1/AUTH_906b88ad732c4d39907987f1ad054814/elemental/$2" />
+</Rule_Actions>
+</CDSRules>

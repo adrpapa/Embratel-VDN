@@ -30,21 +30,6 @@
         //  $level: std | prm
 
         public static function newOutputTemplate( $clientID, $type, $proto, $level ) {
-/*
-            if( $type == 'live' ){
-                if( $level == 'prm') {
-                    $templateId = ConfigConsts::DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE;
-                } else {
-                    $templateId = ConfigConsts::DELTA_STD_EVENT_OUTPUT_TEMPLATE;
-                }
-            } else {
-                if( $level == 'prm' ){
-                    $templateId = ConfigConsts::DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE;
-                } else {
-                    $templateId = ConfigConsts::DELTA_STD_VOD_OUTPUT_TEMPLATE;
-                }
-            }*/
-
             $tpl = ConfigConsts::TEMPLATE_PATH."/DeltaOutput_".$level."_".$proto.".xml";
             if( ! file_exists($tpl) )
                 throw new Exception("File $tpl does not exist \n");
@@ -53,13 +38,13 @@
             $axClientID = cleanClientID( $clientID );
             $xml->name = $axClientID.'_'.$type.'_'.$proto.'_'.$level;
 
-			print($xml->asXml()); //$xml->asXml());
             //acerta custom url para cada output filter
             foreach( $xml->filter as $filter ){
                 if( (boolean)$filter->endpoint ) {
-                    $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/'.$level.'/$fn';
+                    $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/$fn$';
                 }
             } 
+//             print($xml->asXml());
             return new self(DeltaOutputTemplate::getElementalRest()->postRecord(null, null, $xml));
         }
 
@@ -74,6 +59,7 @@
                 $deltaOutputFilter = new DeltaOutputFilter($xml);
                 $this->filters[$deltaOutputFilter->id]=$deltaOutputFilter;
             }
+//             print($xml->asXml());
 //             print_r($this);
         }
 
@@ -100,7 +86,12 @@
         }
         
         public static function delete($id) {
-            DeltaOutputTemplate::getElementalRest()->restDelete($id);
+            try {
+                DeltaOutputTemplate::getElementalRest()->restDelete($id);
+            }
+            catch(Exception $fault) {
+                print_r($fault);
+            }
         }
 
         public static function getOutputTemplate($id) {

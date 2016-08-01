@@ -130,6 +130,9 @@ def createServiceTemplate(name, autoprovisioning, services):
     submitForm()
 
 def selectServiceTemplateResource(services):
+    # select 100 on page
+    linkWrappers=driver.find_elements_by_class_name("linkWrapper")
+    linkWrappers[len(linkWrappers)-1].click()
     for row in getById("global_list").find_elements_by_tag_name("tr"):
         cells = row.find_elements_by_tag_name("td")
         if len(cells) > 1 and cells[1].text in services:

@@ -7,6 +7,6 @@
     <incoming>
       <uri>/data/server/drive/poc-cdn/to-package/</uri>
     </incoming>
-    <search_subfolders>false</search_subfolders>
+    <search_subfolders>true</search_subfolders>
   </filter_settings>
 </input_filter>
