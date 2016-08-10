@@ -3,6 +3,7 @@
 //if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
 require_once "aps/2/runtime.php";
+require_once "elemental_api/utils.php";
 require_once "elemental_api/jobVOD.php";
 require_once "elemental_api/preset.php";
 require_once "elemental_api/deltaContents.php";
@@ -94,7 +95,7 @@ class job extends \APS\ResourceBase {
     public $info;
 
     /**
-        * @type(string[])
+        * @type(string)
         * @title("Input URIs")
         * @description("Job Input URIs for video ingestion")
         */
@@ -151,26 +152,45 @@ class job extends \APS\ResourceBase {
     ## Definition of the functions that will respond to the different CRUD operations
     #############################################################################################################################################
     public function provision() { 
-        echo "Iniciando provisionamento de conteudo(job)\n"; 
         \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
         \APS\LoggerRegistry::get()->info("Iniciando provisionamento de conteudo(job) ".$this->aps->id);
-        $clientid = sprintf("Client_%06d",$this->context->account->id);
-        \APS\LoggerRegistry::get()->info("Client: ".$clientid);
-        \APS\LoggerRegistry::get()->info("Definindo autenticacao...");
-        
+        $clientid = formatClientID($this->context);
+        \APS\LoggerRegistry::get()->info("Client: $clientid Input: ".$this->input_URI);
+        $fnparts = explode('/',$this->input_URI);
+        $fileName = $fnparts[count($fnparts)-1];
+        \APS\LoggerRegistry::get()->info("Verificando duplicidade de conteúdo ".$fileName);
+        foreach( $this->context->vods as $vod ) {
+            $fnparts = explode('/',$vod->input_URI);
+            $vodFileName = $fnparts[count($fnparts)-1];
+            if( $vodFileName == $fileName  ) {
+                throw new Exception(_("Content with this name already exists. Please remove content and resubmit job"));
+            }
+        }
+        \APS\LoggerRegistry::get()->info("Verificando duplicidade de jobs");
+        foreach( $this->context->jobs as $job ) {
+            if( $this->aps->id == $job->aps->id){
+                continue;
+            }
+            $fnparts = explode('/',$job->input_URI);
+            $jobFileName = $fnparts[count($fnparts)-1];
+            if( $jobFileName == $fileName  ){
+                throw new Exception(_("Job with this name already exists. Please remove job, content and resubmit content: ").$jobFileName);
+            }
+        }
+        \APS\LoggerRegistry::get()->info("Montando presets");
         $presets = new Presets();
         for($i=0;$i<count($this->resolutions);$i++ ) {
             $presets->addPreset(new Preset($this->resolutions[$i],
                     $this->video_bitrates[$i],$this->framerates[$i],
                     $this->audio_bitrates[$i]),$i);
         }
-        \APS\LoggerRegistry::get()->info(var_dump($this));
+//         \APS\LoggerRegistry::get()->info(var_dump($this));
         $level = ($this->premium ? 'prm' : 'std');
         $protocol = ($this->https ? 'https' : 'http');
 //         try {
 //             ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
             \APS\LoggerRegistry::get()->info("--> Provisionando Job level=".$level." protocol=".$protocol);
-            $job = JobVOD::newJobVOD( $this->name, $this->input_URI[0], $clientid, $level, $presets, $protocol );
+            $job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets, $protocol );
 //         } catch (Exception $fault) {
 //             \APS\LoggerRegistry::get()->error("Error while creating content job, :\n\t" . $fault->getMessage());
 //             throw new Exception($fault->getMessage());
@@ -183,7 +203,7 @@ class job extends \APS\ResourceBase {
         \APS\LoggerRegistry::get()->info("job_id:" . $this->job_id );
         \APS\LoggerRegistry::get()->info("job_name:" . $this->job_name );
         \APS\LoggerRegistry::get()->info("state:" . $this->state );
-        \APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI[0] );
+        \APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
         \APS\LoggerRegistry::get()->info("<-- Fim Provisionando Job");
         throw new \Rest\Accepted($this, "Job Submitted", 10); // Return "202 Accepted"
     }
@@ -193,12 +213,17 @@ class job extends \APS\ResourceBase {
         $jobstatus = JobVOD::getStatus($this->job_id);
         \APS\LoggerRegistry::get()->info("Called provisionAsync for job id=".$this->job_id);
         \APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
-        if( $jobstatus->status == 'complete' || $jobstatus->status == 'error' || $jobstatus->status == 'cancelled') {
+        $this->state = $jobstatus->status.'';
+        
+        if( $jobstatus->status == 'complete') {
             return $this->createContents($jobstatus);
         }
+        if( $jobstatus->status == 'error' || $jobstatus->status == 'cancelled'){
+            return;
+        }
+        
         $this->retry +=1; // Increment the retry counter
         if( $jobstatus->status == 'running' || $this->retry < ConfigConsts::VOD_STATUS_RETRY_COUNT) {
-            $this->state = $jobstatus->status.'';
             throw new \Rest\Accepted($this, "Job status=".'$jobstatus->status' , ConfigConsts::VOD_STATUS_UPDATE_INTERVAL); // Return "202 Accepted"
         }
         $this->state = "timed out";
@@ -207,7 +232,6 @@ class job extends \APS\ResourceBase {
 
     public function createContents($jobstatus){
         echo "Creating Content\n";
-        $this->state = $jobstatus->status.'';
         $this->info = $jobstatus->asXml();
         $apsc = \APS\Request::getController();
         $apsc2 = $apsc->impersonate($this);
@@ -222,7 +246,7 @@ class job extends \APS\ResourceBase {
 //         preg_match('([\d\.]+)', $vod->content_storage_size, $sizeArray);
 //         $vod->content_storage_size  = round( $sizeArray[0] / 1000);
 
-        $vod->content_time_length   = $content->totalMiliSeconds;
+        $vod->content_time_length   = round($content->totalMiliSeconds / 60000);
         $vod->content_encoding_charged = false;
         $vod->screen_format         = $this->screen_format;
         $vod->premium               = $this->premium;
@@ -234,12 +258,9 @@ class job extends \APS\ResourceBase {
         $vod->video_bitrates        = $this->video_bitrates;
         $vod->audio_bitrates        = $this->audio_bitrates;
 
-//         echo "********************** START VOD **********************\n";
-//         print_r($vod);
-//         echo "********************** END VOD **********************\n";
-        echo "Provision new VOD with link to context\n";
+        JobVOD::archive($this->job_id);
+        \APS\LoggerRegistry::get()->info ("Provisioning new VOD with link to context\n");
         $apsc2->linkResource($context, 'vods', $vod);
-//         $teste=$apsc2->provisionResource($vod);
         return;
     }
 
@@ -254,18 +275,16 @@ class job extends \APS\ResourceBase {
 
     public function unprovision(){
         \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
-        
-        $clientid = sprintf("Client_%06d",$this->context->account->id);
-        
+        $clientid = formatClientID($this->context);
         \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento para job %s-%s do cliente %s",
                 $this->job_id, $this->job_name, $clientid));
         \APS\LoggerRegistry::get()->info(sprintf("Excluindo Job %s",$this->job_id));
 
         try {
             ElementalRest::$auth = new Auth( 'elemental','elemental' );
-    //     JobVOD::delete($this->job_id);
+            JobVOD::delete($this->job_id);
         } catch (Exception $fault) {
-            $this->logger->info("Error while deleting content job, :\n\t" . $fault->getMessage());
+            \APS\LoggerRegistry::get()->info("Error while deleting content job, :\n\t" . $fault->getMessage());
             throw new Exception($fault->getMessage());
         }
         
@@ -273,11 +292,62 @@ class job extends \APS\ResourceBase {
                 $this->job_id, $clientid));
     }
 
+    /*
+    ** C u s t o m   p r o c e d u r e s
+    */
+    
     /**
-        * Update traffic usage
-        * @verb(GET)
-        * @path("/updateJobUsage")
-        */
+     * get jobs current status
+     * @verb(GET)
+     * @path("/updateJobStatus")
+     * @param()
+     * @returns {object}
+     */
+    public function updateJobStatus () {
+        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
+        $jobstatus = JobVOD::getStatus($this->job_id);
+        \APS\LoggerRegistry::get()->info("Called updateJobStatus for job id=".$this->job_id.
+                " status will be updated from ".$this->state." to ".$jobstatus->status);
+        $this->state = $jobstatus->status.'';
+        $apsc = \APS\Request::getController();
+        $apsc->updateResource($this);
+        return $this;
+    }
+
+
+    /**
+     * cancel job
+     * @verb(GET)
+     * @path("/cancelJob")
+     * @param()
+     * @returns {object}
+     */
+    public function cancelJob () {
+        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
+        \APS\LoggerRegistry::get()->info("Called cancelJob for job id=".$this->job_id);
+        $result = new stdClass();
+        try {
+            JobVOD::cancel($this->job_id);
+            $this->updateJobStatus();
+            $result->result = "ok";
+            $result->message = "Job Cancelado";
+            return $result;
+        }
+        catch (Exception $fault) {
+            \APS\LoggerRegistry::get()->info("Error cancelling job: ". $fault->getMessage());
+            $result->result = "error";
+            $result->message = $fault->getMessage();
+            return $result;
+        }
+    }
+
+    /**
+     * Update traffic usage
+     * @verb(GET)
+     * @path("/updateJobUsage")
+     * @param()
+     * @returns {object}
+     */ 
     public function updateJobUsage () {
         $usage = array();
         $usage["VDN_VOD_Encoding_Minutes"] = 0;

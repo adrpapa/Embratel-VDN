@@ -14,11 +14,9 @@
                    "aps/ready!"
         ], function (Store, xhr, when, registry, load, displayError, arr) {
             /* Create the data store */
-            var store = new Store({
+            var store = new Store( {
                 apsType: "http://embratel.com.br/app/VDN_Embratel/job/1.0",
-                target: "/aps/2/resources/",
-                baseQuery: "out(state,(cancelled))"
-            });
+                target: "/aps/2/resources/" });
 
             /* Create widgets */
             load(["aps/PageContainer", { id: "page" }, [
@@ -35,74 +33,103 @@
                 }, [
                     ["aps/Toolbar", [
                         ["aps/ToolbarButton", { id: "job_new",        iconClass: "sb-add-new",        label: "New" }],
-                        // Declare a button with CSS class sb-service-start and label Start.
-                        // It will be enabled only if at least one string is selected
-                        ["aps/ToolbarButton", { id: "job_delete",     iconClass: "sb-delete",         label: "Delete",    requireItems:   true }],
+                        ["aps/ToolbarButton", { id: "job_cancel",     iconClass: "sb-cancel",         label: "Cancel",    requireSingleItem:   true }],
+                        ["aps/ToolbarButton", { id: "job_delete",     iconClass: "sb-delete",         label: "Delete",    requireSingleItem:   true }],
                         ["aps/ToolbarButton", { id: "job_refresh",    iconClass: "sb-refresh",        label: "Refresh",   autoBusy:       false }]
                     ]]
                 ]]
             ]]).then(function(){
-                    /* Once the widgets are created, create the widget processing logic */
-                    var grid = registry.byId("jobl_grid"),
-                        page = registry.byId("page");
+                /* Once the widgets are created, create the widget processing logic */
+                var grid = registry.byId("jobl_grid"),
+                    page = registry.byId("page");
 
-                    /* Create a handler for the *New* button click */
-                    registry.byId("job_new").on("click", function() {
-                        /* Start the process of creating a VPS by going to the first screen */
-                        aps.apsc.gotoView("job-new-1");
-                    });
+                /* Create a handler for the *New* button click */
+                registry.byId("job_new").on("click", function() {
+                    /* Start the process of creating a VPS by going to the first screen */
+                    aps.apsc.gotoView("job-new-1");
+                });
 
-//                     registry.byId("job_refresh").on("click", function() {
-//                         var job_ids = null;
-//                         var dataStoreGrid = store.data;
-//                         dataStoreGrid.forEach(function(items){
-//                             job_ids = [items.job_id];
-//                         });
-//                         job_ids = JSON.stringify(job_ids);
-//                         when(xhr("/aps/2/resources/" + model.aps.id + "/updateJobStatus", {method: "POST", handleAs: "text",
-//                         query: {json: job_ids}}),
-//                             function (res) {
-//                             },
-//                             function (error) {
-//                                 aps.apsc.cancelProcessing();
-//                                 asemail.cancel();
-//                                 return;
-//                             }
-//                         );
-//                         grid.refresh();
-//                     });
+                registry.byId("job_refresh").on("click", function() {
+                    store.query().forEach(
+                        function(item){
+                            console.log("Refreshing job with id = [" + item + "]");
+                            when( xhr("/aps/2/resources/" + item.aps.id + "/updateJobStatus",
+                                {method: "GET",  handleAs: "text"} ),
+                                function(value) {
+                                    console.log(value);
+                                    grid.refresh();
+                                },
+                                function(err) {
+                                    alert( _("Error refreshing job __jobname__:\n __errmsg__",
+                                          {jobname: item.name, errmsg: err.message} ));
+                                }
+                            );
+                        }
+                    );
+                });
 
-                /* Create the on-click handler for the *Delete* button
+                /* Create the on-click handler for the *Cancel* button
                 */
+                registry.byId("job_cancel").on("click",
+                    function() {
+                        var sel = grid.get("selectionArray");
+                        /* Clear the current messages on the screen */
+                        page.get("messageList").removeAll();
+                        arr.forEach(sel,
+                            function(contentID){
+                                console.log("I'm trying to cancel job with id = [" + contentID + "]");
+                                store.get(contentID).then(
+                                    function(jobOri){
+                                        xhr("/aps/2/resources/" + jobOri.aps.id + "/cancelJob",
+                                            {method: "GET",  handleAs: "text"}).then(
+                                            function(rslt) {
+                                                var result=JSON.parse(rslt);
+                                                if(result.result != "ok"){
+                                                    alert(result.message);
+                                                }
+                                                grid.refresh();
+                                            },
+                                            function(err) {
+                                                alert( _("Job __jobname__ cannot be cancelled\n__errmsg__ ",
+                                                         {jobname: jobOri["name"], errmsg: err.message} ));
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
+                        this.cancel();
+                    }
+                );
+                // Create the on-click handler for the *Delete* button
                 registry.byId("job_delete").on("click", function() {
                     var self = this;
-                    /* Get confirmation from the user for the delete operation */
-                    if (!confirm("Are you sure you want delete this content?")) {
-                        self.cancel();
-                        return;
-                    }
                     var sel = grid.get("selectionArray"),
                     counter = sel.length;
-
                     /* Clear the current messages on the screen */
                     page.get("messageList").removeAll();
-
                     arr.forEach(sel, function(contentID){
-                        console.log("I'm trying to delete Content with id = [" + contentID + "]");
-
-                        /* Remove the VPS from the APS controller DB */
-                        when(store.remove(contentID),
-                                /* If success, process the next VPS until the list is empty */
-                            function(){
-                                console.log("Job with id = [" + contentID + "] removed");
-                                sel.splice(sel.indexOf(contentID),1);
-                                grid.refresh();
-                                if (--counter === 0) { self.cancel(); }
-                            },
-                            /* If failure, call the error handler */
-                            function(e){
-                                displayError(e);
-                                if (--counter === 0) { self.cancel(); }
+                        when(store.get(contentID),
+                            function(job){
+                                if(job.state != "cancelled" && job.state != "error") {
+                                    /* Get confirmation from the user for the cancel operation */
+                                    alert( _("Job " + contentID + " is incomplete, cannot be cancelled"));
+                                }
+                                console.log("I'm trying to cancel job with id = [" + contentID + "]");
+                                /* Remove the VPS from the APS controller DB */
+                                when(store.remove(contentID),
+                                    function(){
+                                        console.log("Job with id = [" + contentID + "] removed");
+                                        sel.splice(sel.indexOf(contentID),1);
+                                        grid.refresh();
+                                        if (--counter === 0) { self.cancel(); }
+                                    },
+                                    /* If failure, call the error handler */
+                                    function(e){
+                                        displayError(e);
+                                        if (--counter === 0) { self.cancel(); }
+                                    }
+                                );
                             }
                         );
                     });

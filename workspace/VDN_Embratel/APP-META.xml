@@ -65,8 +65,8 @@ CISCO VDN para entrega distribuída de conteúdo
                         </view>
                         <view id="job-info" label="Job Information">
                             <controls>
-                                <cancel />
-                                <submit />
+                                <finish />
+<!--                                 <submit /> -->
                             </controls>
                             <var name="job"
                                 type-id="http://embratel.com.br/app/VDN_Embratel/job/1.0" />

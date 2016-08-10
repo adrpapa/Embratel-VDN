@@ -137,7 +137,7 @@
                 DeltaInputFilter::getElementalRest()->restDelete($id);
             }
             catch(Exception $fault) {
-                print_r($fault);
+                echo "\nError deleting Input Filter id:".$id.". Error Message:".$fault->getMessage()."\n\n";
             }
         }
 

@@ -90,7 +90,7 @@
                 DeltaOutputTemplate::getElementalRest()->restDelete($id);
             }
             catch(Exception $fault) {
-                print_r($fault);
+                echo "\nError deleting Output Template id:".$id.". Error Message:".$fault->getMessage()."\n\n";
             }
         }
 

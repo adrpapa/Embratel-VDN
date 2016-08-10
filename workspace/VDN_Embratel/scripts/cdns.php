@@ -7,7 +7,7 @@ require_once "elemental_api/deliveryService.php";
 require_once "elemental_api/contentOrigin.php";
 require_once "elemental_api/deliveryServiceGenSettings.php";
 require_once "elemental_api/fileMgmt.php";
-require_once "elemental_api/splunk.php";
+require_once "utils/splunk.php";
 
 /**
  * @type("http://embratel.com.br/app/VDN_Embratel/cdn/1.0")
@@ -418,9 +418,9 @@ class cdn extends \APS\ResourceBase {
         $clientID = $this->context->account->id;
         $dsName = "ds-" . $this->alias . "-" . $clientID;
         $logger->info("Updating resource usage for delivery service: ".$dsName);
-        $splunkStats = SplunkStats::getBilling($clientID, $dsName, $this->newestSplunkData);
+        $splunkStats = SplunkStats::getBilling($this->context, $dsName, $this->newestSplunkData);
         $this->newestSplunkData = $splunkStats->lastResultTime;
-        $logger->info(var_dump($splunkStats));
+//         $logger->info(var_dump($splunkStats));
         
         ## Calculate the resource usage properties
         $this->httpTrafficActualUsage += $splunkStats->gigaTransfered;

@@ -3,6 +3,7 @@
 //if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
 require_once "aps/2/runtime.php";
+require_once "elemental_api/utils.php";
 require_once "elemental_api/deltaContents.php";
 
 /**
@@ -101,7 +102,7 @@ class vod extends \APS\ResourceBase {
         */
     public $input_URI;
     /**
-        * @type(string[])
+        * @type(string)
         * @title("Resolutions")
         * @description("Array of Video Resolutions for the generated streams")
         * @readonly
@@ -138,18 +139,18 @@ class vod extends \APS\ResourceBase {
     public function provision() {
         $this->content_encoding_charged = false;
         $proto = $this->https ? "https" : "http";
-        $cdnName = sprintf("Client_%06d_vod_%s",$this->context->account->id,$proto);
+        $cdnName = sprintf("%s_vod_%s",formatClientID($this->context),$proto);
         $alias = sprintf("vod%s", $proto);
-        $originServer = sprintf("vod%d%s.delta.embratel.com.br",$this->context->account->id,
-                            $this->https ? "s" : "");
-        $originPath = sprintf("out/u/Client_%06d/vod/%s/",$this->context->account->id, $proto);
+        $originServer = sprintf("vod%d%s.origemcdn.embratelcloud.com.br",
+                                $this->context->account->id,$this->https ? "s" : "");
+        $originPath = sprintf("out/u/%s/vod/%s/",formatClientID($this->context), $proto);
         $ds_name       = sprintf("ds-%s-%s", $alias, $this->context->account->id);
         $this->path = sprintf("%s/%s/%s",$originServer,$originPath,$this->content_name);
         // Verifica se já existe delivery service para o tipo de serviço,
         // se não houver, cria
         foreach( $this->context->cdns as $cdn ) {
             if( $cdn->delivery_service_name == $ds_name ) {
-                echo "Content $this->content_name will use Delivery service: $ds-name \n";
+                echo "Content $this->content_name will use Delivery service: $ds_name \n";
                 return;
             }
         }
@@ -179,9 +180,7 @@ class vod extends \APS\ResourceBase {
 
     public function unprovision(){
         \APS\LoggerRegistry::get()->setLogFile("logs/vods.log");
-        
-        $clientid = sprintf("Client_%06d",$this->context->account->id);
-        
+        $clientid = formatClientID($this->context);
         \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento do conteudo %s-%s do cliente %s",
                 $this->content_id, $this->content_name, $clientid));
 
@@ -204,14 +203,13 @@ class vod extends \APS\ResourceBase {
         */
     public function updateVodUsage () {
         $usage = array();
-        $usage["VDN_VOD_Storage_MbH"] = 0;
         if( ! $this->content_encoding_charged ){ 
             $usage["VDN_VOD_Encoding_Minutes"] = $this->content_time_length;
             $this->content_encoding_charged = true;
         } else {
             $usage["VDN_VOD_Encoding_Minutes"] = 0;
         }
-        var_dump($usage);
+//         var_dump($usage);
         return $usage;
     }
 }

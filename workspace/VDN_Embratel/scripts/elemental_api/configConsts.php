@@ -4,10 +4,9 @@
 */
     class ConfigConsts {
         
-        const debug = false;
+        const debug = true;
         
         const TEMPLATE_PATH = 'templates';
-//         const BILLING_LOG_PATH = 'logs';
         const BILLING_LOG_PATH = 'logs';
 
         const API_VERSION = 'v1';
@@ -24,22 +23,16 @@
         
         const DELTA_HOST = '201.31.12.36';
         const DELTA_PORT = '8080';
-/*        
-        const DELTA_UDP_INPUT_FILTER_TEMPLATE = 274;
-        const DELTA_WF_INPUT_FILTER_TEMPLATE = 76;
-*/
+        const DELTA_FINGERPRINT = "5860727908188E3CD57D6676696D29F2";
+        const DELTA_USER = 'elemental';
+        const SSH_PRIVATE_KEY = "/var/www/.ssh/id_rsa";
+        const SSH_PUBLIC_KEY = "/var/www/.ssh/id_rsa.pub";
         const DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive/live';
-        const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/vod';
+        const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/watchfolders';
         const DELTA_WF_INCOMMING_URI = '/data/server/drive/watchfolders';
         const DELTA_WEBDAV_STORAGE_LOCATION = '/data/server/drive';
         const DELTA_MOUNT_POINT = '/data/server';
 
-/*        
-        const DELTA_STD_EVENT_OUTPUT_TEMPLATE = 7;
-        const DELTA_PREMIUM_EVENT_OUTPUT_TEMPLATE = 8;
-        const DELTA_STD_VOD_OUTPUT_TEMPLATE = 1;
-        const DELTA_PREMIUM_VOD_OUTPUT_TEMPLATE = 2;
-*/
         //********** CDN ***********
         const CDMS_ADDRESS = "192.118.77.183";
         const CDMS_PORT = "8443";

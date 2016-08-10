@@ -88,10 +88,11 @@ def createAppService(service, autoprovision=False):
     createResourceType()
     clickOnGlobalList(1)
     selectResourceService(service, autoprovision)
+    submitForm()
 
-def createResourceCounter(counter):
+def createResourceCounter(counter, type):
     createResourceType()
-    clickOnGlobalList(3)
+    clickOnGlobalList(type)
     selectResourceService(counter, False)
 
 def createAppReference(service):
@@ -106,16 +107,18 @@ def createAppReference(service):
     submitForm()
 
 def submitForm():
-    driver.find_element_by_class_name("ButtonSubmit").click()
-
+    try :
+        driver.find_element_by_class_name("ButtonSubmit").click()
+    except:
+        return None
     
 def selectResourceService(service, autoprovision):
     setResourceName(service)
+    submitForm()
     if not clickOnGlobalListName(service):
         raise Exception("Service "+service+" Not found in list")
     if autoprovision:
         getById("check_rt_autoprovision").click()
-    submitForm()
     submitForm()
     return
 
@@ -142,53 +145,50 @@ def selectServiceTemplateResource(services):
             cells[0].click()
     return False
 
-def activateAndSubscribe(name):
+def activateServiceTemplate(name):
     goToServiceTemplates()
     clickOnGlobalListName(name)
-    # Activate subscription
-    if driver.find_elements_by_class_name("s-btn")[3].text == 'Activate':
-        driver.find_elements_by_class_name("s-btn")[3].click()
-    
-    ## go to subscriptions tab
-    #driver.find_element_by_id('subscriptions').click()
-    ## create new subscription
-    #driver.find_element_by_id('subscriptions_create').click()
-    ## give the first customer a brand new subscription!
-    #clickOnGlobalList(1)
-    #submitForm()
-    #driver.find_element_by_class_name("action").click()
+    getById("service_templates_activate").click()
 
 def createServicePlan(name):
-    gotoFrame("topFrame")
-    driver.find_element_by_id("topTxtToBM") .click()
-    
+    # go to Service Plans
     gotoFrame("leftFrame")
     getById("click_service_plans").click()
+
+    # Add Service plan
     gotoFrame("mainFrame")
     getById("input___add").click()
+    #choose type
     getById("ServicePlanType_4").click()
     submitForm()
+
+    # fill in plan properties - Configure Billing Terms
     getById("input___name").send_keys(name)
     getById("input___shortDescription").send_keys(name)
     getById("input___longDescription").send_keys(name)
     getById("input___PlanCategoryplanCategoryID").send_keys("o")
-    getById("input___refServiceTemplate").click()
     getById("input___vPublished").click()
     getById("input___BillingPeriod").send_keys("1")
     getById("input___RecurringType").send_keys("A")
 
-    id=1
-    while driver.find_element_by_class_name("wizard-item-current").text == "1\nConfigure Billing Terms":
-        getById("input___ServiceTemplateserviceTemplateID").send_keys("\b\b\b\b\b\b"+str(id))
-        submitForm()
-        id += 1
+    # select service template
+    getById("input___refServiceTemplate").click()
+    driver.switch_to_window(driver.window_handles[len(driver.window_handles)-1])
+    getById("vel_t1_1").click()
     
-    #Seleciona período de assinatura
-    getById("vec_t1_7").click()
+    #submit first step of wizard
+    driver.switch_to_window(driver.window_handles[0])
+    gotoFrame("mainFrame")
+    submitForm()
+    
+    # Prices & subscription periods
+    getById("vec_t1_7").click() #choose 1 year w/o fees
     submitForm()
 
-    getById("input_____NextStep").click()
-
+    getById("input___SubscriptionFee").clear()
+    getById("input___SubscriptionFee").send_keys("750")
+    submitForm()
+    
     #Configura valores
     getById("input___PlanRaterecurringFee-6").clear()
     getById("input___PlanRaterecurringFee-6").send_keys(750)
@@ -208,7 +208,7 @@ def createServicePlan(name):
     submitForm()
 
 
-def createCategory():
+def createCategory(name):
     # Adicionar categoria à tela da loja
     gotoFrame("leftFrame")
     getById("click_products_online_store").click()
@@ -224,27 +224,31 @@ def createCategory():
     getById("input___ShowInCCP").click()
     submitForm()
 
-	getById("vec_t1_1").click()
+    getById("webgate__t1_1_ctd").click()
     submitForm()
 
-#def deleteAllResources():
+
+def gotoPBA():
+    gotoFrame("topFrame")
+    getById("topTxtToBM").click()
+
+def goToCustomerControlPanel():
+    gotoFrame("leftFrame")
+    getById("click_my_end_user_accounts").click()
+    gotoFrame("mainFrame")
+    driver.find_elements_by_class_name("linkWrapper")[6].click()
+    
 
 driver=webdriver.Chrome('/chromedriver/chromedriver')
 driver.get("http://host1.apo.apsdemo.org:8080/")
+assert 'Parallels® Automation' in driver.title
 login('admin','123@mudar')
-if False:
+if True:
     #try:
-        try:
-            driver.get("http://host1.apo.apsdemo.org:8080/")
-            # driver.get("http://cdn.flts.apsdemo.org:8080/")
-            instance="cdn"
-        except:
-            driver.get("http://host1.apo.apsdemo.org:8080/")
-            instance="apo"
-        assert 'Parallels® Automation' in driver.title
-        login('admin','123@mudar')
-
-        services=['VDN Embratel globals', 'VDN Embratel Management', 'VDN Live Channels', 'VDN Content', 'VDN Job', 'Content Delivery Network', 'httpTrafficInGB', 'http_s_TrafficInGB']
+        services=['VDN Embratel globals', 'VDN Embratel Management',   'VDN Live Channels', 
+                  'VDN Content',          'VDN Job',                   'Content Delivery Network',
+                  'VDN_HTTP_Traffic',     'VDN_HTTPS_Traffic',         'VDN_VOD_Encoding_Minutes', 
+                  'VDN_VOD_Storage_MbH',  'VDN_Live_Encoding_Minutes', 'VDN_Live_DVR_Minutes']
 
         createAppReference(services[0])
         createAppService(services[1], True)
@@ -252,20 +256,19 @@ if False:
         createAppService(services[3])
         createAppService(services[4])
         createAppService(services[5])
-        createResourceCounter(services[6])
-        createResourceCounter(services[7])
+        createResourceCounter(services[6],3)
+        createResourceCounter(services[7],3)
+        createResourceCounter(services[8],4)
+        createResourceCounter(services[9],5)
+        createResourceCounter(services[10],4)
+        createResourceCounter(services[11],4)
 
         createServiceTemplate(services[0], True, services)
-        activateAndSubscribe(services[0])
+        activateServiceTemplate(services[0])
         gotoPBA()
-        
-        ## logout from admin
-        #gotoFrame("topFrame")
-        #driver.find_element_by_id("topTxtLogout").click()
-        #if instance == "cdn":
-            #login('zedaesquina','123@mudar')
-        #else:
-            #login('adrpapa','123@mudar')
+        createServicePlan("VDN 30")
+        createCategory("VDN Embratel")
+        goToCustomerControlPanel()
         #input("waiting for your tests...")
     #finally:
         #driver.close()

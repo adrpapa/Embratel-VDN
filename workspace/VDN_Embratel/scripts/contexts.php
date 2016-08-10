@@ -3,6 +3,8 @@
 # It must correspond to a tenant created for the subscriber in the remote application system.
 
 require_once "aps/2/runtime.php";
+require_once "utils/niceSSH.php";
+require_once "utils/BillingLog.php";
 require_once "elemental_api/deltaInput.php";
 require_once "elemental_api/deltaOutputTemplate.php";
 
@@ -206,14 +208,22 @@ class context extends \APS\ResourceBase
 
     public function provision() {
         \APS\LoggerRegistry::get()->setLogFile("logs/context.log");
-        $clientid = sprintf("Client_%06d",$this->account->id);
+        $clientid = formatClientID( $this );
         \APS\LoggerRegistry::get()->info("Iniciando provisionamento de context para o cliente ".$clientid);
 
         // Initialize counters
-        $this->VDN_VOD_Encoding_Minutes = 0;
-        $this->VDN_VOD_Storage_MbH = 0;
-        $this->VDN_Live_Encoding_Minutes = 0;
-        $this->VDN_Live_DVR_Minutes = 0;
+        $this->VDN_VOD_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_VOD_Encoding_Minutes->usage = 0;
+        $this->VDN_VOD_Storage_MbH = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_VOD_Storage_MbH->usage = 0;
+        $this->VDN_Live_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_Live_Encoding_Minutes->usage = 0;
+        $this->VDN_Live_DVR_Minutes = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_Live_DVR_Minutes->usage = 0;
+        $this->VDN_HTTP_Traffic = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_HTTP_Traffic->usage = 0;
+        $this->VDN_HTTPS_Traffic = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_HTTPS_Traffic->usage = 0;
         
         // Create output template for all options: Live/Vod Premium/Std http/https
         $this->vodDeltaPaths = new DeltaPaths();
@@ -240,7 +250,7 @@ class context extends \APS\ResourceBase
 
     public function unprovision(){
         \APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
-        $clientid = sprintf("Client_%06d",$this->account->id);
+        $clientid = formatClientID( $this );
         \APS\LoggerRegistry::get()->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
 
         // Delete output template for all options: Live/Vod Premium/Std http/https
@@ -285,36 +295,48 @@ class context extends \APS\ResourceBase
 //                 $usage = json_decode($usage);
 //                 $VDN_VOD_Encoding_Minutes += $usage->VDN_VOD_Encoding_Minutes;
 //             }
+        \APS\LoggerRegistry::get()->info("Computing VoD Storage Usage");
+        echo "Creating logfile for VoD Storage Billing";
+        $vodStorageLog = new BillingLog($this, "vodStorage");
+        $totalKB=0;
+        try{
+            $data = NiceSSH::getVODUsage(formatClientID( $this ));
+            foreach($data as $it) {
+                $totalKB += $it[0];
+                $vodStorageLog->log("$it[0];$it[1]");
+                echo "$it[0];$it[1]\n";
+            }
+            $vodStorageLog->log("$totalKB; Total KB");
+        } catch(Exception $fault) {
+            $vodStorageLog->error($fault->getMessage());
+        }
 
-        $VDN_VOD_Encoding_Minutes = $this->VDN_VOD_Encoding_Minutes;
-        $VDN_VOD_Storage_MbH = 0;
+        \APS\LoggerRegistry::get()->info("Computing VoD Usage");
+        $VDN_VOD_Encoding_Minutes = $this->VDN_VOD_Encoding_Minutes->usage;
         foreach ( $this->vods as $vod ) {
             $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($vod->aps->id, 'updateVodUsage'));
             $usage = json_decode($usage);
-            $VDN_VOD_Storage_MbH += $usage->VDN_VOD_Storage_MbH;
             $VDN_VOD_Encoding_Minutes += round($usage->VDN_VOD_Encoding_Minutes);
         }
 
-        $VDN_Live_Encoding_Minutes = $this->VDN_Live_Encoding_Minutes;
-        $VDN_Live_DVR_Minutes = $this->VDN_Live_DVR_Minutes;
+        \APS\LoggerRegistry::get()->info("Computing Live Usage");
         foreach ( $this->channels as $channel ) {
             $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($channel->aps->id, 'updateLiveUsage'));
             $usage = json_decode($usage);
-            $VDN_Live_Encoding_Minutes += $usage->VDN_Live_Encoding_Minutes;
-            $VDN_Live_DVR_Minutes += $usage->VDN_Live_DVR_Minutes;
+            $this->VDN_Live_Encoding_Minutes->usage += $usage->VDN_Live_Encoding_Minutes;
+            $this->VDN_Live_DVR_Minutes->usage += $usage->VDN_Live_DVR_Minutes;
         }
+
         ## Update the APS resource counters
         $this->VDN_HTTP_Traffic->usage = round($httpTraffic, 0);
         $this->VDN_HTTPS_Traffic->usage = round($http_s_Traffic, 0);
         \APS\LoggerRegistry::get()->info(sprintf("Resource usage after update: http=%f https=%f",
                 $this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
 
-        $this->VDN_VOD_Encoding_Minutes = $VDN_VOD_Encoding_Minutes;
-        $this->VDN_VOD_Storage_MbH = $VDN_VOD_Storage_MbH;
-        $this->VDN_Live_Encoding_Minutes = $VDN_Live_Encoding_Minutes;
-        $this->VDN_Live_DVR_Minutes = $VDN_Live_DVR_Minutes;
+        $this->VDN_VOD_Encoding_Minutes->usage = $VDN_VOD_Encoding_Minutes;
+        $this->VDN_VOD_Storage_MbH->usage = round($totalKB/1024);
 //         print_r($this);
     }
 }

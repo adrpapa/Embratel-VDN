@@ -4,6 +4,7 @@ if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
 require_once "aps/2/runtime.php";
 require_once "elemental_api/live.php";
+require_once "elemental_api/utils.php";
 require_once "elemental_api/deltaOutputTemplate.php";
 require_once "elemental_api/deltaInput.php";
 require_once "elemental_api/preset.php";
@@ -180,7 +181,7 @@ class channel extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/channels.log");
         $logger->info("Iniciando provisionamento de canal ".$this->aps->id);
-        $clientid = sprintf("Client_%06d",$this->context->account->id);
+        $clientid = formatClientID($this->context);
 
 		$level = ($this->premium ? 'std' : 'prm');
  		$presets = new Presets();
@@ -237,7 +238,7 @@ class channel extends \APS\ResourceBase {
 
     public function unprovision(){
     	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
-        $clientid = sprintf("Client_%06d",$this->context->account->id);
+        $clientid = formatClientID($this->context);
         \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento para evento %s-%s do cliente %s",
             $this->live_event_id, $this->live_event_name, $clientid));
         \APS\LoggerRegistry::get()->info(sprintf("Excluindo Input Filter %s",$this->input_filter_id));
@@ -257,11 +258,11 @@ class channel extends \APS\ResourceBase {
 		$usage = array();
 		$current_time = 0; // Obter running time do live event
 		$elapsed_time = $current_time - $this->saved_encoding_time;
+		$this->saved_encoding_time = $elapsed_time;
 		$usage["$VDN_Live_Encoding_Minutes"] = $elapsed_time;
 		if( $this->DVR ) {
 			$usage["$VDN_Live_DVR_Minutes"] = $elapsed_time;
 		}
-		$this->saved_encoding_time = $elapsed_time;
 		return $usage;
 	}
 }
