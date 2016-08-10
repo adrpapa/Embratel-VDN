@@ -4,27 +4,26 @@
     <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
     <script>
         require([
-                  "aps/ResourceStore",
+                "aps/ResourceStore",
                 "dijit/registry",
-                 "dojo/when",
+                "dojo/when",
             "dojox/mvc/getPlainValue",
             "dojox/mvc/at",
             "dojox/mvc/getStateful",
-                  "aps/load",
-                  "aps/PageContainer",
-                  "aps/Memory",
-                 "./js/displayError.js",
-                  "aps/ready!"
+                "aps/load",
+                "aps/PageContainer",
+                "aps/Memory",
+                "./js/displayError.js",
+                "aps/ready!"
         ], function (Store, registry, when, getPlainValue, at, getStateful, load, PageContainer, Memory, displayError) {
             var store = new Store({
                     target: "/aps/2/resources"
                 }),
                 model;
-
             /* Getting Job properties */
             store.get(aps.context.vars.job.aps.id).then(function(object){
-                /* Collect the Job properties in the model */
                 model = getStateful(object);
+                /* Collect the Job properties in the model */
                 /* and create the widgets */
                 var widgets =
                     ["aps/PageContainer", { id: "page" }, [
@@ -67,7 +66,10 @@
                 };
             }).otherwise(displayError);
         });
-    </script>
+    }
+    catch(err) {
+        alert("Error in job-info.html! "+err.message);
+    }
 </head>
 <body>
 </body>

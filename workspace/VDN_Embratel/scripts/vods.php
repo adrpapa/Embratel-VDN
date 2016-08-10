@@ -35,6 +35,13 @@ class vod extends \APS\ResourceBase {
 
     /**
         * @type(string)
+        * @title("Description")
+        * @description("Content Description")
+        */
+    public $description;
+
+    /**
+        * @type(string)
         * @title("Content Path")
         * @description("Content Path")
         */
@@ -46,6 +53,13 @@ class vod extends \APS\ResourceBase {
         * @description("Content size in MB")
         */
     public $content_storage_size;
+
+    /**
+        * @type(string)
+        * @title("content creation timestamp")
+        * @description("Content creation timestamp")
+        */
+    public $content_creation_ts;
 
     /**
         * @type(number)
@@ -145,7 +159,7 @@ class vod extends \APS\ResourceBase {
                                 $this->context->account->id,$this->https ? "s" : "");
         $originPath = sprintf("out/u/%s/vod/%s/",formatClientID($this->context), $proto);
         $ds_name       = sprintf("ds-%s-%s", $alias, $this->context->account->id);
-        $this->path = sprintf("%s/%s/%s",$originServer,$originPath,$this->content_name);
+        $this->path = sprintf("%s/%s",$originServer,$this->content_name);
         // Verifica se já existe delivery service para o tipo de serviço,
         // se não houver, cria
         foreach( $this->context->cdns as $cdn ) {
@@ -204,7 +218,7 @@ class vod extends \APS\ResourceBase {
     public function updateVodUsage () {
         $usage = array();
         if( ! $this->content_encoding_charged ){ 
-            $usage["VDN_VOD_Encoding_Minutes"] = $this->content_time_length;
+            $usage["VDN_VOD_Encoding_Minutes"] = round($this->content_time_length / 60000);
             $this->content_encoding_charged = true;
         } else {
             $usage["VDN_VOD_Encoding_Minutes"] = 0;

@@ -118,6 +118,22 @@ class channel extends \APS\ResourceBase {
 	public $delta_port;
 
 	/**
+	 * @type(string)
+	 * @title("Start encoding time")
+	 * @description("Time event was started")
+	 * @readonly
+	 */
+	public $start_encoding_time;
+
+	/**
+	 * @type(string)
+	 * @title("End encoding time")
+	 * @description("Time event was ended")
+	 * @readonly
+	 */
+	public $end_encoding_time;
+
+	/**
 	 * @type(number)
 	 * @title("saved encoding time")
 	 * @description("Last encoding reported to billing")

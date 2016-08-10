@@ -4,14 +4,14 @@
     <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
     <script>
         require([
-                   "aps/ResourceStore",
-                   "aps/xhr",
-                  "dojo/when",
-                 "dijit/registry",
-                   "aps/load",
-                  "./js/displayError.js",
+                "aps/ResourceStore",
+                "aps/xhr",
+                "dojo/when",
+                "dijit/registry",
+                "aps/load",
+                "./js/displayError.js",
             "dojo/_base/array",
-                   "aps/ready!"
+                "aps/ready!"
         ], function (Store, xhr, when, registry, load, displayError, arr) {
             /* Create the data store */
             var store = new Store( {
@@ -26,9 +26,23 @@
                     selectionMode:     "multiple",
                     apsResourceViewId: "job-info",
                     columns:           [
-                        { field: "name",         name: "Name",  filter: { title: "Name" }, type: "resourceName" },
-                        { field: "state",        name: "State", filter: { title: "State" } },
-                        { field: "input_URI",    name: "Input URI"}
+                        { field: "job_id",       name: _("ID"),  sortable: true,
+                        renderCell:
+                            function(object, data){
+                                var allowedStates = "|error|complete|cancelled|";
+                                var currentState = "|"+object.state+"|";
+                                if( allowedStates.indexOf(currentState) == -1){
+                                    return "<div>"+data+"</div>";
+                                }
+                                else {
+                                    return data;
+                                }
+                            }
+
+                            },
+                        { field: "name",         name: _("Name"),  filter: { title: _("Name") }, sortable: true },
+                        { field: "state",        name: _("State"), filter: { title: _("State") },  sortable: true },
+                        { field: "input_URI",    name: _("Input URI")}
                     ]
                 }, [
                     ["aps/Toolbar", [
@@ -61,7 +75,7 @@
                                 },
                                 function(err) {
                                     alert( _("Error refreshing job __jobname__:\n __errmsg__",
-                                          {jobname: item.name, errmsg: err.message} ));
+                                        {jobname: item.name, errmsg: err.message} ));
                                 }
                             );
                         }
@@ -91,7 +105,7 @@
                                             },
                                             function(err) {
                                                 alert( _("Job __jobname__ cannot be cancelled\n__errmsg__ ",
-                                                         {jobname: jobOri["name"], errmsg: err.message} ));
+                                                        {jobname: jobOri["name"], errmsg: err.message} ));
                                             }
                                         );
                                     }
@@ -111,10 +125,6 @@
                     arr.forEach(sel, function(contentID){
                         when(store.get(contentID),
                             function(job){
-                                if(job.state != "cancelled" && job.state != "error") {
-                                    /* Get confirmation from the user for the cancel operation */
-                                    alert( _("Job " + contentID + " is incomplete, cannot be cancelled"));
-                                }
                                 console.log("I'm trying to cancel job with id = [" + contentID + "]");
                                 /* Remove the VPS from the APS controller DB */
                                 when(store.remove(contentID),
@@ -136,6 +146,7 @@
                 });
             });
         });
+
 </script>
 </head>
 <body>

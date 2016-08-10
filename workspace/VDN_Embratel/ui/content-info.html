@@ -40,15 +40,12 @@
                                 fn: at(model, "content_name")
                             }],
                             ["aps/Output", {
-                                content: _("Endpoint: ${endpoint}"),
-                                endpoint: at(model, "path") }],
-                            ["aps/Output", {
                                 content: _("Duration ${duration}"),
                                 duration: tempo }],
                             ["aps/Output", {
                                 content: _("Public URL: ${proto}://${url}"),
                                 proto: proto,
-                                url: at(model, "content_name")}]
+                                url: at(model, "path")}]
                         ]]
                 ]];
                 return load(widgets);

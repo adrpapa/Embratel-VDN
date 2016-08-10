@@ -27,8 +27,9 @@
                     selectionMode:     "multiple",
                     apsResourceViewId: "content-info",
                     columns:           [
-                        { field: "content_name", name: "Name",  filter: { title: "Name" }, sortable: true, type: "resourceName" },
-                        { field: "content_storage_size", name: "Size" },
+                        { field: "content_id", name: _("ID"), sortable: true, type: "resourceName" },
+                        { field: "content_name", name: _("Name"),  filter: { title: "Name" }, sortable: true },
+//                         { field: "content_storage_size", name: "Size" },
                         { field: "content_time_length", name: "Duration(mmm:ss)",
                             renderCell:
                                 function(object, data){
@@ -62,25 +63,8 @@
                     });
 
                     registry.byId("refresh").on("click", function() {
-//                     var job_ids = null;
-//                     var dataStoreGrid = store.data;
-//                     dataStoreGrid.forEach(function(items){
-//                         job_ids = [items.job_id];
-//                     });
-//                     job_ids = JSON.stringify(job_ids);
-//                     when(xhr("/aps/2/resources/" + model.aps.id + "/updateJobStatus", {method: "POST", handleAs: "text",
-//                     query: {json: job_ids}}),
-//                         function (res) {
-//                         },
-//                         function (error) {
-//                             aps.apsc.cancelProcessing();
-//                             asemail.cancel();
-//                             return;
-//                         }
-//                     );
-//                 
-//                     grid.refresh();
-                });
+                        grid.refresh();
+                    });
 
                 /* Create the on-click handler for the *Delete* button
                 */

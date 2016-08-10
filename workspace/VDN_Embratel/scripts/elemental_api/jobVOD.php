@@ -118,29 +118,29 @@
         
         public static function delete($id) {
             $job = JobVOD::getJobVODById($id);
-            printf("%s - %s %s\n",$job->id, $job->name, $job->status);
-            if( $job->isStatusComplete() ) {
-                throw new invalidargumentexception("Complete jobs may not be removed");
-            }
+//             printf("%s - %s %s\n",$job->id, $job->name, $job->status);
+//             if( $job->isStatusComplete() ) {
+//                 throw new invalidargumentexception("Complete jobs may not be removed");
+//             }
             while($job->isStatusPending()) {
                 $job->cancel();
                 $job = JobVOD::getJobVODById($id);
             }
             
-            while(! $job->isStatusArchived() ) {
-                $job->archive($id);
-                $job = JobVOD::getJobVODById($id);
-            }
-            # LiveEvent::getElementalRest()->restDelete($liveEvent->id);
+            $job->archive($id);
+            JobVOD::getElementalRest()->restDelete($liveEvent->id);
         }
         
         public static function cancel($id) {
             $job = JobVOD::getJobVODById($id);
-            if($job->status == "active" || $job->status == "pending" || $job->status == "pre" || $job->status == "running"){
+//             if($job->status == "active" || $job->status == "pending" || $job->status == "pre" || $job->status == "running"){
+            try {
                 JobVOD::getElementalRest()->postRecord($id, "cancel", "<cancel></cancel>");
             }
-            else {
-                throw new invalidargumentexception("Nao e possivel cancelar o job $id com status $job->status. Apenas jobs com status=running ou pending podem ser cancelados");
+            catch(Exception $fault ) {
+                echo "Error cancelling job with ID = $id / status = $job->status.";
+                echo " Fault message: ".$fault->getMessage();
+//              throw new invalidargumentexception "Nao e possivel cancelar o job $id com status $job->status. Apenas jobs com status=running ou pending podem ser cancelados";
             }
         }
         

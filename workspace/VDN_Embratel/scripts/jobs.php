@@ -23,19 +23,25 @@ class job extends \APS\ResourceBase {
 
     /**
         * @type(string)
-        * @title("Name")
-        * @description("Job Name")
+        * @title("Input URIs")
+        * @description("Job Input URIs for video ingestion")
         * @required
         */
-    public $name;	
+    public $input_URI;
+
+    /**
+        * @type(string)
+        * @title("Name")
+        * @description("Job Name")
+        */
+    public $name;
 
     /**
         * @type(string)
         * @title("Description")
         * @description("Job Description")
-        * @required
         */
-    public $description;	
+    public $description;
 
     /**
         * @type(string)
@@ -88,18 +94,27 @@ class job extends \APS\ResourceBase {
 
     /**
         * @type(string)
+        * @title("Submit date")
+        * @description("Date of job submission")
+        * @readonly
+        */
+    public $submit_date;
+
+    /**
+        * @type(string)
+        * @title("Elapsed time")
+        * @description("Job Elapsed time")
+        * @readonly
+        */
+    public $elapsed_time;
+
+    /**
+        * @type(string)
         * @title("Info")
         * @description("Message")
         * @readonly
         */
     public $info;
-
-    /**
-        * @type(string)
-        * @title("Input URIs")
-        * @description("Job Input URIs for video ingestion")
-        */
-    public $input_URI;
 
     /**
     * @type(integer)
@@ -157,12 +172,12 @@ class job extends \APS\ResourceBase {
         $clientid = formatClientID($this->context);
         \APS\LoggerRegistry::get()->info("Client: $clientid Input: ".$this->input_URI);
         $fnparts = explode('/',$this->input_URI);
-        $fileName = $fnparts[count($fnparts)-1];
-        \APS\LoggerRegistry::get()->info("Verificando duplicidade de conteúdo ".$fileName);
+        $this->name = $fnparts[count($fnparts)-1];
+        \APS\LoggerRegistry::get()->info("Verificando duplicidade de conteúdo ".$this->name);
         foreach( $this->context->vods as $vod ) {
             $fnparts = explode('/',$vod->input_URI);
             $vodFileName = $fnparts[count($fnparts)-1];
-            if( $vodFileName == $fileName  ) {
+            if( $vodFileName == $this->name  ) {
                 throw new Exception(_("Content with this name already exists. Please remove content and resubmit job"));
             }
         }
@@ -173,7 +188,7 @@ class job extends \APS\ResourceBase {
             }
             $fnparts = explode('/',$job->input_URI);
             $jobFileName = $fnparts[count($fnparts)-1];
-            if( $jobFileName == $fileName  ){
+            if( $jobFileName == $this->name  ){
                 throw new Exception(_("Job with this name already exists. Please remove job, content and resubmit content: ").$jobFileName);
             }
         }
@@ -214,7 +229,6 @@ class job extends \APS\ResourceBase {
         \APS\LoggerRegistry::get()->info("Called provisionAsync for job id=".$this->job_id);
         \APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
         $this->state = $jobstatus->status.'';
-        
         if( $jobstatus->status == 'complete') {
             return $this->createContents($jobstatus);
         }
@@ -243,10 +257,12 @@ class job extends \APS\ResourceBase {
         $vod->content_id            = $content->id;
         $vod->content_name          = $content->fileName;
         $vod->path                  = $content->endpoint;
+        $vod->content_creation_ts   = $jobstatus->complete_time;
 //         preg_match('([\d\.]+)', $vod->content_storage_size, $sizeArray);
 //         $vod->content_storage_size  = round( $sizeArray[0] / 1000);
 
-        $vod->content_time_length   = round($content->totalMiliSeconds / 60000);
+        $vod->description           = $content->fileName;/*$this->description;*/
+        $vod->content_time_length   = $content->totalMiliSeconds;
         $vod->content_encoding_charged = false;
         $vod->screen_format         = $this->screen_format;
         $vod->premium               = $this->premium;
@@ -282,7 +298,7 @@ class job extends \APS\ResourceBase {
 
         try {
             ElementalRest::$auth = new Auth( 'elemental','elemental' );
-            JobVOD::delete($this->job_id);
+            JobVOD::archive($this->job_id);
         } catch (Exception $fault) {
             \APS\LoggerRegistry::get()->info("Error while deleting content job, :\n\t" . $fault->getMessage());
             throw new Exception($fault->getMessage());
