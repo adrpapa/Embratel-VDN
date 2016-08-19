@@ -9,14 +9,14 @@ require_once "elemental_api/preset.php";
 require_once "elemental_api/deltaContents.php";
 
 /**
- * @type("http://embratel.com.br/app/VDN_Embratel/job/1.0")
+ * @type("http://embratel.com.br/app/VDN_Embratel/job/2.0")
  * @implements("http://aps-standard.org/types/core/resource/1.0")
  */
 class job extends \APS\ResourceBase {
 
     // Relation with the management context
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/context/1.0")
+        * @link("http://embratel.com.br/app/VDN_Embratel/context/2.0")
         * @required
         */
     public $context;
@@ -252,12 +252,12 @@ class job extends \APS\ResourceBase {
         $context = $apsc2->getResource($this->context->aps->id);
         $content = DeltaContents::getContentsFromJob($this->job_id);
 
-        $vod = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDN_Embratel/vod/1.0");
+        $vod = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDN_Embratel/vod/2.0");
         
         $vod->content_id            = $content->id;
         $vod->content_name          = $content->fileName;
         $vod->path                  = $content->endpoint;
-        $vod->content_creation_ts   = $jobstatus->complete_time;
+        $vod->content_creation_ts   = $jobstatus->complete_time."";
 //         preg_match('([\d\.]+)', $vod->content_storage_size, $sizeArray);
 //         $vod->content_storage_size  = round( $sizeArray[0] / 1000);
 

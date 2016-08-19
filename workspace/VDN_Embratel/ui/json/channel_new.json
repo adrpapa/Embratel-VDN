@@ -1,7 +1,7 @@
 {
-	"aps": {
-		"type": "http://embratel.com.br/app/VDN_Embratel/channel/1.0"
-	},
-	"name": "",
-	"description": ""
+    "aps": {
+        "type": "http://embratel.com.br/app/VDN_Embratel/channel/2.0"
+    },
+    "name": "",
+    "description": ""
 }

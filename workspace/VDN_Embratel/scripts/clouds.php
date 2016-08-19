@@ -5,13 +5,13 @@ require "aps/2/runtime.php";
 
 /**
  * Class cloud presents application and its global parameters
- * @type("http://embratel.com.br/app/VDN_Embratel/cloud/1.0")
+ * @type("http://embratel.com.br/app/VDN_Embratel/cloud/2.0")
  * @implements("http://aps-standard.org/types/core/application/1.0")
  */
 class cloud extends APS\ResourceBase {
 # Link to collection of contexts. Pay attention to [] brackets at the end of the @link line.
 	/**
-	 * @link("http://embratel.com.br/app/VDN_Embratel/context/1.0[]")
+	 * @link("http://embratel.com.br/app/VDN_Embratel/context/2.0[]")
 	 */
 	public $contexts;
 

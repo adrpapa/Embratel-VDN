@@ -10,7 +10,7 @@ require_once "elemental_api/fileMgmt.php";
 require_once "utils/splunk.php";
 
 /**
- * @type("http://embratel.com.br/app/VDN_Embratel/cdn/1.0")
+ * @type("http://embratel.com.br/app/VDN_Embratel/cdn/2.0")
  * @implements("http://aps-standard.org/types/core/resource/1.0")
  */
 class cdn extends \APS\ResourceBase {
@@ -18,7 +18,7 @@ class cdn extends \APS\ResourceBase {
     // Relation with the management context
 
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/context/1.0")
+        * @link("http://embratel.com.br/app/VDN_Embratel/context/2.0")
         * @required
         */
     public $context;
@@ -50,9 +50,7 @@ class cdn extends \APS\ResourceBase {
         * @required
         */
     public $alias;
-    /*
-    vod_http
-    */
+
     /**
         * @type(string)
         * @title("Content Origin Server(FQDN or IP)")
@@ -79,12 +77,23 @@ class cdn extends \APS\ResourceBase {
     /**
         * @type(boolean)
         * @title("HTTPS")
-        * @description("Turn on HTTPS feature for live")
+        * @description("Turn on HTTPS feature for output")
         */
     public $https;
     /*
     true ou false
     */
+
+    /**
+        * @type(boolean)
+        * @title("HTTPS")
+        * @description("Turn on HTTPS feature for input")
+        */
+    public $https_in;
+    /*
+    true ou false
+    */
+
     /**
         * @type(boolean)
         * @title("Live")

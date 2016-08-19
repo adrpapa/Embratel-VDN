@@ -7,14 +7,14 @@
     // **
     class DeliveryServiceGenSettings extends CDSM {
 
-    	protected $internal_deliveryService;
-    	protected $internal_protocol;
-    	protected $internal_Bitrate;
-    	protected $internal_HashLevel;
-    	protected $internal_TmpfsSize;
-    	protected $internal_OsHttpPort;
-    	protected $internal_ReadTimeout;
-    	
+        protected $internal_deliveryService;
+        protected $internal_protocol;
+        protected $internal_Bitrate;
+        protected $internal_HashLevel;
+        protected $internal_TmpfsSize;
+        protected $internal_OsHttpPort;
+        protected $internal_ReadTimeout;
+        
         public function __construct( $deliveryService=null,$protocol="http",$Bitrate="1000",$HashLevel="0",
                                      $TmpfsSize="2",$OsHttpPort="80",$ReadTimeout="5") {
                                 	
@@ -95,15 +95,15 @@
         }
         
         public function delete($id) {
-        	$this->action = "deleteDeliveryServiceGenSettings";
-        	$this->deliveryService = $id;
-        	return ( parent::delete($id) );        	
+            $this->action = "deleteDeliveryServiceGenSettings";
+            $this->deliveryService = $id;
+            return ( parent::delete($id) );        	
         }
         
         public function update($id,$data=null) {
-        	$this->action = "modifyDeliveryServiceGenSettings";
-        	$this->deliveryService = $id;     
-        	return ( parent::update($id,$data) );
+            $this->action = "modifyDeliveryServiceGenSettings";
+            $this->deliveryService = $id;     
+            return ( parent::update($id,$data) );
         }        
     }
 ?>

@@ -1,10 +1,10 @@
 {
-	"aps": {
-		"type": "http://embratel.com.br/app/VDN_Embratel/cdn/1.0"
-	},
-	"name": "",
-	"description": "",
-	"alias": "",
-	"origin_server": "",
-	"origin_path": ""
+    "aps": {
+        "type": "http://embratel.com.br/app/VDN_Embratel/cdn/2.0"
+    },
+    "name": "",
+    "description": "",
+    "alias": "",
+    "origin_server": "",
+    "origin_path": ""
 }

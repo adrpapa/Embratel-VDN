@@ -2,11 +2,8 @@
     require_once "utils.php";
     require_once "preset.php";
     require_once "deltaInput.php";
-    require_once "deltaOutputTemplate.php";
     require_once "configConsts.php";
     require_once "elementalRest.php";
-
-    // Alteracoes feitas por Adriano
 
     /*
     ** Classe que cria e controla live events
@@ -21,86 +18,66 @@
             $axStream = $axCli.'/'.$axNam;
             
             $selectedNode='';
+            $nodeIpAddress='';
             $lightestCount='a';
+            // Calcula automaticamente o nó Live onde será gerado o evento
             $nodes = LiveEvent::getNodesRest()->restGet();
             foreach( $nodes->xpath('node') as $node ){
                 if( $node->product == "Live" && $node->status == 'active' ) {
                     if( $node->running_count < $lightestCount ) {
                         $toks = explode('/',$node['href']."");
                         $selectedNode = $toks[count($toks)-1];
+                        echo "\n\n**** Selected $node->hostname ***** \n\n";
+                        $nodeIpAddress = ConfigConsts::$LIVE_NODES[$node->hostname.""];
                     }
                 }
             }
             if( $selectedNode == '' ) {
                 throw new invalidargumentexception("No active live node exists in Conductor Live ".LIVE_CONDUCTOR_HOST);
             }
-            /*
-                * Criação do Output template
-                */
-            $tpl = ConfigConsts::TEMPLATE_PATH."/live_output_templates_".$level.".xml";
-            if( ! file_exists($tpl) )
-                throw new Exception("File $tpl does not exist \n");
-            $outputTemplate = simplexml_load_file($tpl);
-            $outputTemplate->name = $axNam;
-            foreach( $outputTemplate->xpath("/*/filter") as $filter ) {
-                $filter->output_url = $axStream;
-                if($DVR)
-                    $filter->filter_settings->index_duration='7200';
-                if( $filter->filter_type == 'hls_package' )
-                    $filter->filter_settings->playlist_type = 'EVENT';
-            }
-            $outputTemplate = DeltaOutputTemplate::getElementalRest()->postRecord(null, null, $outputTemplate);
+            
+            $tpl = ConfigConsts::TEMPLATE_PATH."/live_input_filter.xml";
+            $inputFilter = new SimpleXmlElement("<input_filter></input_filter>");
+            $inputFilter->filter_type = "webdav_input";
+            $inputFilter->label =  $axCli.'_'.$axNam;
+            $filterSettings = $inputFilter->addChild('filter_settings');
+//             $inputFilter->filter_settings->seconds_to_keep = ($DVR ? 7800 : 600);
+            $filterSettings->template_id = "";
+            $filterSettings->content_window_type = "packager_controlled";
+            $filterSettings->storage_location = ConfigConsts::DELTA_WEBDAV_STORAGE_ROOT."/".$axStream."/";
+            $filterSettings->aws_credential_id;
+            $filterSettings->input_user_id = 1;
+            $filterSettings->relative_uri = $axStream;
+            $filterSettings->vod_content = 'false';
+//             print_r($inputFilter);
+            $inputFilter = DeltaInputFilter::getElementalRest()->postRecord(null, null, $inputFilter);
+            $inputFilterId = idFromHref($inputFilter);
+            
+//             print_r($inputFilter);
+            echo "\n\nCreated Input filter with ID = $inputFilterId\n\n";
 
             try {
-                $tpl = ConfigConsts::TEMPLATE_PATH."/live_input_filter.xml";
-                $inputFilter = simplexml_load_file($tpl);
-                $inputFilter->label =  $axStream;
-                $inputFilter->filter_settings->seconds_to_keep = ($DVR ? 7800 : 600);
-                $inputFilter->filter_settings->relative_uri = $axStream;
-                $inputFilter->filter_settings->template_id = $outputTemplate->id;
-                $inputFilter->filter_settings->storage_location = DELTA_WEBDAV_STORAGE_ROOT.$axStream;
-                $inputFilter->filter_settings->vod_content = 'false';
-                $inputFilter = DeltaInputFilter::getElementalRest()->postRecord(null, null, $inputFilter);
-
-                try {
-                    
-
-
-                    $tpl = ConfigConsts::TEMPLATE_PATH."/live_events_".$level.".xml";
-                    $live_event = simplexml_load_file($tpl);
-                    $live_event->name($name);
-                    $live_event->hot_backup_pair="false";
-                    $live_event->input->network_input->uri = ConfigConsts::LIVE_NODE_URL.$axCli.'/'.$axNam;
-                    $live_event->failure_rule->backup_rule = "none";
-                    $live_event->output_group->apple_live_group_settings->destination->uri = DELTA_WEBDAV_URI_ROOT.$axStream;
-                    $live_event = LiveEvent::getElementalRest()->postRecord(null, null, $live_event);
-                    
-                    $liveEvent = LiveEvent::setPropertiesFromXML($live_event);
-
-                // TODO Calcular automaticamente o nó Live onde será gerado o evento
-                    $liveEvent->live_node = ConfigConsts::LIVE_NODE_URL;
-                    $liveEvent->inputURI = $liveEvent->live_node;
-                    $liveEvent->inputURI .= $liveEvent->clientID.'/';
-                    $liveEvent->inputURI .= preg_replace('/\s+/', '', $liveEvent->name);
-                // TODO Verificar como será criado no delta - se haverá conductor qual URL
-                    $liveEvent->outputURI = "udp://".ConfigConsts::DELTA_HOST.':'.$liveEvent->udpPort;
-                    $liveEvent->xml = LiveEvent::getElementalRest()->getTemplate(
-                            $templateID, "ElementalLive".$templateID);
-                    $liveEvent->xml->name = $liveEvent->name;
-                    $liveEvent->xml->input->network_input->uri = $liveEvent->inputURI;
-                    $liveEvent->xml->output_group->output->udp_settings->destination->uri = $liveEvent->outputURI;
-                    print $liveEvent->xml->asXml().'\n';
-                    $liveEvent->setPropertiesFromXML();
-                    $liveEvent->inputFilterID = $inputFilter->id;
-                    $liveEvent->outputTemplateID = $inputFilter->template_id;
-                    return( $liveEvent );
-                }
-                catch( Exception $e ) {
-                    DeltaInputFilter::getElementalRest()->restDelete($inputFilter->id);
-                }
+                $tpl = ConfigConsts::TEMPLATE_PATH."/live_events_".$level.".xml";
+                $live_event = simplexml_load_file($tpl);
+                $live_event->name = $axNam;
+                $live_event->input->hot_backup_pair="false";
+                $live_event->node_id = $selectedNode;
+                $live_event->input->network_input->uri = ConfigConsts::LIVE_NODE_URL.$axStream;
+                $live_event->failure_rule->backup_rule = "none";
+                $live_event->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WEBDAV_URI_ROOT.$axStream."/".$axNam;
+                $live_event = LiveEvent::getElementalRest()->postRecord(null, null, $live_event);
+                $liveEvent = LiveEvent::liveEventFromXML($live_event);
+                $liveEvent->start();
+                $liveEvent->node_id = $selectedNode;
+                $liveEvent->inputURI = "http://".$nodeIpAddress.":1935/".$axStream;
+                $liveEvent->live_node = $nodeIpAddress;
+                $liveEvent->inputFilterID = $inputFilterId;
+                return( $liveEvent );
             }
             catch( Exception $e ) {
-                DeltaOutputTemplate::getElementalRest()->restDelete($outputTemplate->id);
+                echo "Error creating live event\n";
+                echo $e->getMessage()."\n";
+                DeltaInputFilter::getElementalRest()->restDelete($inputFilterId);
             }
         }
 
@@ -157,9 +134,7 @@
             }
             $ax =$event->xpath('status');
             $this->status =$ax [0]."";
-            $this->href = $event["href"]."";      
-            $toks = explode('/',$this->href);
-            $this->id = $toks[count($toks)-1];
+            $this->id = idFromHref($event);
         }
         
         public function refresh(){
@@ -180,20 +155,24 @@
 
         public function isStatusArchived() {
             $event = LiveEvent::getEventList($this->id, "filter-=archived");
-            var_dump($event);
+//             var_dump($event);
             return $event->id == $this->id;
         }
 
         public static function delete($id) {
             $liveEvent = LiveEvent::getLiveEventById($id);
-//             printf("%s - %s %s\n",$liveEvent->id, $liveEvent->name, $liveEvent->status);
-            while($liveEvent->isStatusPending()) {
+            printf("%s - %s %s\n",$liveEvent->id, $liveEvent->name, $liveEvent->status);
+            if( $liveEvent->status == "running") {
+                $liveEvent->stop();
+                $liveEvent = LiveEvent::getLiveEventById($id);
+            }
+            if( $liveEvent->status == "pending") {
                 $liveEvent->cancel();
                 $liveEvent = LiveEvent::getLiveEventById($id);
             }
-            while(! $liveEvent->isStatusArchived() ) {
+            try {
                 $liveEvent->archive();
-                $liveEvent = LiveEvent::getLiveEventById($id);
+            } catch( Exception $fault ) {
             }
             # LiveEvent::getElementalRest()->restDelete($liveEvent->id);
         }
@@ -216,6 +195,39 @@
             LiveEvent::getElementalRest()->postRecord($this->id, "archive");
         }
     }
-// 	$event = LiveEvent::newLiveEvent( "LiveEventTest1", 'ClienteTesteAPI', 'std', $presets=NULL, $DVR=false, $HTTPS=false);
-// 	var_dump($event);
+        
+// $event = LiveEvent::newLiveEvent( "LiveEventTest1", 'ClienteTesteAPI', 'std', $presets=NULL, $DVR=false, $HTTPS=false);
+// echo "\n\nID = $event->id;\n";
+// echo "Name = $event->name\n";
+// echo "Status = $event->status\n";
+// echo "Input URI = $event->inputURI\n";
+// echo "Live Node: $event->node_id\n";
+// echo "Input Filter ID = $event->inputFilterID\n\n";
+
+// $event =  LiveEvent::getElementalRest()->restGet(35);
+// $fixLen = strlen(ConfigConsts::DELTA_WEBDAV_URI_ROOT);
+// $destpath = substr($event->output_group->apple_live_group_settings->destination->uri."",$fixLen);
+// $fixLen = strlen($destpath) * -1;
+// $destpath = substr($event->output_group->apple_live_group_settings->destination->uri."",$fixLen);
+// echo "Destination = $destpath\n";
+
+// $event = LiveEvent::getLiveEventById();
+// $event->stop();
+// $event->archive();
+// $event->delete();
+
+//         $event = LiveEvent::getStatus(36);
+//         $creation_time=$event->xpath('audit_messages/audit/created_at');
+//         echo "Status = $event->status\n";
+//         echo "Count(creation_time) = ".count($creation_time)."\n";
+//         echo "Creation time: $creation_time[0]\n";
+
+//         2016-08-17 15:45:46-03:00
+//         $creationTime = DateTime::createFromFormat("Y-m-d\TH:i:sT",$creation_time[0]);
+//         $now = new DateTime();
+//         echo $now->format('Y-m-d\TH:i:sP')."\n";
+//         $interval = ($now->getTimestamp() - $creationTime->getTimestamp()) / 60;
+//         var_dump($interval);
+
+
 ?>

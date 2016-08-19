@@ -7,14 +7,14 @@ require_once "elemental_api/utils.php";
 require_once "elemental_api/deltaContents.php";
 
 /**
- * @type("http://embratel.com.br/app/VDN_Embratel/vod/1.0")
+ * @type("http://embratel.com.br/app/VDN_Embratel/vod/2.0")
  * @implements("http://aps-standard.org/types/core/resource/1.0")
  */
 class vod extends \APS\ResourceBase {
 
     // Relation with the management context
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/context/1.0")
+        * @link("http://embratel.com.br/app/VDN_Embratel/context/2.0")
         * @required
         */
     public $context;
@@ -173,7 +173,7 @@ class vod extends \APS\ResourceBase {
         $apsc = \APS\Request::getController();
         $apsc2 = $apsc->impersonate($this);
         $context = $apsc2->getResource($this->context->aps->id);
-        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDN_Embratel/cdn/1.0");
+        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDN_Embratel/cdn/2.0");
         $cdn->name = $cdnName;
         $cdn->description = $cdnName;
         $cdn->alias = $alias;

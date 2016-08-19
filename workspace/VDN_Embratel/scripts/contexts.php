@@ -81,35 +81,40 @@ class DeltaPaths {
 
 /**
 * Class context
-* @type("http://embratel.com.br/app/VDN_Embratel/context/1.0")
+* @type("http://embratel.com.br/app/VDN_Embratel/context/2.0")
 * @implements("http://aps-standard.org/types/core/resource/1.0")
 */
 
 class context extends \APS\ResourceBase
 {
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/channel/1.0[]")
+        * @link("http://embratel.com.br/app/VDN_Embratel/channel/2.0[]")
         */
     public $channels;
 
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/job/1.0[]")
+        * @link("http://embratel.com.br/app/VDN_Embratel/job/2.0[]")
         */
     public $jobs;
 
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/vod/1.0[]")
+        * @link("http://embratel.com.br/app/VDN_Embratel/vod/2.0[]")
         */
     public $vods;
 
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/cdn/1.0[]")
+        * @link("http://embratel.com.br/app/VDN_Embratel/cdn/2.0[]")
         */
     public $cdns;
 
+    /**
+        * @link("http://embratel.com.br/app/VDN_Embratel/cdn/2.0[]")
+        */
+    public $live_cdns;
+
     ## Strong relation (link) to the application instance
     /**
-    * @link("http://embratel.com.br/app/VDN_Embratel/cloud/1.0")
+    * @link("http://embratel.com.br/app/VDN_Embratel/cloud/2.0")
     * @required
     */
     public $cloud;

@@ -16,4 +16,11 @@
         echo "\n********\nSubscription: ".$subscription->subscriptionId."\n***********\n\n";
         return sprintf("Client_%06d",$subscription->subscriptionId);
     }
+    
+    function idFromHref($xml){
+        $href = $xml["href"]."";      
+        $toks = explode('/',$href);
+        return $toks[count($toks)-1];
+    
+    }
 ?>

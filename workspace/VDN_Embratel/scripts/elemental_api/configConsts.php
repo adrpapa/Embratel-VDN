@@ -13,6 +13,7 @@
 
         const LIVE_CONDUCTOR_HOST = '201.31.12.40';
         const LIVE_NODE_URL = 'rtmp://localhost:1935/';
+        public static $LIVE_NODES = array("elencod-2" => "201.31.12.23");
 
         const VOD_CONDUCTOR_HOST  = '201.31.12.26';
         const VOD_WF_MOUNT_POINT = '/mnt/delta';
@@ -27,11 +28,12 @@
         const DELTA_USER = 'elemental';
         const SSH_PRIVATE_KEY = "/var/www/.ssh/id_rsa";
         const SSH_PUBLIC_KEY = "/var/www/.ssh/id_rsa.pub";
-        const DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive/live';
+        const DELTA_LIVE_STORAGE_LOCATION = '/data/server/drive';
         const DELTA_VOD_STORAGE_LOCATION = '/data/server/drive/watchfolders';
         const DELTA_WF_INCOMMING_URI = '/data/server/drive/watchfolders';
-        const DELTA_WEBDAV_STORAGE_LOCATION = '/data/server/drive';
         const DELTA_MOUNT_POINT = '/data/server';
+        const DELTA_WEBDAV_STORAGE_ROOT = '/data/server/drive';
+        const DELTA_WEBDAV_URI_ROOT = 'http://10.0.0.21/in/';
 
         //********** CDN ***********
         const CDMS_ADDRESS = "192.118.77.183";

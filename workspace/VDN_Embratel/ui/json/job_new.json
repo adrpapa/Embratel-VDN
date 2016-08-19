@@ -1,8 +1,8 @@
 {
-	"aps": {
-		"type": "http://embratel.com.br/app/VDN_Embratel/job/1.0"
-	},
-	"name": "",
-	"description": "",
-	"input_URI": ""
+    "aps": {
+        "type": "http://embratel.com.br/app/VDN_Embratel/job/2.0"
+    },
+    "name": "",
+    "description": "",
+    "input_URI": ""
 }

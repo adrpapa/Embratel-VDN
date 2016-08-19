@@ -1,6 +1,6 @@
 {
 	"aps": {
-		"type": "http://embratel.com.br/app/VDN_Embratel/vps/1.0"
+		"type": "http://embratel.com.br/app/VDN_Embratel/vps/2.0"
 	},
 	"state": "Stopped",
 	"platform": {

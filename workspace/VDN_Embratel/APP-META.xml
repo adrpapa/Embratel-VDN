@@ -2,7 +2,7 @@
     xmlns="http://aps-standard.org/ns/2">
     <id>http://embratel.com.br/app/VDN_Embratel</id>
     <name>VDN_Embratel</name>
-    <version>1.0</version>
+    <version>2.0</version>
     <release>1</release>
     <homepage>http://embratel.com.br/app/VDN_Embratel</homepage>
     <vendor>
@@ -34,7 +34,7 @@ CISCO VDN para entrega distribuída de conteúdo
         </categories>
 
         <navigation id="ccpebt" label="VDN Embratel">
-            <var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/1.0" />
+            <var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/2.0" />
             <plugs-to id="http://www.aps-standard.org/ui/service" />
             
             <item id="vod" label="VOD">
@@ -45,7 +45,7 @@ CISCO VDN para entrega distribuída de conteúdo
                                 <cancel label="Back to Contents list"/>
                             </controls>
                             <var name="content"
-                                type-id="http://embratel.com.br/app/VDN_Embratel/vod/1.0" />
+                                type-id="http://embratel.com.br/app/VDN_Embratel/vod/2.0" />
                         </view>
                     </view>
                 </item>
@@ -69,7 +69,7 @@ CISCO VDN para entrega distribuída de conteúdo
 <!--                                 <submit /> -->
                             </controls>
                             <var name="job"
-                                type-id="http://embratel.com.br/app/VDN_Embratel/job/1.0" />
+                                type-id="http://embratel.com.br/app/VDN_Embratel/job/2.0" />
                         </view>
                     </view>
                 </item>
@@ -94,7 +94,7 @@ CISCO VDN para entrega distribuída de conteúdo
                             <submit />
                         </controls>
                         <var name="chnl"
-                            type-id="http://embratel.com.br/app/VDN_Embratel/channel/1.0" />
+                            type-id="http://embratel.com.br/app/VDN_Embratel/channel/2.0" />
                     </view>
                 </view>
             </item>		
@@ -112,7 +112,7 @@ CISCO VDN para entrega distribuída de conteúdo
                             <submit />
                         </controls>
                         <var name="cdnl"
-                            type-id="http://embratel.com.br/app/VDN_Embratel/cdn/1.0" />
+                            type-id="http://embratel.com.br/app/VDN_Embratel/cdn/2.0" />
                     </view>
                 </view>
             </item>						
@@ -126,6 +126,8 @@ CISCO VDN para entrega distribuída de conteúdo
             <file>http://opensource.org/licenses/bsd-license</file>
         </text>
     </license-agreement>
+
+    <upgrade match="version=ge=0,release=ge=0"/>
 
     <service id="clouds">
         <code engine="php" path="scripts/clouds.php" />

@@ -102,9 +102,9 @@ class ElementalRest {
         $this->headers[] = "Content-Type: multipart/form-data; boundary={$boundary}";
     }
     
-    function restGet( $id=null, $params=null){
+    function restGet( $id=null, $params=null, $command=null){
         $this->headers = Array();
-        return $this->restCall( $id, null, $params );
+        return $this->restCall( $id, $command, $params );
     }
 
     function postRecord($id, $command, $data=null){
@@ -127,11 +127,30 @@ class ElementalRest {
         return $this->restCall($id, $command);
     }
     
-    function restDelete( $id ) {
+    function putRecord($id, $command=null, $data=null){
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        if( $data ){
+            if( $data instanceof SimpleXMLElement ){
+                $content = $data->asXml();
+            } else {
+                $content = $data;
+            }
+            curl_setopt($this->ch, CURLOPT_POSTFIELDS, $content);
+            $this->headers = Array("Content-Type: text/xml");
+            $this->headers[] = "Content-Length: ".strlen($content);
+        }
+        else {
+            $this->headers = Array();
+        }
+        
+        return $this->restCall($id, $command);
+    }
+    
+    function restDelete( $id, $command=null ) {
         if( ! $id ) die ("DELETE operation must be called with ID\n");
         $this->headers = Array();
         curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-        return $this->restCall( $id );
+        return $this->restCall( $id, $command );
     }
 
     function restCall( $id=null, $command=null, $params=null){
