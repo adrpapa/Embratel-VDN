@@ -107,11 +107,6 @@ class context extends \APS\ResourceBase
         */
     public $cdns;
 
-    /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/cdn/2.0[]")
-        */
-    public $live_cdns;
-
     ## Strong relation (link) to the application instance
     /**
     * @link("http://embratel.com.br/app/VDN_Embratel/cloud/2.0")

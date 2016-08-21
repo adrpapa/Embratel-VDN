@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
-	<script>
-		require([
-                       "dijit/registry",
-                   "dojox/mvc/getPlainValue",
-                         "aps/WizardData",
-                   "dojox/mvc/at",
-                         "aps/load",
-			             "aps/Memory",
-			/* Include JSON file that defines the wizard steps */
-			"dojo/text!./json/channel-wizard.json",
-			       "dojox/mvc/getStateful",
-			             "aps/ready!"
-		], function (registry, getPlainValue, wd, at, load, Memory, wizardControl, getStateful) {
-			wizardControl = JSON.parse(wizardControl);
-			wizardControl[0].active = true;
-			var channel_new = {
-				aps: { type: "http://embratel.com.br/app/VDN_Embratel/channel/2.0" },
-				name: "",
-				description: "",
-				screen_format: "16:9",
-				dvr: false,
-				https: false,
-				premium: false,
-	            resolutions : [],
-	            framerates : [],
-	            video_bitrates : [],
-	            audio_bitrates : []
+    <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+    <script>
+        require([
+                    "dijit/registry",
+                "dojox/mvc/getPlainValue",
+                        "aps/WizardData",
+                "dojox/mvc/at",
+                        "aps/load",
+                        "aps/Memory",
+            /* Include JSON file that defines the wizard steps */
+            "dojo/text!./json/channel-wizard.json",
+                "dojox/mvc/getStateful",
+                        "aps/ready!"
+        ], function (registry, getPlainValue, wd, at, load, Memory, wizardControl, getStateful) {
+            wizardControl = JSON.parse(wizardControl);
+            wizardControl[0].active = true;
+            var channel_new = {
+                aps: { type: "http://embratel.com.br/app/VDN_Embratel/channel/2.0" },
+                name: "",
+                description: "",
+                screen_format: "16:9",
+                dvr: false,
+                https: false,
+                premium: false,
+                resolutions : [],
+                framerates : [],
+                video_bitrates : [],
+                audio_bitrates : []
 };
-			/* Declare the data source */
-			var model = typeof aps.context.params.isNew === "undefined"? channel_new: getStateful(wd.get());
+            /* Declare the data source */
+            var model = typeof aps.context.params.isNew === "undefined"? channel_new: getStateful(wd.get());
 
-			var screen_formats = new Memory({
-				idProperty: "value",
-					data: [	{ value:"16:9",		label: "16:9" },
-							{ value: "4:3",		label: "4:3" } ]
-			});
+            var screen_formats = new Memory({
+                idProperty: "value",
+                    data: [	{ value:"16:9",		label: "16:9" },
+                            { value: "4:3",		label: "4:3" } ]
+            });
 
-			/* Create widgets */
-			var widgets =
-				["aps/PageContainer", { id: "page" }, [
-					["aps/FieldSet", { id: "new1_general", title:  "General Configuration"  }, [
-						["aps/TextBox", { id: "new1_channelName", label: _("Channel Name"), value: at(model, "name"), required: true }],
-						["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") } ]
-					]],
-					["aps/FieldSet", { id: "new1_options", title:  "Channel Configuration Options"  }, [
-						["aps/Select", { id: "new1_fmt", label: _( "Screen Format"),
-							value: at(model,"screen_format"), store: screen_formats }],
-						["aps/CheckBox", { id: "new1_dvr", label: _("Provide DVR Feature?"), checked: at(model, "dvr") } ],
-						["aps/CheckBox", { id: "new1_https", label: _("Use HTTPS?"), checked: at(model, "https") } ],
-						["aps/CheckBox", { id: "new1_premium", label: _("Premium Configuration Options?"), checked: at(model, "premium") } ]
-					]]
-				]];
-			load(widgets).then(function(){
-				/* Create handlers for the navigation buttons */
-				aps.app.onCancel = function() {
-					aps.apsc.gotoView("channels");
-				};
-				aps.app.onNext = function() {
-					var page = registry.byId("page");
-					page.get("messageList").removeAll();
+            /* Create widgets */
+            var widgets =
+                ["aps/PageContainer", { id: "page" }, [
+                    ["aps/FieldSet", { id: "new1_general", title:  "General Configuration"  }, [
+                        ["aps/TextBox", { id: "new1_channelName", label: _("Channel Name"), value: at(model, "name"), required: true }],
+                        ["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description") } ]
+                    ]],
+                    ["aps/FieldSet", { id: "new1_options", title:  "Channel Configuration Options"  }, [
+                        ["aps/Select", { id: "new1_fmt", label: _( "Screen Format"),
+                            value: at(model,"screen_format"), store: screen_formats }],
+                        ["aps/CheckBox", { id: "new1_dvr", label: _("Provide DVR Feature?"), checked: at(model, "dvr") } ],
+                        ["aps/CheckBox", { id: "new1_https", label: _("Use HTTPS?"), checked: at(model, "https") } ],
+                        ["aps/CheckBox", { id: "new1_premium", label: _("Premium Configuration Options?"), checked: at(model, "premium") } ]
+                    ]]
+                ]];
+            load(widgets).then(function(){
+                /* Create handlers for the navigation buttons */
+                aps.app.onCancel = function() {
+                    aps.apsc.gotoView("channels");
+                };
+                aps.app.onNext = function() {
+                    var page = registry.byId("page");
+                    page.get("messageList").removeAll();
 
-					/* Validate the values assigned to widgets */
-					if (!page.validate()) {
-						aps.apsc.cancelProcessing();
-						return;
-					}
+                    /* Validate the values assigned to widgets */
+                    if (!page.validate()) {
+                        aps.apsc.cancelProcessing();
+                        return;
+                    }
 
-					/* Save the values in the client"s storage */
-					wd.put(getPlainValue(model));
-					/* and proceed to the next screen */
-					aps.apsc.gotoView("channel-new-last");
-				};
-			});
-		}
-	);
-	</script>
+                    /* Save the values in the client"s storage */
+                    wd.put(getPlainValue(model));
+                    /* and proceed to the next screen */
+                    aps.apsc.gotoView("channel-new-last");
+                };
+            });
+        }
+    );
+    </script>
 </head>
 <body>
 </body>

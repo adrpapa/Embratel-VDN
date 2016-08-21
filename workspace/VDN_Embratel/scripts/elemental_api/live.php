@@ -67,7 +67,7 @@
                 $live_event->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WEBDAV_URI_ROOT.$axStream."/".$axNam;
                 $live_event = LiveEvent::getElementalRest()->postRecord(null, null, $live_event);
                 $liveEvent = LiveEvent::liveEventFromXML($live_event);
-                $liveEvent->start();
+                $liveEvent->start($liveEvent->id);
                 $liveEvent->node_id = $selectedNode;
                 $liveEvent->inputURI = "http://".$nodeIpAddress.":1935/".$axStream;
                 $liveEvent->live_node = $nodeIpAddress;
@@ -77,11 +77,11 @@
             catch( Exception $e ) {
                 echo "Error creating live event\n";
                 echo $e->getMessage()."\n";
+                echo $live_event->asXML();
                 DeltaInputFilter::getElementalRest()->restDelete($inputFilterId);
+                throw $e;
             }
         }
-
-
 
         public static function liveEventFromXML( $event ) {
             $liveEvent = new self();
@@ -118,7 +118,12 @@
         }
 
         public static function getStatus( $id ) {
-            return LiveEvent::getElementalRest()->restCall($id=$id, $command='status');
+            $eventXml = LiveEvent::getElementalRest()->restCall($id=$id, $command='status');
+            $event = new self();
+            $event->id = $id;
+            $event->status = $eventXml->status;
+            $event->created_at = $eventXml->xpath('audit_messages/audit/created_at');
+            return $event;
         }
 
         public function setPropertiesFromXML( $event ) {
@@ -137,24 +142,8 @@
             $this->id = idFromHref($event);
         }
         
-        public function refresh(){
-            $this->setPropertiesFromXML(LiveEvent::getElementalRest()->restGet($this->id));
-        }
-        
-        public function isStatusPending() {
-            return $this->status == 'pending';
-        }
-
-        public function isStatusCancelled() {
-            return $this->status == 'cancelled';
-        }
-
-        public function isStatusRunning() {
-            return $this->status == 'running';
-        }
-
-        public function isStatusArchived() {
-            $event = LiveEvent::getEventList($this->id, "filter-=archived");
+        public function isStatusArchived($id) {
+            $event = LiveEvent::getEventList($id, "filter-=archived");
 //             var_dump($event);
             return $event->id == $this->id;
         }
@@ -163,39 +152,45 @@
             $liveEvent = LiveEvent::getLiveEventById($id);
             printf("%s - %s %s\n",$liveEvent->id, $liveEvent->name, $liveEvent->status);
             if( $liveEvent->status == "running") {
-                $liveEvent->stop();
+                $liveEvent->stop($id);
                 $liveEvent = LiveEvent::getLiveEventById($id);
             }
             if( $liveEvent->status == "pending") {
-                $liveEvent->cancel();
+                $liveEvent->cancel($id);
                 $liveEvent = LiveEvent::getLiveEventById($id);
             }
             try {
-                $liveEvent->archive();
+                $liveEvent->archive($id);
             } catch( Exception $fault ) {
             }
             # LiveEvent::getElementalRest()->restDelete($liveEvent->id);
         }
 
-        public function start() {
-            LiveEvent::getElementalRest()->postRecord($this->id, "start");
+        public static function start($id) {
+            $liveEvent = LiveEvent::getStatus($id);
+            if( $liveEvent->status == "complete" || $liveEvent->status == "cancelled" ) {
+                LiveEvent::getElementalRest()->postRecord($id, "reset");
+                $liveEvent = LiveEvent::getStatus($id);
+            }    
+            if( $liveEvent->status == "pending") {
+                LiveEvent::getElementalRest()->postRecord($id, "start");
+            }    
         }
 
-        public function stop() {
-            LiveEvent::getElementalRest()->postRecord($this->id, "stop");
-            $this->refresh();
+        public static function stop($id) {
+            LiveEvent::getElementalRest()->postRecord($id, "stop");
         }
 
-        public function cancel() {
-            LiveEvent::getElementalRest()->postRecord($this->id, "cancel");
-            $this->refresh();
+        public static function cancel($id) {
+            LiveEvent::getElementalRest()->postRecord($id, "cancel");
         }
 
-        public function archive() {
-            LiveEvent::getElementalRest()->postRecord($this->id, "archive");
+        public static function archive($id) {
+            LiveEvent::getElementalRest()->postRecord($id, "archive");
         }
     }
         
+// LiveEvent::delete( 47 );
 // $event = LiveEvent::newLiveEvent( "LiveEventTest1", 'ClienteTesteAPI', 'std', $presets=NULL, $DVR=false, $HTTPS=false);
 // echo "\n\nID = $event->id;\n";
 // echo "Name = $event->name\n";

@@ -4,60 +4,60 @@
     <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
     <script>
         require([       "aps/ResourceStore",
-                       "dojo/when",
-                      "dijit/registry",
+                    "dojo/when",
+                    "dijit/registry",
                         "aps/load",
                         "aps/Memory",
-                  "dojox/mvc/getStateful",
-                  "dojox/mvc/getPlainValue",
+                "dojox/mvc/getStateful",
+                "dojox/mvc/getPlainValue",
                         "aps/WizardData",
-                       "./js/displayError.js",
-                       "./js/videoparams.js",
-           "dojo/text!./json/frameRates.json",
-           "dojo/text!./json/videoBitRates.json",
-           "dojo/text!./json/audioBitRates.json",
-           "dojo/text!./json/resol4x3.json",
-           "dojo/text!./json/resol16x9.json",
-           "dojo/text!./json/channel-wizard.json",
-				  "dojox/mvc/at",
+                    "./js/displayError.js",
+                    "./js/videoparams.js",
+        "dojo/text!./json/frameRates.json",
+        "dojo/text!./json/videoBitRates.json",
+        "dojo/text!./json/audioBitRates.json",
+        "dojo/text!./json/resol4x3.json",
+        "dojo/text!./json/resol16x9.json",
+        "dojo/text!./json/channel-wizard.json",
+                "dojox/mvc/at",
                         "aps/ready!"],
-			function (Store, when, registry, load, Memory, getStateful, getPlainValue, wd,
-					displayError, videoparams, frameRates, videoBitRates, audioBitRates,
-					resol4x3, resol16x9, wizardControl)
-			{
-				wizardControl = JSON.parse(wizardControl);
-				wizardControl[1].active = true;
+            function (Store, when, registry, load, Memory, getStateful, getPlainValue, wd,
+                    displayError, videoparams, frameRates, videoBitRates, audioBitRates,
+                    resol4x3, resol16x9, wizardControl)
+            {
+                wizardControl = JSON.parse(wizardControl);
+                wizardControl[1].active = true;
 
-				var store = new Store({
-						apsType: "http://embratel.com.br/app/VDN_Embratel/channel/2.0",
-						target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/channels"
-					}),
-					model = getStateful(wd.get());
+                var store = new Store({
+                        apsType: "http://embratel.com.br/app/VDN_Embratel/channel/2.0",
+                        target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/channels"
+                    }),
+                    model = getStateful(wd.get());
 
-				var widget = videoparams(model, frameRates, videoBitRates,
-						audioBitRates, resol4x3, resol16x9 );
-				load(widget).then(function()
-				{
-					/* Once the widgets are created, create handlers for the navigation buttons */
-					aps.app.onSubmit = function()
-					{
-						var page = registry.byId("page");
-						if (!page.validate()) {
-							aps.apsc.cancelProcessing();
-							return;
-						}
-						when(store.put(getPlainValue(model)),
-							function(){ aps.apsc.gotoView("channels"); },
-							displayError
-						);
-					};
-					aps.app.onPrev = function() {
-						aps.apsc.prev();
-					};
-				});
-			} // End of function
-		); // End of require
-	</script>
+                var widget = videoparams(model, frameRates, videoBitRates,
+                        audioBitRates, resol4x3, resol16x9 );
+                load(widget).then(function()
+                {
+                    /* Once the widgets are created, create handlers for the navigation buttons */
+                    aps.app.onSubmit = function()
+                    {
+                        var page = registry.byId("page");
+                        if (!page.validate()) {
+                            aps.apsc.cancelProcessing();
+                            return;
+                        }
+                        when(store.put(getPlainValue(model)),
+                            function(){ aps.apsc.gotoView("channels"); },
+                            displayError
+                        );
+                    };
+                    aps.app.onPrev = function() {
+                        aps.apsc.prev();
+                    };
+                });
+            } // End of function
+        ); // End of require
+    </script>
 </head>
 <body>
 </body>

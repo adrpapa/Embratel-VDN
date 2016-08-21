@@ -224,9 +224,13 @@ class channel extends \APS\ResourceBase {
 
         $event = LiveEvent::newLiveEvent( $this->name, $clientid, $level, $presets );
         
+        $logger->info("\n\***Evento Criado ***");
+        $logger->info(var_dump($event));
+        $logger->info("\n\***Evento Criado ***");
+                      
         $this->live_event_id = $event->id;
         $this->live_event_name = $event->name;
-        $this->state = $event->status;
+        $this->state = $event->status."";
         $this->input_URI =  $event->inputURI;
         $this->live_node = $event->live_node;
         $this->input_filter_id = $event->inputFilterID;
@@ -238,32 +242,27 @@ class channel extends \APS\ResourceBase {
         $logger->info("live_node:" . $this->live_node );
         throw new \Rest\Accepted($this, "Event Created", 10); // Return "202 Accepted"
     }
-
+    
     public function provisionAsync() {
         $logger = \APS\LoggerRegistry::get();
         $logger->setLogFile("logs/channels.log");
         $logger->info("Verificando se provisionamento de canal está completo para ID=".$this->aps->id);
         $event = LiveEvent::getStatus($this->live_event_id);
-        $creation_time=$event->xpath('audit_messages/audit/created_at');
         
-        echo "Count(creation_time) = ".count($creation_time);
         $this->state = $event->status."";
-        if( count($creation_time) < 1 ){
-            if( $event->status != "running" ) {
-                return;
-            }
-            $logger->info("live event:" . $this->live_event_id." Has not received input yet" );
-            $this->state = _("Waiting start rtmp");
+        if( $event->status == "running" && count($event->created_at) < 1 ){
+            $logger->info("live event:" . $this->live_event_id." has not received input yet" );
+            $this->state = $this->pendingState();
             throw new \Rest\Accepted($this, "Event Created", 10); // Return "202 Accepted"
         }
         
-        echo "Event Start Encoding Time is: ".$creation_time[0];
+        $logger->info("Event Start Encoding Time is: ".$event->created_at[0]);
         $content = DeltaContents::getContentsForEvent($this);
         if( $content == null ){
             throw new \Rest\Accepted($this, "Event Created", 10); // Return "202 Accepted"
         }
         $this->content_id = $content->id;
-        $this->start_encoding_time = $creation_time[0]."";
+        $this->start_encoding_time = $event->created_at[0]."";
         $this->accum_encoding_time = 0;
         $this->last_reported_encoding_time = 0;
 
@@ -282,40 +281,58 @@ class channel extends \APS\ResourceBase {
         $cdn->description = $cdnName;
         $cdn->alias = $axName;
         $cdn->origin_server = $originServer;
-        $this->origin_server = $originServer;
+        $this->cdn_origin_server = $originServer;
         $cdn->origin_path = $originPath;
         $cdn->https = $this->https;
         $cdn->live = "true";
-        $apsc2->linkResource($context, 'live_cdns', $cdn);
+        $apsc2->linkResource($context, 'cdns', $cdn);
+
+        $logger->info("Finished provisionning event ID:" . $this->live_event_id );
+        $logger->info("\n\tlive_event_id:" . $this->live_event_id );
+        $logger->info("\n\tstate:" . $this->state );
+        $logger->info("\n\tcdn_origin_server:" . $this->cdn_origin_server );
+        $logger->info("\n\tcontent_id". $this->content_id  );
+        $logger->info("\n\tstart_encoding_time". $this->start_encoding_time );
+        $logger->info("\n\taccum_encoding_time". $this->accum_encoding_time );
+        $logger->info("\n\tlast_reported_encoding_time\n". $this->last_reported_encoding_time );
+        
     }
+
+    private function pendingState(){
+        return _("Wait rtmp start");
+    }
+    
 
     public function configure($new) {
     	\APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
         $event = LiveEvent::getStatus($this->live_event_id);
         
-        if( $this->state != $new->state ) {
-            \APS\LoggerRegistry::get()->info (sprintf("Changing channel %s state from %s to %s",
-                $this->state, $new->state));
-            switch( $new->state ){
-                case 'stop':
+        \APS\LoggerRegistry::get()->info (sprintf("Changing channel %s state from %s to %s",
+            $this->live_event_id,  $this->state, $new->state));
+        
+        switch( $new->state ){
+            case 'stop':
+                if( $event->status == 'running') {
                     \APS\LoggerRegistry::get()->info("Stopping event $this->live_event_id wiht accum time = $this->accum_encoding_time");
                     $this->accum_encoding_time += $this->getElapsedEncodingTime();
                     $this->start_encoding_time = null;
                     \APS\LoggerRegistry::get()->info("New accum time for event $this->live_event_id = $this->accum_encoding_time");
-                    $event->stop();
-                    break;
-                case 'start':
+                    LiveEvent::stop($this->live_event_id);
+                }
+                break;
+            case 'running':
+                if( $event->status[0] != 'running') {
                     \APS\LoggerRegistry::get()->info("Starting event $this->live_event_id");
-                    $event->start();
+                    LiveEvent::start($this->live_event_id);
                     $now = new DateTime();
                     $this->start_encoding_time = $now->format('Y-m-d\TH:i:sP')."\n";
                     \APS\LoggerRegistry::get()->info("Event $this->live_event_id started at $this->start_encoding_time");
-                    break;
-            }
+                }
+                break;
             $event = LiveEvent::getStatus($this->live_event_id);
+//          não tem atributos a alterar no original      $this->_copy($new);
+            $this->state = $event->status."";
         }
-//         não tem atributos a alterar no original      $this->_copy($new);
-        $this->state = $event->status;
     }
 
     /*
@@ -355,6 +372,34 @@ class channel extends \APS\ResourceBase {
         \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para evento %s do cliente %s",
                 $this->live_event_id, $clientid));
     }
+
+    /*
+    ** C u s t o m   p r o c e d u r e s
+    */
+    
+    /**
+     * get event current status
+     * @verb(GET)
+     * @path("/updateChannelStatus")
+     * @param()
+     * @returns {object}
+     */
+    public function updateChannelStatus () {
+        \APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
+        \APS\LoggerRegistry::get()->info("Called updateChannelStatus for event id=".$this->live_event_id);
+        $liveEvent = LiveEvent::getStatus($this->live_event_id);
+        \APS\LoggerRegistry::get()->info("Called updateChannelStatus for event id=".$this->live_event_id.
+                " status will be updated from ".$this->state." to ".$liveEvent->status);
+        if($liveEvent->status == "running" && $this->cdn_origin_server == null) {
+            $this->state = $this->pendingState();
+        } else {
+            $this->state = $liveEvent->status.'';
+        }
+        $apsc = \APS\Request::getController();
+        $apsc->updateResource($this);
+        return $this;
+    }
+
 
     /**
         * Update live encoding time / DVR time

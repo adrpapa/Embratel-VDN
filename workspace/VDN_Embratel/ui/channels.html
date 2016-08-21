@@ -5,13 +5,15 @@
     <script>
         require([
                 "aps/ResourceStore",
-                "dojo/when",
-            "dijit/registry",
+               "dojo/when",
+              "dijit/registry",
                 "aps/load",
-                "./js/displayError.js",
-                "dojo/_base/array",
+               "./js/displayError.js",
+               "dojo/_base/array",
+                "aps/xhr",
+
                 "aps/ready!"
-        ], function (Store, when, registry, load, displayError, arr) {
+        ], function (Store, when, registry, load, displayError, arr, xhr) {
             /* Create the data store */
             var store = new Store({
                 apsType: "http://embratel.com.br/app/VDN_Embratel/channel/2.0",
@@ -38,7 +40,7 @@
                         ["aps/ToolbarButton", { id: "chnl_start",      iconClass: "sb-service-start",  label: "Start",     requireItems:   true }],
                         ["aps/ToolbarButton", { id: "chnl_stop",       iconClass: "sb-service-stop",   label: "Stop",      requireItems:   true }],
                         ["aps/ToolbarButton", { id: "chnl_delete",     iconClass: "sb-delete",         label: "Delete",    requireItems:   true }],
-                        ["aps/ToolbarButton", { id: "chnl_refresh",    iconClass: "sb-refresh",        label: "Refresh",   autoBusy:       false }]
+                        ["aps/ToolbarButton", { id: "chnl_refresh",    iconClass: "sb-refresh",        label: "Refresh" }]
                     ]]
                 ]]
             ]]).then(function(){
@@ -53,7 +55,27 @@
                 });
 
                 registry.byId("chnl_refresh").on("click", function() {
-                    grid.refresh();
+                    when(
+                        store.query().forEach(
+                            function(item){
+                                console.log("Refreshing channel with id = [" + item + "]");
+                                when( xhr("/aps/2/resources/" + item.aps.id + "/updateChannelStatus",
+                                    {method: "GET",  handleAs: "text"} ),
+                                    function(value) {
+                                        console.log(value);
+                                        grid.refresh();
+                                    },
+                                    function(err) {
+                                        alert( _("Error refreshing job __jobname__:\n __errmsg__",
+                                            {jobname: item.name, errmsg: err.message} ));
+                                    }
+                                );
+                            }
+                        ),
+                        function() {
+                            registry.byId("chnl_refresh").cancel();
+                        }
+                    );
                 });
 
                 function changeState(state, btn){
@@ -105,7 +127,7 @@
                 registry.byId("chnl_delete").on("click", function() {
                     var self = this;
                     /* Get confirmation from the user for the delete operation */
-                    if (!confirm("Are you sure you want delete Channels?")) {
+                    if (!confirm(_("Are you sure you want delete Channels?"))) {
                         self.cancel();
                         return;
                     }

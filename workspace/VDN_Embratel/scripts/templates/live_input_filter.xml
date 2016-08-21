@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<input_filter href="/input_filters/7" product="Delta" version="1.7.1.40992">
+  <filter_type>webdav_input</filter_type>
+  <label>Customer1-Live-STD-1</label>
+  <filter_settings>
+    <template_id/>
+    <content_window_type>packager_controlled</content_window_type>
+    <storage_location>/data/server/drive/customer1/live-std-1/</storage_location>
+    <aws_credential_id/>
+    <input_user_id>1</input_user_id>
+    <relative_uri>customer1/live-std-1</relative_uri>
+    <vod_content>false</vod_content>
+  </filter_settings>
+</input_filter>
