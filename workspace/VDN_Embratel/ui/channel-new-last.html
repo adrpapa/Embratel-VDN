@@ -34,7 +34,7 @@
                     }),
                     model = getStateful(wd.get());
 
-                var widget = videoparams(model, frameRates, videoBitRates,
+                var widget = videoparams(model, "name", frameRates, videoBitRates,
                         audioBitRates, resol4x3, resol16x9 );
                 load(widget).then(function()
                 {
@@ -53,6 +53,9 @@
                     };
                     aps.app.onPrev = function() {
                         aps.apsc.prev();
+                    };
+                    aps.app.onCancel = function() {
+                        aps.apsc.gotoView("channels");
                     };
                 });
             } // End of function

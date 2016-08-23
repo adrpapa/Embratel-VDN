@@ -14,20 +14,24 @@ class BillingLog {
         $this->billingLog = $billingLogPath.$clientID."_".$name.".log";
         $this->billingError = $billingLogPath.$clientID."_".$name."_error.log";
         $this->billingDebug = $billingLogPath.$clientID."_".$name."_dbg.log";
-        echo "Creating logs for $name: $this->billingLog, $this->billingError, $this->billingDebug\n";
+//         echo "Creating logs for $name: $this->billingLog, $this->billingError, $this->billingDebug\n";
     }
 
     private function write($logfile, $msg){
         $current_ts = date_create();
-        file_put_contents($logfile, date_format( $current_ts, "c") . " " . $msg."\n", FILE_APPEND);
+        file_put_contents($logfile, date_format( $current_ts, "c") . ";" . $msg."\n", FILE_APPEND);
     }
 
     public function debug($msg){
         $this->write($this->billingDebug, $msg);
+        if(ConfigConsts::debug) {
+            echo "DEBUG: $msg";
+        }
     }
 
     public function error($msg){
         $this->write($this->billingError, $msg);
+        echo "ERROR: $msg";
     }
 
     public function log($msg){

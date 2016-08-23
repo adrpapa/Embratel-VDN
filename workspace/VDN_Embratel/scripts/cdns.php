@@ -186,7 +186,7 @@ class cdn extends \APS\ResourceBase {
     public function provision() { 
         $logger = \APS\LoggerRegistry::get();
         $logger->setLogFile("logs/cdns.log");
-        \APS\LoggerRegistry::get()->info("Iniciando provisionamento do CDN... ".$this->aps->id);
+        $logger->info("Iniciando provisionamento do CDN... ".$this->aps->id);
         
         $custom_name   = $this->alias . "-" . $this->context->account->id;
         $custom_domain = $this->alias . "." . $this->context->account->id;
@@ -195,7 +195,7 @@ class cdn extends \APS\ResourceBase {
         $this->httpTrafficActualUsage    = 0;
         $this->http_s_TrafficActualUsage = 0;
         
-        \APS\LoggerRegistry::get()->info("--> ORIGIN DOMAIN: " . $origin_domain);
+        $logger->info("--> ORIGIN DOMAIN: " . $origin_domain);
 
         $origin=null;
         $ds=null;
@@ -205,36 +205,36 @@ class cdn extends \APS\ResourceBase {
         // CREATE CONTENT ORIGIN
         $origin = new ContentOrigin("co-".$custom_name,$this->origin_server,$origin_domain,$this->description);
         if ( !$origin->create() ) {
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
+            $logger->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
             throw new \Exception("Can't create content origin:" . $origin->getMessage(), 501);
         }
         // CREATE DELIVERY SERVICE
         try {
-            \APS\LoggerRegistry::get()->info("--> Creating DS");
+            $logger->info("--> Creating DS");
             $ds = $this->createDeliveryService($origin,$ds_name);
-            \APS\LoggerRegistry::get()->info("<-- End Creating DS");		
+            $logger->info("<-- End Creating DS");		
         } catch (Exception $fault) {
-            \APS\LoggerRegistry::get()->info("Error creating DS");
+            $logger->info("Error creating DS");
             throw new Exception($fault->getMessage());
         }		
 
         // CREATE DELIVERY SERVICE GENERAL SETTINGS
         try {
-            \APS\LoggerRegistry::get()->info("--> Creating General Settings DS");
+            $logger->info("--> Creating General Settings DS");
             $dsgs = $this->createDeliveryServiceGenSettings($origin,$ds);
-            \APS\LoggerRegistry::get()->info("<-- End General Settings DS");
+            $logger->info("<-- End General Settings DS");
         } catch (Exception $fault) {
-            \APS\LoggerRegistry::get()->info("Error creating General Settings DS");
+            $logger->info("Error creating General Settings DS");
             throw new Exception($fault->getMessage());
         }
         
         // ASSIGN RULE TO DELIVERY SERVICE
         try {
-            \APS\LoggerRegistry::get()->info("--> Assign Rule");
+            $logger->info("--> Assign Rule");
             $rule = $this->asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain);
-            \APS\LoggerRegistry::get()->info("<-- End Rule");
+            $logger->info("<-- End Rule");
         } catch (Exception $fault) {
-            \APS\LoggerRegistry::get()->info("Error assign Rule");
+            $logger->info("Error assign Rule");
             throw new Exception($fault->getMessage());
         }		
         
@@ -250,25 +250,25 @@ class cdn extends \APS\ResourceBase {
         $this->origin_domain = $origin_domain;
         //*****************************************
         
-        \APS\LoggerRegistry::get()->info("<-- Fim Provisionando CDN.Delivery Service ID:".$this->delivery_service_id.".Content Origin ID:".$this->content_origin_id);
+        $logger->info("<-- Fim Provisionando CDN.Delivery Service ID:".$this->delivery_service_id.".Content Origin ID:".$this->content_origin_id);
     }
 
     public function configure($new) {
         $logger = \APS\LoggerRegistry::get();
         $logger->setLogFile("logs/cdns.log");
-        \APS\LoggerRegistry::get()->info("Iniciando updating do CDN... ".$this->aps->id);    	 
+        $logger->info("Iniciando updating do CDN... ".$this->aps->id);    	 
 
         $custom_name   = $new->alias . "-" . $this->context->account->id;
         $custom_domain = $new->alias . "." . $this->context->account->id;
         $origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;    	
         $ds_name       = "ds-".$custom_name;
         
-        \APS\LoggerRegistry::get()->info("New Domain:".$origin_domain);
+        $logger->info("New Domain:".$origin_domain);
         
         if ( !is_null($this->content_origin_id) ) {
             $origin = new ContentOrigin("co-".$custom_name,$new->origin_server,$origin_domain,$new->description);
             if ( !$origin->update($this->content_origin_id) ) {
-                \APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating Content Origin: " . $origin->getMessage());
+                $logger->info("cdns:provisioning() Error updating Content Origin: " . $origin->getMessage());
                 throw new \Exception("Can't update content origin:" . $origin->getMessage(), 501);    		
             }
         }
@@ -276,7 +276,7 @@ class cdn extends \APS\ResourceBase {
         if ( !is_null($this->delivery_service_id) ) {
             $ds = new DeliveryService($ds_name,$this->content_origin_id,$new->description);
             if ( !$ds->update($this->delivery_service_id) ) {
-                \APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating Delivery Service: " . $ds->getMessage());
+                $logger->info("cdns:provisioning() Error updating Delivery Service: " . $ds->getMessage());
                 throw new \Exception("Can't update delivery service:" . $ds->getMessage(), 502);    		
             }
             
@@ -286,14 +286,14 @@ class cdn extends \APS\ResourceBase {
         if ( !is_null($this->rule_url_rwr_file_id) ) {
             $rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
             if( !$rule->updateUrlRewriteRule($this->rule_url_rwr_file_id,$origin_domain,$new->origin_path) ) {
-                \APS\LoggerRegistry::get()->info("cdns:provisioning() Error updating rule to Delivery Service: " . $rule->getMessage());
+                $logger->info("cdns:provisioning() Error updating rule to Delivery Service: " . $rule->getMessage());
                 throw new \Exception("Can't update rule to delivery service:" . $rule->getMessage(), 505);
             }
         }
         
         $this->origin_domain = $origin_domain;
         
-        \APS\LoggerRegistry::get()->info("Fim updating do CDN... ".$this->aps->id);
+        $logger->info("Fim updating do CDN... ".$this->aps->id);
     }
 
     public function retrieve(){
@@ -307,7 +307,7 @@ class cdn extends \APS\ResourceBase {
     public function unprovision(){
         $logger = \APS\LoggerRegistry::get();
         $logger->setLogFile("logs/cdns.log");
-        \APS\LoggerRegistry::get()->info("Iniciando des-provisionamento do CDN... ".$this->aps->id);
+        $logger->info("Iniciando des-provisionamento do CDN... ".$this->aps->id);
             
         if ( !is_null($this->delivery_service_gen_settings_id) ) {
             $dsgs = new DeliveryServiceGenSettings();
@@ -329,7 +329,7 @@ class cdn extends \APS\ResourceBase {
             $rule->delete( $this->rule_url_rwr_file_id );    	
         }
         
-        \APS\LoggerRegistry::get()->info("<-- Fim DES-Provisionando CDN");    	    	
+        $logger->info("<-- Fim DES-Provisionando CDN");    	    	
     }
 
     /*********************************************************************
@@ -338,12 +338,14 @@ class cdn extends \APS\ResourceBase {
         *********************************************************************
         */
     function createDeliveryService($origin,$custom_name) {
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/cdns.log");
         $ds = new DeliveryService($custom_name,$origin->getID(),$this->description);
         $ds->live = ($this->live ? "true":"false");
         if ( !$ds->create() ) {
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
+            $logger->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
             // Rollback
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$origin->getID()."]");
+            $logger->info("cdns:provisioning() Rollbacking: [".$origin->getID()."]");
             if ( !is_null($origin) ) $origin->delete( $origin->getID() );
             // 
             throw new \Exception("Can't create delivery service:" . $ds->getMessage(), 502);
@@ -351,9 +353,9 @@ class cdn extends \APS\ResourceBase {
 
         // ASSIGN SEs
         if ( !$ds->assignSEs() ) {
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Error assigning SEs to Delivery Service: " . $ds->getMessage());
+            $logger->info("cdns:provisioning() Error assigning SEs to Delivery Service: " . $ds->getMessage());
             // Rollback
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$ds->getID()."].[".$origin->getID()."]");
+            $logger->info("cdns:provisioning() Rollbacking: [".$ds->getID()."].[".$origin->getID()."]");
             if ( !is_null($ds) ) $ds->delete( $ds->getID() );
             if ( !is_null($origin) ) $origin->delete( $origin->getID() );			
             //
@@ -364,6 +366,8 @@ class cdn extends \APS\ResourceBase {
     }
 
     function createDeliveryServiceGenSettings($origin,$ds) {
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/cdns.log");
         // CUSTOMIZE PROTOCOL: HTTP or HTTPS
         
         if ( $this->live ) return;	// Precisa confirmar isso....
@@ -374,9 +378,9 @@ class cdn extends \APS\ResourceBase {
         $dsgs->HttpExt      = urlencode("asf none nsc wma wmv nsclog");
         
         if ( !$dsgs->create() ) {
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Error customizing delivery service: " . $dsgs->getMessage());
+            $logger->info("cdns:provisioning() Error customizing delivery service: " . $dsgs->getMessage());
             // Rollback
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$ds->getID()."].[".$origin->getID()."]");
+            $logger->info("cdns:provisioning() Rollbacking: [".$ds->getID()."].[".$origin->getID()."]");
             if ( !is_null($ds) ) $ds->delete( $ds->getID() );
             if ( !is_null($origin) ) $origin->delete( $origin->getID() );
             //			
@@ -387,12 +391,14 @@ class cdn extends \APS\ResourceBase {
     }
 
     function asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain) {
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/cdns.log");
         $rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
         
         if( !$rule->createUrlRewriteRule($origin_domain,$this->origin_path) ) {
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Error creating rule to Delivery Service: " . $rule->getMessage());
+            $logger->info("cdns:provisioning() Error creating rule to Delivery Service: " . $rule->getMessage());
             // Rollback
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
+            $logger->info("cdns:provisioning() Rollbacking: [".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
             if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
             if ( !is_null($ds) ) $ds->delete( $ds->getID() );
             if ( !is_null($origin) ) $origin->delete( $origin->getID() );
@@ -401,9 +407,9 @@ class cdn extends \APS\ResourceBase {
         }		
         
         if ( !$ds->applyRuleFile( $rule->getID() ) ) {
-            \APS\LoggerRegistry::get()->info("cdns:provisioning() Error applying rule to Delivery Service: " . $ds->getMessage());
+            $logger->info("cdns:provisioning() Error applying rule to Delivery Service: " . $ds->getMessage());
             // Rollback
-                \APS\LoggerRegistry::get()->info("cdns:provisioning() Rollbacking: [".$rule->getID()."][".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
+                $logger->info("cdns:provisioning() Rollbacking: [".$rule->getID()."][".$dsgs->getID()."].[".$ds->getID()."].[".$origin->getID()."]");
             if ( !is_null($dsgs) ) $dsgs->delete( $dsgs->getID() );
             if ( !is_null($ds) ) $ds->delete( $ds->getID() );
             if ( !is_null($origin) ) $origin->delete( $origin->getID() );

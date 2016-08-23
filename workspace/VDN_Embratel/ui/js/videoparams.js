@@ -1,7 +1,7 @@
 define(["dojox/mvc/at"],
     function (at)
     {
-        return function (model, frameRates, videoBitRates, audioBitRates, resol4x3j, resol16x9j )
+        return function (model, name, frameRates, videoBitRates, audioBitRates, resol4x3j, resol16x9j )
         {
             "use strict";
             var framRats   = JSON.parse(frameRates),
@@ -162,7 +162,7 @@ define(["dojox/mvc/at"],
             var widgets =["aps/PageContainer", { id: "page" }, [
 
                 ["aps/FieldSet", {title:true}, [
-                    ["aps/TextBox", { id: "name", label: _("Name"), value: at(model, "name"), required: true }],
+                    ["aps/TextBox", { id: "name", label: _("Identifier"), value: at(model, name), required: true }],
                     ["aps/TextBox", { id: "description", label: _("Description"), value: at(model, "description") } ]
                 ]],
                 ["aps/FieldSet", {title:true}, []],

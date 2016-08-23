@@ -65,11 +65,14 @@
                 $live_event->input->network_input->uri = ConfigConsts::LIVE_NODE_URL.$axStream;
                 $live_event->failure_rule->backup_rule = "none";
                 $live_event->output_group->apple_live_group_settings->destination->uri = ConfigConsts::DELTA_WEBDAV_URI_ROOT.$axStream."/".$axNam;
+                if ( !is_null($presets) ) {
+                    $live_event = $presets->customizePresets( $live_event->name, $live_event );
+                }
                 $live_event = LiveEvent::getElementalRest()->postRecord(null, null, $live_event);
                 $liveEvent = LiveEvent::liveEventFromXML($live_event);
                 $liveEvent->start($liveEvent->id);
                 $liveEvent->node_id = $selectedNode;
-                $liveEvent->inputURI = "http://".$nodeIpAddress.":1935/".$axStream;
+                $liveEvent->inputURI = "rtmp://".$nodeIpAddress.":1935/".$axStream;
                 $liveEvent->live_node = $nodeIpAddress;
                 $liveEvent->inputFilterID = $inputFilterId;
                 return( $liveEvent );

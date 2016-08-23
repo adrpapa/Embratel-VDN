@@ -3,7 +3,7 @@
     <id>http://embratel.com.br/app/VDN_Embratel</id>
     <name>VDN_Embratel</name>
     <version>2.0</version>
-    <release>3</release>
+    <release>5</release>
     <homepage>http://embratel.com.br/app/VDN_Embratel</homepage>
     <vendor>
         <name>Embratel</name>
@@ -59,7 +59,7 @@ CISCO VDN para entrega distribuída de conteúdo
                         </view>
                         <view id="job-new-last" label="Transcoder Parameters">
                             <controls>
-                                <prev />
+                                <cancel />
                                 <finish />
                             </controls>
                         </view>
@@ -84,20 +84,20 @@ CISCO VDN para entrega distribuída de conteúdo
                     </view>
                     <view id="channel-new-last" label="Review">
                         <controls>
-                            <prev />
+                            <cancel />
                             <finish />
                         </controls>
                     </view>
                     <view id="channel-info" label="Edit Channel">
                         <controls>
-                            <finish />
+                            <cancel />
                         </controls>
                         <var name="chnl"
                             type-id="http://embratel.com.br/app/VDN_Embratel/channel/2.0" />
                     </view>
                 </view>
             </item>		
-            <item id="cdns" label="CDN Standalone">
+            <item id="cdns" label="CDN">
                 <view id="cdns" label="CDN">
                     <view id="cdn-new-1" label="New Delivery Service">
                         <controls>

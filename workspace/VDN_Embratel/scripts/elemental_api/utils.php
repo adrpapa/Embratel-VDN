@@ -13,7 +13,7 @@
     function formatClientID( $context ) {
         $apsc = \APS\Request::getController();
         $subscription = $apsc->getResource($context->subscription->aps->id);
-        echo "\n********\nSubscription: ".$subscription->subscriptionId."\n***********\n\n";
+//         echo "\n********\nSubscription: ".$subscription->subscriptionId."\n***********\n\n";
         return sprintf("Client_%06d",$subscription->subscriptionId);
     }
     
@@ -21,6 +21,11 @@
         $href = $xml["href"]."";      
         $toks = explode('/',$href);
         return $toks[count($toks)-1];
+    }
     
+    function getLogger($path){
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/".$path);
+        return $logger;
     }
 ?>

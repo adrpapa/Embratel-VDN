@@ -207,9 +207,10 @@ class context extends \APS\ResourceBase
     ###############################################################################
 
     public function provision() {
-        \APS\LoggerRegistry::get()->setLogFile("logs/context.log");
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/context.log");
         $clientid = formatClientID( $this );
-        \APS\LoggerRegistry::get()->info("Iniciando provisionamento de context para o cliente ".$clientid);
+        $logger->info("Iniciando provisionamento de context para o cliente ".$clientid);
 
         // Initialize counters
         $this->VDN_VOD_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
@@ -233,7 +234,7 @@ class context extends \APS\ResourceBase
             foreach( $stdPremArr as $level => $stdPrem ) {
                 $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
                 foreach( $httpHttpsArr as $proto => $path ) {
-                    \APS\LoggerRegistry::get()->info("Criandos Input Filter e Output Template $clientid $proto $type $level");
+                    $logger->info("Criandos Input Filter e Output Template $clientid $proto $type $level");
                     /*
                         Delta Input filters e output templates estão sendo criados aqui, mas se desejado
                         podemos usar essa estrutura para verificar se já existe, e criá-los à medida que
@@ -245,13 +246,14 @@ class context extends \APS\ResourceBase
                 }
             }
         }
-        \APS\LoggerRegistry::get()->info("Encerrando provisionamento de context para o cliente ".$clientid);
+        $logger->info("Encerrando provisionamento de context para o cliente ".$clientid);
     }
 
     public function unprovision(){
-        \APS\LoggerRegistry::get()->setLogFile("logs/channels.log");
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/channels.log");
         $clientid = formatClientID( $this );
-        \APS\LoggerRegistry::get()->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
+        $logger->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
 
         // Delete output template for all options: Live/Vod Premium/Std http/https
         $vodLiveArr = array('vod' => $this->vodDeltaPaths);
@@ -260,7 +262,7 @@ class context extends \APS\ResourceBase
             foreach( $stdPremArr as $level => &$stdPrem ) {
                 $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
                 foreach( $httpHttpsArr as $proto => &$path ) {
-                    \APS\LoggerRegistry::get()->info("Removendo Input Filter e Output Template $clientid $proto $type $level");
+                    $logger->info("Removendo Input Filter e Output Template $clientid $proto $type $level");
                     DeltaInputFilter::delete($path->inputFilter);
                     DeltaOutputTemplate::delete($path->outputTemplate);
                 }
@@ -269,9 +271,11 @@ class context extends \APS\ResourceBase
     }
     
     public function retrieve() {
-        \APS\LoggerRegistry::get()->setLogFile("logs/context.log");
-        \APS\LoggerRegistry::get()->info(sprintf("Fetching resource usage. Current values: http=%f https=%f",
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/context.log");
+        $logger->info(sprintf("Fetching VOD traffic usage. Current values: http=%f https=%f",
                 $this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
+        $vodTrafficLog = new BillingLog($this, "vodTraffic");
         ## Connect to the APS controller
         $apsc = \APS\Request::getController();
         
@@ -286,7 +290,9 @@ class context extends \APS\ResourceBase
             $usage = json_decode($usage);
             $httpTraffic +=  $usage->httpTrafficActualUsage * 1024 * 1024; // convert GB to MB
             $http_s_Traffic += $usage->httpsTrafficActualUsage * 1024 * 1024; // convert GB to MB
-        }    	
+            $vodTrafficLog->log("$cdn->origin_domain,http;$usage->httpTrafficActualUsage");
+            $vodTrafficLog->log("$cdn->origin_domain,https;$usage->httpsTrafficActualUsage");
+        }
 
         ## update  Job encoding minutes
 //             foreach ( $this->jobs as $job ) {
@@ -295,8 +301,7 @@ class context extends \APS\ResourceBase
 //                 $usage = json_decode($usage);
 //                 $VDN_VOD_Encoding_Minutes += $usage->VDN_VOD_Encoding_Minutes;
 //             }
-        \APS\LoggerRegistry::get()->info("Computing VoD Storage Usage");
-        echo "Creating logfile for VoD Storage Billing";
+        $logger->info(sprintf("Computing VoD Storage Usage. Current usage=%f MbH",$this->VDN_VOD_Storage_MbH->usage));
         $vodStorageLog = new BillingLog($this, "vodStorage");
         $totalKB=0;
         try{
@@ -311,16 +316,20 @@ class context extends \APS\ResourceBase
             $vodStorageLog->error($fault->getMessage());
         }
 
-        \APS\LoggerRegistry::get()->info("Computing VoD Usage");
         $VDN_VOD_Encoding_Minutes = $this->VDN_VOD_Encoding_Minutes->usage;
+        $logger->info("Computing VoD Encoding Usage. Current usage=%f min",$VDN_VOD_Encoding_Minutes);
+        $vodEncodingLog = new BillingLog($this, "vodEncoding");
         foreach ( $this->vods as $vod ) {
             $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($vod->aps->id, 'updateVodUsage'));
             $usage = json_decode($usage);
             $VDN_VOD_Encoding_Minutes += round($usage->VDN_VOD_Encoding_Minutes);
+            $vodEncodingLog->log("$vod->path;$VDN_VOD_Encoding_Minutes");
         }
 
-        \APS\LoggerRegistry::get()->info("Computing Live Usage");
+        $logger->info("Computing Live Encoding Usage. Current values: %f min / DVR: %f min",
+                $this->VDN_Live_Encoding_Minutes->usage, $this->VDN_Live_DVR_Minutes->usage);
+        $vodEncodingLog = new BillingLog($this, "vodEncoding");
         foreach ( $this->channels as $channel ) {
             $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($channel->aps->id, 'updateLiveUsage'));
@@ -332,7 +341,7 @@ class context extends \APS\ResourceBase
         ## Update the APS resource counters
         $this->VDN_HTTP_Traffic->usage = round($httpTraffic, 0);
         $this->VDN_HTTPS_Traffic->usage = round($http_s_Traffic, 0);
-        \APS\LoggerRegistry::get()->info(sprintf("Resource usage after update: http=%f https=%f",
+        $logger->info(sprintf("Resource usage after update: http=%f https=%f",
                 $this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
 
         $this->VDN_VOD_Encoding_Minutes->usage = $VDN_VOD_Encoding_Minutes;
