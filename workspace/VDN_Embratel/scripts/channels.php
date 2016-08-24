@@ -421,10 +421,12 @@ class channel extends \APS\ResourceBase {
             }
             else {
                 $logger->info("Event Start Encoding Time is: ".$event->created_at[0]);
+                $this->start_encoding_time = $this->start_encoding_time."";
                 $content = DeltaContents::getContentsForEvent($this);
                 if( $content != null ){
                     $this->content_id = $content->id;
                 }
+                
             }
         }
         $apsc = \APS\Request::getController();
