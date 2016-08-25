@@ -158,11 +158,13 @@ define(["dojox/mvc/at"],
                 mainTitle = _("Transcoder Parameters");
                 mainDescr = _("Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will be used in transcoding.");
             }
-        
+            var identifier = _("Channel Name");
+            if( name == "input_URI" )
+                identifier = _("Input URI");
             var widgets =["aps/PageContainer", { id: "page" }, [
 
                 ["aps/FieldSet", {title:true}, [
-                    ["aps/TextBox", { id: "name", label: _("Identifier"), value: at(model, name), required: true }],
+                    ["aps/TextBox", { id: "name", label: identifier, value: at(model, name), required: true }],
                     ["aps/TextBox", { id: "description", label: _("Description"), value: at(model, "description") } ]
                 ]],
                 ["aps/FieldSet", {title:true}, []],

@@ -246,6 +246,7 @@ class context extends \APS\ResourceBase
                 }
             }
         }
+        print_r($this);
         $logger->info("Encerrando provisionamento de context para o cliente ".$clientid);
     }
 

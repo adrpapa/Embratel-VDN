@@ -7,6 +7,7 @@ require_once "elemental_api/deliveryService.php";
 require_once "elemental_api/contentOrigin.php";
 require_once "elemental_api/deliveryServiceGenSettings.php";
 require_once "elemental_api/fileMgmt.php";
+require_once "elemental_api/utils.php";
 require_once "utils/splunk.php";
 
 /**
@@ -188,8 +189,8 @@ class cdn extends \APS\ResourceBase {
         $logger->setLogFile("logs/cdns.log");
         $logger->info("Iniciando provisionamento do CDN... ".$this->aps->id);
         
-        $custom_name   = $this->alias . "-" . $this->context->account->id;
-        $custom_domain = $this->alias . "." . $this->context->account->id;
+        $custom_name   = $this->alias . "-" . getClientID($this->context);
+        $custom_domain = $this->alias . "." . getClientID($this->context);
         $origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;
         $ds_name       = "ds-".$custom_name;
         $this->httpTrafficActualUsage    = 0;
@@ -211,7 +212,7 @@ class cdn extends \APS\ResourceBase {
         // CREATE DELIVERY SERVICE
         try {
             $logger->info("--> Creating DS");
-            $ds = $this->createDeliveryService($origin,$ds_name);
+            $ds = $this->createDeliveryService($origin, $ds_name);
             $logger->info("<-- End Creating DS");		
         } catch (Exception $fault) {
             $logger->info("Error creating DS");
@@ -258,8 +259,8 @@ class cdn extends \APS\ResourceBase {
         $logger->setLogFile("logs/cdns.log");
         $logger->info("Iniciando updating do CDN... ".$this->aps->id);    	 
 
-        $custom_name   = $new->alias . "-" . $this->context->account->id;
-        $custom_domain = $new->alias . "." . $this->context->account->id;
+        $custom_name   = $new->alias . "-" . getClientID($this->context);
+        $custom_domain = $new->alias . "." . getClientID($this->context);
         $origin_domain = $custom_domain . "." . ConfigConsts::CDMS_DOMAIN;    	
         $ds_name       = "ds-".$custom_name;
         
@@ -430,7 +431,7 @@ class cdn extends \APS\ResourceBase {
         $logger = \APS\LoggerRegistry::get();
         $logger->setLogFile("logs/cdns.log");
         $usage = array();
-        $clientID = $this->context->account->id;
+        $clientID = getClientID($this->context);
         $dsName = "ds-" . $this->alias . "-" . $clientID;
         $logger->info("Updating resource usage for delivery service: ".$dsName);
         $splunkStats = SplunkStats::getBilling($this->context, $dsName, $this->newestSplunkData);

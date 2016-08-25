@@ -10,11 +10,15 @@
         return $ax_name;
     }
     
-    function formatClientID( $context ) {
+    function getClientID( $context ) {
         $apsc = \APS\Request::getController();
         $subscription = $apsc->getResource($context->subscription->aps->id);
-//         echo "\n********\nSubscription: ".$subscription->subscriptionId."\n***********\n\n";
-        return sprintf("Client_%06d",$subscription->subscriptionId);
+        echo "\n********\nSubscription: ".$subscription->subscriptionId."\n***********\n\n";
+        return $subscription->subscriptionId;
+    }
+    
+    function formatClientID( $context ) {
+        return sprintf("Client_%06d",getClientID( $context ));
     }
     
     function idFromHref($xml){

@@ -16,6 +16,7 @@
                 "./js/displayError.js",
                 "aps/ready!"
         ], function (Store, registry, Message, getPlainValue, wd, at, load, Memory, getStateful, displayError) {
+            var CDMS_DOMAIN = "csi.cds.cisco.com";
             var cdn_new = {
                 aps: { type: "http://embratel.com.br/app/VDN_Embratel/cdn/2.0" },
                 name: "",
@@ -98,6 +99,10 @@
                 
                 aps.app.onSubmit = function() {
                     var page = registry.byId("page");
+                    if( model.origin_server.indexof(CDMS_DOMAIN) > -1 ) {
+                        displayMessage(_("Subdomains of __cdmsDomain__ may not be used.",{"cdmsDomain":CDMS_DOMAIN}), "error");
+                        aps.apsc.cancelProcessing();
+                    }
                     if ( page.validate() ) {
                         store.put(getPlainValue(model)).then(function() {
                             aps.apsc.gotoView("cdns");
