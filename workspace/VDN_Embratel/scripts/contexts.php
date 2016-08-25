@@ -253,7 +253,7 @@ class context extends \APS\ResourceBase
     public function unprovision(){
         $logger = \APS\LoggerRegistry::get();
         $logger->setLogFile("logs/channels.log");
-        $clientid = formatClientID( $this );
+        $clientid = $this->aps->id;
         $logger->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
 
         // Delete output template for all options: Live/Vod Premium/Std http/https
