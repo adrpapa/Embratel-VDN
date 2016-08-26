@@ -79,7 +79,7 @@
                     );
                 });
 
-                function changeState(state, btn){
+                function changeState(request, btn){
                     var sel = grid.get("selectionArray"),
                     counter = sel.length;
 
@@ -87,11 +87,10 @@
                     page.get("messageList").removeAll();
 
                     arr.forEach(sel, function(chnlId){
-                        console.log("I'm trying to change state of channel with id = [" + chnlId + "]");
-
+                        console.log("Channel id = [" + chnlId + "] was requested to " + request);
                         var chnl = {
                             aps: { id: chnlId },
-                            state: state
+                            request: request
                         };
 
                         /* Save the Channel properties */
@@ -119,7 +118,7 @@
 
                 /* Create the on-click handler for the *Start* button */
                 registry.byId("chnl_start").on("click", function() {
-                    changeState("running", this);
+                    changeState("start", this);
                 });
 
                 /* Create the on-click handler for the *Delete* button

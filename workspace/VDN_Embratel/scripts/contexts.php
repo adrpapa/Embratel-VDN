@@ -274,9 +274,9 @@ class context extends \APS\ResourceBase
     public function retrieve() {
         $logger = \APS\LoggerRegistry::get();
         $logger->setLogFile("logs/context.log");
-        $logger->info(sprintf("Fetching VOD traffic usage. Current values: http=%f https=%f",
+        $logger->info(sprintf("Fetching CDN traffic usage. Current values: http=%f https=%f",
                 $this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
-        $vodTrafficLog = new BillingLog($this, "vodTraffic");
+        $cdnTrafficLog = new BillingLog($this, "cdnTraffic");
         ## Connect to the APS controller
         $apsc = \APS\Request::getController();
         
@@ -291,8 +291,8 @@ class context extends \APS\ResourceBase
             $usage = json_decode($usage);
             $httpTraffic +=  $usage->httpTrafficActualUsage * 1024 * 1024; // convert GB to MB
             $http_s_Traffic += $usage->httpsTrafficActualUsage * 1024 * 1024; // convert GB to MB
-            $vodTrafficLog->log("$cdn->origin_domain,http;$usage->httpTrafficActualUsage");
-            $vodTrafficLog->log("$cdn->origin_domain,https;$usage->httpsTrafficActualUsage");
+            $cdnTrafficLog->log("$cdn->origin_domain,http;$usage->httpTrafficActualUsage");
+            $cdnTrafficLog->log("$cdn->origin_domain,https;$usage->httpsTrafficActualUsage");
         }
 
         ## update  Job encoding minutes
@@ -328,15 +328,16 @@ class context extends \APS\ResourceBase
             $vodEncodingLog->log("$vod->path;$VDN_VOD_Encoding_Minutes");
         }
 
-        $logger->info("Computing Live Encoding Usage. Current values: %f min / DVR: %f min",
-                $this->VDN_Live_Encoding_Minutes->usage, $this->VDN_Live_DVR_Minutes->usage);
-        $vodEncodingLog = new BillingLog($this, "vodEncoding");
+        $logger->info(sprintf("Computing Live Encoding Current Usage values: %f min / DVR: %f min",
+                $this->VDN_Live_Encoding_Minutes->usage, $this->VDN_Live_DVR_Minutes->usage));
+        $liveEncodingLog = new BillingLog($this, "liveEncoding");
         foreach ( $this->channels as $channel ) {
             $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($channel->aps->id, 'updateLiveUsage'));
             $usage = json_decode($usage);
             $this->VDN_Live_Encoding_Minutes->usage += $usage->VDN_Live_Encoding_Minutes;
             $this->VDN_Live_DVR_Minutes->usage += $usage->VDN_Live_DVR_Minutes;
+            $liveEncodingLog->log("$channel->name;$this->VDN_Live_Encoding_Minutes->usage;$this->VDN_Live_DVR_Minutes->usage");
         }
 
         ## Update the APS resource counters

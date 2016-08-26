@@ -113,6 +113,13 @@ class channel extends \APS\ResourceBase {
 
     /**
         * @type(string)
+        * @title("request")
+        * @description("request for channel start/stop")
+        */
+    public $request;
+
+    /**
+        * @type(string)
         * @title("Input URI")
         * @description("Live Channel Input URI for client's transmission")
         * @readonly
@@ -295,53 +302,6 @@ class channel extends \APS\ResourceBase {
         return _("Wait rtmp start");
     }
     
-    
-    public function configure($new) {
-    	$logger = getLogger("channels.log");
-        $event = LiveEvent::getStatus($this->live_event_id);
-        
-        $logger->info (sprintf("Changing channel %s state from %s to %s",
-            $this->live_event_id,  $this->state, $new->state));
-        
-        switch( $new->state ){
-            case 'stop':
-                if( $event->status == 'running') {
-                    $elapsed = $this->getElapsedEncodingTime();
-                    $logger->info("Stopping event $this->live_event_id Elapsed time: $elapsed accum time = $this->accum_encoding_time");
-                    $this->accum_encoding_time += $elapsed;
-                    $this->start_encoding_time = null;
-                    $logger->info("New accum time for event $this->live_event_id = $this->accum_encoding_time");
-                    LiveEvent::stop($this->live_event_id);
-                }
-                break;
-            case 'running':
-                if( $event->status[0] != 'running') {
-                    $logger->info("Starting event $this->live_event_id");
-                    LiveEvent::start($this->live_event_id);
-                    $now = new DateTime();
-                    $this->start_encoding_time = $now->format('Y-m-d\TH:i:sP')."\n";
-                    $logger->info("Event $this->live_event_id started at $this->start_encoding_time");
-                }
-                break;
-            $event = LiveEvent::getStatus($this->live_event_id);
-//          não tem atributos a alterar no original      $this->_copy($new);
-            $this->state = $event->status."";
-        }
-    }
-
-    /*
-     * Calcula o tempo que o evento esta running
-     */
-    private function getElapsedEncodingTime(){
-        if( $this->state != 'running' || $this->start_encoding_time == null ){
-            return 0;
-        }
-        $creationTime = DateTime::createFromFormat("Y-m-d\TH:i:sT",$this->start_encoding_time);
-        $now = new DateTime();
-        $interval = ($now->getTimestamp() - $creationTime->getTimestamp()) / 60;
-        return $interval;
-    }
-    
     public function upgrade(){
         $logger = getLogger("channels.log");
         $logger->info("Entrando na função upgrade de canal");
@@ -395,6 +355,39 @@ class channel extends \APS\ResourceBase {
                 $this->live_event_id, $clientid));
     }
 
+    public function configure($new) {
+    	$logger = getLogger("channels.log");
+        $event = LiveEvent::getStatus($this->live_event_id);
+        
+        $logger->info (sprintf("Channel %s with state %s was requested to %s",
+                $this->live_event_id,  $this->state, $new->request));
+        
+        switch( $new->request ){
+            case 'stop':
+                if( $event->status == 'running') {
+                    $elapsed = $this->getElapsedEncodingTime();
+                    $logger->info("Stopping event $this->live_event_id Elapsed time: $elapsed accum time = $this->accum_encoding_time");
+                    $this->accum_encoding_time += $elapsed;
+                    $this->start_encoding_time = null;
+                    $logger->info("New accum time for event $this->live_event_id = $this->accum_encoding_time");
+                    LiveEvent::stop($this->live_event_id);
+                    $this->state = "stopping";
+                }
+                break;
+            case 'start':
+                if( $event->status[0] != 'running') {
+                    $logger->info("Starting event $this->live_event_id");
+                    LiveEvent::start($this->live_event_id);
+                    $this->state = "starting";
+                }
+                break;
+            otherwise:
+                $this->state = $event->status."";
+                break;
+//          não tem atributos a alterar no original      $this->_copy($new);
+        }
+    }
+
     /*
     ** C u s t o m   p r o c e d u r e s
     */
@@ -414,25 +407,44 @@ class channel extends \APS\ResourceBase {
                 " is: ".$event->status);
 
         $this->state = $event->status.'';
-        if( $this->content_id == null ) {
-            if( count($event->created_at) < 1 ){
-                $logger->info("live event:" . $this->live_event_id." has not received input yet" );
-                $this->state = $this->pendingState();
-            }
-            else {
-                $logger->info("Event Start Encoding Time is: ".$event->created_at[0]);
-                $this->start_encoding_time = $this->start_encoding_time."";
-                $content = DeltaContents::getContentsForEvent($this);
-                if( $content != null ){
-                    $this->content_id = $content->id;
+        if( count($event->created_at) < 1 ){
+            $logger->info("live event:" . $this->live_event_id." has not received input yet" );
+            $this->state = $this->pendingState();
+        }
+        else {
+            $eventEncondingTime = $event->created_at[0]."";
+            if( $this->start_encoding_time != $eventEncondingTime ) {
+                $logger->info("Event Start Encoding Time is: $eventEncondingTime");
+                if ($this->start_encoding_time != null )
+                $this->start_encoding_time = $eventEncondingTime;
+                if( $this->content_id == null ) {
+                    $content = DeltaContents::getContentsForEvent($this);
+                    if( $content != null ){
+                            $this->content_id = $content->id;
+                    }
                 }
-                
             }
         }
         $apsc = \APS\Request::getController();
         $apsc->updateResource($this);
         return $this;
     }
+
+    /*
+     * Calcula o tempo que o evento esta running
+     */
+    private function getElapsedEncodingTime(){
+        if( $this->state != 'running' || $this->start_encoding_time == null ){
+            return 0;
+        }
+        $creationTime = DateTime::createFromFormat("Y-m-d\TH:i:sT",$this->start_encoding_time);
+        $now = new DateTime();
+        $interval = ($now->getTimestamp() - $creationTime->getTimestamp()) / 60;
+        return $interval;
+    }
+    
+
+
 
 
     /**

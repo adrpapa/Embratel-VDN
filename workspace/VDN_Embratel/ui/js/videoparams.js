@@ -164,8 +164,17 @@ define(["dojox/mvc/at"],
             var widgets =["aps/PageContainer", { id: "page" }, [
 
                 ["aps/FieldSet", {title:true}, [
-                    ["aps/TextBox", { id: "name", label: identifier, value: at(model, name), required: true }],
-                    ["aps/TextBox", { id: "description", label: _("Description"), value: at(model, "description") } ]
+                    ["aps/TextBox", {
+                        id: "name",
+                        label: identifier,
+                        value: at(model, name),
+                        required: true }
+                    ],
+                    ["aps/TextBox", { id: "description",
+                        label: _("Description"),
+                        cols: 60,
+                        value: at(model, "description") }
+                    ]
                 ]],
                 ["aps/FieldSet", {title:true}, []],
                 ["aps/FieldSet", {title: mainTitle,description: mainDescr},containers
