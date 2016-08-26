@@ -81,9 +81,9 @@
         	
         	$regsub      = $xml_rule->xpath("/CDSRules/Rule_Actions/Rule_UrlRewrite/@regsub");
         	$rewrite_url = $xml_rule->xpath("/CDSRules/Rule_Actions/Rule_UrlRewrite/@rewrite-url");
-        	
+        	      	
         	$regsub[0][0]      = $protocol . "://(.*." . $domain . ")/(.*)";
-        	$rewrite_url[0][0] = $protocol . "://$1/" . $path . "/$2";
+        	$rewrite_url[0][0] = $protocol . "://$1/" . rtrim(ltrim($path,"/"),"/") . "/$2";
  
         	if( ConfigConsts::debug ) {
         		print( $xml_rule );
