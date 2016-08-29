@@ -67,36 +67,46 @@ class NiceSSH {
         $this->connection = null; 
     } 
 
-    public static function getVODUsage($clientId){
+    /*
+        $clientId ie Client_nnnnnnn
+        $proto ie [ http | https ]
+        $level ie [ std | prm ]
+        $name ie <streamName>
+    */
+    public static function getUsage($clientId, $proto, $level, $name){
         $host = ConfigConsts::DELTA_HOST;
         $user = ConfigConsts::DELTA_USER;
         $fingerprint = ConfigConsts::DELTA_FINGERPRINT;
         $niceSSH = new NiceSSH($host, $fingerprint, $user, ConfigConsts::SSH_PUBLIC_KEY, ConfigConsts::SSH_PRIVATE_KEY);
-        echo "$host, $fingerprint, $user, ConfigConsts::SSH_PUBLIC_KEY, ConfigConsts::SSH_PRIVATE_KEY";
         $niceSSH->connect();
         // Resultados são retornados em KB
         // temos tudo detalhado para o bilhetador logar e totalizar
+        
+        $dirname = ConfigConsts::DELTA_VOD_STORAGE_LOCATION."/$clientId/vod/$proto/$level/$name";
+        $dir = rtrim($niceSSH->exec("du -s $dirname"), "\n");
+        
         $result = array();
-        $detail = explode("\n", $niceSSH->exec("du -s ".ConfigConsts::DELTA_VOD_STORAGE_LOCATION."/".$clientId."/*/*/*/*"));
-        foreach( $detail as $dir ) {
-            $it = explode("\t", $dir);
-            if( count($it) < 2 )
-                continue;
-            $result[] = $it;
+        $result["name"] = $name;
+        $it = explode("\t", $dir);
+        if(count($it) > 1) {
+            $result["size"] = $it[0];
+            $ageInSeconds = rtrim($niceSSH->exec("echo $(( $(date +%s) - $(stat -c%Y $dirname) ))"), "\n");
+            $result["age"] = $ageInSeconds;
         }
+        else{
+            echo "Information for content $dirname not found in delta\n";
+            $result["size"] = 0;
+            $result["age"] = 0;
+        }
+
         return $result;
     }
     public function __destruct() { 
         $this->disconnect(); 
     }
 }
-/*
-    $data = NiceSSH::getVODUsage("Client_000004");
-    $totalKB=0;
-    foreach($data as $it) {
-        $totalKB += $it[0];
-        echo "$it[0];$it[1]\n";
-    }
-    echo "Total KB = $totalKB\n";
-*/
+
+//     $data = NiceSSH::getUsage("Client_000008", "http", "std", "big_buck_bunny_480p_10mb");
+//     echo "\n".$data['name']." : ".$data['size']." age: ".round($data['age']/60)."s\n";
+
 ?> 

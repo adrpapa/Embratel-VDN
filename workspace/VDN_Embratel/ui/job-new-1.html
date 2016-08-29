@@ -40,8 +40,20 @@
                 ["aps/PageContainer", { id: "page" }, [
                     ["aps/FieldSet", { id: "new_general", title:  _("General Configuration")  }, [
 //                         ["aps/TextBox", { id: "new_jobName", label: _("Content Name"), value: at(model, "name"), required: true }],
-                        ["aps/TextBox", { id: "new_input_uri", label: _("Input URI"), value: at(model, "input_URI"), required: true  } ],
-                        ["aps/TextBox", { id: "new_description", label: _("Description"), value: at(model, "description"), required: true } ]
+                        ["aps/TextBox", {
+                            id: "new_input_uri",
+                            label: _("Input URI"),
+                            value: at(model, "input_URI"),
+                            cols: 60,
+                            required: true  }
+                        ],
+                        ["aps/TextBox", {
+                            id: "new_description",
+                            label: _("Description"),
+                            value: at(model, "description"),
+                            cols: 60,
+                            rows: 4}
+                        ]
                     ]],
                     ["aps/FieldSet", { id: "new_options", title:  _("Transcoder Options")  }, [
                         ["aps/Select", { id: "new_fmt", label: _( "Screen Format"),

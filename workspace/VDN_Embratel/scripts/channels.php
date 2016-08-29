@@ -249,7 +249,7 @@ class channel extends \APS\ResourceBase {
         $this->live_event_id = $event->id;
         $this->live_event_name = $event->name;
         $this->state = $this->pendingState();
-        $this->input_URI =  $event->inputURI;
+        $this->input_URI =  $event->inputURI; 
         $this->live_node = $event->live_node;
         $this->input_filter_id = $event->inputFilterID;
         $this->start_encoding_time = null;
@@ -310,9 +310,8 @@ class channel extends \APS\ResourceBase {
 
     public function unprovision(){
         $logger=getLogger("channels.log");
-        $clientid = formatClientID($this->context);
-        $logger->info(sprintf("Iniciando desprovisionamento para evento %s-%s do cliente %s",
-            $this->live_event_id, $this->live_event_name, $clientid));
+        $logger->info(sprintf("Iniciando desprovisionamento para evento %s-%s",
+            $this->live_event_id, $this->live_event_name));
 
         $logger->info(sprintf("Excluindo LiveEvent %s",$this->live_event_id));
         try {
@@ -351,8 +350,8 @@ class channel extends \APS\ResourceBase {
             $logger->error($fault->getMessage());
         }
         
-        $logger->info(sprintf("Fim desprovisionamento para evento %s do cliente %s",
-                $this->live_event_id, $clientid));
+        $logger->info(sprintf("Fim desprovisionamento para evento %s",
+                $this->live_event_id));
     }
 
     public function configure($new) {
@@ -415,7 +414,6 @@ class channel extends \APS\ResourceBase {
             $eventEncondingTime = $event->created_at[0]."";
             if( $this->start_encoding_time != $eventEncondingTime ) {
                 $logger->info("Event Start Encoding Time is: $eventEncondingTime");
-                if ($this->start_encoding_time != null )
                 $this->start_encoding_time = $eventEncondingTime;
                 if( $this->content_id == null ) {
                     $content = DeltaContents::getContentsForEvent($this);
@@ -443,10 +441,6 @@ class channel extends \APS\ResourceBase {
         return $interval;
     }
     
-
-
-
-
     /**
         * Update live encoding time / DVR time
         * @verb(GET)
@@ -463,7 +457,7 @@ class channel extends \APS\ResourceBase {
         } else {
             $usage["VDN_Live_Encoding_Minutes"] = $this->last_reported_encoding_time;
         }
-        if( $this->DVR ) {
+        if( $this->dvr ) {
             $usage["VDN_Live_DVR_Minutes"] = $usage["VDN_Live_Encoding_Minutes"];
         } else {
             $usage["VDN_Live_DVR_Minutes"] = 0;

@@ -32,6 +32,13 @@
                 tempo += ":" + seconds.substr(seconds.length -2);
                 var proto = model["https"] ? "https" : "http";
                 /* and create the widgets */
+                var basename = proto+"://"+model["cdn_routing_uri"];
+                var clientUri = [["aps/Output", { id: "hlsEndpoint",label: _("HLS"),value: basename + ".m3u8" }]];
+                if( model["premium"] ){
+                    clientUri.push( ["aps/Output", { id: "hdsEndpoint",label: _("HDS"),value: basename + ".f4m" }] );
+                    clientUri.push( ["aps/Output", { id: "mssEndpoint",label: _("MSS"),value: basename + ".ism/Manifest" }] );
+                    clientUri.push( ["aps/Output", { id: "dashEndpoint",label: _("DASH"),value: basename + ".mpd" }] );
+                }
                 var widgets =
                     ["aps/PageContainer", { id: "page" }, [
                         ["aps/FieldSet", { id: "title", title:  _("Content Information")  }, [
@@ -40,13 +47,18 @@
                                 fn: at(model, "content_name")
                             }],
                             ["aps/Output", {
+                                id: "screen_format",
+                                label: _("Screen Format: ${sf}"),
+                                sf: at(model, "screen_format")}
+                            ],
+                            ["aps/Output", {
                                 content: _("Duration ${duration}"),
                                 duration: tempo }],
                             ["aps/Output", {
-                                content: _("Public URL: ${proto}://${url}"),
-                                proto: proto,
-                                url: at(model, "path")}]
-                        ]]
+                                content: _("Input URL: ${url}"),
+                                url: at(model, "input_URI")}]
+                        ]],
+                        ["aps/FieldSet", { id: "endpoints", title: _("Public Endpoints") }, clientUri]
                 ]];
                 return load(widgets);
             }).then(function(){

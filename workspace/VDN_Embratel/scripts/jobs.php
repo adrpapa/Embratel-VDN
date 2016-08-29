@@ -255,7 +255,9 @@ class job extends \APS\ResourceBase {
         $vod = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDN_Embratel/vod/2.0");
         
         $vod->content_id            = $content->id;
-        $vod->content_name          = $content->fileName;
+        $fname = explode('.',$content->fileName);
+        array_pop($fname);
+        $vod->content_name          = implode('.', $fname);
         $vod->path                  = $content->endpoint;
         $vod->content_creation_ts   = $jobstatus->complete_time."";
 //         preg_match('([\d\.]+)', $vod->content_storage_size, $sizeArray);
@@ -291,9 +293,8 @@ class job extends \APS\ResourceBase {
 
     public function unprovision(){
         \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
-        $clientid = formatClientID($this->context);
-        \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento para job %s-%s do cliente %s",
-                $this->job_id, $this->job_name, $clientid));
+        \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento para job %s-%s",
+                $this->job_id, $this->job_name));
         \APS\LoggerRegistry::get()->info(sprintf("Excluindo Job %s",$this->job_id));
 
         try {
@@ -304,8 +305,8 @@ class job extends \APS\ResourceBase {
             throw new Exception($fault->getMessage());
         }
         
-        \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para job %s do cliente %s",
-                $this->job_id, $clientid));
+        \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para job %s",
+                $this->job_id));
     }
 
     /*

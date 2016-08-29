@@ -41,34 +41,54 @@
 
             /* Create widgets */
             var widgets =
-                ["aps/PageContainer", { id: "page" }, [
-                    ["aps/FieldSet", { id: "new1_general", title:  "General Configuration"  }, [
-                        ["aps/TextBox", {
-                            id: "new1_channelName",
-                            label: _("Channel Name"),
-                            value: at(model, "name"),
-                            required: true,
-                            pattern: "^[a-zA-Z0-9-]*$",
-                            placeHolder: _("[myLiveEvent]"),
-                            promptMessage: _("Event name containing letters, numbers and dash(-)"),
-                            invalidMessage: _("Invalid value. It should containing only letters, numbers and dash(-)")
-                            }
-                        ],
-                        ["aps/TextArea", {
-                            id: "new1_description",
-                            label: _("Description"),
-                            rows: 1,
-                            cols: 60,
-                            value: at(model, "description") }
+                ["aps/PageContainer", {
+                    id: "page" }, [
+                    ["aps/FieldSet", {
+                        id: "new1_general",
+                        title:  "General Configuration"  }, [
+                            ["aps/TextBox", {
+                                id: "new1_channelName",
+                                label: _("Channel Name"),
+                                value: at(model, "name"),
+                                required: true,
+                                cols: 60,
+                                pattern: "^[a-zA-Z0-9-]*$",
+                                placeHolder: _("[myLiveEvent]"),
+                                promptMessage: _("Event name containing letters, numbers and dash(-)"),
+                                invalidMessage: _("Invalid value. It should containing only letters, numbers and dash(-)")
+                                }
+                            ],
+                            ["aps/TextArea", {
+                                id: "new1_description",
+                                label: _("Description"),
+                                rows: 4,
+                                cols: 60,
+                                value: at(model, "description") }
+                            ]
                         ]
-                    ]],
-                    ["aps/FieldSet", { id: "new1_options", title:  "Channel Configuration Options"  }, [
-                        ["aps/Select", { id: "new1_fmt", label: _( "Screen Format"),
-                            value: at(model,"screen_format"), store: screen_formats }],
-                        ["aps/CheckBox", { id: "new1_dvr", label: _("Provide DVR Feature?"), checked: at(model, "dvr") } ],
-                        ["aps/CheckBox", { id: "new1_https", label: _("Use HTTPS?"), checked: at(model, "https") } ],
-                        ["aps/CheckBox", { id: "new1_premium", label: _("Premium Configuration Options?"), checked: at(model, "premium") } ]
-                    ]]
+                    ],
+                    ["aps/FieldSet", {
+                        id: "new1_options",
+                        title:  "Channel Configuration Options"  }, [
+                            ["aps/Select", {
+                                id: "new1_fmt",
+                                label: _( "Screen Format"),
+                                value: at(model,"screen_format"),
+                                store: screen_formats }],
+                            ["aps/CheckBox", {
+                                id: "new1_dvr",
+                                label: _("Provide DVR Feature?"),
+                                checked: at(model, "dvr") } ],
+                            ["aps/CheckBox", {
+                                id: "new1_https",
+                                label: _("Use HTTPS?"),
+                                checked: at(model, "https") } ],
+                            ["aps/CheckBox", {
+                                id: "new1_premium",
+                                label: _("Premium Configuration Options?"),
+                                checked: at(model, "premium") } ]
+                        ]
+                    ]
                 ]];
             load(widgets).then(function(){
                 /* Create handlers for the navigation buttons */

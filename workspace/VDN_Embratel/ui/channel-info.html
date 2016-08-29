@@ -31,19 +31,18 @@
                         function(object){
                             /* Collect the Channel properties in the model */
                             model = getStateful(object);
-                            var rows = 1;
                             var basename = model["cdn_routing_domain"] + "/" + model["name"];
-                            var clientUri = basename + ".m3u8";
+                            var clientUri = [["aps/Output", { id: "hlsEndpoint",label: _("HLS"),value: basename + ".m3u8" }]];
                             if( model["premium"] ){
-                                rows = 4;
-                                clientUri += "\n"+ basename + ".f4m\n" +
-                                        basename + ".ism/Manifest\n" +
-                                        basename + ".mpd";
+                                clientUri.push( ["aps/Output", { id: "hdsEndpoint",label: _("HDS"),value: basename + ".f4m" }] );
+                                clientUri.push( ["aps/Output", { id: "mssEndpoint",label: _("MSS"),value: basename + ".ism/Manifest" }] );
+                                clientUri.push( ["aps/Output", { id: "dashEndpoint",label: _("DASH"),value: basename + ".mpd" }] );
                             }
+
                             /* and create the widgets */
                             var widgets =
                                 ["aps/PageContainer", { id: "page" }, [
-                                    ["aps/FieldSet", { id: "general", title:  "Channel Configuration"  }, [
+                                    ["aps/FieldSet", { id: "general", title:  _("Channel Configuration")  }, [
                                         ["aps/Output", { id: "channelName", label: _("Channel Name"), value: at(model, "name") }],
                                         ["aps/Output", {
                                             id: "description",
@@ -54,11 +53,16 @@
                                     ]],
                                     ["aps/FieldSet", {
                                         id: "info",
-                                        title:  "Elemental Live Information"  }, [
+                                        title:  _("Elemental Live Information")  }, [
                                             ["aps/Output", {
                                                 id: "state",
                                                 label: _("State"),
                                                 value: at(model, "state")}
+                                            ],
+                                            ["aps/Output", {
+                                                id: "startEncoding",
+                                                label: _("Start Encoding"),
+                                                value: at(model, "start_encoding_time")}
                                             ],
                                             ["aps/Output", {
                                                 id: "screen_format",
@@ -87,21 +91,10 @@
                                                 id: "live_event_id",
                                                 label: _("Live Event Id"),
                                                 value: at(model, "live_event_id") }
-                                            ],
-                                            ["aps/Output", {
-                                                id: "input_URI",
-                                                label: _("Input URI"),
-                                                value: at(model, "input_URI")}
-                                            ],
-                                            ["aps/TextArea", {
-                                                id: "clientUri",
-                                                label: _("Client URI"),
-                                                disabled: true, rows: rows, cols: 60,
-                                                value: clientUri }
                                             ]
-                                        ]
-                                    ]
-                            ]];
+                                    ]],
+                                    ["aps/FieldSet", { id: "endpoints", title: _("Public Endpoints") }, clientUri]
+                                ]];
                             return load(widgets);
                         }).then(
                             function(){

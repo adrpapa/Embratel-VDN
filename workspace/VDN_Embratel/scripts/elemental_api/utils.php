@@ -13,7 +13,7 @@
     function getClientID( $context ) {
         $apsc = \APS\Request::getController();
         $subscription = $apsc->getResource($context->subscription->aps->id);
-        echo "\n********\nSubscription: ".$subscription->subscriptionId."\n***********\n\n";
+//         echo "\n********\nSubscription: ".$subscription->subscriptionId."\n***********\n\n";
         return $subscription->subscriptionId;
     }
     

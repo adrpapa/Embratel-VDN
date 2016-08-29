@@ -3,6 +3,7 @@
 //if (!defined('APS_DEVELOPMENT_MODE')) define ('APS_DEVELOPMENT_MODE', 'on');
 
 require_once "aps/2/runtime.php";
+require_once "utils/niceSSH.php";
 require_once "elemental_api/utils.php";
 require_once "elemental_api/deltaContents.php";
 
@@ -39,6 +40,14 @@ class vod extends \APS\ResourceBase {
         * @description("Content Description")
         */
     public $description;
+
+    /**
+        * @type(string)
+        * @title("Service Routing URI")
+        * @description("Service Routing URI")
+        * @readonly
+        */
+    public $cdn_routing_uri;
 
     /**
         * @type(string)
@@ -151,24 +160,33 @@ class vod extends \APS\ResourceBase {
 ## Definition of the functions that will respond to the different CRUD operations
 #############################################################################################################################################
     public function provision() {
+        $logger = $this->getLogger();
+        $clientName = formatClientID($this->context);
+        $clientId = getClientID($this->context);
+        $logger->info(sprintf("Iniciando provisionamento do conteudo %s-%s da subscrição %s",
+                              $this->content_id, $this->content_name, $clientName));
         $this->content_encoding_charged = false;
         $proto = $this->https ? "https" : "http";
-        $cdnName = sprintf("%s_vod_%s",formatClientID($this->context),$proto);
+        $cdnName = sprintf("%s_vod_%s", $clientName, $proto);
         $alias = sprintf("vod%s", $proto);
         $originServer = sprintf("vod%d%s.origemcdn.embratelcloud.com.br",
-                                $this->context->account->id,$this->https ? "s" : "");
-        $originPath = sprintf("out/u/%s/vod/%s/",formatClientID($this->context), $proto);
-        $ds_name       = sprintf("ds-%s-%s", $alias, $this->context->account->id);
+                                $clientId,$this->https ? "s" : "");
+        $originPath = sprintf("out/u/%s/vod/%s/",$clientName, $proto);
+        $ds_name       = sprintf("ds-%s-%s", $alias, $clientId);
         $this->path = sprintf("%s/%s",$originServer,$this->content_name);
+        $this->cdn_routing_uri = sprintf("%s.%d.csi.cds.cisco.com/%s", $alias, $clientId, $this->content_name);
+        $usage = $this->getUsage();
+        $this->content_storage_size = $usage["size"];
+
         // Verifica se já existe delivery service para o tipo de serviço,
         // se não houver, cria
         foreach( $this->context->cdns as $cdn ) {
             if( $cdn->delivery_service_name == $ds_name ) {
-                echo "Content $this->content_name will use Delivery service: $ds_name \n";
+                $logger->info("Content $this->content_name will use Delivery service: $ds_name");
                 return;
             }
         }
-        echo "Creating new CDN for Delivery service: $ds_name content: $this->content_name\n";
+        $logger->info("Creating new CDN for Delivery service: $ds_name content: $this->content_name");
 
         $apsc = \APS\Request::getController();
         $apsc2 = $apsc->impersonate($this);
@@ -182,7 +200,23 @@ class vod extends \APS\ResourceBase {
         $cdn->https = $this->https;
         $cdn->live = "false";
         $apsc2->linkResource($context, 'cdns', $cdn);
+        $logger->info(sprintf("Finalizando provisionamento do conteudo %s-%s da subscrição %s",
+                $this->content_id, $this->content_name, $clientName));
+    }
 
+    public function getUsage(){
+        $logger = $this->getLogger();
+        $clientName = formatClientID($this->context);
+        $proto = $this->https ? "https" : "http";
+        try{
+            $logger->debug("Obtendo usage do delta via ssh");
+            return NiceSSH::getUsage($clientName, $proto, $this->premium ? "prm": "std", $this->content_name);
+        } catch (Exception $fault ) {
+            $logger->error("Erro ao buscar informações via ssh no delta");
+            $logger->error($fault->getMessage());
+            $data = array("size"=>0,"name"=>"","age"=>0);
+            return $data;
+        }
     }
 
     public function configure($new) {
@@ -193,23 +227,28 @@ class vod extends \APS\ResourceBase {
     }
 
     public function unprovision(){
-        \APS\LoggerRegistry::get()->setLogFile("logs/vods.log");
-        $clientid = formatClientID($this->context);
-        \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento do conteudo %s-%s do cliente %s",
-                $this->content_id, $this->content_name, $clientid));
+        $logger = $this->getLogger();
+        $logger->info(sprintf("Iniciando desprovisionamento do conteudo %s-%s",
+                $this->content_id, $this->content_name));
 
         try {
             ElementalRest::$auth = new Auth( 'elemental','elemental' );
             DeltaContents::delete($this->content_id);
         } catch (Exception $fault) {
-            $this->logger->info("Error while deleting content $this->content_name, :\n\t" . $fault->getMessage());
-            throw new Exception($fault->getMessage());
+            $logger->info("Error while deleting content $this->content_name, :\n\t" . $fault->getMessage());
+//             throw new Exception($fault->getMessage());
         }    	
         
-        \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento do conteudo %s-%s do cliente %s",
-                $this->content_id, $this->content_name, $clientid));
+        $logger->info(sprintf("Fim desprovisionamento do conteudo %s-%s",
+                $this->content_id, $this->content_name));
     }
 
+    private function getLogger() {
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/vods.log");
+        return $logger;
+    }
+    
     /**
         * Update traffic usage
         * @verb(GET)
@@ -223,6 +262,11 @@ class vod extends \APS\ResourceBase {
         } else {
             $usage["VDN_VOD_Encoding_Minutes"] = 0;
         }
+        $storage = $this->getUsage();
+        $usage["size"] = $storage["size"];
+        $usage["name"] = $storage["name"];
+        $usage["age"] = $storage["age"];
+
 //         var_dump($usage);
         return $usage;
     }

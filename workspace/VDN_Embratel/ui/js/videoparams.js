@@ -169,15 +169,14 @@ define(["dojox/mvc/at"],
                         label: identifier,
                         value: at(model, name),
                         required: true }
-                    ],
-                    ["aps/TextBox", { id: "description",
-                        label: _("Description"),
-                        cols: 60,
-                        value: at(model, "description") }
                     ]
                 ]],
-                ["aps/FieldSet", {title:true}, []],
-                ["aps/FieldSet", {title: mainTitle,description: mainDescr},containers
+                ["aps/FieldSet", {
+                    title:true}, []
+                ],
+                ["aps/FieldSet", {
+                    title: mainTitle,description: mainDescr},
+                    containers
                 ]
             ]];
             return widgets;

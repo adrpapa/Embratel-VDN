@@ -177,6 +177,13 @@ class context extends \APS\ResourceBase
 
     /**
         * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+        * @description("VOD Encoding time in minutes - premium streams")
+        * @unit("unit")
+        */
+    public $VDN_VOD_Encoding_Minutes_Premium;
+
+    /**
+        * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
         * @description("Encoding time in minutes")
         * @unit("mb-h")
         */
@@ -192,6 +199,13 @@ class context extends \APS\ResourceBase
         * @unit("unit")
         */
     public $VDN_Live_Encoding_Minutes;
+
+    /**
+        * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
+        * @description("Live encoding time in minutes - premium streams")
+        * @unit("unit")
+        */
+    public $VDN_Live_Encoding_Minutes_Premium;
 
     /**
         * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
@@ -215,10 +229,14 @@ class context extends \APS\ResourceBase
         // Initialize counters
         $this->VDN_VOD_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
         $this->VDN_VOD_Encoding_Minutes->usage = 0;
+        $this->VDN_VOD_Encoding_Minutes_Premium = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_VOD_Encoding_Minutes_Premium->usage = 0;
         $this->VDN_VOD_Storage_MbH = new \org\standard\aps\types\core\resource\Counter();
         $this->VDN_VOD_Storage_MbH->usage = 0;
         $this->VDN_Live_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
         $this->VDN_Live_Encoding_Minutes->usage = 0;
+        $this->VDN_Live_Encoding_Minutes_Premium = new \org\standard\aps\types\core\resource\Counter();
+        $this->VDN_Live_Encoding_Minutes_Premium->usage = 0;
         $this->VDN_Live_DVR_Minutes = new \org\standard\aps\types\core\resource\Counter();
         $this->VDN_Live_DVR_Minutes->usage = 0;
         $this->VDN_HTTP_Traffic = new \org\standard\aps\types\core\resource\Counter();
@@ -295,49 +313,45 @@ class context extends \APS\ResourceBase
             $cdnTrafficLog->log("$cdn->origin_domain,https;$usage->httpsTrafficActualUsage");
         }
 
-        ## update  Job encoding minutes
-//             foreach ( $this->jobs as $job ) {
-//                 $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
-//                         $apsc->getIo()->resourcePath($job->aps->id, 'updateResourceUsage'));
-//                 $usage = json_decode($usage);
-//                 $VDN_VOD_Encoding_Minutes += $usage->VDN_VOD_Encoding_Minutes;
-//             }
-        $logger->info(sprintf("Computing VoD Storage Usage. Current usage=%f MbH",$this->VDN_VOD_Storage_MbH->usage));
-        $vodStorageLog = new BillingLog($this, "vodStorage");
-        $totalKB=0;
-        try{
-            $data = NiceSSH::getVODUsage(formatClientID( $this ));
-            foreach($data as $it) {
-                $totalKB += $it[0];
-                $vodStorageLog->log("$it[0];$it[1]");
-                echo "$it[0];$it[1]\n";
-            }
-            $vodStorageLog->log("$totalKB; Total KB");
-        } catch(Exception $fault) {
-            $vodStorageLog->error($fault->getMessage());
-        }
 
-        $VDN_VOD_Encoding_Minutes = $this->VDN_VOD_Encoding_Minutes->usage;
-        $logger->info("Computing VoD Encoding Usage. Current usage=%f min",$VDN_VOD_Encoding_Minutes);
+        // acumula MBxh em kbxs para converter no final
+        $totalKBs=0;
+        $VDN_VOD_Encoding_Minutes = 0;
+        $VDN_VOD_Encoding_Minutes_Premium = 0;
+        $logger->info(sprintf("Computing VoD Encoding Usage. Current usage=%f min Premium=%f min",
+                              $this->VDN_VOD_Encoding_Minutes->usage,
+                              $this->VDN_VOD_Encoding_Minutes_Premium->usage));
         $vodEncodingLog = new BillingLog($this, "vodEncoding");
+        $vodStorageLog = new BillingLog($this, "vodStorage");
         foreach ( $this->vods as $vod ) {
+            $logger->debug(sprintf("obtaining VoD billing for ".$vod->path));
             $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($vod->aps->id, 'updateVodUsage'));
             $usage = json_decode($usage);
-            $VDN_VOD_Encoding_Minutes += round($usage->VDN_VOD_Encoding_Minutes);
-            $vodEncodingLog->log("$vod->path;$VDN_VOD_Encoding_Minutes");
+            $VDN_VOD_Encoding_Minutes += $usage->VDN_VOD_Encoding_Minutes;
+            if($vod->premium){
+                $VDN_VOD_Encoding_Minutes_Premium += $usage->VDN_VOD_Encoding_Minutes;
+            }
+            $vodEncodingLog->log("$vod->path;$VDN_VOD_Encoding_Minutes;$VDN_VOD_Encoding_Minutes_Premium");
+            $totalKBs += ($usage->size * $usage->age);
+            $vodStorageLog->log("$vod->path;$usage->size;$usage->age");
         }
 
-        $logger->info(sprintf("Computing Live Encoding Current Usage values: %f min / DVR: %f min",
-                $this->VDN_Live_Encoding_Minutes->usage, $this->VDN_Live_DVR_Minutes->usage));
+        $logger->info(sprintf("Computing Live Encoding Current Usage values: %f min Premium: %f min / DVR: %f min",
+                $this->VDN_Live_Encoding_Minutes->usage,
+                $this->VDN_Live_Encoding_Minutes_Premium->usage,
+                $this->VDN_Live_DVR_Minutes->usage));
         $liveEncodingLog = new BillingLog($this, "liveEncoding");
         foreach ( $this->channels as $channel ) {
             $usage = $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($channel->aps->id, 'updateLiveUsage'));
             $usage = json_decode($usage);
             $this->VDN_Live_Encoding_Minutes->usage += $usage->VDN_Live_Encoding_Minutes;
+            if( $channel->premium ) {
+                $this->VDN_Live_Encoding_Minutes_Premium->usage += $usage->VDN_Live_Encoding_Minutes_Premium;
+            }
             $this->VDN_Live_DVR_Minutes->usage += $usage->VDN_Live_DVR_Minutes;
-            $liveEncodingLog->log("$channel->name;$this->VDN_Live_Encoding_Minutes->usage;$this->VDN_Live_DVR_Minutes->usage");
+            $liveEncodingLog->log($channel->name.";".$this->VDN_Live_Encoding_Minutes->usage.";".$this->VDN_Live_DVR_Minutes->usage);
         }
 
         ## Update the APS resource counters
@@ -346,8 +360,9 @@ class context extends \APS\ResourceBase
         $logger->info(sprintf("Resource usage after update: http=%f https=%f",
                 $this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
 
-        $this->VDN_VOD_Encoding_Minutes->usage = $VDN_VOD_Encoding_Minutes;
-        $this->VDN_VOD_Storage_MbH->usage = round($totalKB/1024);
+        $this->VDN_VOD_Encoding_Minutes->usage += round($VDN_VOD_Encoding_Minutes);
+        $this->VDN_VOD_Encoding_Minutes_Premium->usage += round($VDN_VOD_Encoding_Minutes_Premium);
+        $this->VDN_VOD_Storage_MbH->usage = round($totalKBs/1024/60/60);
 //         print_r($this);
     }
 }
