@@ -348,7 +348,7 @@ class context extends \APS\ResourceBase
             $usage = json_decode($usage);
             $this->VDN_Live_Encoding_Minutes->usage += $usage->VDN_Live_Encoding_Minutes;
             if( $channel->premium ) {
-                $this->VDN_Live_Encoding_Minutes_Premium->usage += $usage->VDN_Live_Encoding_Minutes_Premium;
+                $this->VDN_Live_Encoding_Minutes_Premium->usage += $usage->VDN_Live_Encoding_Minutes;
             }
             $this->VDN_Live_DVR_Minutes->usage += $usage->VDN_Live_DVR_Minutes;
             $liveEncodingLog->log($channel->name.";".$this->VDN_Live_Encoding_Minutes->usage.";".$this->VDN_Live_DVR_Minutes->usage);
