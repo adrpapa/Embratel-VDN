@@ -47,8 +47,7 @@
                                 fn: at(model, "content_name")
                             }],
                             ["aps/Output", {
-                                id: "screen_format",
-                                label: _("Screen Format: ${sf}"),
+                                content: _("Screen Format: ${sf}"),
                                 sf: at(model, "screen_format")}
                             ],
                             ["aps/Output", {
@@ -56,7 +55,17 @@
                                 duration: tempo }],
                             ["aps/Output", {
                                 content: _("Input URL: ${url}"),
-                                url: at(model, "input_URI")}]
+                                url: at(model, "input_URI")}],
+                            ["aps/CheckBox", {
+                                disabled: true,
+                                label: _("Use HTTPS?"),
+                                checked: at(model, "https") }
+                            ],
+                            ["aps/CheckBox", {
+                                disabled: true,
+                                label: _("Premium Configuration Options?"),
+                                checked: at(model, "premium") }
+                            ]
                         ]],
                         ["aps/FieldSet", { id: "endpoints", title: _("Public Endpoints") }, clientUri]
                 ]];

@@ -20,34 +20,32 @@
                     target: "/aps/2/resources"
                 }),
                 model;
+
             /* Getting Job properties */
             store.get(aps.context.vars.job.aps.id).then(function(object){
-                model = getStateful(object);
-                /* Collect the Job properties in the model */
-                /* and create the widgets */
-                var widgets =
-                    ["aps/PageContainer", { id: "page" }, [
-                        ["aps/FieldSet",   { id: "new1_general", title:  _("Job Configuration")  }, [
-                            ["aps/Output", { id: "new1_jobName", label: _("Job Name"), value: at(model, "name") }],
-                            ["aps/Output", { id: "new1_description", label: _("Description"), value: at(model, "description") }],
-                            ["aps/Output", { id: "new1_input_URI", label: _("Input URI"), value: at(model, "input_URI")}]
+
+            /* Collect the Job properties in the model */
+            model = getStateful(object);
+            /* and create the widgets */
+            var widgets =
+                ["aps/PageContainer", { id: "page" }, [
+                    ["aps/FieldSet", { id: "new1_general", title: _("Job Configuration")  }, [
+                            ["aps/TextBox", { id: "new1_jobName", label: _("Job Name"), value: at(model, "name"), disabled: true }],
+                            ["aps/TextBox", { id: "new1_description", label: _("Description"), value: at(model, "description", disabled: true) }]
                         ]],
                         ["aps/FieldSet",   { id: "new1_info", title:  _("Elemental Server Information")  }, [
                             ["aps/Output", { id: "new1_state", label: _("State"), value: at(model, "state")}],
                             ["aps/Output", { id: "new1_screen_format", label: _("Screen Format"), value: at(model, "screen_format")}],
-                            ["aps/Output", { id: "new1_job_id", label: _("Job Id"), value: at(model, "job_id")}]
-//                             ["aps/Output", { id: "new1_server_node", label: _("Elemental Server Node"), value: at(model, "server_node")}],
-//                             ["aps/Output", { id: "new1_profile_id", label: _("Profile ID"), value: at(model, "profile_id")}]
+                            ["aps/Output", { id: "new1_job_id", label: _("Job Id"), value: at(model, "job_id")}],
+                            ["aps/Output", { id: "new1_input_URI", label: _("Input URI"), value: at(model, "input_URI")}],
+                            ["aps/Output", { id: "new1_server_node", label: _("Elemental Server Node"), value: at(model, "server_node")}],
+                            ["aps/Output", { id: "new1_profile_id", label: _("Profile ID"), value: at(model, "profile_id")}]
                         ]]
                 ]];
                 return load(widgets);
             }).then(function(){
                 /* Once the widgets are created, create handlers for the navigation buttons */
                 aps.app.onCancel = function() {
-                    aps.apsc.gotoView("jobs");
-                };
-
-                aps.app.onFinish = function() {
                     aps.apsc.gotoView("jobs");
                 };
 
@@ -63,13 +61,10 @@
                         },
                         displayError
                     );
-                };
+            };
             }).otherwise(displayError);
         });
-    }
-    catch(err) {
-        alert("Error in job-info.html! "+err.message);
-    }
+    </script>
 </head>
 <body>
 </body>

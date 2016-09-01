@@ -309,8 +309,7 @@ class context extends \APS\ResourceBase
             $usage = json_decode($usage);
             $httpTraffic +=  $usage->httpTrafficActualUsage * 1024 * 1024; // convert GB to MB
             $http_s_Traffic += $usage->httpsTrafficActualUsage * 1024 * 1024; // convert GB to MB
-            $cdnTrafficLog->log("$cdn->origin_domain,http;$usage->httpTrafficActualUsage");
-            $cdnTrafficLog->log("$cdn->origin_domain,https;$usage->httpsTrafficActualUsage");
+            $cdnTrafficLog->log("$cdn->origin_domain;http;$usage->httpTrafficActualUsage;https;$usage->httpsTrafficActualUsage");
         }
 
 
@@ -351,7 +350,7 @@ class context extends \APS\ResourceBase
                 $this->VDN_Live_Encoding_Minutes_Premium->usage += $usage->VDN_Live_Encoding_Minutes;
             }
             $this->VDN_Live_DVR_Minutes->usage += $usage->VDN_Live_DVR_Minutes;
-            $liveEncodingLog->log($channel->name.";".$this->VDN_Live_Encoding_Minutes->usage.";".$this->VDN_Live_DVR_Minutes->usage);
+            $liveEncodingLog->log($channel->name.";".$this->VDN_Live_Encoding_Minutes->usage.";".$this->VDN_Live_Encoding_Minutes_Premium->usage.";".$this->VDN_Live_DVR_Minutes->usage);
         }
 
         ## Update the APS resource counters

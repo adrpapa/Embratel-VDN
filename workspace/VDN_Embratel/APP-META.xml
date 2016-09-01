@@ -3,7 +3,7 @@
     <id>http://embratel.com.br/app/VDN_Embratel</id>
     <name>VDN_Embratel</name>
     <version>2.0</version>
-    <release>8</release>
+    <release>10</release>
     <homepage>http://embratel.com.br/app/VDN_Embratel</homepage>
     <vendor>
         <name>Embratel</name>
@@ -65,8 +65,7 @@ CISCO VDN para entrega distribuída de conteúdo
                         </view>
                         <view id="job-info" label="Job Information">
                             <controls>
-                                <finish/>
-<!--                                 <submit /> -->
+                                <cancel label="Back to list"/>
                             </controls>
                             <var name="job"
                                 type-id="http://embratel.com.br/app/VDN_Embratel/job/2.0" />
@@ -88,9 +87,10 @@ CISCO VDN para entrega distribuída de conteúdo
                             <finish />
                         </controls>
                     </view>
-                    <view id="channel-info" label="Edit Channel">
+                    <view id="channel-info" label="Channel Information">
                         <controls>
-                            <cancel />
+                                <cancel label="Back to list"/>
+<!--                             <cancel /> -->
                         </controls>
                         <var name="chnl"
                             type-id="http://embratel.com.br/app/VDN_Embratel/channel/2.0" />
@@ -101,14 +101,14 @@ CISCO VDN para entrega distribuída de conteúdo
                 <view id="cdns" label="CDN">
                     <view id="cdn-new-1" label="New Delivery Service">
                         <controls>
-                            <cancel />
+                            <cancel label="Back to list"/>
                             <submit />
                         </controls>
                     </view>
-                    <view id="cdn-info" label="Edit Delivery Service">
+                    <view id="cdn-info" label="Delivery Service Information">
                         <controls>
-                            <cancel />
-                            <submit />
+                            <cancel label="Back to list"/>
+<!--                             <submit /> -->
                         </controls>
                         <var name="cdnl"
                             type-id="http://embratel.com.br/app/VDN_Embratel/cdn/2.0" />
