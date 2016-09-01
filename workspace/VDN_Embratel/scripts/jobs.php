@@ -246,7 +246,7 @@ class job extends \APS\ResourceBase {
 
     public function createContents($jobstatus){
         echo "Creating Content\n";
-        $this->info = $jobstatus->asXml();
+//         $this->info = $jobstatus->asXml();
         $apsc = \APS\Request::getController();
         $apsc2 = $apsc->impersonate($this);
         $context = $apsc2->getResource($this->context->aps->id);
@@ -326,8 +326,18 @@ class job extends \APS\ResourceBase {
         \APS\LoggerRegistry::get()->info("Called updateJobStatus for job id=".$this->job_id.
                 " status will be updated from ".$this->state." to ".$jobstatus->status);
         $this->state = $jobstatus->status.'';
+        $this->submit_date  = $jobstatus->start_time.'';
+        $this->elapsed_time  = $jobstatus->elapsed_time_in_words.'';
+        if( $jobstatus->error_messages != null && 
+                $jobstatus->error_messages->error != null && 
+                $jobstatus->error_messages->error->message != null) {
+            $this->info = $jobstatus->error_messages->error->message.'';
+        } else {
+            $this->info = null;
+        }
         $apsc = \APS\Request::getController();
         $apsc->updateResource($this);
+        \APS\LoggerRegistry::get()->info("job id=".$this->job_id." Updated!");
         return $this;
     }
 
