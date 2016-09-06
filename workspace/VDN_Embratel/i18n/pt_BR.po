@@ -2,104 +2,152 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
-#, fuzzy
 msgid ""
-msgstr "Project-Id-Version: VDN_Embratel-2.0-1n"
-"Report-Msgid-Bugs-To: \n"
+msgstr ""
+"Project-Id-Version: VDN_Embratel-2.0-1nReport-Msgid-Bugs-To:\n"
 "POT-Creation-Date: 2016-07-26 13:14-0300\n"
-"PO-Revision-Date: 2016-07-26 13:14-0300\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-09-06 05:00-0300\n"
 "Language-Team: Portuguese <EMAIL@ADDRESS>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 1.8.5\n"
 
 # @generated
 #: APP-META.xml:18
-msgid "APS para suportar venda de infraestrutura para provedores de conteúdo.\n"
+msgid ""
+"APS para suportar venda de infraestrutura para provedores de conteúdo.\n"
 "Permite configurar os back-ends:\n"
 "Elemental server - para encoding de conteúdo estático\n"
 "Elemental live - para streaming ao vivo\n"
 "Elemental delta para empacotamento\n"
 "CISCO VDN para entrega distribuída de conteúdo"
 msgstr ""
+"APS para suportar venda de infraestrutura para provedores de conteúdo.\n"
+"Permite configurar os back-ends:\n"
+"Elemental server - para encoding de conteúdo estático\n"
+"Elemental live - para streaming ao vivo\n"
+"Elemental delta para empacotamento\n"
+"CISCO VDN para entrega distribuída de conteúdo"
 
 # @generated
-#: ui/cdn-info.html:42
-#: ui/cdn-new-1.html:58
-#: ui/cdn-new-last.html:35
+#: ui/cdn-info.html:43 ui/cdn-new-1.html:59 ui/cdn-new-last.html:35
 msgid "Alias"
-msgstr ""
+msgstr "Apelido"
 
 # @generated
-#: APP-META.xml:69
+#: ui/cdns.html:87
+msgid "Are you sure you want delete CDN __cdn__?"
+msgstr "Confirma exclusão do CDN __cdn__?"
+
+# @generated
+#: ui/channels.html:130
+msgid "Are you sure you want delete Channels?"
+msgstr "Confirma a exclusão dos Canais?"
+
+# @generated
+#: APP-META.xml:45
 msgid "Back to Contents list"
-msgstr ""
+msgstr "Volta à lista de conteúdos"
 
 # @generated
-#: APP-META.xml:102
+#: APP-META.xml:68 APP-META.xml:92 APP-META.xml:104 APP-META.xml:110
+msgid "Back to list"
+msgstr "Volta à lista"
+
+# @generated
+#: APP-META.xml:100 APP-META.xml:101
 msgid "CDN"
-msgstr ""
+msgstr "CDN"
 
 # @generated
-#: APP-META.xml:101
-msgid "CDN Standalone"
-msgstr ""
+#: ui/cdns.html:83
+msgid "CDN __cdn__ created automatically by the system - may not be removed"
+msgstr "CDN __cdn__ foi criado internamente pelo sistema e não é possível removê-lo."
 
 # @generated
-#: ui/channel-info.html:33
-#: ui/channel-new-1.html:46
+#: ui/jobs.html:52
+msgid "Cancel"
+msgstr "Cancelar"
+
+# @generated
+#: ui/channel-info.html:45
+msgid "Channel Configuration"
+msgstr "Configuração do Canal"
+
+# @generated
+#: APP-META.xml:90
+msgid "Channel Information"
+msgstr "Informação do Canal"
+
+# @generated
+#: ui/channel-info.html:46 ui/channel-new-1.html:51 ui/js/videoparams.js:161
 msgid "Channel Name"
+msgstr "Nome do Canal"
+
+# @generated
+#: ui/jobs.html:58
+msgid "Complete Jobs"
 msgstr ""
 
 # @generated
-#: APP-META.xml:173
-#: APP-META.xml:174
+#: APP-META.xml:174 APP-META.xml:175
 msgid "Content Delivery Network"
 msgstr ""
 
 # @generated
-#: APP-META.xml:67
+#: APP-META.xml:43 ui/content-info.html:44
 msgid "Content Information"
 msgstr ""
 
 # @generated
-#: ui/content-info.html:32
 #: ui/job-new-1.html:42
 msgid "Content Name"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:67
-#: ui/cdn-new-1.html:83
-#: ui/cdn-new-last.html:34
-#: ui/channel-info.html:34
-#: ui/channel-new-1.html:47
-#: ui/job-info.html:33
-#: ui/job-new-1.html:43
+#: APP-META.xml:41 APP-META.xml:42
+msgid "Conteúdo"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:39 ui/content-info.html:40
+msgid "DASH"
+msgstr ""
+
+# @generated
+#: ui/jobs.html:53
+msgid "Delete"
+msgstr ""
+
+# @generated
+#: APP-META.xml:108
+msgid "Delivery Service Information"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:50 ui/cdn-info.html:71 ui/cdn-new-1.html:84
+#: ui/cdn-new-last.html:34 ui/channel-new-1.html:63 ui/job-new-1.html:52
+#: ui/job-info.html:34
 msgid "Description"
 msgstr ""
 
 # @generated
-#: APP-META.xml:91
-msgid "Edit Channel"
-msgstr ""
-
-# @generated
-#: APP-META.xml:109
-msgid "Edit Delivery Service"
-msgstr ""
-
-# @generated
-#: ui/channel-info.html:42
-msgid "Elemental Live Node"
+#: ui/content-info.html:54
+msgid "Duration ${duration}"
 msgstr ""
 
 # @generated
 #: ui/job-info.html:40
-msgid "Elemental Server Node"
+msgid "Elapsed Time"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:56
+msgid "Elemental Live Information"
 msgstr ""
 
 # @generated
@@ -113,8 +161,50 @@ msgid "Embratel"
 msgstr ""
 
 # @generated
+#: ui/channels.html:70 ui/jobs.html:94
+msgid ""
+"Error refreshing job __jobname__:\n"
+" __errmsg__"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:57
+msgid "Event name containing letters, numbers and dash(-)"
+msgstr ""
+
+# @generated
 #: APP-META.xml:13
 msgid "Fastlane"
+msgstr ""
+
+# @generated
+#: ui/content-info.html:46
+msgid "File Name: ${fn}"
+msgstr ""
+
+# @generated
+#: ui/job-new-1.html:41
+msgid "General Configuration"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:37 ui/content-info.html:38
+msgid "HDS"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:35 ui/content-info.html:36
+msgid "HLS"
+msgstr ""
+
+# @generated
+#: ui/contents.html:30 ui/jobs.html:44
+msgid "ID"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:71
+msgid "IP or FQDN from origin server that will provide the content"
 msgstr ""
 
 # @generated
@@ -123,91 +213,132 @@ msgid "Initial release."
 msgstr ""
 
 # @generated
-#: ui/channel-info.html:40
-#: ui/job-info.html:39
-#: ui/job-new-1.html:44
+#: ui/job-new-1.html:45 ui/jobs.html:47 ui/jobs.html:67 ui/job-info.html:38
+#: ui/js/videoparams.js:163
 msgid "Input URI"
 msgstr ""
 
 # @generated
-#: ui/job-info.html:38
-msgid "Job Id"
+#: ui/content-info.html:57
+msgid "Input URL: ${url}"
 msgstr ""
 
 # @generated
-#: APP-META.xml:55
-msgid "Job Information"
+#: ui/cdn-new-1.html:72
+msgid "Invalid value. It should be a valid IPv4 or FQDN"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:81
+msgid "Invalid value. It should be a valid path. Ex: out/u"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:58
+msgid "Invalid value. It should containing only letters, numbers and dash(-)"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:64
+msgid "Invalid value. It should contains only numbers and letters"
 msgstr ""
 
 # @generated
 #: ui/job-info.html:32
+msgid "Job Details"
+msgstr ""
+
+# @generated
+#: ui/job-info.html:37
+msgid "Job Id"
+msgstr ""
+
+# @generated
+#: APP-META.xml:66
+msgid "Job Information"
+msgstr ""
+
+# @generated
+#: ui/job-info.html:33
 msgid "Job Name"
 msgstr ""
 
 # @generated
-#: APP-META.xml:41
-#: APP-META.xml:42
+#: ui/jobs.html:144
+msgid ""
+"Job __jobname__ cannot be cancelled\n"
+"__errmsg__ "
+msgstr ""
+
+# @generated
+#: APP-META.xml:52 APP-META.xml:53
 msgid "Jobs"
 msgstr ""
 
 # @generated
-#: APP-META.xml:77
-#: APP-META.xml:78
+#: APP-META.xml:76 APP-META.xml:77
 msgid "Live Channels"
 msgstr ""
 
 # @generated
-#: ui/channel-info.html:39
+#: ui/channel-info.html:92
 msgid "Live Event Id"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:75
-#: ui/cdn-new-1.html:90
-#: ui/cdn-new-last.html:41
+#: ui/cdn-info.html:80 ui/cdn-new-1.html:91 ui/cdn-new-last.html:41
 msgid "Live?"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:34
-#: ui/cdn-new-1.html:50
-#: ui/cdn-new-last.html:33
-#: ui/js/videoparams.js:164
+#: ui/channel-info.html:38 ui/content-info.html:39
+msgid "MSS"
+msgstr ""
+
+# @generated
+#: ui/contents.html:31 ui/cdn-info.html:34 ui/cdn-new-1.html:51
+#: ui/cdn-new-last.html:33 ui/jobs.html:45 ui/jobs.html:65
 msgid "Name"
 msgstr ""
 
 # @generated
-#: APP-META.xml:79
+#: ui/cdn-new-1.html:57
+msgid "Name is mandatory. Please fill it"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:56
+msgid "Name of this CDN configuration. It's used to identify this configuration in your control panel"
+msgstr ""
+
+# @generated
+#: ui/jobs.html:51
+msgid "New"
+msgstr ""
+
+# @generated
+#: APP-META.xml:78
 msgid "New Channel"
 msgstr ""
 
 # @generated
-#: APP-META.xml:103
+#: APP-META.xml:102
 msgid "New Delivery Service"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:58
-#: ui/cdn-new-1.html:74
-#: ui/cdn-new-last.html:37
+#: ui/cdn-info.html:61 ui/cdn-new-1.html:75 ui/cdn-new-last.html:37
 msgid "Origin Path"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:50
-#: ui/cdn-new-1.html:66
-#: ui/cdn-new-last.html:36
+#: ui/cdn-info.html:52 ui/cdn-new-1.html:67 ui/cdn-new-last.html:36
 msgid "Origin Server"
 msgstr ""
 
 # @generated
-#: ui/content-info.html:33
-msgid "Path"
-msgstr ""
-
-# @generated
-#: ui/channel-new-1.html:54
-#: ui/job-new-1.html:50
+#: ui/channel-info.html:87 ui/channel-new-1.html:88 ui/job-new-1.html:62
+#: ui/content-info.html:66
 msgid "Premium Configuration Options?"
 msgstr ""
 
@@ -217,18 +348,22 @@ msgid "Premium Transcoder Parameter Customization"
 msgstr ""
 
 # @generated
-#: ui/channel-info.html:43
-#: ui/job-info.html:41
-msgid "Profile ID"
-msgstr ""
-
-# @generated
-#: ui/channel-new-1.html:52
+#: ui/channel-info.html:75 ui/channel-new-1.html:80
 msgid "Provide DVR Feature?"
 msgstr ""
 
 # @generated
-#: ui/cdn-new-1.html:106
+#: ui/channel-info.html:96 ui/content-info.html:70
+msgid "Public Endpoints"
+msgstr ""
+
+# @generated
+#: ui/jobs.html:54
+msgid "Refresh"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:111
 msgid "Required fields have to be filled"
 msgstr ""
 
@@ -238,94 +373,120 @@ msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will b
 msgstr ""
 
 # @generated
-#: APP-META.xml:85
+#: APP-META.xml:84
 msgid "Review"
 msgstr ""
 
 # @generated
-#: ui/channel-info.html:38
-#: ui/channel-new-1.html:50
-#: ui/job-info.html:37
-#: ui/job-new-1.html:47
+#: ui/jobs.html:38
+msgid "Running Jobs"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:69 ui/channel-new-1.html:75 ui/job-new-1.html:59
+#: ui/job-info.html:36
 msgid "Screen Format"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:71
+#: ui/content-info.html:50
+msgid "Screen Format: ${sf}"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:76
 msgid "Service Routing Domain Name"
 msgstr ""
 
 # @generated
-#: ui/channel-info.html:37
-#: ui/job-info.html:36
+#: ui/channel-info.html:64
+msgid "Start Encoding"
+msgstr ""
+
+# @generated
+#: ui/channel-info.html:59 ui/jobs.html:46 ui/jobs.html:66 ui/job-info.html:35
 msgid "State"
 msgstr ""
 
 # @generated
-#: APP-META.xml:43
+#: ui/cdn-new-1.html:103
+msgid "Subdomains of __cdmsDomain__ may not be used."
+msgstr ""
+
+# @generated
+#: ui/job-info.html:39
+msgid "Submit Date"
+msgstr ""
+
+# @generated
+#: APP-META.xml:54
 msgid "Submit New Content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:49
-#: ui/js/videoparams.js:158
+#: ui/cdn-new-1.html:63
+msgid "This alias will be used in the Service Routing Domain Name generated by the system"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:80
+msgid "This is the path from content origin. It is used to redefine the CDN URL. It will supress the needed to type this path before the video name in the URL"
+msgstr ""
+
+# @generated
+#: ui/job-new-1.html:58
+msgid "Transcoder Options"
+msgstr ""
+
+# @generated
+#: APP-META.xml:60 ui/js/videoparams.js:158
 msgid "Transcoder Parameters"
 msgstr ""
 
 # @generated
-#: ui/channel-info.html:41
-msgid "UDP Delta Port"
-msgstr ""
-
-# @generated
-#: ui/cdn-info.html:74
-#: ui/cdn-new-1.html:89
-#: ui/cdn-new-last.html:40
-#: ui/channel-new-1.html:53
-#: ui/job-new-1.html:49
+#: ui/channel-info.html:81 ui/cdn-info.html:79 ui/cdn-new-1.html:90
+#: ui/cdn-new-last.html:40 ui/channel-new-1.html:84 ui/job-new-1.html:61
+#: ui/content-info.html:61
 msgid "Use HTTPS?"
 msgstr ""
 
 # @generated
-#: APP-META.xml:134
+#: APP-META.xml:36
+msgid "VDN"
+msgstr ""
+
+# @generated
+#: APP-META.xml:135
 msgid "VDN  Embratel  global configuration variables"
 msgstr ""
 
 # @generated
-#: APP-META.xml:141
+#: APP-META.xml:142
 msgid "VDN  Embratel Management"
 msgstr ""
 
 # @generated
-#: APP-META.xml:133
+#: APP-META.xml:134
 msgid "VDN  Embratel globals"
 msgstr ""
 
 # @generated
-#: APP-META.xml:157
-#: APP-META.xml:158
+#: APP-META.xml:158 APP-META.xml:159
 msgid "VDN Content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:36
-msgid "VDN Embratel"
-msgstr ""
-
-# @generated
-#: APP-META.xml:142
+#: APP-META.xml:143
 msgid "VDN Embratel environment"
 msgstr ""
 
 # @generated
-#: APP-META.xml:165
-#: APP-META.xml:166
+#: APP-META.xml:166 APP-META.xml:167
 msgid "VDN Job"
 msgstr ""
 
 # @generated
-#: APP-META.xml:149
-#: APP-META.xml:150
+#: APP-META.xml:150 APP-META.xml:151
 msgid "VDN Live Channels"
 msgstr ""
 
@@ -335,14 +496,33 @@ msgid "VOD"
 msgstr ""
 
 # @generated
-#: APP-META.xml:65
-#: APP-META.xml:66
-msgid "VOD Contents"
+#: ui/js/videoparams.js:155
+msgid "You may change each stream's Resolution, Frame Rate, Video Bit Rate and Audio Bit Rate for the transcoder."
 msgstr ""
 
 # @generated
-#: ui/js/videoparams.js:155
-msgid "You may change each stream's Resolution, Frame Rate, Video Bit Rate and Audio Bit Rate for the transcoder."
+#: ui/cdn-new-1.html:55
+msgid "[Example: This is a live event for IT free lessons]"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:62
+msgid "[Example: livefreelessons]"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:79
+msgid "[Example: out/u/myvideos]"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:70
+msgid "[Examples: myhost.mydomain.com 201.233.111.10]"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:56
+msgid "[myLiveEvent]"
 msgstr ""
 
 # @generated

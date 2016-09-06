@@ -79,10 +79,8 @@
                 });
 
                 registry.byId("job_refresh").on("click", function() {
-                    var pendingGrid = registry.byId("pendingGrid"),
-                        completeGrid = registry.byId("completeGrid");
-                        pendingArr = [];
-                        completeArr = [];
+                    pendingArr = [];
+                    completeArr = [];
                     when(
                         store.query().forEach(
                             function(item){
@@ -108,18 +106,15 @@
                                         }
                                     }
                                 ).then( function(){
-                                        pendingGrid.refresh();
-                                        completeGrid.refresh();
-                                    }
-                                ).then( function(){
-                                        registry.byId("job_refresh").cancel();
-                                    }
-                                ),
-                                function() {
+                                    registry.byId("pendingGrid").refresh();
+                                    registry.byId("completeGrid").refresh();
                                     registry.byId("job_refresh").cancel();
-                                };
+                                  });
                             }
                         )
+                    ).then( function(){
+                        aps.apsc.gotoView("jobs");
+                        }
                     );
                 });
 
@@ -184,9 +179,11 @@
                                     }
                                 );
                             }
-                        );
+                        ).then(function(){
+                                completeGrid.refresh();
+                                registry.byId("job_delete").cancel();
+                            });
                     });
-                    registry.byId("job_delete").cancel();
                 });
             });
             });

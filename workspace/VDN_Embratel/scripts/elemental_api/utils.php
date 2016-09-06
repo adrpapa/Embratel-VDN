@@ -32,4 +32,24 @@
         $logger->setLogFile("logs/".$path);
         return $logger;
     }
+    
+    /*
+    Convert text durations to milliseconds
+    */
+    function txtDuration2ms($duration){
+        preg_match_all("|([\d\.]+)\s*([^\d^\s^\.]+)|", $duration, $time_parts);
+        $multi = array("ms"=>1, "s"=>1000, "mn"=>60*1000, "h"=>60*60*1000, "d"=>24*60*60*1000 );
+        $totalMiliSeconds = 0;
+//              var_dump($time_parts);
+        for( $ix=0; $ix < count($time_parts[0]); $ix++ ) {
+            $unit = $time_parts[2][$ix];
+            $multiplier = $multi[$unit] * $time_parts[1][$ix];
+            $totalMiliSeconds += $multiplier;
+            next($multi);
+        }
+        return $totalMiliSeconds;
+    }
+        
+        
+//     echo txtDuration2ms("1mn 2s");
 ?>

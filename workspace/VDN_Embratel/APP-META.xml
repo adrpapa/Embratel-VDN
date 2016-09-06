@@ -24,7 +24,7 @@ CISCO VDN para entrega distribuída de conteúdo
 </description>
         <icon path="images/icon.png" />
         <changelog>
-            <version release="1" version="1.0">
+            <version release="1" version="1.ß0">
                 <entry>Initial release.</entry>
             </version>
         </changelog>
@@ -33,13 +33,13 @@ CISCO VDN para entrega distribuída de conteúdo
             <category>Streaming Infrastructure/Management</category>
         </categories>
 
-        <navigation id="ccpebt" label="VDN Embratel">
+        <navigation id="ccpebt" label="VDN">
             <var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/2.0" />
             <plugs-to id="http://www.aps-standard.org/ui/service" />
             
             <item id="vod" label="VOD">
-                <item id="contents" label="VOD Contents">
-                    <view id="contents" label="VOD Contents">
+                <item id="contents" label="Conteúdo">
+                    <view id="contents" label="Conteúdo">
                         <view id="content-info" label="Content Information">
                             <controls>
                                 <cancel label="Back to Contents list"/>

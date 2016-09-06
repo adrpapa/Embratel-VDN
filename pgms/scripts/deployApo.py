@@ -245,10 +245,11 @@ assert 'Parallels® Automation' in driver.title
 login('admin','123@mudar')
 if True:
     #try:
-        services=['VDN Embratel globals', 'VDN Embratel Management',   'VDN Live Channels', 
-                  'VDN Content',          'VDN Job',                   'Content Delivery Network',
-                  'VDN_HTTP_Traffic',     'VDN_HTTPS_Traffic',         'VDN_VOD_Encoding_Minutes', 
-                  'VDN_VOD_Storage_MbH',  'VDN_Live_Encoding_Minutes', 'VDN_Live_DVR_Minutes']
+        services=['VDN Embratel globals',      'VDN Embratel Management',           'VDN Live Channels', 
+                  'VDN Content',               'VDN Job',                           'Content Delivery Network',
+                  'VDN_HTTP_Traffic',          'VDN_HTTPS_Traffic',
+                  'VDN_VOD_Encoding_Minutes',  'VDN_VOD_Encoding_Minutes_Premium',  'VDN_VOD_Storage_MbH',
+                  'VDN_Live_Encoding_Minutes', 'VDN_Live_Encoding_Minutes_Premium', 'VDN_Live_DVR_Minutes']
 
         createAppReference(services[0])
         createAppService(services[1], True)
@@ -259,9 +260,11 @@ if True:
         createResourceCounter(services[6],3)
         createResourceCounter(services[7],3)
         createResourceCounter(services[8],4)
-        createResourceCounter(services[9],5)
-        createResourceCounter(services[10],4)
+        createResourceCounter(services[9],4)
+        createResourceCounter(services[10],5)
         createResourceCounter(services[11],4)
+        createResourceCounter(services[12],4)
+        createResourceCounter(services[13],4)
 
         createServiceTemplate(services[0], True, services)
         activateServiceTemplate(services[0])

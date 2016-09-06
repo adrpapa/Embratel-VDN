@@ -259,6 +259,8 @@ class vod extends \APS\ResourceBase {
         if( ! $this->content_encoding_charged ){ 
             $usage["VDN_VOD_Encoding_Minutes"] = round($this->content_time_length / 60000);
             $this->content_encoding_charged = true;
+            $apsc = \APS\Request::getController();
+            $apsc->updateResource($this);
         } else {
             $usage["VDN_VOD_Encoding_Minutes"] = 0;
         }
@@ -267,7 +269,7 @@ class vod extends \APS\ResourceBase {
         $usage["name"] = $storage["name"];
         $usage["age"] = $storage["age"];
 
-//         var_dump($usage);
+        $this->getLogger()->info(print_r($usage));
         return $usage;
     }
 }

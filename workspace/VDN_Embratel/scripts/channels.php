@@ -465,6 +465,8 @@ class channel extends \APS\ResourceBase {
         $logger->info("Event id ".$this->live_event_id." start_encoding_time: ".$this->start_encoding_time.
                       " last_reported_encoding_time: ". $this->last_reported_encoding_time." currentEncodingTime: ".$usage["VDN_Live_Encoding_Minutes"]);
         $this->last_reported_encoding_time = $usage["VDN_Live_Encoding_Minutes"];
+        $apsc = \APS\Request::getController();
+        $apsc->updateResource($this);
         return $usage;
     }
 }
