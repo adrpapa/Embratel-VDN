@@ -27,14 +27,14 @@ msgid "APS para suportar venda de infraestrutura para provedores de conteúdo.\n
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:43
+#: ui/cdn-info.html:45
 #: ui/cdn-new-1.html:59
 #: ui/cdn-new-last.html:35
 msgid "Alias"
 msgstr ""
 
 # @generated
-#: ui/cdns.html:87
+#: ui/cdns.html:89
 msgid "Are you sure you want delete CDN __cdn__?"
 msgstr ""
 
@@ -44,26 +44,41 @@ msgid "Are you sure you want delete Channels?"
 msgstr ""
 
 # @generated
-#: APP-META.xml:45
+#: ui/job-new-1.html:62
+msgid "Avanced Options (additional charges may apply)"
+msgstr ""
+
+# @generated
+#: APP-META.xml:48
 msgid "Back to Contents list"
 msgstr ""
 
 # @generated
-#: APP-META.xml:68
-#: APP-META.xml:92
-#: APP-META.xml:104
-#: APP-META.xml:110
+#: APP-META.xml:71
+#: APP-META.xml:95
+#: APP-META.xml:107
+#: APP-META.xml:113
 msgid "Back to list"
 msgstr ""
 
 # @generated
-#: APP-META.xml:100
-#: APP-META.xml:101
+#: APP-META.xml:103
+#: APP-META.xml:104
 msgid "CDN"
 msgstr ""
 
 # @generated
-#: ui/cdns.html:83
+#: ui/cdn-info.html:32
+msgid "CDN Configuration"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:33
+msgid "CDN Options"
+msgstr ""
+
+# @generated
+#: ui/cdns.html:84
 msgid "CDN __cdn__ created automatically by the system - may not be removed"
 msgstr ""
 
@@ -78,7 +93,7 @@ msgid "Channel Configuration"
 msgstr ""
 
 # @generated
-#: APP-META.xml:90
+#: APP-META.xml:93
 msgid "Channel Information"
 msgstr ""
 
@@ -95,14 +110,14 @@ msgid "Complete Jobs"
 msgstr ""
 
 # @generated
-#: APP-META.xml:174
-#: APP-META.xml:175
+#: APP-META.xml:177
+#: APP-META.xml:178
 msgid "Content Delivery Network"
 msgstr ""
 
 # @generated
-#: APP-META.xml:43
-#: ui/content-info.html:44
+#: APP-META.xml:46
+#: ui/content-info.html:41
 msgid "Content Information"
 msgstr ""
 
@@ -112,45 +127,52 @@ msgid "Content Name"
 msgstr ""
 
 # @generated
-#: APP-META.xml:41
-#: APP-META.xml:42
+#: APP-META.xml:44
+#: APP-META.xml:45
 msgid "Conteúdo"
 msgstr ""
 
 # @generated
 #: ui/channel-info.html:39
-#: ui/content-info.html:40
+#: ui/content-info.html:37
 msgid "DASH"
 msgstr ""
 
 # @generated
+#: ui/cdns.html:46
+#: ui/contents.html:46
 #: ui/jobs.html:53
 msgid "Delete"
 msgstr ""
 
 # @generated
-#: APP-META.xml:108
+#: APP-META.xml:111
 msgid "Delivery Service Information"
 msgstr ""
 
 # @generated
 #: ui/channel-info.html:50
-#: ui/cdn-info.html:71
+#: ui/cdn-info.html:79
 #: ui/cdn-new-1.html:84
 #: ui/cdn-new-last.html:34
 #: ui/channel-new-1.html:63
-#: ui/job-new-1.html:52
-#: ui/job-info.html:34
+#: ui/job-new-1.html:53
+#: ui/job-info.html:35
 msgid "Description"
 msgstr ""
 
 # @generated
-#: ui/content-info.html:54
+#: ui/content-info.html:51
 msgid "Duration ${duration}"
 msgstr ""
 
 # @generated
-#: ui/job-info.html:40
+#: ui/contents.html:34
+msgid "Duration(h:mm:ss)"
+msgstr ""
+
+# @generated
+#: ui/job-info.html:41
 msgid "Elapsed Time"
 msgstr ""
 
@@ -171,7 +193,7 @@ msgstr ""
 
 # @generated
 #: ui/channels.html:70
-#: ui/jobs.html:94
+#: ui/jobs.html:95
 msgid "Error refreshing job __jobname__:\n"
 " __errmsg__"
 msgstr ""
@@ -187,7 +209,7 @@ msgid "Fastlane"
 msgstr ""
 
 # @generated
-#: ui/content-info.html:46
+#: ui/content-info.html:43
 msgid "File Name: ${fn}"
 msgstr ""
 
@@ -198,23 +220,34 @@ msgstr ""
 
 # @generated
 #: ui/channel-info.html:37
-#: ui/content-info.html:38
+#: ui/content-info.html:35
 msgid "HDS"
 msgstr ""
 
 # @generated
 #: ui/channel-info.html:35
-#: ui/content-info.html:36
+#: ui/content-info.html:33
 msgid "HLS"
 msgstr ""
 
 # @generated
-#: ui/contents.html:30
+#: ui/cdn-info.html:89
+msgid "HTTPS Delivery"
+msgstr ""
+
+# @generated
+#: ui/cdn-new-1.html:92
+msgid "HTTPS protocol"
+msgstr ""
+
+# @generated
+#: ui/contents.html:31
 #: ui/jobs.html:44
 msgid "ID"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:61
 #: ui/cdn-new-1.html:71
 msgid "IP or FQDN from origin server that will provide the content"
 msgstr ""
@@ -227,23 +260,25 @@ msgstr ""
 # @generated
 #: ui/job-new-1.html:45
 #: ui/jobs.html:47
-#: ui/jobs.html:67
-#: ui/job-info.html:38
+#: ui/jobs.html:68
+#: ui/job-info.html:39
 #: ui/js/videoparams.js:163
 msgid "Input URI"
 msgstr ""
 
 # @generated
-#: ui/content-info.html:57
+#: ui/content-info.html:54
 msgid "Input URL: ${url}"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:62
 #: ui/cdn-new-1.html:72
 msgid "Invalid value. It should be a valid IPv4 or FQDN"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:72
 #: ui/cdn-new-1.html:81
 msgid "Invalid value. It should be a valid path. Ex: out/u"
 msgstr ""
@@ -254,45 +289,55 @@ msgid "Invalid value. It should containing only letters, numbers and dash(-)"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:51
 #: ui/cdn-new-1.html:64
 msgid "Invalid value. It should contains only numbers and letters"
 msgstr ""
 
 # @generated
-#: ui/job-info.html:32
+#: ui/job-info.html:33
 msgid "Job Details"
 msgstr ""
 
 # @generated
-#: ui/job-info.html:37
+#: ui/job-info.html:38
 msgid "Job Id"
 msgstr ""
 
 # @generated
-#: APP-META.xml:66
+#: APP-META.xml:69
 msgid "Job Information"
 msgstr ""
 
 # @generated
-#: ui/job-info.html:33
+#: ui/job-info.html:34
 msgid "Job Name"
 msgstr ""
 
 # @generated
-#: ui/jobs.html:144
+#: ui/jobs.html:145
 msgid "Job __jobname__ cannot be cancelled\n"
 "__errmsg__ "
 msgstr ""
 
 # @generated
-#: APP-META.xml:52
-#: APP-META.xml:53
+#: APP-META.xml:55
+#: APP-META.xml:56
 msgid "Jobs"
 msgstr ""
 
 # @generated
-#: APP-META.xml:76
-#: APP-META.xml:77
+#: ui/channel-new-1.html:85
+msgid "Just in time Content Encryption"
+msgstr ""
+
+# @generated
+#: APP-META.xml:79
+msgid "Live"
+msgstr ""
+
+# @generated
+#: APP-META.xml:80
 msgid "Live Channels"
 msgstr ""
 
@@ -302,21 +347,25 @@ msgid "Live Event Id"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:80
-#: ui/cdn-new-1.html:91
+#: ui/cdn-info.html:92
+msgid "Live Transmission"
+msgstr ""
+
+# @generated
 #: ui/cdn-new-last.html:41
 msgid "Live?"
 msgstr ""
 
 # @generated
 #: ui/channel-info.html:38
-#: ui/content-info.html:39
+#: ui/content-info.html:36
 msgid "MSS"
 msgstr ""
 
 # @generated
-#: ui/contents.html:31
-#: ui/cdn-info.html:34
+#: ui/contents.html:32
+#: ui/contents.html:32
+#: ui/cdn-info.html:36
 #: ui/cdn-new-1.html:51
 #: ui/cdn-new-last.html:33
 #: ui/jobs.html:45
@@ -325,8 +374,14 @@ msgid "Name"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:43
 #: ui/cdn-new-1.html:57
 msgid "Name is mandatory. Please fill it"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:42
+msgid "Name of this CDN configuration. It is used to identify this configuration in your control panel"
 msgstr ""
 
 # @generated
@@ -335,29 +390,35 @@ msgid "Name of this CDN configuration. It's used to identify this configuration 
 msgstr ""
 
 # @generated
-#: ui/jobs.html:51
+#: ui/cdns.html:43
+#: ui/contents.html:43
 msgid "New"
 msgstr ""
 
 # @generated
-#: APP-META.xml:78
+#: APP-META.xml:81
 msgid "New Channel"
 msgstr ""
 
 # @generated
-#: APP-META.xml:102
+#: APP-META.xml:105
 msgid "New Delivery Service"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:61
+#: ui/jobs.html:51
+msgid "New Job"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:66
 #: ui/cdn-new-1.html:75
 #: ui/cdn-new-last.html:37
 msgid "Origin Path"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:52
+#: ui/cdn-info.html:56
 #: ui/cdn-new-1.html:67
 #: ui/cdn-new-last.html:36
 msgid "Origin Server"
@@ -366,14 +427,20 @@ msgstr ""
 # @generated
 #: ui/channel-info.html:87
 #: ui/channel-new-1.html:88
-#: ui/job-new-1.html:62
-#: ui/content-info.html:66
+#: ui/job-new-1.html:66
+#: ui/content-info.html:63
 msgid "Premium Configuration Options?"
 msgstr ""
 
 # @generated
 #: ui/js/videoparams.js:154
 msgid "Premium Transcoder Parameter Customization"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:89
+#: ui/job-new-1.html:67
+msgid "Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH"
 msgstr ""
 
 # @generated
@@ -384,17 +451,19 @@ msgstr ""
 
 # @generated
 #: ui/channel-info.html:96
-#: ui/content-info.html:70
+#: ui/content-info.html:67
 msgid "Public Endpoints"
 msgstr ""
 
 # @generated
+#: ui/cdns.html:47
+#: ui/contents.html:47
 #: ui/jobs.html:54
 msgid "Refresh"
 msgstr ""
 
 # @generated
-#: ui/cdn-new-1.html:111
+#: ui/cdn-new-1.html:117
 msgid "Required fields have to be filled"
 msgstr ""
 
@@ -404,7 +473,7 @@ msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will b
 msgstr ""
 
 # @generated
-#: APP-META.xml:84
+#: APP-META.xml:87
 msgid "Review"
 msgstr ""
 
@@ -416,18 +485,18 @@ msgstr ""
 # @generated
 #: ui/channel-info.html:69
 #: ui/channel-new-1.html:75
-#: ui/job-new-1.html:59
-#: ui/job-info.html:36
+#: ui/job-new-1.html:60
+#: ui/job-info.html:37
 msgid "Screen Format"
 msgstr ""
 
 # @generated
-#: ui/content-info.html:50
+#: ui/content-info.html:47
 msgid "Screen Format: ${sf}"
 msgstr ""
 
 # @generated
-#: ui/cdn-info.html:76
+#: ui/cdn-info.html:86
 msgid "Service Routing Domain Name"
 msgstr ""
 
@@ -440,102 +509,117 @@ msgstr ""
 #: ui/channel-info.html:59
 #: ui/jobs.html:46
 #: ui/jobs.html:66
-#: ui/job-info.html:35
+#: ui/job-info.html:36
 msgid "State"
 msgstr ""
 
 # @generated
-#: ui/cdn-new-1.html:103
+#: ui/cdn-new-1.html:109
 msgid "Subdomains of __cdmsDomain__ may not be used."
 msgstr ""
 
 # @generated
-#: ui/job-info.html:39
+#: ui/job-info.html:40
 msgid "Submit Date"
 msgstr ""
 
 # @generated
-#: APP-META.xml:54
+#: APP-META.xml:57
 msgid "Submit New Content"
 msgstr ""
 
 # @generated
+#: ui/jobs.html:67
+msgid "Submit Time"
+msgstr ""
+
+# @generated
+#: ui/cdn-info.html:50
 #: ui/cdn-new-1.html:63
 msgid "This alias will be used in the Service Routing Domain Name generated by the system"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:73
 #: ui/cdn-new-1.html:80
 msgid "This is the path from content origin. It is used to redefine the CDN URL. It will supress the needed to type this path before the video name in the URL"
 msgstr ""
 
 # @generated
-#: ui/job-new-1.html:58
+#: ui/job-new-1.html:59
 msgid "Transcoder Options"
 msgstr ""
 
 # @generated
-#: APP-META.xml:60
+#: APP-META.xml:63
 #: ui/js/videoparams.js:158
 msgid "Transcoder Parameters"
 msgstr ""
 
 # @generated
+#: ui/job-new-1.html:47
+msgid "URI of content to be processed. Supported Protocols are: HTTP, HTTPS, FTP, SFTP, SCP, S3, S3SSL e ASPERA."
+msgstr ""
+
+# @generated
 #: ui/channel-info.html:81
-#: ui/cdn-info.html:79
-#: ui/cdn-new-1.html:90
 #: ui/cdn-new-last.html:40
 #: ui/channel-new-1.html:84
-#: ui/job-new-1.html:61
-#: ui/content-info.html:61
+#: ui/job-new-1.html:63
+#: ui/content-info.html:58
 msgid "Use HTTPS?"
 msgstr ""
 
 # @generated
-#: APP-META.xml:36
+#: ui/cdn-new-1.html:96
+msgid "Use for Live Stream"
+msgstr ""
+
+# @generated
+#: APP-META.xml:39
 msgid "VDN"
 msgstr ""
 
 # @generated
-#: APP-META.xml:135
+#: APP-META.xml:138
 msgid "VDN  Embratel  global configuration variables"
 msgstr ""
 
 # @generated
-#: APP-META.xml:142
+#: APP-META.xml:145
 msgid "VDN  Embratel Management"
 msgstr ""
 
 # @generated
-#: APP-META.xml:134
+#: APP-META.xml:137
 msgid "VDN  Embratel globals"
 msgstr ""
 
 # @generated
-#: APP-META.xml:158
-#: APP-META.xml:159
+#: APP-META.xml:161
+#: APP-META.xml:162
 msgid "VDN Content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:143
+#: APP-META.xml:146
 msgid "VDN Embratel environment"
 msgstr ""
 
 # @generated
-#: APP-META.xml:166
-#: APP-META.xml:167
+#: APP-META.xml:169
+#: APP-META.xml:170
 msgid "VDN Job"
 msgstr ""
 
 # @generated
-#: APP-META.xml:150
-#: APP-META.xml:151
+#: APP-META.xml:153
+#: APP-META.xml:154
 msgid "VDN Live Channels"
 msgstr ""
 
 # @generated
-#: APP-META.xml:40
+#: APP-META.xml:43
 msgid "VOD"
 msgstr ""
 
@@ -545,21 +629,25 @@ msgid "You may change each stream's Resolution, Frame Rate, Video Bit Rate and A
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:41
 #: ui/cdn-new-1.html:55
 msgid "[Example: This is a live event for IT free lessons]"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:49
 #: ui/cdn-new-1.html:62
 msgid "[Example: livefreelessons]"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:71
 #: ui/cdn-new-1.html:79
 msgid "[Example: out/u/myvideos]"
 msgstr ""
 
 # @generated
+#: ui/cdn-info.html:60
 #: ui/cdn-new-1.html:70
 msgid "[Examples: myhost.mydomain.com 201.233.111.10]"
 msgstr ""

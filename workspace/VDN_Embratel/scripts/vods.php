@@ -269,7 +269,7 @@ class vod extends \APS\ResourceBase {
         $usage["name"] = $storage["name"];
         $usage["age"] = $storage["age"];
 
-        $this->getLogger()->info(print_r($usage));
+        $this->getLogger()->info(var_dump($usage));
         return $usage;
     }
 }

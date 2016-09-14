@@ -31,10 +31,10 @@
             
             var screen_formats = new Memory({
                 idProperty: "value",
-                    data: [{ value:"16:9",		label: "16:9" },
+                    data: [{ value:"16:9",		label: "16:9 (Widescreen)" },
                            { value: "4:3",		label: "4:3" }]
             });
-
+            var useAuth = false;
             /* Create widgets */
             var widgets =
                 ["aps/PageContainer", { id: "page" }, [
@@ -44,22 +44,42 @@
                             id: "new_input_uri",
                             label: _("Input URI"),
                             value: at(model, "input_URI"),
-                            cols: 60,
+                            promptMessage: _('URI of content to be processed. Supported Protocols are: HTTP, HTTPS, FTP, SFTP, SCP, S3, S3SSL e ASPERA.'),
+                            cols: 120,
                             required: true  }
                         ],
-                        ["aps/TextBox", {
+                        ["aps/CheckBox", {
+                            id: "use_auth",
+                            label: _("Requires autehtication"),
+                            hint: _("Input URI requires user/password authentication"),
+                            checked: useAuth } ],
+                        ["aps/TextArea", {
                             id: "new_description",
                             label: _("Description"),
                             value: at(model, "description"),
-                            cols: 60,
+                            cols: 120,
                             rows: 4}
+                        ],
+                        ["aps/Select", {
+                            id: "new_fmt",
+                            label: _( "Screen Format"),
+                            value: at(model,"screen_format"),
+                            store: screen_formats }
                         ]
                     ]],
-                    ["aps/FieldSet", { id: "new_options", title:  _("Transcoder Options")  }, [
-                        ["aps/Select", { id: "new_fmt", label: _( "Screen Format"),
-                            value: at(model,"screen_format"), store: screen_formats }],
-                        ["aps/CheckBox", { id: "new_https", label: _("Use HTTPS?"), checked: at(model, "https") } ],
-                        ["aps/CheckBox", { id: "new_premium", label: _("Premium Configuration Options?"), checked: at(model, "premium") } ]
+                    ["aps/FieldSet", {title:  _("Avanced Options (additional charges may apply)")  }, [
+                        ["aps/CheckBox", {
+                            id: "new_https",
+                            label: _("Use HTTPS?"),
+                            hint: _("Just In Time Encryption of content"),
+                            checked: at(model, "https") } ],
+                        ["aps/CheckBox", {
+                            id: "new_premium",
+                            label: _("Premium Configuration Options?"),
+                            hint: _("Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH"),
+                            checked: at(model, "premium")
+                            }
+                        ]
                     ]]
                 ]];
             load(widgets).then(function(){

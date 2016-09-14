@@ -6,13 +6,14 @@
         require([
                     "aps/ResourceStore",
                     "aps/xhr",
-                    "dojo/when",
-                    "dijit/registry",
+                   "dojo/when",
+                  "dijit/registry",
                     "aps/load",
-                    "./js/displayError.js",
-            "dojo/_base/array",
+                   "./js/displayError.js",
+             "dojo/_base/array",
+                   "./js/millis2hms.js",
                     "aps/ready!"
-        ], function (Store, xhr, when, registry, load, displayError, arr) {
+        ], function (Store, xhr, when, registry, load, displayError, arr, millis2hms) {
             /* Create the data store */
             var store = new Store({
                 apsType: "http://embratel.com.br/app/VDN_Embratel/vod/2.0",
@@ -28,27 +29,22 @@
                     apsResourceViewId: "content-info",
                     columns:           [
                         { field: "content_id", name: _("ID"), sortable: true, type: "resourceName" },
-                        { field: "content_name", name: _("Name"),  filter: { title: "Name" }, sortable: true },
+                        { field: "content_name", name: _("Name"),  filter: { title: _("Name") }, sortable: true },
 //                         { field: "content_storage_size", name: "Size" },
-                        { field: "content_time_length", name: "Duration(mmm:ss)",
+                        { field: "content_time_length", name: _("Duration(h:mm:ss)"),
                             renderCell:
                                 function(object, data){
-                                    var totalSec = Math.round(data/1000, 10);
-                                    var minutes = "000" + Math.round( totalSec / 60 );
-                                    var seconds = "0" + totalSec % 60;
-                                    var resultado = minutes.substr(minutes.length -3);
-                                    resultado += ":" + seconds.substr(seconds.length -2);
-                                    return resultado;
+                                    return millis2hms(data);
                                 }
                         }
                     ]
                 }, [
                     ["aps/Toolbar", [
-                        ["aps/ToolbarButton", { id: "job_new",        iconClass: "sb-add-new",        label: "New" }],
+                        ["aps/ToolbarButton", { id: "job_new",        iconClass: "sb-add-new",        label: _("New") }],
                         // Declare a button with CSS class sb-service-start and label Start.
                         // It will be enabled only if at least one string is selected
-                        ["aps/ToolbarButton", { id: "delete",     iconClass: "sb-delete",         label: "Delete",    requireItems:   true }],
-                        ["aps/ToolbarButton", { id: "refresh",    iconClass: "sb-refresh",        label: "Refresh",   autoBusy:       false }]
+                        ["aps/ToolbarButton", { id: "delete",     iconClass: "sb-delete",         label: _("Delete"),    requireItems:   true }],
+                        ["aps/ToolbarButton", { id: "refresh",    iconClass: "sb-refresh",        label: _("Refresh"),   autoBusy:       false }]
                     ]]
                 ]]
             ]]).then(function(){

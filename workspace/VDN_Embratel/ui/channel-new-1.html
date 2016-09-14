@@ -35,7 +35,7 @@
 
             var screen_formats = new Memory({
                 idProperty: "value",
-                    data: [	{ value:"16:9",		label: "16:9" },
+                    data: [	{ value:"16:9",		label: "16:9 (Widescreen)" },
                             { value: "4:3",		label: "4:3" } ]
             });
 
@@ -64,29 +64,31 @@
                                 rows: 4,
                                 cols: 60,
                                 value: at(model, "description") }
-                            ]
-                        ]
-                    ],
-                    ["aps/FieldSet", {
-                        id: "new1_options",
-                        title:  "Channel Configuration Options"  }, [
+                            ],
                             ["aps/Select", {
                                 id: "new1_fmt",
                                 label: _( "Screen Format"),
                                 value: at(model,"screen_format"),
-                                store: screen_formats }],
+                                store: screen_formats }
+                            ]
+                        ]
+                    ],
+                    ["aps/FieldSet", {
+                        title:  "Channel Configuration Options",
+                        id: "new1_options"}, [
                             ["aps/CheckBox", {
                                 id: "new1_dvr",
                                 label: _("Provide DVR Feature?"),
+                                hint:"Cho",
                                 checked: at(model, "dvr") } ],
                             ["aps/CheckBox", {
                                 id: "new1_https",
                                 label: _("Use HTTPS?"),
-                                checked: at(model, "https") } ],
+                                hint: _("Just in time Content Encryption"),                                checked: at(model, "https") } ],
                             ["aps/CheckBox", {
                                 id: "new1_premium",
                                 label: _("Premium Configuration Options?"),
-                                checked: at(model, "premium") } ]
+                                hint: _("Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH"),                             checked: at(model, "premium") } ]
                         ]
                     ]
                 ]];

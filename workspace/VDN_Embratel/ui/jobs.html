@@ -48,7 +48,7 @@
                          ]
                      }, [
                          ["aps/Toolbar", [
-                             ["aps/ToolbarButton", { id: "job_new",     iconClass: "sb-add-new", label: _("New") }],
+                             ["aps/ToolbarButton", { id: "job_new",     iconClass: "sb-add-new", label: _("New Job") }],
                              ["aps/ToolbarButton", { id: "job_cancel",  iconClass: "sb-cancel",  label: _("Cancel"), requireItems: true}],
                              ["aps/ToolbarButton", { id: "job_delete",  iconClass: "sb-delete",  label: _("Delete")}],
                              ["aps/ToolbarButton", { id: "job_refresh", iconClass: "sb-refresh", label: _("Refresh") }]
@@ -64,6 +64,7 @@
                          columns:  [
                             { field: "name",         name: _("Name"), type: "resourceName"},
                             { field: "state",        name: _("State")},
+                            { field: "submit_date",  name: _("Submit Time")},
                             { field: "input_URI",    name: _("Input URI")}
                          ]
                      }]

@@ -51,5 +51,5 @@
     }
         
         
-//     echo txtDuration2ms("1mn 2s");
+//      echo txtDuration2ms("29s 568ms");
 ?>

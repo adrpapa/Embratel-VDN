@@ -14,8 +14,9 @@
                   "aps/PageContainer",
                   "aps/Memory",
                  "./js/displayError.js",
+                 "./js/millis2hms.js",
                   "aps/ready!"
-        ], function (Store, registry, when, getPlainValue, at, getStateful, load, PageContainer, Memory, displayError) {
+        ], function (Store, registry, when, getPlainValue, at, getStateful, load, PageContainer, Memory, displayError, millis2hms) {
             var store = new Store({
                     target: "/aps/2/resources"
                 }),
@@ -25,11 +26,7 @@
             store.get(aps.context.vars.content.aps.id).then(function(object){
                 /* Collect the Job properties in the model */
                 model = getStateful(object);
-                var totalSec = Math.round(model["content_time_length"]/1000);
-                var minutes = "000" + Math.round( totalSec / 60 );
-                var seconds = "0" + totalSec % 60;
-                var tempo = minutes.substr(minutes.length -3);
-                tempo += ":" + seconds.substr(seconds.length -2);
+                var tempo = millis2hms(model.content_time_length);
                 var proto = model["https"] ? "https" : "http";
                 /* and create the widgets */
                 var basename = proto+"://"+model["cdn_routing_uri"];

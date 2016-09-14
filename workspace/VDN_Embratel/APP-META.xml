@@ -3,7 +3,7 @@
     <id>http://embratel.com.br/app/VDN_Embratel</id>
     <name>VDN_Embratel</name>
     <version>2.0</version>
-    <release>10</release>
+    <release>12</release>
     <homepage>http://embratel.com.br/app/VDN_Embratel</homepage>
     <vendor>
         <name>Embratel</name>
@@ -32,7 +32,10 @@ CISCO VDN para entrega distribuída de conteúdo
             <category>Video Streaming</category>
             <category>Streaming Infrastructure/Management</category>
         </categories>
-
+        <languages>
+            <language>en</language>
+            <language>pt</language>
+        </languages>
         <navigation id="ccpebt" label="VDN">
             <var name="context" type-id="http://embratel.com.br/app/VDN_Embratel/context/2.0" />
             <plugs-to id="http://www.aps-standard.org/ui/service" />
@@ -73,7 +76,7 @@ CISCO VDN para entrega distribuída de conteúdo
                     </view>
                 </item>
             </item>
-            <item id="channels" label="Live Channels">
+            <item id="channels" label="Live">
                 <view id="channels" label="Live Channels">
                     <view id="channel-new-1" label="New Channel">
                         <controls>

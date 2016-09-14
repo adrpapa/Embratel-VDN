@@ -87,8 +87,14 @@
                             value: at(model, "description") } ]
                     ]],
                     ["aps/FieldSet", { id: "new_options", title:  "CDN Options"  }, [
-                        ["aps/CheckBox", { id: "new_https", label: _("Use HTTPS?"), checked: at(model, "https") } ],
-                        ["aps/CheckBox", { id: "new_live", label: _("Live?"), checked: at(model, "live") } ]
+                        ["aps/CheckBox", {
+                            id: "new_https",
+                            label: _("HTTPS protocol"),
+                            checked: at(model, "https") } ],
+                        ["aps/CheckBox", {
+                            id: "new_live",
+                            label: _("Use for Live Stream"),
+                            checked: at(model, "live") } ]
                     ]]
                 ]];
             load(widgets).then(function(){

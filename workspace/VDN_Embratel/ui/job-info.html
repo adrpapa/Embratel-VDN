@@ -27,6 +27,7 @@
             /* Collect the Job properties in the model */
             model = getStateful(object);
             /* and create the widgets */
+            var errorVisible = model.state == "error";
             var widgets =
                 ["aps/PageContainer",   { id: "page" }, [
                     ["aps/FieldSet",    { id: "new1_general", title: _("Job Details")  }, [
@@ -38,7 +39,7 @@
                         ["aps/Output",  { id: "new1_input_URI", label: _("Input URI"), value: at(model, "input_URI")}],
                         ["aps/Output",  { id: "new1_submit_date", label: _("Submit Date"), value: at(model, "submit_date")}],
                         ["aps/Output",  { id: "new1_elapsed", label: _("Elapsed Time"), value: at(model, "elapsed_time")}],
-                        ["aps/TextArea",{ id: "new1_info", disabled: true, rows: 4, cols: 60, value: at(model, "info") } ]
+                        ["aps/TextArea",{ id: "new1_info", disabled: true, rows: 4, cols: 60, value: at(model, "info"), visible: errorVisible } ]
                     ]]
                 ]];
                 return load(widgets);
