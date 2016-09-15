@@ -157,11 +157,11 @@ require(["aps/load",
                  
                      ["aps/Select",{id:id, value: at(model,"res_"+id),options:resolutions}],
                      ["aps/Output",{content:" FR:"}],
-                     buildCombo(at, model, "fr", i, res, framRats, params[i].fr),
+                     buildCombo(model, "fr", i, res, framRats, params[i].fr)
                      ["aps/Output",{content:" VBR:"}],
-					 buildCombo(at, model, "vbr", i, res, vidBitRats, params[i].vbr),
+					 buildCombo( model, "vbr", i, res, vidBitRats, params[i].vbr),
                      ["aps/Output",{content:" ABR: "}],
-                     buildCombo(at, model, "abr", i, res, audBitRats, params[i].abr)
+                     buildCombo(model, "abr", i, res, audBitRats, params[i].abr)
                  ]]);
         }
         

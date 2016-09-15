@@ -40,25 +40,27 @@
                 ["aps/PageContainer", { id: "page" }, [
                     ["aps/FieldSet", { id: "new_general", title:  _("General Configuration")  }, [
 //                         ["aps/TextBox", { id: "new_jobName", label: _("Content Name"), value: at(model, "name"), required: true }],
-                        ["aps/TextBox", {
+                        ["aps/TextArea", {
                             id: "new_input_uri",
                             label: _("Input URI"),
                             value: at(model, "input_URI"),
                             promptMessage: _('URI of content to be processed. Supported Protocols are: HTTP, HTTPS, FTP, SFTP, SCP, S3, S3SSL e ASPERA.'),
                             cols: 120,
+                            rows: 1,
                             required: true  }
                         ],
                         ["aps/CheckBox", {
                             id: "use_auth",
-                            label: _("Requires autehtication"),
+                            label: _("Requires authentication"),
                             hint: _("Input URI requires user/password authentication"),
                             checked: useAuth } ],
                         ["aps/TextArea", {
                             id: "new_description",
-                            label: _("Description"),
+                            label: _("Nome"),
                             value: at(model, "description"),
+                             required: true,
                             cols: 120,
-                            rows: 4}
+                            rows: 1}
                         ],
                         ["aps/Select", {
                             id: "new_fmt",
@@ -73,13 +75,15 @@
                             label: _("Use HTTPS?"),
                             hint: _("Just In Time Encryption of content"),
                             checked: at(model, "https") } ],
-                        ["aps/CheckBox", {
-                            id: "new_premium",
-                            label: _("Premium Configuration Options?"),
-                            hint: _("Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH"),
-                            checked: at(model, "premium")
-                            }
-                        ]
+                        ["aps/Container", {label:_("Premium Configuration Options?")},[
+                            [ "aps/CheckBox", {
+                                checked: at(model, "premium")
+                            }],
+                            [ "aps/Output", {
+                                "class": "hint",
+                                innerHTML: _("Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH")
+                            }]
+                        ]]
                     ]]
                 ]];
             load(widgets).then(function(){

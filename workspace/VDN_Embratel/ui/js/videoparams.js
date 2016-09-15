@@ -37,8 +37,8 @@ define(["dojox/mvc/at"],
                         }
                     }
                     return ["aps/Select",{id:parm+ix, value: at(model[parm],ix),
-                        disabled: disabled, options:options",
-                        "style":"display: inline-block; width:150px;"}];
+                        disabled: disabled, options:options,
+                        "style":"display: inline-block; width:120px;"}];
                 },
                 premiumParms =
                 {
@@ -99,8 +99,18 @@ define(["dojox/mvc/at"],
         
             var paramLength=params.length;
             // loop pelos formatos de saida (5xstd 8xPrem)
-            // armazena resolução/framerate/bitrate A/V em objetos 
-            var containers=[], resText;
+            // armazena resolução/framerate/bitrate A/V em objetos
+            var cssStyle = "display: inline-block; width:";
+            var containers=[["aps/Container",{},[
+                ["aps/Output",{content:_("Profile"),"style":cssStyle+"70px;"}],
+                ["aps/Output",{content:_("Proportion"),"style":cssStyle+"80px;"}],
+                ["aps/Output",{content:_("Quality index"),"style":cssStyle+"80px;"}],
+                ["aps/Output",{content:_("Resolution"),"style":cssStyle+"120px;"}],
+                ["aps/Output",{content:_("Frame Rate"),"style":cssStyle+"120px;"}],
+                ["aps/Output",{content:_("Video Bit Rate"),"style":cssStyle+"120px;"}],
+                ["aps/Output",{content:_("Audio Bit Rate"),"style":cssStyle+"120px;"}]
+            ]]];
+            var resText;
             model["resolutions"] = [];
             model["framerates"] = [];
             model["video_bitrates"] = [];
@@ -115,19 +125,17 @@ define(["dojox/mvc/at"],
                     resolutions.push({label:resText, value:resText});
                 }
                 var res=params[i].res.name;
-                containers.push(
-                    ["aps/Container",{label:params[i].name},[
-                        ["aps/Output",{content:" Res:"}],
-                        ["aps/Select",{id:"res_"+i, value: at(model["resolutions"],i),
-                        disabled:disabled, options:resolutions}],
-                        ["aps/Output",{content:" FR:"}],
-                        buildCombo(model, "framerates", i, res, framRats, params[i].fr, false),
-                        ["aps/Output",{content:" VBR:"}],
-                        buildCombo(model, "video_bitrates", i, res, vidBitRats, params[i].vbr, disabled),
-                        ["aps/Output",{content:" ABR: "}],
-                        buildCombo(model, "audio_bitrates", i, res, audBitRats, params[i].abr, disabled)
-                    ]]
-                );
+                var newContainer = ["aps/Container",{},[]];
+                var names= params[i].name.split(" ");
+                newContainer[2].push(["aps/Output",{content:names[0],"style": cssStyle+"70px;"}]);
+                newContainer[2].push(["aps/Output",{content:names[1],"style": cssStyle+"80px;"}]);
+                newContainer[2].push(["aps/Output",{content:names[2],"style": cssStyle+"80px;"}]);
+                newContainer[2].push(["aps/Select",{id:"res_"+i, value: at(model["resolutions"],i),
+                            options:resolutions, disabled:disabled, "style":cssStyle+"120px;"}]);
+                newContainer[2].push(buildCombo(model, "framerates", i, res, framRats, params[i].fr));
+                newContainer[2].push(buildCombo(model, "video_bitrates", i, res, vidBitRats, params[i].vbr, disabled));
+                newContainer[2].push(buildCombo(model, "audio_bitrates", i, res, audBitRats, params[i].abr, disabled));
+                containers.push(newContainer);
             }
             var mainTitle, mainDescr;
             
@@ -155,7 +163,7 @@ define(["dojox/mvc/at"],
                 ["aps/FieldSet", {
                     title:true}, []
                 ],
-                ["aps/FieldSet", {
+                ["aps/Container", {
                     title: mainTitle,description: mainDescr},
                     containers
                 ]

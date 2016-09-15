@@ -34,17 +34,28 @@ msgid "Alias"
 msgstr ""
 
 # @generated
+#: ui/channel-new-1.html:80
+msgid "Allows viewers to pause, play, and rewind live events"
+msgstr ""
+
+# @generated
 #: ui/cdns.html:89
 msgid "Are you sure you want delete CDN __cdn__?"
 msgstr ""
 
 # @generated
-#: ui/channels.html:130
+#: ui/channels.html:145
 msgid "Are you sure you want delete Channels?"
 msgstr ""
 
 # @generated
-#: ui/job-new-1.html:62
+#: ui/js/videoparams.js:111
+msgid "Audio Bit Rate"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:76
+#: ui/job-new-1.html:72
 msgid "Avanced Options (additional charges may apply)"
 msgstr ""
 
@@ -99,8 +110,8 @@ msgstr ""
 
 # @generated
 #: ui/channel-info.html:46
-#: ui/channel-new-1.html:51
-#: ui/js/videoparams.js:161
+#: ui/channel-new-1.html:50
+#: ui/js/videoparams.js:150
 msgid "Channel Name"
 msgstr ""
 
@@ -141,6 +152,7 @@ msgstr ""
 # @generated
 #: ui/cdns.html:46
 #: ui/contents.html:46
+#: ui/channels.html:58
 #: ui/jobs.html:53
 msgid "Delete"
 msgstr ""
@@ -155,8 +167,7 @@ msgstr ""
 #: ui/cdn-info.html:79
 #: ui/cdn-new-1.html:84
 #: ui/cdn-new-last.html:34
-#: ui/channel-new-1.html:63
-#: ui/job-new-1.html:53
+#: ui/channel-new-1.html:62
 #: ui/job-info.html:35
 msgid "Description"
 msgstr ""
@@ -192,14 +203,14 @@ msgid "Embratel"
 msgstr ""
 
 # @generated
-#: ui/channels.html:70
+#: ui/channels.html:85
 #: ui/jobs.html:95
 msgid "Error refreshing job __jobname__:\n"
 " __errmsg__"
 msgstr ""
 
 # @generated
-#: ui/channel-new-1.html:57
+#: ui/channel-new-1.html:56
 msgid "Event name containing letters, numbers and dash(-)"
 msgstr ""
 
@@ -214,6 +225,12 @@ msgid "File Name: ${fn}"
 msgstr ""
 
 # @generated
+#: ui/js/videoparams.js:109
+msgid "Frame Rate"
+msgstr ""
+
+# @generated
+#: ui/channel-new-1.html:47
 #: ui/job-new-1.html:41
 msgid "General Configuration"
 msgstr ""
@@ -228,6 +245,11 @@ msgstr ""
 #: ui/channel-info.html:35
 #: ui/content-info.html:33
 msgid "HLS"
+msgstr ""
+
+# @generated
+#: ui/cdns.html:38
+msgid "HTTPS"
 msgstr ""
 
 # @generated
@@ -262,8 +284,13 @@ msgstr ""
 #: ui/jobs.html:47
 #: ui/jobs.html:68
 #: ui/job-info.html:39
-#: ui/js/videoparams.js:163
+#: ui/js/videoparams.js:152
 msgid "Input URI"
+msgstr ""
+
+# @generated
+#: ui/job-new-1.html:55
+msgid "Input URI requires user/password authentication"
 msgstr ""
 
 # @generated
@@ -284,7 +311,7 @@ msgid "Invalid value. It should be a valid path. Ex: out/u"
 msgstr ""
 
 # @generated
-#: ui/channel-new-1.html:58
+#: ui/channel-new-1.html:57
 msgid "Invalid value. It should containing only letters, numbers and dash(-)"
 msgstr ""
 
@@ -327,12 +354,14 @@ msgid "Jobs"
 msgstr ""
 
 # @generated
-#: ui/channel-new-1.html:85
-msgid "Just in time Content Encryption"
+#: ui/channel-new-1.html:86
+#: ui/job-new-1.html:76
+msgid "Just In Time Encryption of content"
 msgstr ""
 
 # @generated
 #: APP-META.xml:79
+#: ui/cdns.html:39
 msgid "Live"
 msgstr ""
 
@@ -363,11 +392,15 @@ msgid "MSS"
 msgstr ""
 
 # @generated
+#: ui/cdns.html:34
+#: ui/cdns.html:34
 #: ui/contents.html:32
 #: ui/contents.html:32
 #: ui/cdn-info.html:36
 #: ui/cdn-new-1.html:51
 #: ui/cdn-new-last.html:33
+#: ui/channels.html:31
+#: ui/channels.html:31
 #: ui/jobs.html:45
 #: ui/jobs.html:65
 msgid "Name"
@@ -397,6 +430,7 @@ msgstr ""
 
 # @generated
 #: APP-META.xml:81
+#: ui/channels.html:53
 msgid "New Channel"
 msgstr ""
 
@@ -408,6 +442,11 @@ msgstr ""
 # @generated
 #: ui/jobs.html:51
 msgid "New Job"
+msgstr ""
+
+# @generated
+#: ui/job-new-1.html:59
+msgid "Nome"
 msgstr ""
 
 # @generated
@@ -426,26 +465,36 @@ msgstr ""
 
 # @generated
 #: ui/channel-info.html:87
-#: ui/channel-new-1.html:88
-#: ui/job-new-1.html:66
+#: ui/channel-new-1.html:89
+#: ui/job-new-1.html:78
 #: ui/content-info.html:63
 msgid "Premium Configuration Options?"
 msgstr ""
 
 # @generated
-#: ui/js/videoparams.js:154
+#: ui/js/videoparams.js:143
 msgid "Premium Transcoder Parameter Customization"
 msgstr ""
 
 # @generated
-#: ui/channel-new-1.html:89
-#: ui/job-new-1.html:67
+#: ui/channel-new-1.html:95
+#: ui/job-new-1.html:84
 msgid "Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH"
 msgstr ""
 
 # @generated
+#: ui/js/videoparams.js:105
+msgid "Profile"
+msgstr ""
+
+# @generated
+#: ui/js/videoparams.js:106
+msgid "Proportion"
+msgstr ""
+
+# @generated
 #: ui/channel-info.html:75
-#: ui/channel-new-1.html:80
+#: ui/channel-new-1.html:79
 msgid "Provide DVR Feature?"
 msgstr ""
 
@@ -456,8 +505,24 @@ msgid "Public Endpoints"
 msgstr ""
 
 # @generated
+#: ui/js/videoparams.js:107
+msgid "Quality index"
+msgstr ""
+
+# @generated
+#: ui/channels.html:42
+msgid "RTMP Stream"
+msgstr ""
+
+# @generated
+#: ui/channels.html:33
+msgid "RTMP URL"
+msgstr ""
+
+# @generated
 #: ui/cdns.html:47
 #: ui/contents.html:47
+#: ui/channels.html:59
 #: ui/jobs.html:54
 msgid "Refresh"
 msgstr ""
@@ -468,7 +533,17 @@ msgid "Required fields have to be filled"
 msgstr ""
 
 # @generated
-#: ui/js/videoparams.js:159
+#: ui/job-new-1.html:54
+msgid "Requires authentication"
+msgstr ""
+
+# @generated
+#: ui/js/videoparams.js:108
+msgid "Resolution"
+msgstr ""
+
+# @generated
+#: ui/js/videoparams.js:148
 msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will be used in transcoding."
 msgstr ""
 
@@ -484,8 +559,8 @@ msgstr ""
 
 # @generated
 #: ui/channel-info.html:69
-#: ui/channel-new-1.html:75
-#: ui/job-new-1.html:60
+#: ui/channel-new-1.html:69
+#: ui/job-new-1.html:67
 #: ui/job-info.html:37
 msgid "Screen Format"
 msgstr ""
@@ -496,8 +571,14 @@ msgid "Screen Format: ${sf}"
 msgstr ""
 
 # @generated
+#: ui/cdns.html:35
 #: ui/cdn-info.html:86
 msgid "Service Routing Domain Name"
+msgstr ""
+
+# @generated
+#: ui/channels.html:56
+msgid "Start"
 msgstr ""
 
 # @generated
@@ -506,11 +587,23 @@ msgid "Start Encoding"
 msgstr ""
 
 # @generated
+#: ui/channels.html:49
+msgid "Start time"
+msgstr ""
+
+# @generated
 #: ui/channel-info.html:59
+#: ui/channels.html:32
+#: ui/channels.html:32
 #: ui/jobs.html:46
 #: ui/jobs.html:66
 #: ui/job-info.html:36
 msgid "State"
+msgstr ""
+
+# @generated
+#: ui/channels.html:57
+msgid "Stop"
 msgstr ""
 
 # @generated
@@ -546,13 +639,8 @@ msgid "This is the path from content origin. It is used to redefine the CDN URL.
 msgstr ""
 
 # @generated
-#: ui/job-new-1.html:59
-msgid "Transcoder Options"
-msgstr ""
-
-# @generated
 #: APP-META.xml:63
-#: ui/js/videoparams.js:158
+#: ui/js/videoparams.js:147
 msgid "Transcoder Parameters"
 msgstr ""
 
@@ -564,8 +652,8 @@ msgstr ""
 # @generated
 #: ui/channel-info.html:81
 #: ui/cdn-new-last.html:40
-#: ui/channel-new-1.html:84
-#: ui/job-new-1.html:63
+#: ui/channel-new-1.html:85
+#: ui/job-new-1.html:75
 #: ui/content-info.html:58
 msgid "Use HTTPS?"
 msgstr ""
@@ -624,7 +712,12 @@ msgid "VOD"
 msgstr ""
 
 # @generated
-#: ui/js/videoparams.js:155
+#: ui/js/videoparams.js:110
+msgid "Video Bit Rate"
+msgstr ""
+
+# @generated
+#: ui/js/videoparams.js:144
 msgid "You may change each stream's Resolution, Frame Rate, Video Bit Rate and Audio Bit Rate for the transcoder."
 msgstr ""
 
@@ -653,7 +746,7 @@ msgid "[Examples: myhost.mydomain.com 201.233.111.10]"
 msgstr ""
 
 # @generated
-#: ui/channel-new-1.html:56
+#: ui/channel-new-1.html:55
 msgid "[myLiveEvent]"
 msgstr ""
 

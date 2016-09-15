@@ -181,8 +181,8 @@
                                 );
                             }
                         ).then(function(){
-                                completeGrid.refresh();
                                 registry.byId("job_delete").cancel();
+                                 aps.apsc.gotoView("jobs");
                             });
                     });
                 });

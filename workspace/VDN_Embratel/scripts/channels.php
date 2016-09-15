@@ -125,12 +125,6 @@ class channel extends \APS\ResourceBase {
         * @readonly
         */
     public $input_URI;
-    /**
-        * @type(integer)
-        * @title("Delta UDP Port")
-        * @description("UDP Port used for communication with Elemental Delta")
-        * @readonly
-        */
 
     /**
         * @type(string)
@@ -411,16 +405,17 @@ class channel extends \APS\ResourceBase {
             $this->state = $this->pendingState();
         }
         else {
+            if( $this->content_id == null ) {
+                $content = DeltaContents::getContentsForEvent($this);
+                if( $content != null ){
+                    $this->content_id = $content->id;
+                    $logger->info("Event Content ID: $this->content_id");
+                }
+            }
             $eventEncondingTime = $event->created_at[0]."";
             if( $this->start_encoding_time != $eventEncondingTime ) {
                 $logger->info("Event Start Encoding Time is: $eventEncondingTime");
                 $this->start_encoding_time = $eventEncondingTime;
-                if( $this->content_id == null ) {
-                    $content = DeltaContents::getContentsForEvent($this);
-                    if( $content != null ){
-                            $this->content_id = $content->id;
-                    }
-                }
             }
         }
         $apsc = \APS\Request::getController();
@@ -450,21 +445,17 @@ class channel extends \APS\ResourceBase {
         $logger = getLogger("channels.log");
         $logger->debug("Called updateLiveUsage for event id=".$this->live_event_id);
         $this->updateChannelStatus();
+        $currentEncodingTime = $this->accum_encoding_time + round($this->getElapsedEncodingTime());
         $usage = array();
-        if( $this->state == "running" ) {
-            $usage["VDN_Live_Encoding_Minutes"] = $this->accum_encoding_time
-                                                + round($this->getElapsedEncodingTime());
-        } else {
-            $usage["VDN_Live_Encoding_Minutes"] = $this->last_reported_encoding_time;
-        }
+        $usage["VDN_Live_Encoding_Minutes"] = $currentEncodingTime - $this->last_reported_encoding_time;
         if( $this->dvr ) {
             $usage["VDN_Live_DVR_Minutes"] = $usage["VDN_Live_Encoding_Minutes"];
         } else {
             $usage["VDN_Live_DVR_Minutes"] = 0;
         }
         $logger->info("Event id ".$this->live_event_id." start_encoding_time: ".$this->start_encoding_time.
-                      " last_reported_encoding_time: ". $this->last_reported_encoding_time." currentEncodingTime: ".$usage["VDN_Live_Encoding_Minutes"]);
-        $this->last_reported_encoding_time = $usage["VDN_Live_Encoding_Minutes"];
+                      " last_reported_encoding_time: ". $this->last_reported_encoding_time." currentEncodingTime: ".$currentEncodingTime);
+        $this->last_reported_encoding_time = $currentEncodingTime;
         $apsc = \APS\Request::getController();
         $apsc->updateResource($this);
         return $usage;

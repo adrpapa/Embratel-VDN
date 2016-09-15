@@ -41,11 +41,10 @@
 
             /* Create widgets */
             var widgets =
-                ["aps/PageContainer", {
-                    id: "page" }, [
+                ["aps/PageContainer", {id: "page"}, [
                     ["aps/FieldSet", {
                         id: "new1_general",
-                        title:  "General Configuration"  }, [
+                        title: _("General Configuration")}, [
                             ["aps/TextBox", {
                                 id: "new1_channelName",
                                 label: _("Channel Name"),
@@ -74,23 +73,29 @@
                         ]
                     ],
                     ["aps/FieldSet", {
-                        title:  "Channel Configuration Options",
-                        id: "new1_options"}, [
-                            ["aps/CheckBox", {
-                                id: "new1_dvr",
-                                label: _("Provide DVR Feature?"),
-                                hint:"Cho",
-                                checked: at(model, "dvr") } ],
-                            ["aps/CheckBox", {
-                                id: "new1_https",
-                                label: _("Use HTTPS?"),
-                                hint: _("Just in time Content Encryption"),                                checked: at(model, "https") } ],
-                            ["aps/CheckBox", {
-                                id: "new1_premium",
-                                label: _("Premium Configuration Options?"),
-                                hint: _("Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH"),                             checked: at(model, "premium") } ]
-                        ]
-                    ]
+                        title:  _("Avanced Options (additional charges may apply)")  }, [
+                        ["aps/CheckBox", {
+                            id: "new1_dvr",
+                            label: _("Provide DVR Feature?"),
+                            hint: _("Allows viewers to pause, play, and rewind live events"),
+                            checked: at(model, "dvr")
+                        }],
+                        ["aps/CheckBox", {
+                            id: "new_https",
+                            label: _("Use HTTPS?"),
+                            hint: _("Just In Time Encryption of content"),
+                            checked: at(model, "https")
+                        }],
+                        ["aps/Container", {label:_("Premium Configuration Options?")},[
+                            [ "aps/CheckBox", {
+                                checked: at(model, "premium")
+                            }],
+                            [ "aps/Output", {
+                                "class": "hint",
+                                innerHTML: _("Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH")
+                            }]
+                        ]]
+                    ]]
                 ]];
             load(widgets).then(function(){
                 /* Create handlers for the navigation buttons */

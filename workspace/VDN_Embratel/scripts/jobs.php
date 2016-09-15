@@ -229,10 +229,16 @@ class job extends \APS\ResourceBase {
         \APS\LoggerRegistry::get()->info("Called provisionAsync for job id=".$this->job_id);
         \APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
         $this->state = $jobstatus->status.'';
+        $this->submit_date  = $jobstatus->start_time.'';
         if( $jobstatus->status == 'complete') {
             return $this->createContents($jobstatus);
         }
         if( $jobstatus->status == 'error' || $jobstatus->status == 'cancelled'){
+            if( $jobstatus->error_messages != null && 
+                    $jobstatus->error_messages->error != null && 
+                    $jobstatus->error_messages->error->message != null) {
+                $this->info = $jobstatus->error_messages->error->message.'';
+            }
             return;
         }
         
