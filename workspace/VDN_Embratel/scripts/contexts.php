@@ -93,7 +93,7 @@ class context extends \APS\ResourceBase
     public $channels;
 
     /**
-        * @link("http://embratel.com.br/app/VDN_Embratel/job/2.0[]")
+        * @link("http://embratel.com.br/app/VDN_Embratel/job/2.1[]")
         */
     public $jobs;
 

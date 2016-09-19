@@ -1,33 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<output_template href="/output_templates/3" product="Delta" version="1.7.1.40992">
-  <name>Sample-LIVE-STD-CRIPT</name>
-<filter href="/output_template/3/filters/137" product="Delta" version="1.7.1.40992">
-  <name>filter_137</name>
-  <parent_filter></parent_filter>
-  <endpoint>true</endpoint>
-  <output_url>customer1/live-std-1-s/event-name</output_url>
-  <filter_type>hls_encryption</filter_type>
-  <filter_settings>
-    <encryption_type>AES-128</encryption_type>
-    <key_rotation_count>3</key_rotation_count>
-    <iv_follows_segment_number>true</iv_follows_segment_number>
-    <constant_iv/>
-    <key_format/>
-    <key_format_versions/>
-    <key_id/>
-    <keyprovider_type>self_generated</keyprovider_type>
-    <server_url/>
-    <service_id/>
-    <content_key_base64/>
-    <content_key_hex/>
-    <license_url/>
-    <ui_license_url/>
-    <custom_attributes/>
-    <repeat_ext_x_key>true</repeat_ext_x_key>
-    <keyprovider_settings>
-      <common_key>true</common_key>
-      <key_prefix>https://secure.</key_prefix>
-    </keyprovider_settings>
-  </filter_settings>
-</filter>
+<output_template href="/output_templates/4" product="Delta" version="1.7.1.40992">
+    <name>Sample-LIVE-PRM-CRIPT</name>
+    <filter href="/contents/634/filters/1003" product="Delta" version="1.7.3.42410">
+        <name>hls_filter</name>
+        <parent_filter></parent_filter>
+        <endpoint>false</endpoint>
+        <output_url/>
+        <filter_type>hls_package</filter_type>
+        <use_default_stream_sets>true</use_default_stream_sets>
+        <filter_settings>
+            <segment_duration>10</segment_duration>
+            <index_duration>60</index_duration>
+            <playlist_type>VOD</playlist_type>
+            <avail_trigger>all</avail_trigger>
+            <ad_markers>none</ad_markers>
+            <broadcast_time>false</broadcast_time>
+            <ignore_web_delivery_allowed>false</ignore_web_delivery_allowed>
+            <ignore_no_regional_blackout>false</ignore_no_regional_blackout>
+            <enable_blackout>false</enable_blackout>
+            <enable_network_end_blackout>false</enable_network_end_blackout>
+            <network_id/>
+            <include_program_date_time>false</include_program_date_time>
+            <program_date_time_interval>600</program_date_time_interval>
+        </filter_settings>
+    </filter>
+    <filter href="/contents/634/filters/1004" product="Delta" version="1.7.3.42410">
+    <name>filter_1004</name>
+    <parent_filter>hls_filter</parent_filter>
+    <endpoint>true</endpoint>
+    <output_url>Client_nnnn/CanalTeste</output_url>
+    <filter_type>hls_encryption</filter_type>
+    <filter_settings>
+        <encryption_type>AES-128</encryption_type>
+        <key_rotation_count>3</key_rotation_count>
+        <iv_follows_segment_number>true</iv_follows_segment_number>
+        <constant_iv/>
+        <key_format/>
+        <key_format_versions/>
+        <key_id/>
+        <keyprovider_type>self_generated</keyprovider_type>
+        <server_url/>
+        <service_id/>
+        <content_key_base64/>
+        <content_key_hex/>
+        <license_url/>
+        <ui_license_url/>
+        <custom_attributes/>
+        <repeat_ext_x_key>false</repeat_ext_x_key>
+        <keyprovider_settings>
+            <common_key>false</common_key>
+            <key_prefix>https://201.31.12.36</key_prefix>
+        </keyprovider_settings>
+    </filter_settings>
+    </filter>
 </output_template>

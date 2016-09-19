@@ -9,7 +9,7 @@ require_once "elemental_api/preset.php";
 require_once "elemental_api/deltaContents.php";
 
 /**
- * @type("http://embratel.com.br/app/VDN_Embratel/job/2.0")
+ * @type("http://embratel.com.br/app/VDN_Embratel/job/2.1")
  * @implements("http://aps-standard.org/types/core/resource/1.0")
  */
 class job extends \APS\ResourceBase {
@@ -28,6 +28,20 @@ class job extends \APS\ResourceBase {
         * @required
         */
     public $input_URI;
+
+    /**
+        * @type(string)
+        * @title("Username")
+        * @description("Username for acess to URI")
+        */
+    public $username;
+
+    /**
+        * @type(string)
+        * @title("Password")
+        * @description("Username's password for acess to URI")
+        */
+    public $password;
 
     /**
         * @type(string)
@@ -205,7 +219,8 @@ class job extends \APS\ResourceBase {
 //         try {
 //             ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
             \APS\LoggerRegistry::get()->info("--> Provisionando Job level=".$level." protocol=".$protocol);
-            $job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets, $protocol );
+            $job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets, $protocol, 
+                                     $this->username, $this->password );
 //         } catch (Exception $fault) {
 //             \APS\LoggerRegistry::get()->error("Error while creating content job, :\n\t" . $fault->getMessage());
 //             throw new Exception($fault->getMessage());

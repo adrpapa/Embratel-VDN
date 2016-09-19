@@ -228,7 +228,7 @@
             $this->filterSettings->repeat_ext_x_key = "false";
             $keyProviderSettings = $this->filterSettings->addChild("keyprovider_settings");
             $keyProviderSettings->common_key = "false";
-            $keyProviderSettings->key_prefix = "https://201.31.12.36";
+            $keyProviderSettings->key_prefix = ConfigConsts::DELTA_JIT_KEY_PREFIX;
         }
     }
 
@@ -283,14 +283,16 @@
         }
     }
         
-// $channel = new stdClass();
-// $channel->live_event_id = 35;
-// $channel->inputURI = "Dummy/Dummy";
-// $channel->dvr = true;
-// $channel->https = false;
-// $channel->premium = true;
-// $content = DeltaContents::getContentsForEvent($channel);
-// print_r($content);
+ /*
+ $channel = new stdClass();
+ $channel->live_event_id = 73;
+ $channel->inputURI = "Dummy/Dummy";
+ $channel->dvr = true;
+ $channel->https = true;
+ $channel->premium = false;
+ $content = DeltaContents::getContentsForEvent($channel);
+ print_r($content);
+ */
 
 
 //  DeltaContents::getContentsByFolder('/data/server/drive/watchfolders/Cliente1/')
@@ -298,5 +300,5 @@
 //      var_dump($content);
 //  }
 
-//          print_r(DeltaContents::getContentsFromJob(171));
+//          print_r(DeltaContents::getContentsFromJob(214));
 ?>

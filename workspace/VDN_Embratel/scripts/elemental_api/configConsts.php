@@ -34,6 +34,7 @@
         const DELTA_MOUNT_POINT = '/data/server';
         const DELTA_WEBDAV_STORAGE_ROOT = '/data/server/drive';
         const DELTA_WEBDAV_URI_ROOT = 'http://10.0.0.21/in/';
+        const DELTA_JIT_KEY_PREFIX = 'https://201.31.12.36/jit_encryption_site';
 
         //********** CDN ***********
         const CDMS_ADDRESS = "192.118.77.183";

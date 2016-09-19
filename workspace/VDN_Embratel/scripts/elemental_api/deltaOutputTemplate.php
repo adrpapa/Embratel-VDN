@@ -43,6 +43,9 @@
                 if( (boolean)$filter->endpoint ) {
                     $filter->output_url = $axClientID.'/'.$type.'/'.$proto.'/$fn$';
                 }
+                if( $filter->filter_type.'' == "hls_encryption") {
+                    $filter->filter_settings->keyprovider_settings->key_prefix = ConfigConsts::DELTA_JIT_KEY_PREFIX;
+                }
             } 
 //             print($xml->asXml());
             return new self(DeltaOutputTemplate::getElementalRest()->postRecord(null, null, $xml));
@@ -123,6 +126,9 @@
 // $proto="http";
 // $level="std";
 // DeltaOutputTemplate::getCli
+
+// DeltaOutputTemplate::newOutputTemplate( "clientID", "vod", "https", "std" );
+// DeltaOutputTemplate::newOutputTemplate( "clientID", "vod", "https", "prm" );
 
 
 /*

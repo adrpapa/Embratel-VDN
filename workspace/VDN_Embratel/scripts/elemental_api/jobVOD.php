@@ -13,7 +13,8 @@
         /*
         ** cria objeto JOB, e monta XML para inclusão do mesmo
         */
-        public static function newJobVOD( $name, $file_input_uri, $clientID, $level, Presets $presets=NULL, $protocol ) {
+        public static function newJobVOD( $name, $file_input_uri, $clientID, $level, 
+                    Presets $presets=NULL, $protocol, $username, $password ) {
             $axCli = cleanClientID($clientID);
             $axNam = cleanName($name);
             $axVideoName = pathinfo($file_input_uri, PATHINFO_FILENAME);
@@ -24,6 +25,10 @@
             $job = simplexml_load_file($tpl);
             $job->input->name = $name;
             $job->input->file_input->uri = $file_input_uri;
+            if ( !is_null($username) ) {
+                $job->input->file_input->username = $username;
+                $job->input->file_input->password = $password;
+            }
             if ( !is_null($presets) ) {
                 $job = $presets->customizePresets( $job->name, $job );
             }
@@ -179,7 +184,7 @@ for($i=0;$i<count($resolutions);$i++ ) {
         $audio_bitrates[$i]),$i);
 }
 
-$jobVOD = JobVOD::newJobVOD( 'big_buck_bunny', 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4', 'Client_000004', 'std', $presets, 'http' );
+$jobVOD = JobVOD::newJobVOD( 'WiegelesHeliSki_DivXPlus_19Mbps', 'sftp://talismadeluz.com.br:/videos/WiegelesHeliSki_DivXPlus_19Mbps.mkv', 'Cliente_teste_Api', 'std', $presets, 'http', "openuser", "senhaopenuser" );
 // print_r($jobVOD);
 */
 ?>

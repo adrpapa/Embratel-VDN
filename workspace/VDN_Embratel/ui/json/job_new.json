@@ -1,8 +1,17 @@
 {
     "aps": {
-        "type": "http://embratel.com.br/app/VDN_Embratel/job/2.0"
+        "type": "http://embratel.com.br/app/VDN_Embratel/job/2.1"
     },
+    "input_URI": "",
+    "username" : "",
+    "password" : "",
     "name": "",
     "description": "",
-    "input_URI": ""
+    "screen_format": "",
+    "premium": false,
+    "https": false,
+    "resolutions" : [],
+    "framerates" : [],
+    "video_bitrates" : [],
+    "audio_bitrates" : []
 }

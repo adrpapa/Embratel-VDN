@@ -71,7 +71,7 @@ CISCO VDN para entrega distribuída de conteúdo
                                 <cancel label="Back to list"/>
                             </controls>
                             <var name="job"
-                                type-id="http://embratel.com.br/app/VDN_Embratel/job/2.0" />
+                                type-id="http://embratel.com.br/app/VDN_Embratel/job/2.1" />
                         </view>
                     </view>
                 </item>
