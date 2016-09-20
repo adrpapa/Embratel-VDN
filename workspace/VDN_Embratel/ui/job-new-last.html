@@ -24,13 +24,12 @@
                 resol4x3, resol16x9)
             {
                 "use strict";
-                
+                var model = getStateful(wd.get());
                 var store = new Store({
                     apsType: "http://embratel.com.br/app/VDN_Embratel/job/2.1",
                     //target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/jobs"
                     target: "/aps/2/resources/"
-                    }),
-                    model = getStateful(wd.get());
+                    });
 
                 var widget = videoparams(model, "input_URI", frameRates, videoBitRates,
                     audioBitRates, resol4x3, resol16x9 );
@@ -43,6 +42,24 @@
                         if (!page.validate()) {
                             aps.apsc.cancelProcessing();
                             return;
+                        }
+                        var newJob= {
+                            aps: {
+                                type: "http://embratel.com.br/app/VDN_Embratel/job/2.1"
+                            },
+                            inputs: [],
+                            username : model.username,
+                            password : model.password,
+                            screen_format: model.screen_format,
+                            premium: model.premium,
+                            https: model.https,
+                            resolutions : model.resolutions,
+                            framerates : model.framerates,
+                            video_bitrates : model.video_bitrates,
+                            audio_bitrates : model.audio_bitrates
+                        };
+                        for( var ix=0; ix < model.filenames.length; ++ix){
+                            newJob.inputs.push(model.protocol + model.site + "/" + model.filenames[ix].name);
                         }
                         when(store.put(getPlainValue(model)),
                             function(){ aps.apsc.gotoView("jobs"); },

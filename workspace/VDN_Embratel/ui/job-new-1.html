@@ -11,20 +11,22 @@
                   "aps/load",
                   "aps/Memory",
             "dojox/mvc/getStateful",
+                  "aps/Message",
                   "aps/TextBox",
                   "aps/ready!"
-        ], function (registry, getPlainValue, wd, at, load, Memory, getStateful) {
+        ], function (registry, getPlainValue, wd, at, load, Memory, getStateful, Message) {
 
             var model = getStateful({
                 aps: {
                     type: "http://embratel.com.br/app/VDN_Embratel/job/2.1"
                 },
+                protocol: "",
                 input_URI: "",
                 username : "",
                 password : "",
                 name: "",
                 description: "",
-                screen_format: "",
+                screen_format: "16:9",
                 premium: false,
                 https: false,
                 filenames: [{name:""}, {name:""}, {name:""}],
@@ -144,6 +146,16 @@
                 aps.app.onNext = function() {
                     var page = registry.byId("page");
                     page.get("messageList").removeAll();
+                    var sorted_arr = model.filenames.slice().sort();// (we use slice to clone the array so the
+                                                                    // original array won't be modified)
+                    for (var i = 0; i < model.filenames.length - 1; i++) {
+                        if (sorted_arr[i + 1] == sorted_arr[i]) {
+                            page.get("messageList").addChild(new Message({
+                                description: _("Duplicate stream: ")+sorted_arr[i],
+                                type: "error"
+                            }));
+                        }
+                    }
 
                     /* Validate the values assigned to widgets */
                     if (!page.validate()) {

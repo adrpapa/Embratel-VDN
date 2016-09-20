@@ -25,9 +25,16 @@ class job extends \APS\ResourceBase {
         * @type(string)
         * @title("Input URIs")
         * @description("Job Input URIs for video ingestion")
-        * @required
         */
     public $input_URI;
+
+    /**
+        * @type(string[])
+        * @title("Inputs")
+        * @description("Array of Video inputs")
+        * @readonly
+        */
+    public $inputs;
 
     /**
         * @type(string)
@@ -184,29 +191,64 @@ class job extends \APS\ResourceBase {
         \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
         \APS\LoggerRegistry::get()->info("Iniciando provisionamento de conteudo(job) ".$this->aps->id);
         $clientid = formatClientID($this->context);
-        \APS\LoggerRegistry::get()->info("Client: $clientid Input: ".$this->input_URI);
-        $fnparts = explode('/',$this->input_URI);
-        $this->name = $fnparts[count($fnparts)-1];
-        \APS\LoggerRegistry::get()->info("Verificando duplicidade de conteúdo ".$this->name);
-        foreach( $this->context->vods as $vod ) {
-            $fnparts = explode('/',$vod->input_URI);
-            $vodFileName = $fnparts[count($fnparts)-1];
-            if( $vodFileName == $this->name  ) {
-                throw new Exception(_("Content with this name already exists. Please remove content and resubmit job"));
+        if( $this->input_URI == null ) {
+            $names = [];
+            foreach($this->inputs as $input) {
+                $fnparts = explode('/',$input);
+                $names[] = $fnparts[count($fnparts)-1];
+            }
+
+            $dupnames = [];
+            \APS\LoggerRegistry::get()->info("Verificando duplicidade de conteúdo ".$this->aps->id);
+            foreach( $this->context->vods as $vod ) {
+                $fnparts = explode('/',$vod->input_URI);
+                $vodFileName = $fnparts[count($fnparts)-1];
+                if( in_array($vodFileName, $names)  ) {
+                    $dupnames[] = $vodFileName;
+                }
+            }
+            \APS\LoggerRegistry::get()->info("Verificando duplicidade de jobs");
+            foreach( $this->context->jobs as $job ) {
+                if( $this->aps->id == $job->aps->id){
+                    continue;
+                }
+                $fnparts = explode('/',$job->input_URI);
+                $jobFileName = $fnparts[count($fnparts)-1];
+                if( in_array($vodFileName, $names)  ) {
+                    if( $job->state != 'error' & $job->state != 'cancelled'){
+                        $dupnames[] = $jobFileName;
+                    }
+                }
+            }
+            if( count($dupnames) > 0 ){
+                throw new Exception(_("Contents with the following names already were submitted and should be removed before resubmission: ").implode(",", $dupnames));
+            }
+            
+            //O Job iniciado pelo painel pega o primeiro input
+            $this->input_URI = $this->inputs[0];
+
+            $apsc = \APS\Request::getController();
+            $apsc2 = $apsc->impersonate($this);
+            $context = $apsc2->getResource($this->context->aps->id);
+            $content = DeltaContents::getContentsFromJob($this->job_id);
+            //aqui geramos os outros jobs para cada um dos inputs
+            for( $ix=1; $ix<count($this->inputs); ++$ix) {
+                $job = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDN_Embratel/job/2.1");
+                $job->input_URI      = $this->inputs[$ix];
+                $job->resolutions    = $this->resolutions;
+                $job->video_bitrates = $this->video_bitrates;
+                $job->framerates     = $this->framerates;
+                $job->audio_bitrates = $this->audio_bitrates;
+                $job->username       = $this->username;
+                $job->password       = $this->password;
+                $job->screen_format  = $this->screen_format;
+                $job->premium        = $this->premium;
+                $job->https          = $this->https;
+                \APS\LoggerRegistry::get()->info ("Provisioning new Job  for content $job->input_URI");
+                $apsc2->linkResource($context, 'vods', $job);
             }
         }
-        \APS\LoggerRegistry::get()->info("Verificando duplicidade de jobs");
-        foreach( $this->context->jobs as $job ) {
-            if( $this->aps->id == $job->aps->id){
-                continue;
-            }
-            $fnparts = explode('/',$job->input_URI);
-            $jobFileName = $fnparts[count($fnparts)-1];
-            if( $jobFileName == $this->name  ){
-                throw new Exception(_("Job with this name already exists. Please remove job, content and resubmit content: ").$jobFileName);
-            }
-        }
-        \APS\LoggerRegistry::get()->info("Montando presets");
+        \APS\LoggerRegistry::get()->info("Provisionning Client: $clientid Job Input: ".$this->input_URI);
         $presets = new Presets();
         for($i=0;$i<count($this->resolutions);$i++ ) {
             $presets->addPreset(new Preset($this->resolutions[$i],
@@ -218,9 +260,9 @@ class job extends \APS\ResourceBase {
         $protocol = ($this->https ? 'https' : 'http');
 //         try {
 //             ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
-            \APS\LoggerRegistry::get()->info("--> Provisionando Job level=".$level." protocol=".$protocol);
-            $job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets, $protocol, 
-                                     $this->username, $this->password );
+        \APS\LoggerRegistry::get()->info("--> Provisionando Job level=".$level." protocol=".$protocol);
+        $job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets, $protocol, 
+                                    $this->username, $this->password );
 //         } catch (Exception $fault) {
 //             \APS\LoggerRegistry::get()->error("Error while creating content job, :\n\t" . $fault->getMessage());
 //             throw new Exception($fault->getMessage());

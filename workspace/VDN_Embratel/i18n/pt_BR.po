@@ -5,7 +5,7 @@
 msgid ""
 msgstr "Project-Id-Version: VDN_Embratel-2.0-1nReport-Msgid-Bugs-To:\n"
 "POT-Creation-Date: 2016-07-26 13:14-0300\n"
-"PO-Revision-Date: 2016-09-15 10:50-0300\n"
+"PO-Revision-Date: 2016-09-20 05:32-0300\n"
 "Language-Team: Portuguese <EMAIL@ADDRESS>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr "Apelido"
 # @generated
 #: ui/channel-new-1.html:80
 msgid "Allows viewers to pause, play, and rewind live events"
-msgstr "Permite ao usuário pausar, voltar e reproduzir eventos ao vivo (Live)"
+msgstr "Permite ao usuário parar, voltar e reproduzir eventos ao vivo (Live)"
 
 # @generated
 #: ui/cdns.html:89
@@ -55,11 +55,11 @@ msgstr "Confirma a exclusão dos Canais?"
 # @generated
 #: ui/js/videoparams.js:111
 msgid "Audio Bit Rate"
-msgstr "Bit Rate Áudio"
+msgstr "Bit Rate de Áudio"
 
 # @generated
 #: ui/channel-new-1.html:76
-#: ui/job-new-1.html:72
+#: ui/job-new-1.html:117
 msgid "Avanced Options (additional charges may apply)"
 msgstr "Opções Avançadas (ATENÇÃO: Pode incidir cobrança adicional)"
 
@@ -75,6 +75,11 @@ msgstr "Voltar para lista de conteúdo"
 #: APP-META.xml:113
 msgid "Back to list"
 msgstr "Volta à lista"
+
+# @generated
+#: ui/job-new-1.html:72
+msgid "Base URL"
+msgstr "URL Base"
 
 # @generated
 #: APP-META.xml:103
@@ -137,11 +142,6 @@ msgid "Content Information"
 msgstr "Informações do Conteúdo"
 
 # @generated
-#: ui/job-new-1.html:42
-msgid "Content Name"
-msgstr "Nome do Conteúdo"
-
-# @generated
 #: APP-META.xml:44
 #: APP-META.xml:45
 msgid "Conteúdo"
@@ -175,6 +175,11 @@ msgstr "Detalhes do Serviço de Entrega (Delivery Service)"
 #: ui/job-info.html:35
 msgid "Description"
 msgstr "Descrição"
+
+# @generated
+#: ui/job-new-1.html:154
+msgid "Duplicate stream: "
+msgstr "Arquivo duplicado"
 
 # @generated
 #: ui/content-info.html:51
@@ -236,7 +241,7 @@ msgstr "Frame Rate"
 
 # @generated
 #: ui/channel-new-1.html:47
-#: ui/job-new-1.html:41
+#: ui/job-new-1.html:64
 msgid "General Configuration"
 msgstr "Configurações Gerais"
 
@@ -276,6 +281,7 @@ msgstr "ID"
 # @generated
 #: ui/cdn-info.html:61
 #: ui/cdn-new-1.html:71
+#: ui/job-new-1.html:85
 msgid "IP or FQDN from origin server that will provide the content"
 msgstr "IP ou FQDN do servidor origem para provisionamento de conteúdo"
 
@@ -285,18 +291,12 @@ msgid "Initial release."
 msgstr "Release inicial"
 
 # @generated
-#: ui/job-new-1.html:45
 #: ui/jobs.html:47
 #: ui/jobs.html:68
 #: ui/job-info.html:39
 #: ui/js/videoparams.js:152
 msgid "Input URI"
 msgstr "URI do Conteúdo"
-
-# @generated
-#: ui/job-new-1.html:55
-msgid "Input URI requires user/password authentication"
-msgstr "Site de conteúdo exige autenticação (usuário/senha)"
 
 # @generated
 #: ui/content-info.html:54
@@ -306,6 +306,7 @@ msgstr "URI de entrada: ${url}"
 # @generated
 #: ui/cdn-info.html:62
 #: ui/cdn-new-1.html:72
+#: ui/job-new-1.html:84
 msgid "Invalid value. It should be a valid IPv4 or FQDN"
 msgstr "Valor inválido. Deve ser um IPv4 válido ou FQDN"
 
@@ -361,7 +362,7 @@ msgstr "Jobs"
 
 # @generated
 #: ui/channel-new-1.html:86
-#: ui/job-new-1.html:76
+#: ui/job-new-1.html:121
 msgid "Just In Time Encryption of content"
 msgstr "Criptografia em tempo real do conteúdo (JIT Encryption)"
 
@@ -451,11 +452,6 @@ msgid "New Job"
 msgstr "Novo Job"
 
 # @generated
-#: ui/job-new-1.html:59
-msgid "Nome"
-msgstr "Name"
-
-# @generated
 #: ui/cdn-info.html:66
 #: ui/cdn-new-1.html:75
 #: ui/cdn-new-last.html:37
@@ -470,9 +466,14 @@ msgid "Origin Server"
 msgstr "Servidor de origem"
 
 # @generated
+#: ui/job-new-1.html:102
+msgid "Password (optional)"
+msgstr "Senha"
+
+# @generated
 #: ui/channel-info.html:87
 #: ui/channel-new-1.html:89
-#: ui/job-new-1.html:78
+#: ui/job-new-1.html:123
 #: ui/content-info.html:63
 msgid "Premium Configuration Options?"
 msgstr "Perfil Premium?"
@@ -484,7 +485,7 @@ msgstr "Customização de parâmetros de transcodificação para Perfil Premium"
 
 # @generated
 #: ui/channel-new-1.html:95
-#: ui/job-new-1.html:84
+#: ui/job-new-1.html:129
 msgid "Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH"
 msgstr "'<table style=\"width:100%\">\n"
 "	<tr>\n"
@@ -562,11 +563,6 @@ msgid "Required fields have to be filled"
 msgstr "Os campos obrigatórios devem ser preenchidos"
 
 # @generated
-#: ui/job-new-1.html:54
-msgid "Requires authentication"
-msgstr "Requer Autenticação"
-
-# @generated
 #: ui/js/videoparams.js:108
 msgid "Resolution"
 msgstr "Resolução"
@@ -604,6 +600,11 @@ msgstr "Taxa de Proporção de Tela do Conteúdo: ${sf}"
 #: ui/cdn-info.html:86
 msgid "Service Routing Domain Name"
 msgstr "Service Routing Domain Name"
+
+# @generated
+#: ui/job-new-1.html:73
+msgid "Site / Path to content"
+msgstr "Site / Caminho dos conteúdos"
 
 # @generated
 #: ui/channels.html:56
@@ -674,15 +675,15 @@ msgid "Transcoder Parameters"
 msgstr "Parametros de Transcodificação"
 
 # @generated
-#: ui/job-new-1.html:47
-msgid "URI of content to be processed. Supported Protocols are: HTTP, HTTPS, FTP, SFTP, SCP, S3, S3SSL e ASPERA."
-msgstr "URI do conteúdo a ser processado. Protocolos suportados: HTTP, HTTPS, FTP, SFTP, SCP, S3, S3SSL e ASPERA."
+#: ui/job-new-1.html:92
+msgid "Use Authentication"
+msgstr "Utilizar autenticação"
 
 # @generated
 #: ui/channel-info.html:81
 #: ui/cdn-new-last.html:40
 #: ui/channel-new-1.html:85
-#: ui/job-new-1.html:75
+#: ui/job-new-1.html:120
 #: ui/content-info.html:58
 msgid "Use HTTPS?"
 msgstr "JIT Encryption"
@@ -691,6 +692,11 @@ msgstr "JIT Encryption"
 #: ui/cdn-new-1.html:96
 msgid "Use for Live Stream"
 msgstr "Transmissão ao Vivo"
+
+# @generated
+#: ui/job-new-1.html:96
+msgid "Username (optional)"
+msgstr "Usuário"
 
 # @generated
 #: APP-META.xml:39
@@ -754,25 +760,25 @@ msgstr "Ajuste a Resolução, Frame Rate, Bit Rate de Vídeo e Bit Rate de Áudi
 #: ui/cdn-info.html:41
 #: ui/cdn-new-1.html:55
 msgid "[Example: This is a live event for IT free lessons]"
-msgstr "[Examplo: Minha transmissão ao Vivo]"
+msgstr "[Exemplo: Minha transmissão ao Vivo]"
 
 # @generated
 #: ui/cdn-info.html:49
 #: ui/cdn-new-1.html:62
 msgid "[Example: livefreelessons]"
-msgstr "[Examplo: minhatransmissaoaovivo]"
+msgstr "[Exemplo: minhatransmissaoaovivo]"
 
 # @generated
 #: ui/cdn-info.html:71
 #: ui/cdn-new-1.html:79
 msgid "[Example: out/u/myvideos]"
-msgstr "[Examplo: minhapasta/meuvideo]"
+msgstr "[Exemplo: minhapasta/meuvideo]"
 
 # @generated
 #: ui/cdn-info.html:60
 #: ui/cdn-new-1.html:70
 msgid "[Examples: myhost.mydomain.com 201.233.111.10]"
-msgstr "[Examplos: meuhost.meudominio.com.br / 201.233.111.10]"
+msgstr "[Exemplos: meuhost.meudominio.com.br / 201.233.111.10]"
 
 # @generated
 #: ui/channel-new-1.html:55
