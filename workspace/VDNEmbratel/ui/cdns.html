@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+<script>
+    require([
+        "aps/ResourceStore",
+        "aps/xhr",
+        "dojo/when",
+        "dijit/registry",
+        "aps/load",
+        "./js/displayError.js",
+        "dojo/_base/array",
+        "dojo/text!./json/constants.json",
+        "aps/ready!"
+        ],
+        function (Store, xhr, when, registry, load, displayError, arr, consts) {
+            /* Create the data store */
+            var store = new Store({
+                apsType: "http://embratel.com.br/app/VDNEmbratel/cdn/1.0",
+                target: "/aps/2/resources/"
+//                 target : "/aps/2/resources/" + model.aps.id + "/mozyProAccount",
+//                 baseQuery: "select(subscription),eq(partnerId,null()),ne(subscription.subscriptionId,null())"
+            });
+            var constants = JSON.parse(consts);
+            /* Create widgets */
+            load(["aps/PageContainer", { id: "page" }, [
+                ["aps/Grid", {
+                    id:                "cdnl_grid",
+                    store:             store,
+                    selectionMode:     "multiple",
+                    apsResourceViewId: "cdn-info",
+                    columns:           [
+                        { field: "name",         name: _("Name"),   filter: { title: _("Name") }, type: "resourceName" },
+                        { field: "origin_domain",name: _("Service Routing Domain Name") },
+//                         { field: "origin_server",name: "Origin Server" },
+//                         { field: "origin_path",  name: "Origin Path" },
+                        { field: "https",        name: _("HTTPS"), type: "boolean" },
+                        { field: "live",         name: _("Live"), type: "boolean" }
+                    ]
+                }, [
+                    ["aps/Toolbar", [
+                        ["aps/ToolbarButton", { id: "cdn_new",        iconClass: "sb-add-new",        label: _("New") }],
+                        // Declare a button with CSS class sb-service-start and label Start.
+                        // It will be enabled only if at least one string is selected
+                        ["aps/ToolbarButton", { id: "cdn_delete",     iconClass: "sb-delete",         label: _("Delete"),    requireItems:   true }],
+                        ["aps/ToolbarButton", { id: "cdn_refresh",    iconClass: "sb-refresh",        label: _("Refresh") }]
+                    ]]
+                ]]
+            ]]).then(
+                function() {
+                    /* Once the widgets are created, create the widget processing logic */
+                    var grid = registry.byId("cdnl_grid"),
+                        page = registry.byId("page");
+
+                    /* Create a handler for the *New* button click */
+                    registry.byId("cdn_new").on("click",
+                        function() {
+                            /* Start the process of creating a VPS by going to the first screen */
+                            aps.apsc.gotoView("cdn-new-1");
+                        });
+
+                    registry.byId("cdn_refresh").on("click",
+                        function() {
+                            grid.refresh();
+                            registry.byId("cdn_refresh").cancel();
+                        });
+                    
+                    /* Create the on-click handler for the *Delete* button
+                    */
+                    registry.byId("cdn_delete").on("click",
+                        function() {
+                            /* Clear the current messages on the screen */
+                            page.get("messageList").removeAll();
+                            var self = this;
+                            var sel = grid.get("selectionArray");
+                            var counter = sel.length;
+                            arr.forEach(sel,
+                                function(cdnlId){
+                                    console.log("Trying to delete CDN with id = [" + cdnlId + "]");
+                                    store.get(cdnlId).then(
+                                        function(cdn){
+                                            if( cdn.origin_server.indexOf(constants.ORIGIN_EBT) > -1 ){
+                                                alert (_("CDN __cdn__ created automatically by the system - may not be removed",{"cdn":cdn.name}));
+                                                registry.byId("cdn_delete").cancel();
+                                            }
+                                            else {
+                                                /* Get confirmation from the user for the delete operation */
+                                                if (confirm(_("Are you sure you want delete CDN __cdn__?",{"cdn":cdn.name}))) {
+                                                    /* Remove the VPS from the APS controller DB */
+                                                    when(store.remove(cdnlId),
+                                                        /* If success, process the next VPS until the list is empty */
+                                                        function(){
+                                                            console.log("CDN with id = [" + cdnlId + "] removed");
+                                                            sel.splice(sel.indexOf(cdnlId),1);
+                                                            grid.refresh();
+                                                            if (--counter === 0) { self.cancel(); }
+                                                        },
+                                                        /* If failure, call the error handler */
+                                                        function(e){
+                                                            displayError(e);
+                                                            if (--counter === 0) { self.cancel(); }
+                                                        }
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    );
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+    <script>
+        require([
+                "dijit/registry",
+            "dojox/mvc/getPlainValue",
+                  "aps/WizardData",
+            "dojox/mvc/at",
+                  "aps/load",
+                  "aps/Memory",
+            "dojox/mvc/getStateful",
+                  "aps/Message",
+                  "aps/TextBox",
+                  "aps/ready!"
+        ], function (registry, getPlainValue, wd, at, load, Memory, getStateful, Message) {
+
+            var model = getStateful({
+                aps: {
+                    type: "http://embratel.com.br/app/VDNEmbratel/job/2.0"
+                },
+                protocol: "http://",
+                input_URI: "",
+                username : "",
+                password : "",
+                name: "",
+                description: "",
+                screen_format: "16:9",
+                premium: false,
+                https: false,
+                filenames: [{name:""}, {name:""}, {name:""}],
+                resolutions : [],
+                framerates : [],
+                video_bitrates : [],
+                audio_bitrates : []
+            });
+//            if( typeof aps.context.params.isNew != "undefined" ) {
+//              model = getStateful(wd.get());
+//            }
+
+            var screen_formats = new Memory({
+                idProperty: "value",
+                    data: [{ value:"16:9",		label: "16:9 (Widescreen)" },
+                           { value: "4:3",		label: "4:3" }]
+            });
+
+            var protocols = new Memory({
+                idProperty: "value",
+                    data:  [{label: "//:http",   value: "http://"},
+                            {label: "//:https",  value: "https://"},
+                            {label: "//:ftp",    value: "ftp://"},
+                            {label: "//:sftp",   value: "sftp://"},
+                            {label: "//:scp",    value: "scp://"},
+                            {label: "//:s3",     value: "s3://"},
+                            {label: "//:s3ssl",  value: "s3ssl://"},
+                            {label: "//:aspera", value: "aspera://"} ]
+            });
+
+            /* Create widgets */
+            var widgets =
+                ["aps/PageContainer", { id: "page" }, [
+                    ["aps/FieldSet", { id: "new_general",
+                                      title:  _("General Configuration") }, [
+                        ["aps/Select", {
+                            id: "new_fmt",
+                            label: _( "Screen Format"),
+                            value: at(model,"screen_format"),
+                            store: screen_formats,
+                            required: true
+                        }],
+                        ["aps/Container", {label: _("Base URL"),
+                                           promptMessage: _('Site / Path to content'), required: true},[
+                            ["aps/Select", {
+                                id: "new_protocol",
+                                value: at(model,"protocol"),
+                                store: protocols,
+                                "style": "direction: rtl;",
+                                required: true
+                            }],
+                            ["aps/TextBox", {
+                                id: "new_input_uri",
+                                pattern: "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$",
+                                invalidMessage: _("Invalid value. It should be a valid IPv4 or FQDN"),
+                                promptMessage: _("IP or FQDN from origin server that will provide the content"),
+                                value: at(model, "site"),
+                                required: true
+                            }]
+                        ]],
+                        ["aps/CheckBox",{
+                            id: "use_auth",
+                            label: _("Use Authentication")
+                        }],
+                        ["aps/TextBox", {
+                            id: "username",
+                            label: _("Username (optional)"),
+                            value: at(model, "username"),
+                            visible: false
+                        }],
+                        ["aps/Password", {
+                            id: "password",
+                            label: _("Password (optional)"),
+                            value: at(model, "password"),
+                            visible: false
+                        }],
+                        ["aps/WidgetList", {
+                            id: "fnames",
+                            children:      at(model, "filenames"),
+                            label: "File Name(s)"
+                          }, [
+                              ["aps/TextBox", {
+                                  value: at("rel:", "name"),
+                                  required: true
+                                }]
+                        ]]
+                    ]],
+                    ["aps/FieldSet", {title:  _("Avanced Options (additional charges may apply)")  }, [
+                        ["aps/CheckBox", {
+                            id: "new_https",
+                            label: _("Use HTTPS?"),
+                            hint: _("Just In Time Encryption of content"),
+                            checked: at(model, "https") } ],
+                        ["aps/Container", {label:_("Premium Configuration Options?")},[
+                            [ "aps/CheckBox", {
+                                checked: at(model, "premium")
+                            }],
+                            [ "aps/Output", {
+                                "class": "hint",
+                                innerHTML: _("Premium configuration includes 3 HD outputs plus 2 SD outputs, and ofers 4 output protocols: HLS, HSS, HDS and DASH")
+                            }]
+                        ]]
+                    ]]
+                ]];
+            load(widgets).then(function(){
+                /* Create handlers for the navigation buttons */
+                registry.byId("use_auth").watch("checked", function(ctl,ov,nv){
+                    var props={"visible": nv};
+                    registry.byId("username").set(props);
+                    registry.byId("password").set(props);
+                });
+
+                aps.app.onCancel = function() {
+                    aps.apsc.gotoView("jobs");
+                };
+                aps.app.onNext = function() {
+                    var page = registry.byId("page");
+                    page.get("messageList").removeAll();
+                    var sorted_arr = model.filenames.slice().sort();// (we use slice to clone the array so the
+                                                                    // original array won't be modified)
+                    for (var i = 0; i < model.filenames.length - 1; i++) {
+                        if (sorted_arr[i + 1] == sorted_arr[i]) {
+                            page.get("messageList").addChild(new Message({
+                                description: _("Duplicate stream: ")+sorted_arr[i],
+                                type: "error"
+                            }));
+                        }
+                    }
+
+                    /* Validate the values assigned to widgets */
+                    if (!page.validate()) {
+                        aps.apsc.cancelProcessing();
+                        return;
+                    }
+
+                    /* Save the values in the client"s storage */
+                    wd.put(getPlainValue(model));
+                    /* and proceed to the next screen */
+                    aps.apsc.gotoView("job-new-last");
+                };
+            });
+        }
+    );
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+	"aps": {
+		"type": "http://embratel.com.br/app/VDNEmbratel/vps/1.0"
+	},
+	"state": "Stopped",
+	"platform": {
+		"OS": {
+			"name": "centos6"
+		}
+	},
+	"hardware": {
+		"CPU": {
+			"number": 4
+		},
+		"diskspace": 32,
+		"memory": 512
+	},
+	"name": "",
+	"description": ""
+}

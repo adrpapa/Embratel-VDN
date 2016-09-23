@@ -1,0 +1,181 @@
+<application packaged="2016-06-16T10:37:18" version="2.0"
+    xmlns="http://aps-standard.org/ns/2">
+    <id>http://embratel.com.br/app/VDNEmbratel</id>
+    <name>VDNEmbratel</name>
+    <version>2.0</version>
+    <release>2</release>
+    <homepage>http://embratel.com.br/app/VDNEmbratel</homepage>
+    <vendor>
+        <name>Embratel</name>
+        <homepage>https://embratel.com.br</homepage>
+    </vendor>
+    <packager>
+        <name>Fastlane</name>
+        <homepage>https://flts.com.br</homepage>
+    </packager>
+    <presentation>
+        <summary>Elemental Server/Live/Delta plugin for parallels</summary>
+        <description>APS para suportar venda de infraestrutura para provedores de conteúdo.
+Permite configurar os back-ends:
+Elemental server - para encoding de conteúdo estático
+Elemental live - para streaming ao vivo
+Elemental delta para empacotamento
+CISCO VDN para entrega distribuída de conteúdo
+</description>
+        <icon path="images/icon.png" />
+        <changelog>
+            <version release="1" version="1.ß0">
+                <entry>Initial release.</entry>
+            </version>
+        </changelog>
+        <categories>
+            <category>Video Streaming</category>
+            <category>Streaming Infrastructure/Management</category>
+        </categories>
+        <languages>
+            <language>en</language>
+            <language>pt</language>
+        </languages>
+        <navigation id="ccpebt" label="VDN">
+            <var name="context" type-id="http://embratel.com.br/app/VDNEmbratel/context/1.0" />
+            <plugs-to id="http://www.aps-standard.org/ui/service" />
+            
+            <item id="vod" label="VOD">
+                <item id="contents" label="Conteúdo">
+                    <view id="contents" label="Conteúdo">
+                        <view id="content-info" label="Content Information">
+                            <controls>
+                                <cancel label="Back to Contents list"/>
+                            </controls>
+                            <var name="content"
+                                type-id="http://embratel.com.br/app/VDNEmbratel/vod/1.0" />
+                        </view>
+                    </view>
+                </item>
+                <item id="jobs" label="Jobs">
+                    <view id="jobs" label="Jobs">
+                        <view id="job-new-1" label="Submit New Content">
+                            <controls>
+                                <cancel />
+                                <next />
+                            </controls>
+                        </view>
+                        <view id="job-new-last" label="Transcoder Parameters">
+                            <controls>
+                                <cancel />
+                                <finish />
+                            </controls>
+                        </view>
+                        <view id="job-info" label="Job Information">
+                            <controls>
+                                <cancel label="Back to list"/>
+                            </controls>
+                            <var name="job"
+                                type-id="http://embratel.com.br/app/VDNEmbratel/job/2.0" />
+                        </view>
+                    </view>
+                </item>
+            </item>
+            <item id="channels" label="Live">
+                <view id="channels" label="Live Channels">
+                    <view id="channel-new-1" label="New Channel">
+                        <controls>
+                            <cancel />
+                            <next />
+                        </controls>
+                    </view>
+                    <view id="channel-new-last" label="Review">
+                        <controls>
+                            <cancel />
+                            <finish />
+                        </controls>
+                    </view>
+                    <view id="channel-info" label="Channel Information">
+                        <controls>
+                                <cancel label="Back to list"/>
+<!--                             <cancel /> -->
+                        </controls>
+                        <var name="chnl"
+                            type-id="http://embratel.com.br/app/VDNEmbratel/channel/2.1" />
+                    </view>
+                </view>
+            </item>		
+            <item id="cdns" label="CDN">
+                <view id="cdns" label="CDN">
+                    <view id="cdn-new-1" label="New Delivery Service">
+                        <controls>
+                            <cancel label="Back to list"/>
+                            <submit />
+                        </controls>
+                    </view>
+                    <view id="cdn-info" label="Delivery Service Information">
+                        <controls>
+                            <cancel label="Back to list"/>
+<!--                             <submit /> -->
+                        </controls>
+                        <var name="cdnl"
+                            type-id="http://embratel.com.br/app/VDNEmbratel/cdn/1.0" />
+                    </view>
+                </view>
+            </item>						
+        </navigation>
+
+    </presentation>
+    <license-agreement must-accept="true">
+        <free />
+        <text>
+            <name>End-User License Agreement</name>
+            <file>http://opensource.org/licenses/bsd-license</file>
+        </text>
+    </license-agreement>
+
+    <upgrade match="version=ge=0,release=ge=0"/>
+
+    <service id="clouds">
+        <code engine="php" path="scripts/clouds.php" />
+        <presentation>
+            <name>VDN  Embratel globals</name>
+            <summary>VDN  Embratel  global configuration variables</summary>
+        </presentation>
+    </service>
+
+    <service id="contexts">
+        <code engine="php" path="scripts/contexts.php" />
+        <presentation>
+            <name>VDN  Embratel Management</name>
+            <summary>VDN Embratel environment</summary>
+        </presentation>
+    </service>
+
+    <service id="channels">
+        <code engine="php" path="scripts/channels.php" />
+        <presentation>
+            <name>VDN Live Channels</name>
+            <summary>VDN Live Channels</summary>
+        </presentation>
+    </service>
+
+    <service id="vods">
+        <code engine="php" path="scripts/vods.php" />
+        <presentation>
+            <name>VDN Content</name>
+            <summary>VDN Content</summary>
+        </presentation>
+    </service>	
+
+    <service id="jobs">
+        <code engine="php" path="scripts/jobs.php" />
+        <presentation>
+            <name>VDN Job</name>
+            <summary>VDN Job</summary>
+        </presentation>
+    </service>	
+
+    <service id="cdns">
+        <code engine="php" path="scripts/cdns.php" />
+        <presentation>
+            <name>Content Delivery Network</name>
+            <summary>Content Delivery Network</summary>
+        </presentation>
+    </service>		
+</application>

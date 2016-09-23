@@ -1,7 +1,7 @@
 {
   "version": "v1",
   "title": "Eclipse Automated Error Reporting",
-  "timestamp": 1466187491704,
+  "timestamp": 1474641450813,
   "ttl": 10080,
   "helpUrl": "https://dev.eclipse.org/recommenders/community/aeri/v2/help/",
   "feedbackUrl": "http://ctrlflow.com/automated-error-reporting",
@@ -13,17 +13,17 @@
   "connectTimeout": 10,
   "socketTimeout": 10,
   "acceptedProducts": [
-    "org.eclipse.*"
+    "org.eclipse.*",
+    "org.fordiac.*"
   ],
   "acceptedPlugins": [
     "org.apache.log4j.*",
-    "org.eclipse.*"
+    "org.eclipse.*",
+    "org.fordiac.*"
   ],
   "acceptedPackages": [
     "ch.qos.*",
     "com.cforcoding.*",
-    "com.codetrails.*",
-    "com.ctrlflow.*",
     "com.google.*",
     "com.gradleware.tooling.*",
     "com.naef.*",
@@ -33,6 +33,7 @@
     "javax.*",
     "org.apache.*",
     "org.eclipse.*",
+    "org.fordiac.*",
     "org.gradle.*",
     "org.osgi.*",
     "org.slf4j.*",
@@ -40,16 +41,16 @@
   ],
   "requiredPackages": [
     "com.cforcoding.*",
-    "com.codetrails.*",
-    "com.ctrlflow.*",
     "com.gradleware.tooling.*",
     "com.naef.*",
     "org.eclipse.*",
+    "org.fordiac.*",
     "org.gradle.*"
   ],
   "acceptOtherPackages": true,
   "acceptUiFreezes": true,
   "ignoredStatuses": [
+    ":java.io.IOException:There is not enough space on the disk",
     ":java.net.*:",
     "org.eclipse.core.filesystem::Could not delete*",
     "org.eclipse.core.filesystem::Could not move*",
@@ -61,5 +62,5 @@
     "org.eclipse.pde.core::The current target platform contains errors*",
     "org.eclipse.ui::Conflicting handlers for*"
   ],
-  "problemsZipLastDownloadTimestamp": 1466187815309
+  "problemsZipLastDownloadTimestamp": 0
 }

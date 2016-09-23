@@ -159,10 +159,10 @@ driver=webdriver.Chrome('/chromedriver/chromedriver')
 if True:
 
     try:
-        driver.get("http://cdn.flts.apsdemo.org:8080/")
+        driver.get("http://z.pyer.apsdemo.org:8080/")
         instance="cdn"
-        assert 'Parallels® Automation' in driver.title
-        login('admin','123@mudar')
+        #assert 'Parallels® Automation' in driver.title
+        login('admin','1qazXSW@')
 
         services=['VDN Embratel globals', 'VDN Embratel Management',   'VDN Live Channels', 
                   'VDN Content',          'VDN Job',                   'Content Delivery Network',

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="ASCII"?>
+<aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="VDNEmbratel">
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/context" version="1.0" relations="//@relations.0/@source //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source //@relations.5/@source //@relations.6/@source" name="context" implements="//@typesFromLibrary.0">
+    <properties name="vodDeltaPaths" type="DeltaPaths" readonly="true"/>
+    <properties name="VDN_HTTP_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTP"/>
+    <properties name="VDN_HTTPS_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTPS"/>
+    <properties name="VDN_VOD_Encoding_Minutes" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VOD Encoding time in minutes"/>
+    <properties name="VDN_VOD_Encoding_Minutes_Premium" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VOD Encoding time in minutes - premium streams"/>
+    <properties name="VDN_VOD_JIT_Encryption_Minutes" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VOD jit encryption time in minutes"/>
+    <properties name="VDN_VOD_Storage_MbH" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="Encoding time in minutes"/>
+    <properties name="VDN_Live_Encoding_Minutes" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="Live encoding time in minutes"/>
+    <properties name="VDN_Live_Encoding_Minutes_Premium" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="Live encoding time in minutes - premium streams"/>
+    <properties name="VDN_Live_JIT_Encryption_Minutes" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="Live jit encryption time in minutes"/>
+    <properties name="VDN_Live_DVR_Minutes" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="Live encoding time in minutes"/>
+    <structures name="InOutPath">
+      <properties name="inputFilter" type="integer"/>
+      <properties name="outputTemplate" type="integer"/>
+    </structures>
+    <structures name="ProtoPaths">
+      <properties name="http" type="InOutPath"/>
+      <properties name="https" type="InOutPath"/>
+    </structures>
+    <structures name="DeltaPaths">
+      <properties name="standard" type="ProtoPaths"/>
+      <properties name="premium" type="ProtoPaths"/>
+    </structures>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/channel" version="2.1" relations="//@relations.0/@target" name="channel" implements="//@typesFromLibrary.0">
+    <properties name="name" type="string" description="Channel Name" required="true"/>
+    <properties name="description" type="string" description="Channel Description" required="true"/>
+    <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
+    <properties name="dvr" type="boolean" description="Turn on DVR feature for live"/>
+    <properties name="https" type="boolean" description="Turn on HTTPS feature for live"/>
+    <properties name="premium" type="boolean" description="Allow transcoder fine-tuning and multiple transmux packaging"/>
+    <properties name="content_id" type="integer" description="Content ID" readonly="true"/>
+    <properties name="live_event_id" type="integer" description="Live Event ID in Elemental Live Conductor" readonly="true"/>
+    <properties name="live_event_name" type="string" description="Live Event Name in Elemental Live Conductor" readonly="true"/>
+    <properties name="input_filter_id" type="integer" description="Delta Input Filter ID" readonly="true"/>
+    <properties name="state" type="string" description="Live channel current state" readonly="true"/>
+    <properties name="request" type="string" description="request for channel start/stop"/>
+    <properties name="input_URI" type="string" description="Live Channel Input URI for client's transmission" readonly="true"/>
+    <properties name="cdn_aps_id" type="string" description="ID of cdn created for event" readonly="true"/>
+    <properties name="cdn_routing_domain" type="string" description="Service Routing Domain Name" readonly="true"/>
+    <properties name="cdn_origin_server" type="string" description="delta access fqdn for CDN content origin" readonly="true"/>
+    <properties name="start_encoding_time" type="string" description="Time event was started" readonly="true"/>
+    <properties name="accum_encoding_time" type="number" description="total encoding time for billing" readonly="true"/>
+    <properties name="last_reported_encoding_time" type="number" description="Last encoding time reported to billing" readonly="true"/>
+    <properties name="live_node" type="string" description="Elemental Live node this channell is assigned to" readonly="true"/>
+    <properties name="resolutions" type="array" description="Array of Video Resolutions for the generated streams"/>
+    <properties name="framerates" type="array" description="Array of Frame Rates for the generated streams"/>
+    <properties name="video_bitrates" type="array" description="Array of Video Bitrates for the generated streams"/>
+    <properties name="audio_bitrates" type="array" description="Array of Audio Bitrates for the generated streams"/>
+    <operations name="updateChannelStatus" verb="GET" path="/updateChannelStatus"/>
+    <operations name="updateLiveUsage" verb="GET" path="/updateLiveUsage"/>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.0" relations="//@relations.3/@target" name="cdn" implements="//@typesFromLibrary.0">
+    <properties name="name" type="string" description="CDN Name" required="true"/>
+    <properties name="description" type="string" description="CDN Description"/>
+    <properties name="alias" type="string" description="CDN Alias-only characters and numbers are allowed" required="true"/>
+    <properties name="origin_server" type="string" description="Content Origin Server(FQDN or IP) for video ingestion" required="true"/>
+    <properties name="origin_path" type="string" description="Content Path for video ingestion" required="true"/>
+    <properties name="https" type="boolean" description="Turn on HTTPS feature for output"/>
+    <properties name="https_in" type="boolean" description="Turn on HTTPS feature for input"/>
+    <properties name="live" type="boolean" description="Turn on Live Delivery Service"/>
+    <properties name="delivery_service_id" type="string" description="CDMS Delivery Service" readonly="true"/>
+    <properties name="content_origin_id" type="string" description="CDMS Content Origin" readonly="true"/>
+    <properties name="delivery_service_gen_settings_id" type="string" description="CDMS Delivery Service General Settings" readonly="true"/>
+    <properties name="rule_url_rwr_file_id" type="string" description="CDMS URL Rewrite Rule File" readonly="true"/>
+    <properties name="origin_domain" type="string" description="Content Origin Domain" readonly="true"/>
+    <properties name="delivery_service_name" type="string" description="Delivery Service Name" readonly="true"/>
+    <properties name="httpTrafficActualUsage" type="number" description="Traffic HTTP actual usage"/>
+    <properties name="http_s_TrafficActualUsage" type="number" description="Traffic HTTPS actual usage"/>
+    <properties name="newestSplunkData" type="string" description="Timestamp of last result from splunk"/>
+    <operations name="updateResourceUsage" verb="GET" path="/updateResourceUsage"/>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cloud" version="1.0" relations="//@relations.4/@target" application="true" name="cloud" implements="//@typesFromLibrary.1"/>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/vod" version="1.0" relations="//@relations.2/@target" name="vod" implements="//@typesFromLibrary.0">
+    <properties name="content_id" type="integer" description="Content ID in Elemental Delta"/>
+    <properties name="content_name" type="string" description="Content Name"/>
+    <properties name="description" type="string" description="Content Description"/>
+    <properties name="cdn_routing_uri" type="string" description="Service Routing URI" readonly="true"/>
+    <properties name="path" type="string" description="Content Path"/>
+    <properties name="content_storage_size" type="number" description="Content size in MB"/>
+    <properties name="content_creation_ts" type="string" description="Content creation timestamp"/>
+    <properties name="content_time_length" type="number" description="Content length in minutes"/>
+    <properties name="content_encoding_charged" type="boolean" description="Flag to verify if encoding time has been billed"/>
+    <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
+    <properties name="premium" type="boolean" description="Allow transcoder fine-tuning and multiple transmux packaging"/>
+    <properties name="https" type="boolean" description="Turn on HTTPS feature for live"/>
+    <properties name="job_id" type="integer" description="Job ID in Elemental Server Conductor" readonly="true"/>
+    <properties name="input_URI" type="string" description="Job Input URI for video ingestion" readonly="true"/>
+    <properties name="resolutions" type="string" description="Array of Video Resolutions for the generated streams" readonly="true"/>
+    <properties name="framerates" type="array" description="Array of Frame Rates for the generated streams" readonly="true"/>
+    <properties name="video_bitrates" type="array" description="Array of Video Bitrates for the generated streams" readonly="true"/>
+    <properties name="audio_bitrates" type="array" description="Array of Audio Bitrates for the generated streams" readonly="true"/>
+    <operations name="updateVodUsage" verb="GET" path="/updateVodUsage"/>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/job" version="2.0" relations="//@relations.1/@target" name="job" implements="//@typesFromLibrary.0">
+    <properties name="input_URI" type="string" description="Job Input URIs for video ingestion"/>
+    <properties name="inputs" type="array" description="Array of Video inputs"/>
+    <properties name="username" type="string" description="Username for acess to URI"/>
+    <properties name="password" type="string" description="Username's password for acess to URI"/>
+    <properties name="name" type="string" description="Job Name"/>
+    <properties name="description" type="string" description="Job Description"/>
+    <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
+    <properties name="premium" type="boolean" description="Allow transcoder fine-tuning and multiple transmux packaging"/>
+    <properties name="https" type="boolean" description="Turn on HTTPS feature for live"/>
+    <properties name="job_id" type="integer" description="Job ID in Elemental Server Conductor" readonly="true"/>
+    <properties name="job_name" type="string" description="Job Name in Elemental Server Conductor" readonly="true"/>
+    <properties name="state" type="string" description="Job current state" readonly="true"/>
+    <properties name="submit_date" type="string" description="Date of job submission" readonly="true"/>
+    <properties name="elapsed_time" type="string" description="Job Elapsed time" readonly="true"/>
+    <properties name="info" type="string" description="Message" readonly="true"/>
+    <properties name="retry" type="integer" description="Counts down number of retries for async operation" readonly="true"/>
+    <properties name="server_node" type="string" description="Elemental Server node this job is assigned to" readonly="true"/>
+    <properties name="resolutions" type="array" description="Array of Video Resolutions for the generated streams"/>
+    <properties name="framerates" type="array" description="Array of Frame Rates for the generated streams"/>
+    <properties name="video_bitrates" type="array" description="Array of Video Bitrates for the generated streams"/>
+    <properties name="audio_bitrates" type="array" description="Array of Audio Bitrates for the generated streams"/>
+    <operations name="updateJobStatus" verb="GET" path="/updateJobStatus"/>
+    <operations name="cancelJob" verb="GET" path="/cancelJob"/>
+    <operations name="updateJobUsage" verb="GET" path="/updateJobUsage"/>
+  </internalTypes>
+  <typesFromLibrary id="http://aps-standard.org/types/core/resource" version="1.0" name="Resource">
+    <operations name="provision" verb="POST" path="/"/>
+    <operations name="retrieve" verb="GET" path="/"/>
+    <operations name="configure" verb="PUT" path="/"/>
+    <operations name="unprovision" verb="DELETE" path="/"/>
+    <structures name="Counter">
+      <properties name="usage" type="integer"/>
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Limit">
+      <properties name="limit" type="integer"/>
+    </structures>
+    <structures name="Usage">
+      <properties name="usage" type="integer"/>
+    </structures>
+    <structures name="NotificationSource">
+      <properties name="type" type="string" description="APS Type of source resources"/>
+      <properties name="id" type="string" description="Resource which is source of event"/>
+    </structures>
+    <structures name="Notification">
+      <properties name="type" type="string" description="Type of event (URI)" required="true"/>
+      <properties name="time" type="string" description="Date-time when event happens"/>
+      <properties name="serial" type="number" description="Serial number of event (incrementing)"/>
+      <properties name="source" type="NotificationSource" description="Resource originating the event"/>
+    </structures>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/application" version="1.0" name="Application" implements="//@typesFromLibrary.0">
+    <operations name="upgrade" verb="POST" path="/upgrade"/>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/subscription" version="1.0" relations="//@relations.5/@target" name="Subscription">
+    <properties name="trial" type="boolean"/>
+    <properties name="disabled" type="boolean"/>
+    <properties name="name" type="string"/>
+    <properties name="description" type="string"/>
+    <operations name="resources" verb="GET" path="/resources"/>
+    <structures name="SubscriptionResource">
+      <properties name="id" type="string" required="true"/>
+      <properties name="title" type="string"/>
+      <properties name="apsId" type="string"/>
+      <properties name="apsType" type="string"/>
+      <properties name="applicationId" type="string"/>
+      <properties name="property" type="string"/>
+      <properties name="usage" type="integer"/>
+      <properties name="limit" type="integer"/>
+      <properties name="autoprovisioning" type="boolean"/>
+      <properties name="unit" type="string" required="true"/>
+    </structures>
+  </typesFromLibrary>
+  <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.6/@target" name="Account">
+    <properties name="companyName" type="string" required="true"/>
+    <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
+  </typesFromLibrary>
+  <relations>
+    <source type="//@internalTypes.0" name="channels" collection="true"/>
+    <target type="//@internalTypes.1" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="jobs" collection="true"/>
+    <target type="//@internalTypes.5" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="vods" collection="true"/>
+    <target type="//@internalTypes.4" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="cdns" collection="true"/>
+    <target type="//@internalTypes.2" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="cloud" required="true"/>
+    <target type="//@internalTypes.3" name="contexts" collection="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="subscription" required="true"/>
+    <target type="//@typesFromLibrary.2"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="account" required="true"/>
+    <target type="//@typesFromLibrary.3"/>
+  </relations>
+</aps:APSPackage>

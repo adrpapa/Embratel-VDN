@@ -248,8 +248,13 @@ if True:
         services=['VDN Embratel globals',      'VDN Embratel Management',           'VDN Live Channels', 
                   'VDN Content',               'VDN Job',                           'Content Delivery Network',
                   'VDN_HTTP_Traffic',          'VDN_HTTPS_Traffic',
-                  'VDN_VOD_Encoding_Minutes',  'VDN_VOD_Encoding_Minutes_Premium',  'VDN_VOD_Storage_MbH',
-                  'VDN_Live_Encoding_Minutes', 'VDN_Live_Encoding_Minutes_Premium', 'VDN_Live_DVR_Minutes']
+                  'VDN_VOD_Encoding_Minutes',  'VDN_VOD_Encoding_Minutes_Premium', 
+                  
+                  'VDN_VOD_Storage_MbH',
+                  'VDN_Live_Encoding_Minutes', 'VDN_Live_Encoding_Minutes_Premium',
+                  'VDN_Live_DVR_Minutes',
+                  'VDN_Live_JIT_Encryption_Minutes',
+                  'VDN_VOD_JIT_Encryption_Minutes']
 
         createAppReference(services[0])
         createAppService(services[1], True)
@@ -265,6 +270,8 @@ if True:
         createResourceCounter(services[11],4)
         createResourceCounter(services[12],4)
         createResourceCounter(services[13],4)
+        createResourceCounter(services[14],4)
+        createResourceCounter(services[15],4)
 
         createServiceTemplate(services[0], True, services)
         activateServiceTemplate(services[0])
