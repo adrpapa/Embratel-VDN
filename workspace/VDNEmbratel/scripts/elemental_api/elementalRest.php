@@ -205,10 +205,7 @@ class ElementalRest {
             $errMsg = sprintf( "HTTP Error: %s\nData: %s", $httpRC, $data);
             try {
                 $xml=simplexml_load_string($data);
-                $errMsg = "Erro na chamada da API:\n";
-                foreach( $xml->error as $err ){
-                    $errMsg .= $err."\n";
-                }
+                $errMsg = "Erro na chamada da API:\n".print_r($xml->error, true);
             } catch(Exception $ex) {
             }
             throw new invalidargumentexception( $errMsg );

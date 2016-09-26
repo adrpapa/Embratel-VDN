@@ -200,6 +200,7 @@ class job extends \APS\ResourceBase {
                 $fnparts = explode('/',$vod->input_URI);
                 $vodFileName = $fnparts[count($fnparts)-1];
                 if( in_array($vodFileName, $names)  ) {
+                    \APS\LoggerRegistry::get()->info("Found duplicate content:\n".print_r($vod,true));
                     $dupnames[] = $vodFileName;
                 }
             }
@@ -210,8 +211,9 @@ class job extends \APS\ResourceBase {
                 }
                 $fnparts = explode('/',$job->input_URI);
                 $jobFileName = $fnparts[count($fnparts)-1];
-                if( in_array($vodFileName, $names)  ) {
-                    if( $job->state != 'error' & $job->state != 'cancelled'){
+                if( in_array($jobFileName, $names)  ) {
+                    if( $job->state != 'error' & $job->state != 'cancelled' & $job->state != 'complete'){
+                        \APS\LoggerRegistry::get()->info("Found duplicate content:\n".print_r($job,true));
                         $dupnames[] = $jobFileName;
                     }
                 }
@@ -241,11 +243,11 @@ class job extends \APS\ResourceBase {
                 $job->screen_format  = $this->screen_format;
                 $job->premium        = $this->premium;
                 $job->https          = $this->https;
-                \APS\LoggerRegistry::get()->info ("Provisioning new Job  for content $job->input_URI");
+                \APS\LoggerRegistry::get()->info ("Dynamically creating new Job for content $job->input_URI");
                 $apsc2->linkResource($context, 'jobs', $job);
             }
         }
-        \APS\LoggerRegistry::get()->info("Provisionning Client: $clientid Job Input: ".$this->input_URI);
+        \APS\LoggerRegistry::get()->info("Provisioning Client: $clientid Job Input: ".$this->input_URI);
         $presets = new Presets();
         for($i=0;$i<count($this->resolutions);$i++ ) {
             $presets->addPreset(new Preset($this->resolutions[$i],
@@ -275,7 +277,7 @@ class job extends \APS\ResourceBase {
         \APS\LoggerRegistry::get()->info("job_name:" . $this->job_name );
         \APS\LoggerRegistry::get()->info("state:" . $this->state );
         \APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
-        \APS\LoggerRegistry::get()->info("<-- Fim Provisionando Job");
+        \APS\LoggerRegistry::get()->info("<-- Job Provisionado assincronamente");
         throw new \Rest\Accepted($this, "Job Submitted", 10); // Return "202 Accepted"
     }
 
@@ -312,7 +314,6 @@ class job extends \APS\ResourceBase {
         $content = DeltaContents::getContentsFromJob($this->job_id);
 
         $vod = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/vod/1.0");
-        
         $vod->content_id            = $content->id;
         $fname = explode('.',$content->fileName);
         array_pop($fname);
@@ -335,12 +336,13 @@ class job extends \APS\ResourceBase {
         $vod->video_bitrates        = $this->video_bitrates;
         $vod->audio_bitrates        = $this->audio_bitrates;
 
-        \APS\LoggerRegistry::get()->info ("Provisioning new VOD with link to context\n");
+        \APS\LoggerRegistry::get()->info ("Provisioning new VOD with link to context with data:\n".print_r($vod,true));
         $apsc = \APS\Request::getController();
         $apsc2 = $apsc->impersonate($this);
         $context = $apsc2->getResource($this->context->aps->id);
-        $apsc->linkResource($context, 'vods', $vod);
+        $apsc2->linkResource($context, 'vods', $vod);
         JobVOD::archive($this->job_id);
+        \APS\LoggerRegistry::get()->info ("Finished provisioning new VOD with link to context for job number $this->job_id");
         return;
     }
 
@@ -364,7 +366,7 @@ class job extends \APS\ResourceBase {
             JobVOD::archive($this->job_id);
         } catch (Exception $fault) {
             \APS\LoggerRegistry::get()->info("Error while deleting content job, :\n\t" . $fault->getMessage());
-            throw new Exception($fault->getMessage());
+//             throw new Exception($fault->getMessage());
         }
         
         \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para job %s",

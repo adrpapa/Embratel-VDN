@@ -188,10 +188,9 @@ class vod extends \APS\ResourceBase {
         }
         $logger->info("Creating new CDN for Delivery service: $ds_name content: $this->content_name");
 
-        $apsc = \APS\Request::getController();
-        $apsc2 = $apsc->impersonate($this);
-        $context = $apsc2->getResource($this->context->aps->id);
+        $logger->info("Intantiating CDN");
         $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/cdn/1.0");
+        $logger->info("Setting CDN Properties");
         $cdn->name = $cdnName;
         $cdn->description = $cdnName;
         $cdn->alias = $alias;
@@ -199,6 +198,12 @@ class vod extends \APS\ResourceBase {
         $cdn->origin_path = $originPath;
         $cdn->https = $this->https;
         $cdn->live = "false";
+        $logger->info("Creating CDN with values: \n".print_r($cdn,true));
+        $apsc = \APS\Request::getController();
+        $apsc2 = $apsc->impersonate($this);
+        $logger->info("Obtaininig context resource");
+        $context = $apsc2->getResource($this->context->aps->id);
+        $logger->info("Linking context with newly created cdn");
         $apsc2->linkResource($context, 'cdns', $cdn);
         $logger->info(sprintf("Finalizando provisionamento do conteudo %s-%s da subscrição %s",
                 $this->content_id, $this->content_name, $clientName));
@@ -207,6 +212,7 @@ class vod extends \APS\ResourceBase {
     public function getUsage(){
         $logger = $this->getLogger();
         $clientName = formatClientID($this->context);
+
         $proto = $this->https ? "https" : "http";
         try{
             $logger->debug("Obtendo usage do delta via ssh");

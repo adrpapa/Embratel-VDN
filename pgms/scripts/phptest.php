@@ -24,6 +24,7 @@ foreach($arrCount as $key => $value) {
         print("Values $key has $value values\n");
         }
     }
-print_r();
+
+echo "Caca is " .print_r($array, true);
 
 ?>

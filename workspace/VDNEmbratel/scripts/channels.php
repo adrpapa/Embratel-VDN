@@ -261,6 +261,7 @@ class channel extends \APS\ResourceBase {
         $cdn->origin_path = $originPath;
         $cdn->https = $this->https;
         $cdn->live = "true";
+        $logger->info("Creating CDN with values: \n".print_r($cdn,true));
         $apsc = \APS\Request::getController();
         $apsc2 = $apsc->impersonate($this);
         $context = $apsc2->getResource($this->context->aps->id);        
