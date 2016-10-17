@@ -17,16 +17,6 @@ msgstr "Project-Id-Version: VDNEmbratel-1.0-1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 # @generated
-#: APP-META.xml:18
-msgid "APS para suportar venda de infraestrutura para provedores de conteúdo.\n"
-"Permite configurar os back-ends:\n"
-"Elemental server - para encoding de conteúdo estático\n"
-"Elemental live - para streaming ao vivo\n"
-"Elemental delta para empacotamento\n"
-"CISCO VDN para entrega distribuída de conteúdo"
-msgstr ""
-
-# @generated
 #: ui/cdn-info.html:45
 #: ui/cdn-new-1.html:60
 #: ui/cdn-new-last.html:35
@@ -60,15 +50,15 @@ msgid "Avanced Options (additional charges may apply)"
 msgstr ""
 
 # @generated
-#: APP-META.xml:48
+#: APP-META.xml:46
 msgid "Back to Contents list"
 msgstr ""
 
 # @generated
-#: APP-META.xml:71
-#: APP-META.xml:95
-#: APP-META.xml:107
-#: APP-META.xml:113
+#: APP-META.xml:69
+#: APP-META.xml:93
+#: APP-META.xml:105
+#: APP-META.xml:111
 msgid "Back to list"
 msgstr ""
 
@@ -78,8 +68,8 @@ msgid "Base URL"
 msgstr ""
 
 # @generated
-#: APP-META.xml:103
-#: APP-META.xml:104
+#: APP-META.xml:101
+#: APP-META.xml:102
 msgid "CDN"
 msgstr ""
 
@@ -109,7 +99,7 @@ msgid "Channel Configuration"
 msgstr ""
 
 # @generated
-#: APP-META.xml:93
+#: APP-META.xml:91
 msgid "Channel Information"
 msgstr ""
 
@@ -126,20 +116,20 @@ msgid "Complete Jobs"
 msgstr ""
 
 # @generated
-#: APP-META.xml:177
-#: APP-META.xml:178
+#: APP-META.xml:180
+#: APP-META.xml:181
 msgid "Content Delivery Network"
 msgstr ""
 
 # @generated
-#: APP-META.xml:46
+#: APP-META.xml:44
 #: ui/content-info.html:41
 msgid "Content Information"
 msgstr ""
 
 # @generated
-#: APP-META.xml:44
-#: APP-META.xml:45
+#: APP-META.xml:42
+#: APP-META.xml:43
 msgid "Conteúdo"
 msgstr ""
 
@@ -158,7 +148,7 @@ msgid "Delete"
 msgstr ""
 
 # @generated
-#: APP-META.xml:111
+#: APP-META.xml:109
 msgid "Delivery Service Information"
 msgstr ""
 
@@ -195,11 +185,6 @@ msgstr ""
 # @generated
 #: ui/channel-info.html:56
 msgid "Elemental Live Information"
-msgstr ""
-
-# @generated
-#: APP-META.xml:17
-msgid "Elemental Server/Live/Delta plugin for parallels"
 msgstr ""
 
 # @generated
@@ -286,7 +271,7 @@ msgid "IP or FQDN from origin server that will provide the content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:28
+#: APP-META.xml:26
 msgid "Initial release."
 msgstr ""
 
@@ -337,7 +322,7 @@ msgid "Job Id"
 msgstr ""
 
 # @generated
-#: APP-META.xml:69
+#: APP-META.xml:67
 msgid "Job Information"
 msgstr ""
 
@@ -353,8 +338,8 @@ msgid "Job __jobname__ cannot be cancelled\n"
 msgstr ""
 
 # @generated
-#: APP-META.xml:55
-#: APP-META.xml:56
+#: APP-META.xml:53
+#: APP-META.xml:54
 msgid "Jobs"
 msgstr ""
 
@@ -365,13 +350,13 @@ msgid "Just In Time Encryption of content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:79
+#: APP-META.xml:77
 #: ui/cdns.html:39
 msgid "Live"
 msgstr ""
 
 # @generated
-#: APP-META.xml:80
+#: APP-META.xml:78
 msgid "Live Channels"
 msgstr ""
 
@@ -383,6 +368,13 @@ msgstr ""
 # @generated
 #: ui/cdn-info.html:92
 msgid "Live Transmission"
+msgstr ""
+
+# @generated
+#: APP-META.xml:18
+msgid "Live and On-demand(VOD) video transcoding and distribution solution \n"
+"allowing multiple streaming protocols (HLS, HDS, Smooth Streaming e DASH) \n"
+"using content distribution network (CDN) for the internet."
 msgstr ""
 
 # @generated
@@ -434,13 +426,13 @@ msgid "New"
 msgstr ""
 
 # @generated
-#: APP-META.xml:81
+#: APP-META.xml:79
 #: ui/channels.html:53
 msgid "New Channel"
 msgstr ""
 
 # @generated
-#: APP-META.xml:105
+#: APP-META.xml:103
 msgid "New Delivery Service"
 msgstr ""
 
@@ -548,7 +540,7 @@ msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will b
 msgstr ""
 
 # @generated
-#: APP-META.xml:87
+#: APP-META.xml:85
 msgid "Review"
 msgstr ""
 
@@ -622,7 +614,7 @@ msgid "Submit Date"
 msgstr ""
 
 # @generated
-#: APP-META.xml:57
+#: APP-META.xml:55
 msgid "Submit New Content"
 msgstr ""
 
@@ -644,7 +636,7 @@ msgid "This is the path from content origin. It is used to redefine the CDN URL.
 msgstr ""
 
 # @generated
-#: APP-META.xml:63
+#: APP-META.xml:61
 #: ui/js/videoparams.js:147
 msgid "Transcoder Parameters"
 msgstr ""
@@ -674,56 +666,62 @@ msgid "Username (optional)"
 msgstr ""
 
 # @generated
-#: APP-META.xml:39
+#: APP-META.xml:37
+#: APP-META.xml:147
 msgid "VDN"
 msgstr ""
 
 # @generated
-#: APP-META.xml:138
+#: APP-META.xml:136
 msgid "VDN  Embratel  global configuration variables"
 msgstr ""
 
 # @generated
-#: APP-META.xml:145
+#: APP-META.xml:143
 msgid "VDN  Embratel Management"
 msgstr ""
 
 # @generated
-#: APP-META.xml:137
+#: APP-META.xml:135
 msgid "VDN  Embratel globals"
 msgstr ""
 
 # @generated
-#: APP-META.xml:161
-#: APP-META.xml:162
+#: APP-META.xml:164
+#: APP-META.xml:165
 msgid "VDN Content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:146
+#: APP-META.xml:144
 msgid "VDN Embratel environment"
 msgstr ""
 
 # @generated
-#: APP-META.xml:169
-#: APP-META.xml:170
+#: APP-META.xml:172
+#: APP-META.xml:173
 msgid "VDN Job"
 msgstr ""
 
 # @generated
-#: APP-META.xml:153
-#: APP-META.xml:154
+#: APP-META.xml:156
+#: APP-META.xml:157
 msgid "VDN Live Channels"
 msgstr ""
 
 # @generated
-#: APP-META.xml:43
+#: APP-META.xml:41
 msgid "VOD"
 msgstr ""
 
 # @generated
 #: ui/js/videoparams.js:110
 msgid "Video Bit Rate"
+msgstr ""
+
+# @generated
+#: APP-META.xml:17
+msgid "Video Delivery Network (VDN)"
 msgstr ""
 
 # @generated

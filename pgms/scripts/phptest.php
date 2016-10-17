@@ -27,4 +27,6 @@ foreach($arrCount as $key => $value) {
 
 echo "Caca is " .print_r($array, true);
 
+$data="logs/vods".date("Ymd").".log";
+echo $data."\n";
 ?>

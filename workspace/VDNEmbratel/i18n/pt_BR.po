@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDNEmbratel-1.0-1nReport-Msgid-Bugs-To:\n"
 "POT-Creation-Date: 2016-07-26 13:14-0300\n"
-"PO-Revision-Date: 2016-09-26 17:35-0300\n"
+"PO-Revision-Date: 2016-10-14 15:37-0300\n"
 "Language-Team: Portuguese <EMAIL@ADDRESS>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -15,23 +15,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Last-Translator: \n"
 "X-Generator: Poedit 1.8.5\n"
-
-# @generated
-#: APP-META.xml:18
-msgid ""
-"APS para suportar venda de infraestrutura para provedores de conteúdo.\n"
-"Permite configurar os back-ends:\n"
-"Elemental server - para encoding de conteúdo estático\n"
-"Elemental live - para streaming ao vivo\n"
-"Elemental delta para empacotamento\n"
-"CISCO VDN para entrega distribuída de conteúdo"
-msgstr ""
-"APS para suportar venda de infraestrutura para provedores de conteúdo.\n"
-"Permite configurar os back-ends:\n"
-"Elemental server - para encoding de conteúdo estático\n"
-"Elemental live - para streaming ao vivo\n"
-"Elemental delta para empacotamento\n"
-"CISCO VDN para entrega distribuída de conteúdo"
 
 # @generated
 #: ui/cdn-info.html:45 ui/cdn-new-1.html:60 ui/cdn-new-last.html:35
@@ -64,12 +47,12 @@ msgid "Avanced Options (additional charges may apply)"
 msgstr "Opções Avançadas (ATENÇÃO: Pode incidir cobrança adicional)"
 
 # @generated
-#: APP-META.xml:48
+#: APP-META.xml:46
 msgid "Back to Contents list"
 msgstr "Voltar para lista de conteúdo"
 
 # @generated
-#: APP-META.xml:71 APP-META.xml:95 APP-META.xml:107 APP-META.xml:113
+#: APP-META.xml:69 APP-META.xml:93 APP-META.xml:105 APP-META.xml:111
 msgid "Back to list"
 msgstr "Volta à lista"
 
@@ -79,7 +62,7 @@ msgid "Base URL"
 msgstr "URL Base"
 
 # @generated
-#: APP-META.xml:103 APP-META.xml:104
+#: APP-META.xml:101 APP-META.xml:102
 msgid "CDN"
 msgstr "CDN"
 
@@ -109,7 +92,7 @@ msgid "Channel Configuration"
 msgstr "Configuração do Canal"
 
 # @generated
-#: APP-META.xml:93
+#: APP-META.xml:91
 msgid "Channel Information"
 msgstr "Informação do Canal"
 
@@ -124,17 +107,17 @@ msgid "Complete Jobs"
 msgstr "Tarefas Encerradas"
 
 # @generated
-#: APP-META.xml:177 APP-META.xml:178
+#: APP-META.xml:180 APP-META.xml:181
 msgid "Content Delivery Network"
 msgstr "Content Delivery Network"
 
 # @generated
-#: APP-META.xml:46 ui/content-info.html:41
+#: APP-META.xml:44 ui/content-info.html:41
 msgid "Content Information"
 msgstr "Informações do Conteúdo"
 
 # @generated
-#: APP-META.xml:44 APP-META.xml:45
+#: APP-META.xml:42 APP-META.xml:43
 msgid "Conteúdo"
 msgstr "Conteúdo"
 
@@ -149,7 +132,7 @@ msgid "Delete"
 msgstr "Remover"
 
 # @generated
-#: APP-META.xml:111
+#: APP-META.xml:109
 msgid "Delivery Service Information"
 msgstr "Detalhes do Serviço de Entrega (Delivery Service)"
 
@@ -183,11 +166,6 @@ msgstr "Tempo"
 #: ui/channel-info.html:56
 msgid "Elemental Live Information"
 msgstr "Detalhes do Evento"
-
-# @generated
-#: APP-META.xml:17
-msgid "Elemental Server/Live/Delta plugin for parallels"
-msgstr "Elemental Server/Live/Delta plugin for parallels"
 
 # @generated
 #: APP-META.xml:9
@@ -269,7 +247,7 @@ msgid "IP or FQDN from origin server that will provide the content"
 msgstr "IP ou FQDN do servidor origem para provisionamento de conteúdo"
 
 # @generated
-#: APP-META.xml:28
+#: APP-META.xml:26
 msgid "Initial release."
 msgstr "Release inicial"
 
@@ -314,7 +292,7 @@ msgid "Job Id"
 msgstr "ID do Job"
 
 # @generated
-#: APP-META.xml:69
+#: APP-META.xml:67
 msgid "Job Information"
 msgstr "Informação do Job"
 
@@ -333,7 +311,7 @@ msgstr ""
 "__errmsg__ "
 
 # @generated
-#: APP-META.xml:55 APP-META.xml:56
+#: APP-META.xml:53 APP-META.xml:54
 msgid "Jobs"
 msgstr "Jobs"
 
@@ -343,12 +321,12 @@ msgid "Just In Time Encryption of content"
 msgstr "Criptografia em tempo real do conteúdo (JIT Encryption)"
 
 # @generated
-#: APP-META.xml:79 ui/cdns.html:39
+#: APP-META.xml:77 ui/cdns.html:39
 msgid "Live"
 msgstr "Live"
 
 # @generated
-#: APP-META.xml:80
+#: APP-META.xml:78
 msgid "Live Channels"
 msgstr "Canais Live"
 
@@ -361,6 +339,14 @@ msgstr "ID do Evento Live"
 #: ui/cdn-info.html:92
 msgid "Live Transmission"
 msgstr "Transmissão ao Vivo"
+
+# @generated
+#: APP-META.xml:18
+msgid ""
+"Live and On-demand(VOD) video transcoding and distribution solution \n"
+"allowing multiple streaming protocols (HLS, HDS, Smooth Streaming e DASH) \n"
+"using content distribution network (CDN) for the internet."
+msgstr "Solução de transcodificação e distribuição de vídeos - LIVE ou VOD - usando protocolos de streaming (HLS, HDS, Smooth Streaming e DASH) via rede de distribuição de conteúdo (CDN) pela internet."
 
 # @generated
 #: ui/cdn-new-last.html:41
@@ -400,12 +386,12 @@ msgid "New"
 msgstr "Novo"
 
 # @generated
-#: APP-META.xml:81 ui/channels.html:53
+#: APP-META.xml:79 ui/channels.html:53
 msgid "New Channel"
 msgstr "Criar Novo Canal"
 
 # @generated
-#: APP-META.xml:105
+#: APP-META.xml:103
 msgid "New Delivery Service"
 msgstr "Novo Serviço de Entrega (Delivery Service)"
 
@@ -525,7 +511,7 @@ msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will b
 msgstr "Confirme a Resolução, Frame Rate, Bit Rate de Vídeo e Bit Rate de Áudio que serão usados na transcodificação"
 
 # @generated
-#: APP-META.xml:87
+#: APP-META.xml:85
 msgid "Review"
 msgstr "Revisar Configuraçoes"
 
@@ -592,7 +578,7 @@ msgid "Submit Date"
 msgstr "Data de Início"
 
 # @generated
-#: APP-META.xml:57
+#: APP-META.xml:55
 msgid "Submit New Content"
 msgstr "Enviar Conteúdo"
 
@@ -612,7 +598,7 @@ msgid "This is the path from content origin. It is used to redefine the CDN URL.
 msgstr "Informe a porção do caminho (path) de sua origem de dados (esta porção do caminho será suprimida da URL final do CDN)"
 
 # @generated
-#: APP-META.xml:63 ui/js/videoparams.js:147
+#: APP-META.xml:61 ui/js/videoparams.js:147
 msgid "Transcoder Parameters"
 msgstr "Parametros de Transcodificação"
 
@@ -638,47 +624,47 @@ msgid "Username (optional)"
 msgstr "Usuário"
 
 # @generated
-#: APP-META.xml:39
+#: APP-META.xml:37 APP-META.xml:147
 msgid "VDN"
 msgstr "VDN"
 
 # @generated
-#: APP-META.xml:138
+#: APP-META.xml:136
 msgid "VDN  Embratel  global configuration variables"
 msgstr "Variáveis Globais"
 
 # @generated
-#: APP-META.xml:145
+#: APP-META.xml:143
 msgid "VDN  Embratel Management"
 msgstr "Gerenciamento VDN"
 
 # @generated
-#: APP-META.xml:137
+#: APP-META.xml:135
 msgid "VDN  Embratel globals"
 msgstr "Globais VDN"
 
 # @generated
-#: APP-META.xml:161 APP-META.xml:162
+#: APP-META.xml:164 APP-META.xml:165
 msgid "VDN Content"
 msgstr "Conteúdo VDN"
 
 # @generated
-#: APP-META.xml:146
+#: APP-META.xml:144
 msgid "VDN Embratel environment"
 msgstr "Ambiente VDN"
 
 # @generated
-#: APP-META.xml:169 APP-META.xml:170
+#: APP-META.xml:172 APP-META.xml:173
 msgid "VDN Job"
 msgstr "Job"
 
 # @generated
-#: APP-META.xml:153 APP-META.xml:154
+#: APP-META.xml:156 APP-META.xml:157
 msgid "VDN Live Channels"
 msgstr "Live"
 
 # @generated
-#: APP-META.xml:43
+#: APP-META.xml:41
 msgid "VOD"
 msgstr "VOD"
 
@@ -686,6 +672,11 @@ msgstr "VOD"
 #: ui/js/videoparams.js:110
 msgid "Video Bit Rate"
 msgstr "Bit Rate de Vídeo"
+
+# @generated
+#: APP-META.xml:17
+msgid "Video Delivery Network (VDN)"
+msgstr "Video Delivery Network (VDN)"
 
 # @generated
 #: ui/js/videoparams.js:144

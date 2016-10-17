@@ -3,7 +3,7 @@
     <id>http://embratel.com.br/app/VDNEmbratel</id>
     <name>VDNEmbratel</name>
     <version>2.0</version>
-    <release>3</release>
+    <release>3.1</release>
     <homepage>http://embratel.com.br/app/VDNEmbratel</homepage>
     <vendor>
         <name>Embratel</name>
@@ -14,14 +14,12 @@
         <homepage>https://flts.com.br</homepage>
     </packager>
     <presentation>
-        <summary>Elemental Server/Live/Delta plugin for parallels</summary>
-        <description>APS para suportar venda de infraestrutura para provedores de conteúdo.
-Permite configurar os back-ends:
-Elemental server - para encoding de conteúdo estático
-Elemental live - para streaming ao vivo
-Elemental delta para empacotamento
-CISCO VDN para entrega distribuída de conteúdo
-</description>
+        <summary>Video Delivery Network (VDN)</summary>
+        <description>
+Live and On-demand(VOD) video transcoding and distribution solution 
+allowing multiple streaming protocols (HLS, HDS, Smooth Streaming e DASH) 
+using content distribution network (CDN) for the internet.
+        </description>
         <icon path="images/icon.png" />
         <changelog>
             <version release="1" version="1.ß0">
@@ -144,6 +142,11 @@ CISCO VDN para entrega distribuída de conteúdo
         <presentation>
             <name>VDN  Embratel Management</name>
             <summary>VDN Embratel environment</summary>
+            <entry-points>
+            	<entry dst="http://embratel.com.br/app/VDNEmbratel#contents" class="aps2-view">
+            		<label>VDN</label>
+            	</entry>
+            </entry-points>
         </presentation>
     </service>
 

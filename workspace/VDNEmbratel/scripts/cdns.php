@@ -185,8 +185,7 @@ class cdn extends \APS\ResourceBase {
 #############################################################################################################################################
 
     public function provision() { 
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns.log");
+        $logger = $this->getLogger();
         $logger->info("Iniciando provisionamento do CDN... ".$this->aps->id);
         
         $custom_name   = $this->alias . "-" . getClientID($this->context);
@@ -202,21 +201,31 @@ class cdn extends \APS\ResourceBase {
         $ds=null;
         $dsgs=null;
         $rule=null;
+        $userError = "Ocorreu um erro no provisionamento do CDN";
         
         // CREATE CONTENT ORIGIN
         $origin = new ContentOrigin("co-".$custom_name,$this->origin_server,$origin_domain,$this->description);
         if ( !$origin->create() ) {
-            $logger->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
-            throw new \Exception("Can't create content origin:" . $origin->getMessage(), 501);
+            $logger->info("cdns:provisioning() Error creating Content Origin $this->origin_server: " . $origin->getMessage());
+            throw new \Rest\RestException( 500, $userError, $origin->getMessage(), "ContentOriginProvisioningError",
+	            array( "internal_name"        => $origin->internal_name,
+				       "internal_origin"      => $origin->internal_origin,
+				       "internal_fqdn"        => $origin->internal_fqdn,
+				       "internal_description" => $origin->internal_description) );
         }
+	    $originData = array( "internal_name"        => $origin->internal_name,
+				             "internal_origin"      => $origin->internal_origin,
+				             "internal_fqdn"        => $origin->internal_fqdn,
+				             "internal_description" => $origin->internal_description);
+        
         // CREATE DELIVERY SERVICE
         try {
             $logger->info("--> Creating DS");
             $ds = $this->createDeliveryService($origin, $ds_name);
             $logger->info("<-- End Creating DS");		
         } catch (Exception $fault) {
-            $logger->info("Error creating DS");
-            throw new Exception($fault->getMessage());
+            $logger->info("Error creating DS " . $fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceProvisioningError", $originData);
         }		
 
         // CREATE DELIVERY SERVICE GENERAL SETTINGS
@@ -225,8 +234,8 @@ class cdn extends \APS\ResourceBase {
             $dsgs = $this->createDeliveryServiceGenSettings($origin,$ds);
             $logger->info("<-- End General Settings DS");
         } catch (Exception $fault) {
-            $logger->info("Error creating General Settings DS");
-            throw new Exception($fault->getMessage());
+            $logger->info("Error creating General Settings DS " . $fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceSettingsProvisioningError", $originData);
         }
         
         // ASSIGN RULE TO DELIVERY SERVICE
@@ -235,8 +244,8 @@ class cdn extends \APS\ResourceBase {
             $rule = $this->asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain);
             $logger->info("<-- End Rule");
         } catch (Exception $fault) {
-            $logger->info("Error assign Rule");
-            throw new Exception($fault->getMessage());
+            $logger->info("Error assign Rule " . $fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceRuleProvisioningError", $originData);
         }		
         
         // SUCCESS: UPDATE APS RESOURCES
@@ -255,8 +264,7 @@ class cdn extends \APS\ResourceBase {
     }
 
     public function configure($new) {
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns.log");
+        $logger = $this->getLogger();
         $logger->info("Iniciando updating do CDN... ".$this->aps->id);    	 
 
         $custom_name   = $new->alias . "-" . getClientID($this->context);
@@ -306,30 +314,36 @@ class cdn extends \APS\ResourceBase {
     }
 
     public function unprovision(){
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns.log");
+        $logger = $this->getLogger();
         $logger->info("Iniciando des-provisionamento do CDN... ".$this->aps->id);
-            
-        if ( !is_null($this->delivery_service_gen_settings_id) ) {
-            $dsgs = new DeliveryServiceGenSettings();
-            $dsgs->delete( $this->delivery_service_gen_settings_id );
+        $userError = "Ocorreu um erro no desprovisionamento do CDN";
+        try {
+	        if ( !is_null($this->delivery_service_gen_settings_id) ) {
+	            $dsgs = new DeliveryServiceGenSettings();
+	            $dsgs->delete( $this->delivery_service_gen_settings_id );
+	        }
+	        
+	        if ( !is_null($this->delivery_service_id) ) {
+	            $ds = new DeliveryService();
+	            $ds->delete( $this->delivery_service_id );
+	        }
+	        
+	        if ( !is_null($this->content_origin_id) ) {
+	            $origin = new ContentOrigin();
+	            $origin->delete( $this->content_origin_id );
+	        }
+	        
+	        if ( !is_null($this->rule_url_rwr_file_id) ) {
+	            $rule = new FileMgmt();
+	            $rule->delete( $this->rule_url_rwr_file_id );    	
+	        }
+        } catch (Exception $fault){
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UnprovisioningError");
         }
-        
-        if ( !is_null($this->delivery_service_id) ) {
-            $ds = new DeliveryService();
-            $ds->delete( $this->delivery_service_id );
-        }
-        
-        if ( !is_null($this->content_origin_id) ) {
-            $origin = new ContentOrigin();
-            $origin->delete( $this->content_origin_id );
-        }
-        
-        if ( !is_null($this->rule_url_rwr_file_id) ) {
-            $rule = new FileMgmt();
-            $rule->delete( $this->rule_url_rwr_file_id );    	
-        }
-        
+
         $logger->info("<-- Fim DES-Provisionando CDN");    	    	
     }
 
@@ -339,8 +353,7 @@ class cdn extends \APS\ResourceBase {
         *********************************************************************
         */
     function createDeliveryService($origin,$custom_name) {
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns.log");
+        $logger = $this->getLogger();
         $ds = new DeliveryService($custom_name,$origin->getID(),$this->description);
         $ds->live = ($this->live ? "true":"false");
         if ( !$ds->create() ) {
@@ -367,8 +380,7 @@ class cdn extends \APS\ResourceBase {
     }
 
     function createDeliveryServiceGenSettings($origin,$ds) {
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns.log");
+        $logger = $this->getLogger();
         // CUSTOMIZE PROTOCOL: HTTP or HTTPS
         
         if ( $this->live ) return;	// Precisa confirmar isso....
@@ -392,8 +404,7 @@ class cdn extends \APS\ResourceBase {
     }
 
     function asssignRule($origin,$ds,$dsgs,$custom_name,$origin_domain) {
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns.log");
+        $logger = $this->getLogger();
         $rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
         
         if( !$rule->createUrlRewriteRule($origin_domain,$this->origin_path) ) {
@@ -422,14 +433,19 @@ class cdn extends \APS\ResourceBase {
         return $rule;
     }
 
+    private function getLogger() {
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/cdns_".date("Ymd").".log");
+        return $logger;
+    }
+
     /**
         * Update traffic usage
         * @verb(GET)
         * @path("/updateResourceUsage")
         */
     public function updateResourceUsage () {
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns.log");
+        $logger = $this->getLogger();
         $usage = array();
         $clientID = getClientID($this->context);
         $dsName = "ds-" . $this->alias . "-" . $clientID;

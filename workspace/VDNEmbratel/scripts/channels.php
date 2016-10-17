@@ -215,75 +215,83 @@ class channel extends \APS\ResourceBase {
 #############################################################################################################################################
 
     public function provision() { 
-        $logger = getLogger("channels.log");
-        $logger->info("Iniciando provisionamento de canal ".$this->aps->id);
-        $clientid = formatClientID($this->context);
-
-        foreach( $this->context->channels as $channel ) {
-            if( $channel->name == $this->name 
-               && $channel->aps->id != $this->aps->id ) {
-                throw new Exception(_("Live Channel with this name already exists. Please use a different name"));
-            }
+        $logger = $this->getLogger();
+		try {
+	        $logger->info("Iniciando provisionamento de canal ".$this->aps->id);
+	        $clientid = formatClientID($this->context);
+	
+	        foreach( $this->context->channels as $channel ) {
+	            if( $channel->name == $this->name 
+	               && $channel->aps->id != $this->aps->id ) {
+	               	$userError="Canal com nome: $this->name já existe. Favor informar um nome de canal diferente.";
+	                throw new \Rest\RestException(500, $userError, $userError);
+	            }
+	        }
+	
+	        $level = ($this->premium ? 'prm' : 'std');
+	        $presets = new Presets();
+	        for($i=0;$i<count($this->resolutions);$i++ ) {
+	            $presets->addPreset(new Preset($this->resolutions[$i],
+	                    $this->video_bitrates[$i],$this->framerates[$i],
+	                    $this->audio_bitrates[$i]),$i);
+	        }
+	
+	        $event = LiveEvent::newLiveEvent( $this->name, $clientid, $level, $presets );
+	        
+	        $this->live_event_id = $event->id;
+	        $this->live_event_name = $event->name;
+	        $this->state = $this->pendingState();
+	        $this->input_URI =  $event->inputURI; 
+	        $this->live_node = $event->live_node;
+	        $this->input_filter_id = $event->inputFilterID;
+	        $this->start_encoding_time = null;
+	        $this->accum_encoding_time = 0;
+	        $this->last_reported_encoding_time = 0;
+	
+	        $axName = cleanName($this->name);
+	        $proto = $this->https ? "https" : "http";
+	        $cdnName = sprintf("%s_%s",formatClientID($this->context),$axName);
+	        $this->cdn_origin_server = sprintf("l%d%s.origemcdn.embratelcloud.com.br",
+	                                $this->context->account->id,$axName);
+	        $originPath = sprintf("out/u/%s",formatClientID($this->context));
+	
+	        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/cdn/1.0");
+	        $cdn->name = $cdnName;
+	        $cdn->description = $cdnName;
+	        $cdn->alias = $axName;
+	        $cdn->origin_server = $this->cdn_origin_server;
+	        $cdn->origin_path = $originPath;
+	        $cdn->https = $this->https;
+	        $cdn->live = "true";
+	        $logger->info("Creating CDN with values: \n".print_r($cdn,true));
+	        $apsc = \APS\Request::getController();
+	        $apsc2 = $apsc->impersonate($this);
+	        $context = $apsc2->getResource($this->context->aps->id);        
+	        $cdnxml = $apsc2->linkResource($context, 'cdns', $cdn);
+	    
+	        foreach( $this->context->cdns as $cdn2 ) {
+	            if( $cdn2->origin_server == $cdn->origin_server) {
+	                $this->cdn_routing_domain = $cdn2->origin_domain;
+	                $this->cdn_aps_id = $cdn2->aps->id;
+	                $logger->info("Found routing domain ");
+	                break;
+	            }
+	        }
+	
+	        $logger->info("Finished provisionning event ID:" . $this->live_event_id );
+	        $logger->info("\tlive_event_id:" . $this->live_event_id );
+	        $logger->info("\tlive_event_name:" . $this->live_event_name );
+	        $logger->info("\tstate:" . $this->state );
+	        $logger->info("\tcdn_origin_server:" . $this->cdn_origin_server );
+	        $logger->info("\tinput_URI:" . $this->input_URI );
+	        $logger->info("\tlive_node:" . $this->live_node );
+        } catch (Exception $fault){
+        	$userError = "Erro no provisionamento do canal";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"ProvisioningError");
         }
-
-        $level = ($this->premium ? 'prm' : 'std');
-        $presets = new Presets();
-        for($i=0;$i<count($this->resolutions);$i++ ) {
-            $presets->addPreset(new Preset($this->resolutions[$i],
-                    $this->video_bitrates[$i],$this->framerates[$i],
-                    $this->audio_bitrates[$i]),$i);
-        }
-
-        $event = LiveEvent::newLiveEvent( $this->name, $clientid, $level, $presets );
-        
-        $this->live_event_id = $event->id;
-        $this->live_event_name = $event->name;
-        $this->state = $this->pendingState();
-        $this->input_URI =  $event->inputURI; 
-        $this->live_node = $event->live_node;
-        $this->input_filter_id = $event->inputFilterID;
-        $this->start_encoding_time = null;
-        $this->accum_encoding_time = 0;
-        $this->last_reported_encoding_time = 0;
-
-        $axName = cleanName($this->name);
-        $proto = $this->https ? "https" : "http";
-        $cdnName = sprintf("%s_%s",formatClientID($this->context),$axName);
-        $this->cdn_origin_server = sprintf("l%d%s.origemcdn.embratelcloud.com.br",
-                                $this->context->account->id,$axName);
-        $originPath = sprintf("out/u/%s",formatClientID($this->context));
-
-        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/cdn/1.0");
-        $cdn->name = $cdnName;
-        $cdn->description = $cdnName;
-        $cdn->alias = $axName;
-        $cdn->origin_server = $this->cdn_origin_server;
-        $cdn->origin_path = $originPath;
-        $cdn->https = $this->https;
-        $cdn->live = "true";
-        $logger->info("Creating CDN with values: \n".print_r($cdn,true));
-        $apsc = \APS\Request::getController();
-        $apsc2 = $apsc->impersonate($this);
-        $context = $apsc2->getResource($this->context->aps->id);        
-        $cdnxml = $apsc2->linkResource($context, 'cdns', $cdn);
-    
-        foreach( $this->context->cdns as $cdn2 ) {
-            if( $cdn2->origin_server == $cdn->origin_server) {
-                $this->cdn_routing_domain = $cdn2->origin_domain;
-                $this->cdn_aps_id = $cdn2->aps->id;
-                $logger->info("Found routing domain ");
-                break;
-            }
-        }
-
-        $logger->info("Finished provisionning event ID:" . $this->live_event_id );
-        $logger->info("\tlive_event_id:" . $this->live_event_id );
-        $logger->info("\tlive_event_name:" . $this->live_event_name );
-        $logger->info("\tstate:" . $this->state );
-        $logger->info("\tcdn_origin_server:" . $this->cdn_origin_server );
-        $logger->info("\tinput_URI:" . $this->input_URI );
-        $logger->info("\tlive_node:" . $this->live_node );
-        
     }
     public function provisionAsync() {
         return;
@@ -294,87 +302,101 @@ class channel extends \APS\ResourceBase {
     }
     
     public function upgrade(){
-        $logger = getLogger("channels.log");
+        $logger = $this->getLogger();
         $logger->info("Entrando na função upgrade de canal");
 
     }
 
     public function unprovision(){
-        $logger=getLogger("channels.log");
-        $logger->info(sprintf("Iniciando desprovisionamento para evento %s-%s",
-            $this->live_event_id, $this->live_event_name));
-
-        $logger->info(sprintf("Excluindo LiveEvent %s",$this->live_event_id));
-        try {
-            LiveEvent::delete($this->live_event_id);
+        $logger = $this->getLogger();
+		try {
+	        $logger->info(sprintf("Iniciando desprovisionamento para evento %s-%s",
+	            $this->live_event_id, $this->live_event_name));
+	
+	        $logger->info(sprintf("Excluindo LiveEvent %s",$this->live_event_id));
+	        try {
+	            LiveEvent::delete($this->live_event_id);
+	        } catch (Exception $fault){
+	            $logger->error("Erro na exclusão do Live Event:\n");
+	            $logger->error($fault->getMessage());
+	        }
+	
+	        try {
+	            $logger->info(sprintf("Excluindo CDN %s",$this->cdn_aps_id));
+	            $apsc = \APS\Request::getController();
+	            $apsc2 = $apsc->impersonate($this);
+	            $cdn = $apsc2->getResource($this->cdn_aps_id);        
+	            $apsc2->unprovisionResource($cdn);
+	        } catch (Exception $fault){
+	            $logger->error("Erro na exclusão do CDN:\n");
+	            $logger->error($fault->getMessage());
+	        }
+	
+	        try {
+	            if( $this->content_id != null ){
+	                $logger->info(sprintf("Excluindo Content %s",$this->content_id));
+	                DeltaContents::delete($this->content_id);
+	            }
+	        } catch (Exception $fault){
+	            $logger->error("Erro na exclusão do Content:\n");
+	            $logger->error($fault->getMessage());
+	        }
+	
+	        try {
+	            $logger->info(sprintf("Excluindo Input Filter %s",$this->input_filter_id));
+	            DeltaInputFilter::delete($this->input_filter_id);
+	        } catch (Exception $fault){
+	            $logger->error("Erro na exclusão do Input Filter:\n");
+	            $logger->error($fault->getMessage());
+	        }
+	        
+	        $logger->info(sprintf("Fim desprovisionamento para evento %s",
+	                $this->live_event_id));
         } catch (Exception $fault){
-            $logger->error("Erro na exclusão do Live Event:\n");
+        	$userError = "Erro no desprovisionamento do canal";
+            $logger->error($userError);
             $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UnprovisioningError");
         }
-
-        try {
-            $logger->info(sprintf("Excluindo CDN %s",$this->cdn_aps_id));
-            $apsc = \APS\Request::getController();
-            $apsc2 = $apsc->impersonate($this);
-            $cdn = $apsc2->getResource($this->cdn_aps_id);        
-            $apsc2->unprovisionResource($cdn);
-        } catch (Exception $fault){
-            $logger->error("Erro na exclusão do CDN:\n");
-            $logger->error($fault->getMessage());
-        }
-
-        try {
-            if( $this->content_id != null ){
-                $logger->info(sprintf("Excluindo Content %s",$this->content_id));
-                DeltaContents::delete($this->content_id);
-            }
-        } catch (Exception $fault){
-            $logger->error("Erro na exclusão do Content:\n");
-            $logger->error($fault->getMessage());
-        }
-
-        try {
-            $logger->info(sprintf("Excluindo Input Filter %s",$this->input_filter_id));
-            DeltaInputFilter::delete($this->input_filter_id);
-        } catch (Exception $fault){
-            $logger->error("Erro na exclusão do Input Filter:\n");
-            $logger->error($fault->getMessage());
-        }
-        
-        $logger->info(sprintf("Fim desprovisionamento para evento %s",
-                $this->live_event_id));
     }
 
     public function configure($new) {
-    	$logger = getLogger("channels.log");
-        $event = LiveEvent::getStatus($this->live_event_id);
-        
-        $logger->info (sprintf("Channel %s with state %s was requested to %s",
-                $this->live_event_id,  $this->state, $new->request));
-        
-        switch( $new->request ){
-            case 'stop':
-                if( $event->status == 'running') {
-                    $elapsed = $this->getElapsedEncodingTime();
-                    $logger->info("Stopping event $this->live_event_id Elapsed time: $elapsed accum time = $this->accum_encoding_time");
-                    $this->accum_encoding_time += $elapsed;
-                    $this->start_encoding_time = null;
-                    $logger->info("New accum time for event $this->live_event_id = $this->accum_encoding_time");
-                    LiveEvent::stop($this->live_event_id);
-                    $this->state = "stopping";
-                }
-                break;
-            case 'start':
-                if( $event->status[0] != 'running') {
-                    $logger->info("Starting event $this->live_event_id");
-                    LiveEvent::start($this->live_event_id);
-                    $this->state = "starting";
-                }
-                break;
-            otherwise:
-                $this->state = $event->status."";
-                break;
-//          não tem atributos a alterar no original      $this->_copy($new);
+        $logger = $this->getLogger();
+		try {
+	        $event = LiveEvent::getStatus($this->live_event_id);
+	        
+	        $logger->info (sprintf("Channel %s with state %s was requested to %s",
+	                $this->live_event_id,  $this->state, $new->request));
+	        
+	        switch( $new->request ){
+	            case 'stop':
+	                if( $event->status == 'running') {
+	                    $elapsed = $this->getElapsedEncodingTime();
+	                    $logger->info("Stopping event $this->live_event_id Elapsed time: $elapsed accum time = $this->accum_encoding_time");
+	                    $this->accum_encoding_time += $elapsed;
+	                    $this->start_encoding_time = null;
+	                    $logger->info("New accum time for event $this->live_event_id = $this->accum_encoding_time");
+	                    LiveEvent::stop($this->live_event_id);
+	                    $this->state = "stopping";
+	                }
+	                break;
+	            case 'start':
+	                $logger->info("Starting event $this->live_event_id");
+	                LiveEvent::start($this->live_event_id);
+	                $this->state = "starting";
+	                break;
+	            otherwise:
+	                $this->state = $event->status."";
+	                break;
+	//          não tem atributos a alterar no original      $this->_copy($new);
+	        }
+        } catch (Exception $fault){
+        	$userError = "Erro na configuração do canal";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UnprovisioningError");
         }
     }
 
@@ -390,7 +412,7 @@ class channel extends \APS\ResourceBase {
      * @returns {object}
      */
     public function updateChannelStatus () {
-        $logger = getLogger("channels.log");
+        $logger = $this->getLogger();
         $logger->info("Called updateChannelStatus for event id=".$this->live_event_id.". Current status = ".$this->state);
         $event = LiveEvent::getStatus($this->live_event_id);
         $logger->info("Elemental Live status for event id=".$this->live_event_id.
@@ -398,8 +420,10 @@ class channel extends \APS\ResourceBase {
 
         $this->state = $event->status.'';
         if( count($event->created_at) < 1 ){
-            $logger->info("live event:" . $this->live_event_id." has not received input yet" );
-            $this->state = $this->pendingState();
+        	if( $this->state == "running" ) {
+	            $logger->info("live event:" . $this->live_event_id." has not received input yet" );
+	            $this->state = $this->pendingState();
+        	}
         }
         else {
             if( $this->content_id == null ) {
@@ -424,13 +448,23 @@ class channel extends \APS\ResourceBase {
      * Calcula o tempo que o evento esta running
      */
     private function getElapsedEncodingTime(){
+        $logger = $this->getLogger();
         if( $this->state != 'running' || $this->start_encoding_time == null ){
+        	$logger->info("Called getElapsedEncodingTime for live event $this->live_event_id which is not started yet :(");
             return 0;
         }
+        $logger->info("Obtaining Elapsed encoding time for live event id $this->live_event_id started $this->start_encoding_time at ".date('c'));
         $creationTime = DateTime::createFromFormat("Y-m-d\TH:i:sT",$this->start_encoding_time);
         $now = new DateTime();
         $interval = ($now->getTimestamp() - $creationTime->getTimestamp()) / 60;
+        $logger->info("Elapsed encoding time for live event id $this->live_event_id is $interval minutes");
         return $interval;
+    }
+
+    private function getLogger() {
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/cdns_".date("Ymd").".log");
+        return $logger;
     }
     
     /**
@@ -439,7 +473,7 @@ class channel extends \APS\ResourceBase {
         * @path("/updateLiveUsage")
         */
     public function updateLiveUsage () {
-        $logger = getLogger("channels.log");
+        $logger = $this->getLogger();
         $logger->debug("Called updateLiveUsage for event id=".$this->live_event_id);
         $this->updateChannelStatus();
         $currentEncodingTime = $this->accum_encoding_time + round($this->getElapsedEncodingTime());

@@ -183,109 +183,117 @@ class job extends \APS\ResourceBase {
     #############################################################################################################################################
     ## Definition of the functions that will respond to the different CRUD operations
     #############################################################################################################################################
-    public function provision() { 
-        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
-        \APS\LoggerRegistry::get()->info("Iniciando provisionamento de conteudo(job) ".$this->aps->id);
-        $clientid = formatClientID($this->context);
-        if( $this->input_URI == null ) {
-            $names = array();
-            foreach($this->inputs as $input) {
-                $fnparts = explode('/',$input);
-                $names[] = $fnparts[count($fnparts)-1];
-            }
-
-            $dupnames = array();
-            \APS\LoggerRegistry::get()->info("Verificando duplicidade de conteúdo ".$this->aps->id);
-            foreach( $this->context->vods as $vod ) {
-                $fnparts = explode('/',$vod->input_URI);
-                $vodFileName = $fnparts[count($fnparts)-1];
-                if( in_array($vodFileName, $names)  ) {
-                    \APS\LoggerRegistry::get()->info("Found duplicate content:\n".print_r($vod,true));
-                    $dupnames[] = $vodFileName;
-                }
-            }
-            \APS\LoggerRegistry::get()->info("Verificando duplicidade de jobs");
-            foreach( $this->context->jobs as $job ) {
-                if( $this->aps->id == $job->aps->id){
-                    continue;
-                }
-                $fnparts = explode('/',$job->input_URI);
-                $jobFileName = $fnparts[count($fnparts)-1];
-                if( in_array($jobFileName, $names)  ) {
-                    if( $job->state != 'error' & $job->state != 'cancelled' & $job->state != 'complete'){
-                        \APS\LoggerRegistry::get()->info("Found duplicate content:\n".print_r($job,true));
-                        $dupnames[] = $jobFileName;
-                    }
-                }
-            }
-            if( count($dupnames) > 0 ){
-                throw new Exception(_("Contents with the following names already were submitted and should be removed before resubmission: ").implode(",", $dupnames));
-            }
-            \APS\LoggerRegistry::get()->info ("Provisionando jobs para ". count($this->inputs)." Arquivos: ");
-            
-            //O Job iniciado pelo painel pega o primeiro input
-            $this->input_URI = $this->inputs[0];
-
-            $apsc = \APS\Request::getController();
-            $apsc2 = $apsc->impersonate($this);
-            $context = $apsc2->getResource($this->context->aps->id);
-            //aqui geramos os outros jobs para cada um dos inputs
-            for( $ix=1; $ix<count($this->inputs); ++$ix) {
-                $job = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/job/2.0");
-                \APS\LoggerRegistry::get()->info ("Criando input ".$this->inputs[$ix]);
-                $job->input_URI      = $this->inputs[$ix];
-                $job->resolutions    = $this->resolutions;
-                $job->video_bitrates = $this->video_bitrates;
-                $job->framerates     = $this->framerates;
-                $job->audio_bitrates = $this->audio_bitrates;
-                $job->username       = $this->username;
-                $job->password       = $this->password;
-                $job->screen_format  = $this->screen_format;
-                $job->premium        = $this->premium;
-                $job->https          = $this->https;
-                \APS\LoggerRegistry::get()->info ("Dynamically creating new Job for content $job->input_URI");
-                $apsc2->linkResource($context, 'jobs', $job);
-            }
+    public function provision() {
+    	try {
+	        $logger = $this->getLogger();
+	        $logger->info("Iniciando provisionamento de conteudo(job) ".$this->aps->id);
+	        $clientid = formatClientID($this->context);
+	        if( $this->input_URI == null ) {
+	            $names = array();
+	            foreach($this->inputs as $input) {
+	                $fnparts = explode('/',$input);
+	                $names[] = $fnparts[count($fnparts)-1];
+	            }
+	
+	            $dupnames = array();
+	            $logger->info("Verificando duplicidade de conteúdo ".$this->aps->id);
+	            foreach( $this->context->vods as $vod ) {
+	                $fnparts = explode('/',$vod->input_URI);
+	                $vodFileName = $fnparts[count($fnparts)-1];
+	                if( in_array($vodFileName, $names)  ) {
+	                    $logger->info("Found duplicate content:\n".print_r($vod,true));
+	                    $dupnames[] = $vodFileName;
+	                }
+	            }
+	            $logger->info("Verificando duplicidade de jobs");
+	            foreach( $this->context->jobs as $job ) {
+	                if( $this->aps->id == $job->aps->id){
+	                    continue;
+	                }
+	                $fnparts = explode('/',$job->input_URI);
+	                $jobFileName = $fnparts[count($fnparts)-1];
+	                if( in_array($jobFileName, $names)  ) {
+	                    if( $job->state != 'error' & $job->state != 'cancelled' & $job->state != 'complete'){
+	                        $logger->info("Found duplicate content:\n".print_r($job,true));
+	                        $dupnames[] = $jobFileName;
+	                    }
+	                }
+	            }
+	            if( count($dupnames) > 0 ){
+	                throw new Exception(_("Contents with the following names already were submitted and should be removed before resubmission: ").implode(",", $dupnames));
+	            }
+	            $logger->info ("Provisionando jobs para ". count($this->inputs)." Arquivos: ");
+	            
+	            //O Job iniciado pelo painel pega o primeiro input
+	            $this->input_URI = $this->inputs[0];
+	
+	            $apsc = \APS\Request::getController();
+	            $apsc2 = $apsc->impersonate($this);
+	            $context = $apsc2->getResource($this->context->aps->id);
+	            //aqui geramos os outros jobs para cada um dos inputs
+	            for( $ix=1; $ix<count($this->inputs); ++$ix) {
+	                $job = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/job/2.0");
+	                $logger->info ("Criando input ".$this->inputs[$ix]);
+	                $job->input_URI      = $this->inputs[$ix];
+	                $job->resolutions    = $this->resolutions;
+	                $job->video_bitrates = $this->video_bitrates;
+	                $job->framerates     = $this->framerates;
+	                $job->audio_bitrates = $this->audio_bitrates;
+	                $job->username       = $this->username;
+	                $job->password       = $this->password;
+	                $job->screen_format  = $this->screen_format;
+	                $job->premium        = $this->premium;
+	                $job->https          = $this->https;
+	                $logger->info ("Dynamically creating new Job for content $job->input_URI");
+	                $apsc2->linkResource($context, 'jobs', $job);
+	            }
+	        }
+	        $logger->info("Provisioning Client: $clientid Job Input: ".$this->input_URI);
+	        $presets = new Presets();
+	        for($i=0;$i<count($this->resolutions);$i++ ) {
+	            $presets->addPreset(new Preset($this->resolutions[$i],
+	                    $this->video_bitrates[$i],$this->framerates[$i],
+	                    $this->audio_bitrates[$i]),$i);
+	        }
+	        $toks = explode('/',$this->input_URI);
+	        $this->name = $toks[count($toks)-1];
+	//         $logger->info(var_dump($this));
+	        $level = ($this->premium ? 'prm' : 'std');
+	        $protocol = ($this->https ? 'https' : 'http');
+	//         try {
+	//             ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
+	        $logger->info("--> Provisionando Job level=".$level." protocol=".$protocol. " username  $this->username password: $this->password");
+	        $job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets, $protocol, 
+	                                    $this->username, $this->password );
+	//         } catch (Exception $fault) {
+	//             $logger->error("Error while creating content job, :\n\t" . $fault->getMessage());
+	//             throw new Exception($fault->getMessage());
+	//         }
+	
+	        $this->job_id = $job->id;
+	        $this->job_name = $job->name;
+	        $this->state = $job->status;
+	        
+	        $logger->info("job_id:" . $this->job_id );
+	        $logger->info("job_name:" . $this->job_name );
+	        $logger->info("state:" . $this->state );
+	        $logger->info("input_URI:" . $this->input_URI );
+	        $logger->info("<-- Job Provisionado assincronamente");
+        } catch (Exception $fault){
+        	$userError = "Erro no provisionamento do job";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"ProvisionError");
         }
-        \APS\LoggerRegistry::get()->info("Provisioning Client: $clientid Job Input: ".$this->input_URI);
-        $presets = new Presets();
-        for($i=0;$i<count($this->resolutions);$i++ ) {
-            $presets->addPreset(new Preset($this->resolutions[$i],
-                    $this->video_bitrates[$i],$this->framerates[$i],
-                    $this->audio_bitrates[$i]),$i);
-        }
-        $toks = explode('/',$this->input_URI);
-        $this->name = $toks[count($toks)-1];
-//         \APS\LoggerRegistry::get()->info(var_dump($this));
-        $level = ($this->premium ? 'prm' : 'std');
-        $protocol = ($this->https ? 'https' : 'http');
-//         try {
-//             ElementalRest::$auth = new Auth( 'elemental','elemental' );		// TODO: trazer usuario/api key
-        \APS\LoggerRegistry::get()->info("--> Provisionando Job level=".$level." protocol=".$protocol. " username  $this->username password: $this->password");
-        $job = JobVOD::newJobVOD( $this->name, $this->input_URI, $clientid, $level, $presets, $protocol, 
-                                    $this->username, $this->password );
-//         } catch (Exception $fault) {
-//             \APS\LoggerRegistry::get()->error("Error while creating content job, :\n\t" . $fault->getMessage());
-//             throw new Exception($fault->getMessage());
-//         }
-
-        $this->job_id = $job->id;
-        $this->job_name = $job->name;
-        $this->state = $job->status;
-        
-        \APS\LoggerRegistry::get()->info("job_id:" . $this->job_id );
-        \APS\LoggerRegistry::get()->info("job_name:" . $this->job_name );
-        \APS\LoggerRegistry::get()->info("state:" . $this->state );
-        \APS\LoggerRegistry::get()->info("input_URI:" . $this->input_URI );
-        \APS\LoggerRegistry::get()->info("<-- Job Provisionado assincronamente");
         throw new \Rest\Accepted($this, "Job Submitted", 10); // Return "202 Accepted"
     }
 
     public function provisionAsync() {
-        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
+    	$logger = $this->getLogger();
         $jobstatus = JobVOD::getStatus($this->job_id);
-        \APS\LoggerRegistry::get()->info("Called provisionAsync for job id=".$this->job_id);
-        \APS\LoggerRegistry::get()->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
+        $logger->info("Called provisionAsync for job id=".$this->job_id);
+        $logger->info("Updating state from ".$this->state." to ".$jobstatus->status.'' );
         $this->state = $jobstatus->status.'';
         $this->submit_date  = $jobstatus->start_time.'';
         if( $jobstatus->status == 'complete') {
@@ -305,11 +313,12 @@ class job extends \APS\ResourceBase {
             throw new \Rest\Accepted($this, "Job status=".'$jobstatus->status' , ConfigConsts::VOD_STATUS_UPDATE_INTERVAL); // Return "202 Accepted"
         }
         $this->state = "timed out";
-        \APS\LoggerRegistry::get()->info("Job $this->job_id timed out!");
+        $logger->info("Job $this->job_id timed out!");
     }
 
     public function createContents($jobstatus){
-        echo "Creating Content\n";
+    	$logger = $this->getLogger();
+        $logger->info("Obtaining Content for job $this->job_id");
 //         $this->info = $jobstatus->asXml();
         $content = DeltaContents::getContentsFromJob($this->job_id);
 
@@ -336,41 +345,40 @@ class job extends \APS\ResourceBase {
         $vod->video_bitrates        = $this->video_bitrates;
         $vod->audio_bitrates        = $this->audio_bitrates;
 
-        \APS\LoggerRegistry::get()->info ("Provisioning new VOD with link to context with data:\n".print_r($vod,true));
+        $logger->info ("Provisioning new VOD for job $vod->job_id content $vod->content_id - $vod->content_name");
         $apsc = \APS\Request::getController();
         $apsc2 = $apsc->impersonate($this);
         $context = $apsc2->getResource($this->context->aps->id);
         $apsc2->linkResource($context, 'vods', $vod);
+        $logger->info ("Archiving job $vod->job_id");
         JobVOD::archive($this->job_id);
-        \APS\LoggerRegistry::get()->info ("Finished provisioning new VOD with link to context for job number $this->job_id");
+        $logger->info ("Finished provisioning VOD for job $vod->job_id content $vod->content_id - $vod->content_name");
         return;
     }
 
     public function configure($new) {
-        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
+    	$logger = $this->getLogger();
         $jobstatus = JobVOD::getStatus($this->job_id);
-        \APS\LoggerRegistry::get()->info("Called configure for job id=".$this->job_id);
+        $logger->info("Called configure for job id=".$this->job_id);
     }
 
     public function upgrade(){
     }
 
     public function unprovision(){
-        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
-        \APS\LoggerRegistry::get()->info(sprintf("Iniciando desprovisionamento para job %s-%s",
-                $this->job_id, $this->job_name));
-        \APS\LoggerRegistry::get()->info(sprintf("Excluindo Job %s",$this->job_id));
-
+    	$logger = $this->getLogger();
         try {
+	        $logger->info(sprintf("Iniciando desprovisionamento para job %s-%s", $this->job_id, $this->job_name));
             ElementalRest::$auth = new Auth( 'elemental','elemental' );
             JobVOD::archive($this->job_id);
-        } catch (Exception $fault) {
-            \APS\LoggerRegistry::get()->info("Error while deleting content job, :\n\t" . $fault->getMessage());
-//             throw new Exception($fault->getMessage());
+	        $logger->info(sprintf("Fim desprovisionamento para job %s", $this->job_id));
+        } catch (Exception $fault){
+        	$userError = "Erro no desprovisionamento do job";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UnprovisionError");
         }
-        
-        \APS\LoggerRegistry::get()->info(sprintf("Fim desprovisionamento para job %s",
-                $this->job_id));
     }
 
     /*
@@ -385,24 +393,33 @@ class job extends \APS\ResourceBase {
      * @returns {object}
      */
     public function updateJobStatus () {
-        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
-        $jobstatus = JobVOD::getStatus($this->job_id);
-        \APS\LoggerRegistry::get()->info("Called updateJobStatus for job id=".$this->job_id.
-                " status will be updated from ".$this->state." to ".$jobstatus->status);
-        $this->state = $jobstatus->status.'';
-        $this->submit_date  = $jobstatus->start_time.'';
-        $this->elapsed_time  = $jobstatus->elapsed_time_in_words.'';
-        if( $jobstatus->error_messages != null && 
-                $jobstatus->error_messages->error != null && 
-                $jobstatus->error_messages->error->message != null) {
-            $this->info = $jobstatus->error_messages->error->message.'';
-        } else {
-            $this->info = null;
+    	$logger = $this->getLogger();    	
+    	try {
+	        $jobstatus = JobVOD::getStatus($this->job_id);
+	        $logger->info("Called updateJobStatus for job id=".$this->job_id.
+	                " status will be updated from ".$this->state." to ".$jobstatus->status);
+	        $this->state = $jobstatus->status.'';
+	        $this->submit_date  = $jobstatus->start_time.'';
+	        $this->elapsed_time  = $jobstatus->elapsed_time_in_words.'';
+	        if( $jobstatus->error_messages != null && 
+	                $jobstatus->error_messages->error != null && 
+	                $jobstatus->error_messages->error->message != null) {
+	            $this->info = $jobstatus->error_messages->error->message.'';
+	        } else {
+	            $this->info = null;
+	        }
+	        $apsc = \APS\Request::getController();
+	        $apsc->updateResource($this);
+	        $logger->info("job id=".$this->job_id." Updated!");
+	        return $this;
+        } catch (Exception $fault){
+        	$userError = "Erro na atualização de status do job";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UpdateJobStatusError");
         }
-        $apsc = \APS\Request::getController();
-        $apsc->updateResource($this);
-        \APS\LoggerRegistry::get()->info("job id=".$this->job_id." Updated!");
-        return $this;
+
     }
 
 
@@ -414,22 +431,36 @@ class job extends \APS\ResourceBase {
      * @returns {object}
      */
     public function cancelJob () {
-        \APS\LoggerRegistry::get()->setLogFile("logs/jobs.log");
-        \APS\LoggerRegistry::get()->info("Called cancelJob for job id=".$this->job_id);
-        $result = new stdClass();
-        try {
+    	$logger = $this->getLogger();
+		try {
+	        $logger->info("Called cancelJob for job id=".$this->job_id);
+	        $result = new stdClass();
+//	        try {
             JobVOD::cancel($this->job_id);
             $this->updateJobStatus();
             $result->result = "ok";
             $result->message = "Job Cancelado";
             return $result;
+//	        }
+//	        catch (Exception $fault) {
+//	            $logger->info("Error cancelling job: ". $fault->getMessage());
+//	            $result->result = "error";
+//	            $result->message = $fault->getMessage();
+//	            return $result;
+//	        }
+        } catch (Exception $fault){
+        	$userError = "Erro no cancelamento do job";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"CancelJobError");
         }
-        catch (Exception $fault) {
-            \APS\LoggerRegistry::get()->info("Error cancelling job: ". $fault->getMessage());
-            $result->result = "error";
-            $result->message = $fault->getMessage();
-            return $result;
-        }
+    }
+
+    private function getLogger() {
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/jobs_".date("Ymd").".log");
+        return $logger;
     }
 
     /**

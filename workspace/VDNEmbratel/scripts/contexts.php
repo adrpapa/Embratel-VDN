@@ -235,81 +235,101 @@ class context extends \APS\ResourceBase
     ###############################################################################
 
     public function provision() {
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/context.log");
-        $clientid = formatClientID( $this );
-        $logger->info("Iniciando provisionamento de context para o cliente ".$clientid);
-
-        // Initialize counters
-        $this->VDN_VOD_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_VOD_Encoding_Minutes->usage = 0;
-        $this->VDN_VOD_Encoding_Minutes_Premium = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_VOD_Encoding_Minutes_Premium->usage = 0;
-        $this->VDN_VOD_JIT_Encryption_Minutes = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_VOD_JIT_Encryption_Minutes->usage = 0;
-        $this->VDN_VOD_Storage_MbH = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_VOD_Storage_MbH->usage = 0;
-        $this->VDN_Live_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_Live_Encoding_Minutes->usage = 0;
-        $this->VDN_Live_Encoding_Minutes_Premium = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_Live_Encoding_Minutes_Premium->usage = 0;
-        $this->VDN_Live_JIT_Encryption_Minutes = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_Live_JIT_Encryption_Minutes->usage = 0;
-        $this->VDN_Live_DVR_Minutes = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_Live_DVR_Minutes->usage = 0;
-        $this->VDN_HTTP_Traffic = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_HTTP_Traffic->usage = 0;
-        $this->VDN_HTTPS_Traffic = new \org\standard\aps\types\core\resource\Counter();
-        $this->VDN_HTTPS_Traffic->usage = 0;
-        
-        // Create output template for all options: Live/Vod Premium/Std http/https
-        $this->vodDeltaPaths = new DeltaPaths();
-        $vodLiveArr = array('vod' => $this->vodDeltaPaths);
-        foreach( $vodLiveArr as $type => $vodLive ) {
-            $stdPremArr = array( 'std' => $vodLive->standard, 'prm' => $vodLive->premium );
-            foreach( $stdPremArr as $level => $stdPrem ) {
-                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
-                foreach( $httpHttpsArr as $proto => $path ) {
-                    $logger->info("Criandos Input Filter e Output Template $clientid $proto $type $level");
-                    /*
-                        Delta Input filters e output templates estão sendo criados aqui, mas se desejado
-                        podemos usar essa estrutura para verificar se já existe, e criá-los à medida que
-                        forem necessários
-                    */
-                    $inputFilter=DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level );
-                    $path->inputFilter = $inputFilter->id;
-                    $path->outputTemplate = $inputFilter->template_id;
-                }
-            }
+    	try {
+	        $logger = $this->getLogger();
+	        $clientid = formatClientID( $this );
+	        $logger->info("Iniciando provisionamento de context para o cliente ".$clientid);
+	
+	        // Initialize counters
+	        $this->VDN_VOD_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_VOD_Encoding_Minutes->usage = 0;
+	        $this->VDN_VOD_Encoding_Minutes_Premium = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_VOD_Encoding_Minutes_Premium->usage = 0;
+	        $this->VDN_VOD_JIT_Encryption_Minutes = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_VOD_JIT_Encryption_Minutes->usage = 0;
+	        $this->VDN_VOD_Storage_MbH = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_VOD_Storage_MbH->usage = 0;
+	        $this->VDN_Live_Encoding_Minutes = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_Live_Encoding_Minutes->usage = 0;
+	        $this->VDN_Live_Encoding_Minutes_Premium = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_Live_Encoding_Minutes_Premium->usage = 0;
+	        $this->VDN_Live_JIT_Encryption_Minutes = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_Live_JIT_Encryption_Minutes->usage = 0;
+	        $this->VDN_Live_DVR_Minutes = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_Live_DVR_Minutes->usage = 0;
+	        $this->VDN_HTTP_Traffic = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_HTTP_Traffic->usage = 0;
+	        $this->VDN_HTTPS_Traffic = new \org\standard\aps\types\core\resource\Counter();
+	        $this->VDN_HTTPS_Traffic->usage = 0;
+	        
+	        // Create output template for all options: Live/Vod Premium/Std http/https
+	        $this->vodDeltaPaths = new DeltaPaths();
+	        $vodLiveArr = array('vod' => $this->vodDeltaPaths);
+	        foreach( $vodLiveArr as $type => $vodLive ) {
+	            $stdPremArr = array( 'std' => $vodLive->standard, 'prm' => $vodLive->premium );
+	            foreach( $stdPremArr as $level => $stdPrem ) {
+	                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
+	                foreach( $httpHttpsArr as $proto => $path ) {
+	                    $logger->info("Criandos Input Filter e Output Template $clientid $proto $type $level");
+	                    /*
+	                        Delta Input filters e output templates estão sendo criados aqui, mas se desejado
+	                        podemos usar essa estrutura para verificar se já existe, e criá-los à medida que
+	                        forem necessários
+	                    */
+	                    $inputFilter=DeltaInputFilter::getClientInputFilter( $clientid, $type, $proto, $level );
+	                    $path->inputFilter = $inputFilter->id;
+	                    $path->outputTemplate = $inputFilter->template_id;
+	                }
+	            }
+	        }
+	        print_r($this);
+	        $logger->info("Encerrando provisionamento de context para o cliente ".$clientid);
+        } catch (Exception $fault){
+        	$userError = "Erro no provisionamento do contexto";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"ProvisioningError");
         }
-        print_r($this);
-        $logger->info("Encerrando provisionamento de context para o cliente ".$clientid);
     }
 
     public function unprovision(){
-        $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/channels.log");
-        $clientid = $this->aps->id;
-        $logger->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
-
-        // Delete output template for all options: Live/Vod Premium/Std http/https
-        $vodLiveArr = array('vod' => $this->vodDeltaPaths);
-        foreach( $vodLiveArr as $type => &$vodLive ) {
-            $stdPremArr = array( 'std' => $vodLive->standard, 'prm' => $vodLive->premium );
-            foreach( $stdPremArr as $level => &$stdPrem ) {
-                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
-                foreach( $httpHttpsArr as $proto => &$path ) {
-                    $logger->info("Removendo Input Filter e Output Template $clientid $proto $type $level");
-                    DeltaInputFilter::delete($path->inputFilter);
-                    DeltaOutputTemplate::delete($path->outputTemplate);
-                }
-            }
+    	try {
+	        $logger = $this->getLogger();
+	        $clientid = $this->aps->id;
+	        $logger->info("Iniciando desprovisionamento de contexto para o cliente ".$clientid);
+	
+	        // Delete output template for all options: Live/Vod Premium/Std http/https
+	        $vodLiveArr = array('vod' => $this->vodDeltaPaths);
+	        foreach( $vodLiveArr as $type => &$vodLive ) {
+	            $stdPremArr = array( 'std' => $vodLive->standard, 'prm' => $vodLive->premium );
+	            foreach( $stdPremArr as $level => &$stdPrem ) {
+	                $httpHttpsArr = array('http' => $stdPrem->http, 'https' => $stdPrem->https );
+	                foreach( $httpHttpsArr as $proto => &$path ) {
+	                    $logger->info("Removendo Input Filter e Output Template $clientid $proto $type $level");
+	                    DeltaInputFilter::delete($path->inputFilter);
+	                    DeltaOutputTemplate::delete($path->outputTemplate);
+	                }
+	            }
+	        }
+	        $logger->info("Fim de desprovisionamento de contexto para o cliente ".$clientid);
+        } catch (Exception $fault){
+        	$userError = "Erro no desprovisionamento do contexto";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UnprovisioningError");
         }
     }
     
-    public function retrieve() {
+    private function getLogger() {
         $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/context.log");
+        $logger->setLogFile("logs/context_".date("Ymd").".log");
+        return $logger;
+    }
+    
+    public function retrieve() {
+        $logger = $this->getLogger();
         $logger->info("Start retrieve billing data for ".formatClientID($this));
 
         ## Connect to the APS controller
