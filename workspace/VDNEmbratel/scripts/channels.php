@@ -463,7 +463,7 @@ class channel extends \APS\ResourceBase {
 
     private function getLogger() {
         $logger = \APS\LoggerRegistry::get();
-        $logger->setLogFile("logs/cdns_".date("Ymd").".log");
+        $logger->setLogFile("logs/channels_".date("Ymd").".log");
         return $logger;
     }
     

@@ -206,10 +206,18 @@ class cdn extends \APS\ResourceBase {
         // CREATE CONTENT ORIGIN
         $origin = new ContentOrigin("co-".$custom_name,$this->origin_server,$origin_domain,$this->description);
         if ( !$origin->create() ) {
-            $logger->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
-            throw new \Exception("Can't create content origin:" . $origin->getMessage(), 501);
-			throw new \Rest\RestException( 500, $userError, $origin->getMessage(), "ContentOriginProvisioningError");
+            $logger->info("cdns:provisioning() Error creating Content Origin $this->origin_server: " . $origin->getMessage());
+            throw new \Rest\RestException( 500, $userError, $origin->getMessage(), "ContentOriginProvisioningError",
+	            array( "internal_name"        => $origin->internal_name,
+				       "internal_origin"      => $origin->internal_origin,
+				       "internal_fqdn"        => $origin->internal_fqdn,
+				       "internal_description" => $origin->internal_description) );
         }
+	    $originData = array( "internal_name"        => $origin->internal_name,
+				             "internal_origin"      => $origin->internal_origin,
+				             "internal_fqdn"        => $origin->internal_fqdn,
+				             "internal_description" => $origin->internal_description);
+        
         // CREATE DELIVERY SERVICE
         try {
             $logger->info("--> Creating DS");
@@ -217,7 +225,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End Creating DS");		
         } catch (Exception $fault) {
             $logger->info("Error creating DS " . $fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceProvisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceProvisioningError", $originData);
         }		
 
         // CREATE DELIVERY SERVICE GENERAL SETTINGS
@@ -227,7 +235,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End General Settings DS");
         } catch (Exception $fault) {
             $logger->info("Error creating General Settings DS " . $fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceSettingsProvisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceSettingsProvisioningError", $originData);
         }
         
         // ASSIGN RULE TO DELIVERY SERVICE
@@ -237,7 +245,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End Rule");
         } catch (Exception $fault) {
             $logger->info("Error assign Rule " . $fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceRuleProvisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceRuleProvisioningError", $originData);
         }		
         
         // SUCCESS: UPDATE APS RESOURCES
@@ -308,27 +316,34 @@ class cdn extends \APS\ResourceBase {
     public function unprovision(){
         $logger = $this->getLogger();
         $logger->info("Iniciando des-provisionamento do CDN... ".$this->aps->id);
-            
-        if ( !is_null($this->delivery_service_gen_settings_id) ) {
-            $dsgs = new DeliveryServiceGenSettings();
-            $dsgs->delete( $this->delivery_service_gen_settings_id );
+        $userError = "Ocorreu um erro no desprovisionamento do CDN";
+        try {
+	        if ( !is_null($this->delivery_service_gen_settings_id) ) {
+	            $dsgs = new DeliveryServiceGenSettings();
+	            $dsgs->delete( $this->delivery_service_gen_settings_id );
+	        }
+	        
+	        if ( !is_null($this->delivery_service_id) ) {
+	            $ds = new DeliveryService();
+	            $ds->delete( $this->delivery_service_id );
+	        }
+	        
+	        if ( !is_null($this->content_origin_id) ) {
+	            $origin = new ContentOrigin();
+	            $origin->delete( $this->content_origin_id );
+	        }
+	        
+	        if ( !is_null($this->rule_url_rwr_file_id) ) {
+	            $rule = new FileMgmt();
+	            $rule->delete( $this->rule_url_rwr_file_id );    	
+	        }
+        } catch (Exception $fault){
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UnprovisioningError");
         }
-        
-        if ( !is_null($this->delivery_service_id) ) {
-            $ds = new DeliveryService();
-            $ds->delete( $this->delivery_service_id );
-        }
-        
-        if ( !is_null($this->content_origin_id) ) {
-            $origin = new ContentOrigin();
-            $origin->delete( $this->content_origin_id );
-        }
-        
-        if ( !is_null($this->rule_url_rwr_file_id) ) {
-            $rule = new FileMgmt();
-            $rule->delete( $this->rule_url_rwr_file_id );    	
-        }
-        
+
         $logger->info("<-- Fim DES-Provisionando CDN");    	    	
     }
 

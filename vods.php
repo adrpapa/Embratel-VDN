@@ -234,19 +234,20 @@ class vod extends \APS\ResourceBase {
 
     public function unprovision(){
         $logger = $this->getLogger();
-        $logger->info(sprintf("Iniciando desprovisionamento do conteudo %s-%s",
-                $this->content_id, $this->content_name));
-
-        try {
+        try{
+	        $logger->info(sprintf("Iniciando desprovisionamento do conteudo %s-%s",
+	                $this->content_id, $this->content_name));
             ElementalRest::$auth = new Auth( 'elemental','elemental' );
             DeltaContents::delete($this->content_id);
-        } catch (Exception $fault) {
-            $logger->info("Error while deleting content $this->content_name, :\n\t" . $fault->getMessage());
-//             throw new Exception($fault->getMessage());
-        }    	
-        
-        $logger->info(sprintf("Fim desprovisionamento do conteudo %s-%s",
-                $this->content_id, $this->content_name));
+	        $logger->info(sprintf("Fim desprovisionamento do conteudo %s-%s",
+	                $this->content_id, $this->content_name));
+        } catch (Exception $fault){
+        	$userError = "Erro no desprovisionamento do conteudo";
+            $logger->error($userError);
+            $logger->error($fault->getMessage());
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
+            	"UnprovisionError");
+        }                
     }
 
     private function getLogger() {
@@ -275,7 +276,7 @@ class vod extends \APS\ResourceBase {
         $usage["name"] = $storage["name"];
         $usage["age"] = $storage["age"];
 
-        $this->getLogger()->info(var_dump($usage));
+        $this->getLogger()->info("Usage data for content id $this->content_id: \n".var_dump($usage));
         return $usage;
     }
 }
