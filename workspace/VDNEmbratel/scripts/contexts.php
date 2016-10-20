@@ -288,8 +288,7 @@ class context extends \APS\ResourceBase
         	$userError = "Erro no provisionamento do contexto";
             $logger->error($userError);
             $logger->error($fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
-            	"ProvisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage());
         }
     }
 
@@ -317,8 +316,7 @@ class context extends \APS\ResourceBase
         	$userError = "Erro no desprovisionamento do contexto";
             $logger->error($userError);
             $logger->error($fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
-            	"UnprovisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage() );
         }
     }
     

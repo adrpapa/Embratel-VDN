@@ -25,6 +25,34 @@
       <properties name="premium" type="ProtoPaths"/>
     </structures>
   </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/channel" version="2.1" relations="//@relations.0/@target" name="channel" implements="//@typesFromLibrary.0">
+    <properties name="name" type="string" description="Channel Name" required="true"/>
+    <properties name="description" type="string" description="Channel Description" required="true"/>
+    <properties name="screen_format" type="string" description="4:3 / 16:9 ?"/>
+    <properties name="dvr" type="boolean" description="Turn on DVR feature for live"/>
+    <properties name="https" type="boolean" description="Turn on HTTPS feature for live"/>
+    <properties name="premium" type="boolean" description="Allow transcoder fine-tuning and multiple transmux packaging"/>
+    <properties name="content_id" type="integer" description="Content ID" readonly="true"/>
+    <properties name="live_event_id" type="integer" description="Live Event ID in Elemental Live Conductor" readonly="true"/>
+    <properties name="live_event_name" type="string" description="Live Event Name in Elemental Live Conductor" readonly="true"/>
+    <properties name="input_filter_id" type="integer" description="Delta Input Filter ID" readonly="true"/>
+    <properties name="state" type="string" description="Live channel current state" readonly="true"/>
+    <properties name="request" type="string" description="request for channel start/stop"/>
+    <properties name="input_URI" type="string" description="Live Channel Input URI for client's transmission" readonly="true"/>
+    <properties name="cdn_aps_id" type="string" description="ID of cdn created for event" readonly="true"/>
+    <properties name="cdn_routing_domain" type="string" description="Service Routing Domain Name" readonly="true"/>
+    <properties name="cdn_origin_server" type="string" description="delta access fqdn for CDN content origin" readonly="true"/>
+    <properties name="start_encoding_time" type="string" description="Time event was started" readonly="true"/>
+    <properties name="accum_encoding_time" type="number" description="total encoding time for billing" readonly="true"/>
+    <properties name="last_reported_encoding_time" type="number" description="Last encoding time reported to billing" readonly="true"/>
+    <properties name="live_node" type="string" description="Elemental Live node this channell is assigned to" readonly="true"/>
+    <properties name="resolutions" type="array" description="Array of Video Resolutions for the generated streams"/>
+    <properties name="framerates" type="array" description="Array of Frame Rates for the generated streams"/>
+    <properties name="video_bitrates" type="array" description="Array of Video Bitrates for the generated streams"/>
+    <properties name="audio_bitrates" type="array" description="Array of Audio Bitrates for the generated streams"/>
+    <operations name="updateChannelStatus" verb="GET" path="/updateChannelStatus"/>
+    <operations name="updateLiveUsage" verb="GET" path="/updateLiveUsage"/>
+  </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.0" relations="//@relations.3/@target" name="cdn" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="CDN Name" required="true"/>
     <properties name="description" type="string" description="CDN Description"/>
@@ -145,26 +173,25 @@
     <properties name="companyName" type="string" required="true"/>
     <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
   </typesFromLibrary>
-  <externalTypes id="http://embratel.com.br/app/VDNEmbratel/channel" version="2.1" relations="//@relations.0/@target"/>
   <relations>
     <source type="//@internalTypes.0" name="channels" collection="true"/>
-    <target type="//@externalTypes.0"/>
-  </relations>
-  <relations>
-    <source type="//@internalTypes.0" name="jobs" collection="true"/>
-    <target type="//@internalTypes.4" name="context" required="true"/>
-  </relations>
-  <relations>
-    <source type="//@internalTypes.0" name="vods" collection="true"/>
-    <target type="//@internalTypes.3" name="context" required="true"/>
-  </relations>
-  <relations>
-    <source type="//@internalTypes.0" name="cdns" collection="true"/>
     <target type="//@internalTypes.1" name="context" required="true"/>
   </relations>
   <relations>
+    <source type="//@internalTypes.0" name="jobs" collection="true"/>
+    <target type="//@internalTypes.5" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="vods" collection="true"/>
+    <target type="//@internalTypes.4" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="cdns" collection="true"/>
+    <target type="//@internalTypes.2" name="context" required="true"/>
+  </relations>
+  <relations>
     <source type="//@internalTypes.0" name="cloud" required="true"/>
-    <target type="//@internalTypes.2" name="contexts" collection="true"/>
+    <target type="//@internalTypes.3" name="contexts" collection="true"/>
   </relations>
   <relations>
     <source type="//@internalTypes.0" name="subscription" required="true"/>

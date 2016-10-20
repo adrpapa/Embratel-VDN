@@ -90,11 +90,11 @@
                                     {method: "GET",  handleAs: "text"} ),
                                     function(value) {
                                         console.log(value);
-                                    },
-                                    function(err) {
-                                        alert( _("Error refreshing job __jobname__:\n __errmsg__",
-                                            {jobname: item.name, errmsg: err.message} ));
-                                    }
+                                    }, displayError
+//                                     function(err) {
+//                                         alert( _("Error refreshing job __jobname__:\n __errmsg__",
+//                                             {jobname: item.name, errmsg: err.message} ));
+//                                     }
                                 );
                             }
                         ).then( function() {
@@ -140,11 +140,11 @@
                                                     alert(result.message);
                                                 }
                                                 pendingGrid.refresh();
-                                            },
-                                            function(err) {
-                                                alert( _("Job __jobname__ cannot be cancelled\n__errmsg__ ",
-                                                        {jobname: jobOri["name"], errmsg: err.message} ));
-                                            }
+                                            }, displayError
+//                                             function(err) {
+//                                                 alert( _("Job __jobname__ cannot be cancelled\n__errmsg__ ",
+//                                                         {jobname: jobOri["name"], errmsg: err.message} ));
+//                                             }
                                         );
                                     }
                                 );

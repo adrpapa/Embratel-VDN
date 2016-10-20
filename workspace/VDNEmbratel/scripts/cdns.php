@@ -207,8 +207,7 @@ class cdn extends \APS\ResourceBase {
         $origin = new ContentOrigin("co-".$custom_name,$this->origin_server,$origin_domain,$this->description);
         if ( !$origin->create() ) {
             $logger->info("cdns:provisioning() Error creating Content Origin: " . $origin->getMessage());
-            throw new \Exception("Can't create content origin:" . $origin->getMessage(), 501);
-			throw new \Rest\RestException( 500, $userError, $origin->getMessage(), "ContentOriginProvisioningError");
+			throw new \Rest\RestException( 500, $userError." - Content Origin", $origin->getMessage());
         }
         // CREATE DELIVERY SERVICE
         try {
@@ -217,7 +216,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End Creating DS");		
         } catch (Exception $fault) {
             $logger->info("Error creating DS " . $fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceProvisioningError");
+            throw new \Rest\RestException( 500, $userError." - Delivery Service", $fault->getMessage());
         }		
 
         // CREATE DELIVERY SERVICE GENERAL SETTINGS
@@ -227,7 +226,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End General Settings DS");
         } catch (Exception $fault) {
             $logger->info("Error creating General Settings DS " . $fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceSettingsProvisioningError");
+            throw new \Rest\RestException( 500, $userError." - Delivery Service Settings", $fault->getMessage());
         }
         
         // ASSIGN RULE TO DELIVERY SERVICE
@@ -237,7 +236,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End Rule");
         } catch (Exception $fault) {
             $logger->info("Error assign Rule " . $fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(), "DeliveryServiceRuleProvisioningError");
+            throw new \Rest\RestException( 500, $userError." - Assign Rule", $fault->getMessage());
         }		
         
         // SUCCESS: UPDATE APS RESOURCES

@@ -289,8 +289,7 @@ class channel extends \APS\ResourceBase {
         	$userError = "Erro no provisionamento do canal";
             $logger->error($userError);
             $logger->error($fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
-            	"ProvisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage() );
         }
     }
     public function provisionAsync() {
@@ -356,8 +355,7 @@ class channel extends \APS\ResourceBase {
         	$userError = "Erro no desprovisionamento do canal";
             $logger->error($userError);
             $logger->error($fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
-            	"UnprovisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage() );
         }
     }
 
@@ -395,8 +393,7 @@ class channel extends \APS\ResourceBase {
         	$userError = "Erro na configuração do canal";
             $logger->error($userError);
             $logger->error($fault->getMessage());
-            throw new \Rest\RestException( 500, $userError, $fault->getMessage(),
-            	"UnprovisioningError");
+            throw new \Rest\RestException( 500, $userError, $fault->getMessage() );
         }
     }
 
