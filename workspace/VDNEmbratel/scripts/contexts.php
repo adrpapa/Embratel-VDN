@@ -328,6 +328,10 @@ class context extends \APS\ResourceBase
     
     public function retrieve() {
         $logger = $this->getLogger();
+        if( $this->disabled ) {
+	        $logger->info("Subscription disabled. No billing data will be collected for ".formatClientID($this));
+	        return;
+        }
         $logger->info("Start retrieve billing data for ".formatClientID($this));
 
         ## Connect to the APS controller
@@ -413,6 +417,35 @@ class context extends \APS\ResourceBase
 
 //         print_r($this);
     }
+
+    public function disable() {
+        $logger = $this->getLogger();
+        $logger->info("Subscription disable requested for subscription ".formatClientID($this));
+
+        ## Connect to the APS controller
+        $apsc = \APS\Request::getController();
+        
+        ## Call cdn do disable endpoint by removing SEs from the DS
+        foreach ( $this->cdns as $cdn ) {
+            $logger->info("Disabling service on cds $cdn->origin_domain");
+            $apsc->getIo()->sendRequest(\APS\Proto::GET,
+                    $apsc->getIo()->resourcePath($cdn->aps->id, 'unassignServiceEngines'));
+        }
+
+    public function enable() {
+        $logger = $this->getLogger();
+        $logger->info("Subscription enable requested for subscription ".formatClientID($this));
+
+        ## Connect to the APS controller
+        $apsc = \APS\Request::getController();
+        
+        ## Call cdn do disable endpoint by removing SEs from the DS
+        foreach ( $this->cdns as $cdn ) {
+            $logger->info("Disabling service on cds $cdn->origin_domain");
+            $apsc->getIo()->sendRequest(\APS\Proto::GET,
+                    $apsc->getIo()->resourcePath($cdn->aps->id, 'assignServiceEngines'));
+        }
+
 }
 
 ?>

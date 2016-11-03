@@ -8,6 +8,7 @@ require_once "elemental_api/contentOrigin.php";
 require_once "elemental_api/deliveryServiceGenSettings.php";
 require_once "elemental_api/fileMgmt.php";
 require_once "elemental_api/utils.php";
+require_once "elemental_api/configConsts.php";
 require_once "utils/splunk.php";
 
 /**
@@ -339,7 +340,9 @@ class cdn extends \APS\ResourceBase {
     function createDeliveryService($origin,$custom_name) {
         $logger = $this->getLogger();
         $ds = new DeliveryService($custom_name,$origin->getID(),$this->description);
-        $ds->live = ($this->live ? "true":"false");
+        /* INICIO Alteração sugeridas pelo Daniel Pinkas da Cisco */
+        $ds->live = "false";	// ($this->live ? "true":"false");
+        /* FIM Alteração sugeridas pelo Daniel Pinkas da Cisco */
         if ( !$ds->create() ) {
             $logger->info("cdns:provisioning() Error creating Delivery Service: " . $ds->getMessage());
             // Rollback
@@ -367,12 +370,15 @@ class cdn extends \APS\ResourceBase {
         $logger = $this->getLogger();
         // CUSTOMIZE PROTOCOL: HTTP or HTTPS
         
-        if ( $this->live ) return;	// Precisa confirmar isso....
+        // if ( $this->live ) return;	// Precisa confirmar isso....
         
         $dsgs = new DeliveryServiceGenSettings($ds->getID(), ($this->https ? "https" : "http") );
         
-        $dsgs->HttpExtAllow = "true";
-        $dsgs->HttpExt      = urlencode("asf none nsc wma wmv nsclog");
+        /* INICIO Alterações sugeridas pelo Daniel Pinkas da Cisco */
+        // $dsgs->HttpExtAllow = "true";
+        // $dsgs->HttpExt      = urlencode("asf none nsc wma wmv nsclog");
+        $dsgs->Bitrate = ConfigConsts::CDMS_MAX_BITRATE_PER_SESSION;
+        /* FIM Alterações sugeridas pelo Daniel Pinkas da Cisco */
         
         if ( !$dsgs->create() ) {
             $logger->info("cdns:provisioning() Error customizing delivery service: " . $dsgs->getMessage());
@@ -455,6 +461,26 @@ class cdn extends \APS\ResourceBase {
         $apsc->updateResource($this);
         
         return $usage;
+    }
+    
+    /**
+        * Enable Service engines for CDN
+        * @verb(GET)
+        * @path("/assignServiceEngines")
+        */
+    public assignServiceEngines(){
+    	//TODO: Insert code to insert service engines into delivery service
+    	return;
+    }
+
+    /**
+        * Enable Service engines for CDN
+        * @verb(GET)
+        * @path("/unassignServiceEngines")
+        */
+    public unassignServiceEngines(){
+    	//TODO: Insert code to unassign service engines from delivery service
+    	return;
     }
 }
 ?>

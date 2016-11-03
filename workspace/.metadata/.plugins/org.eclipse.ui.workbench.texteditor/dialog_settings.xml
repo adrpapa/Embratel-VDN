@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="isRegEx"/>
-		<item value="&#x09;" key="selection"/>
+		<item value="cssStyle" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="cssStyle"/>
 			<item value="\t"/>
 			<item value="throw"/>
 			<item value="err"/>
@@ -15,7 +16,6 @@
 			<item value="$this"/>
 			<item value="LoggerRegistry"/>
 			<item value="$originData"/>
-			<item value="\APS\LoggerRegistry::get()"/>
 		</list>
 		<list key="replacehistory">
 			<item value="    "/>

@@ -25,7 +25,7 @@ define(["dijit/registry", "aps/Message", "aps/PageContainer"],
             messages.removeAll();
             /* And display the new message */
             messages.addChild(new Message({description: (errData.message ?
-                    "<br />" + errData.message : err), type: type || "error"}));
+                    errData.message : err), type: type || "error"}));
         };
     }
 );

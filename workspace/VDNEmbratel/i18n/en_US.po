@@ -34,7 +34,7 @@ msgid "Are you sure you want delete CDN __cdn__?"
 msgstr ""
 
 # @generated
-#: ui/channels.html:145
+#: ui/channels.html:144
 msgid "Are you sure you want delete Channels?"
 msgstr ""
 
@@ -50,15 +50,15 @@ msgid "Avanced Options (additional charges may apply)"
 msgstr ""
 
 # @generated
-#: APP-META.xml:46
+#: APP-META.xml:48
 msgid "Back to Contents list"
 msgstr ""
 
 # @generated
-#: APP-META.xml:69
-#: APP-META.xml:93
-#: APP-META.xml:105
-#: APP-META.xml:111
+#: APP-META.xml:71
+#: APP-META.xml:95
+#: APP-META.xml:107
+#: APP-META.xml:113
 msgid "Back to list"
 msgstr ""
 
@@ -68,8 +68,8 @@ msgid "Base URL"
 msgstr ""
 
 # @generated
-#: APP-META.xml:101
-#: APP-META.xml:102
+#: APP-META.xml:103
+#: APP-META.xml:104
 msgid "CDN"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid "Channel Configuration"
 msgstr ""
 
 # @generated
-#: APP-META.xml:91
+#: APP-META.xml:93
 msgid "Channel Information"
 msgstr ""
 
@@ -116,20 +116,20 @@ msgid "Complete Jobs"
 msgstr ""
 
 # @generated
-#: APP-META.xml:180
-#: APP-META.xml:181
+#: APP-META.xml:182
+#: APP-META.xml:183
 msgid "Content Delivery Network"
 msgstr ""
 
 # @generated
-#: APP-META.xml:44
+#: APP-META.xml:46
 #: ui/content-info.html:41
 msgid "Content Information"
 msgstr ""
 
 # @generated
-#: APP-META.xml:42
-#: APP-META.xml:43
+#: APP-META.xml:44
+#: APP-META.xml:45
 msgid "Conteúdo"
 msgstr ""
 
@@ -142,13 +142,13 @@ msgstr ""
 # @generated
 #: ui/contents.html:46
 #: ui/jobs.html:53
-#: ui/channels.html:58
+#: ui/channels.html:57
 #: ui/cdns.html:46
 msgid "Delete"
 msgstr ""
 
 # @generated
-#: APP-META.xml:109
+#: APP-META.xml:111
 msgid "Delivery Service Information"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 
 # @generated
 #: ui/jobs.html:95
-#: ui/channels.html:85
+#: ui/channels.html:84
 msgid "Error refreshing job __jobname__:\n"
 " __errmsg__"
 msgstr ""
@@ -228,6 +228,11 @@ msgstr ""
 #: ui/channel-new-1.html:47
 #: ui/job-new-1.html:64
 msgid "General Configuration"
+msgstr ""
+
+# @generated
+#: APP-META.xml:28
+msgid "General fixes"
 msgstr ""
 
 # @generated
@@ -271,7 +276,7 @@ msgid "IP or FQDN from origin server that will provide the content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:26
+#: APP-META.xml:25
 msgid "Initial release."
 msgstr ""
 
@@ -322,7 +327,7 @@ msgid "Job Id"
 msgstr ""
 
 # @generated
-#: APP-META.xml:67
+#: APP-META.xml:69
 msgid "Job Information"
 msgstr ""
 
@@ -338,8 +343,8 @@ msgid "Job __jobname__ cannot be cancelled\n"
 msgstr ""
 
 # @generated
-#: APP-META.xml:53
-#: APP-META.xml:54
+#: APP-META.xml:55
+#: APP-META.xml:56
 msgid "Jobs"
 msgstr ""
 
@@ -350,13 +355,13 @@ msgid "Just In Time Encryption of content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:77
+#: APP-META.xml:79
 #: ui/cdns.html:39
 msgid "Live"
 msgstr ""
 
 # @generated
-#: APP-META.xml:78
+#: APP-META.xml:80
 msgid "Live Channels"
 msgstr ""
 
@@ -389,13 +394,18 @@ msgid "MSS"
 msgstr ""
 
 # @generated
+#: APP-META.xml:149
+msgid "Management"
+msgstr ""
+
+# @generated
 #: ui/contents.html:32
 #: ui/contents.html:32
 #: ui/jobs.html:45
 #: ui/jobs.html:65
 #: ui/cdn-info.html:36
-#: ui/channels.html:31
-#: ui/channels.html:31
+#: ui/channels.html:30
+#: ui/channels.html:30
 #: ui/cdn-new-1.html:52
 #: ui/cdns.html:34
 #: ui/cdns.html:34
@@ -426,13 +436,13 @@ msgid "New"
 msgstr ""
 
 # @generated
-#: APP-META.xml:79
-#: ui/channels.html:53
+#: APP-META.xml:81
+#: ui/channels.html:52
 msgid "New Channel"
 msgstr ""
 
 # @generated
-#: APP-META.xml:103
+#: APP-META.xml:105
 msgid "New Delivery Service"
 msgstr ""
 
@@ -507,19 +517,19 @@ msgid "Quality index"
 msgstr ""
 
 # @generated
-#: ui/channels.html:42
+#: ui/channels.html:41
 msgid "RTMP Stream"
 msgstr ""
 
 # @generated
-#: ui/channels.html:33
+#: ui/channels.html:32
 msgid "RTMP URL"
 msgstr ""
 
 # @generated
 #: ui/contents.html:47
 #: ui/jobs.html:54
-#: ui/channels.html:59
+#: ui/channels.html:58
 #: ui/cdns.html:47
 msgid "Refresh"
 msgstr ""
@@ -540,7 +550,7 @@ msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will b
 msgstr ""
 
 # @generated
-#: APP-META.xml:85
+#: APP-META.xml:87
 msgid "Review"
 msgstr ""
 
@@ -574,7 +584,7 @@ msgid "Site / Path to content"
 msgstr ""
 
 # @generated
-#: ui/channels.html:56
+#: ui/channels.html:55
 msgid "Start"
 msgstr ""
 
@@ -584,7 +594,7 @@ msgid "Start Encoding"
 msgstr ""
 
 # @generated
-#: ui/channels.html:49
+#: ui/channels.html:48
 msgid "Start time"
 msgstr ""
 
@@ -592,14 +602,14 @@ msgstr ""
 #: ui/channel-info.html:59
 #: ui/jobs.html:46
 #: ui/jobs.html:66
-#: ui/channels.html:32
-#: ui/channels.html:32
+#: ui/channels.html:31
+#: ui/channels.html:31
 #: ui/job-info.html:36
 msgid "State"
 msgstr ""
 
 # @generated
-#: ui/channels.html:57
+#: ui/channels.html:56
 msgid "Stop"
 msgstr ""
 
@@ -614,7 +624,7 @@ msgid "Submit Date"
 msgstr ""
 
 # @generated
-#: APP-META.xml:55
+#: APP-META.xml:57
 msgid "Submit New Content"
 msgstr ""
 
@@ -636,7 +646,7 @@ msgid "This is the path from content origin. It is used to redefine the CDN URL.
 msgstr ""
 
 # @generated
-#: APP-META.xml:61
+#: APP-META.xml:63
 #: ui/js/videoparams.js:147
 msgid "Transcoder Parameters"
 msgstr ""
@@ -666,51 +676,50 @@ msgid "Username (optional)"
 msgstr ""
 
 # @generated
-#: APP-META.xml:37
-#: APP-META.xml:147
+#: APP-META.xml:39
 msgid "VDN"
 msgstr ""
 
 # @generated
-#: APP-META.xml:136
+#: APP-META.xml:138
 msgid "VDN  Embratel  global configuration variables"
 msgstr ""
 
 # @generated
-#: APP-META.xml:143
+#: APP-META.xml:145
 msgid "VDN  Embratel Management"
 msgstr ""
 
 # @generated
-#: APP-META.xml:135
+#: APP-META.xml:137
 msgid "VDN  Embratel globals"
 msgstr ""
 
 # @generated
-#: APP-META.xml:164
-#: APP-META.xml:165
+#: APP-META.xml:166
+#: APP-META.xml:167
 msgid "VDN Content"
 msgstr ""
 
 # @generated
-#: APP-META.xml:144
+#: APP-META.xml:146
 msgid "VDN Embratel environment"
 msgstr ""
 
 # @generated
-#: APP-META.xml:172
-#: APP-META.xml:173
+#: APP-META.xml:174
+#: APP-META.xml:175
 msgid "VDN Job"
 msgstr ""
 
 # @generated
-#: APP-META.xml:156
-#: APP-META.xml:157
+#: APP-META.xml:158
+#: APP-META.xml:159
 msgid "VDN Live Channels"
 msgstr ""
 
 # @generated
-#: APP-META.xml:41
+#: APP-META.xml:43
 msgid "VOD"
 msgstr ""
 

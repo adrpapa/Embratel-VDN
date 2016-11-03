@@ -3,7 +3,7 @@
     <id>http://embratel.com.br/app/VDNEmbratel</id>
     <name>VDNEmbratel</name>
     <version>2.0</version>
-    <release>3.1</release>
+    <release>3.3</release>
     <homepage>http://embratel.com.br/app/VDNEmbratel</homepage>
     <vendor>
         <name>Embratel</name>
@@ -146,7 +146,7 @@ using content distribution network (CDN) for the internet.
             <summary>VDN Embratel environment</summary>
             <entry-points>
             	<entry dst="http://embratel.com.br/app/VDNEmbratel#contents" class="aps2-view">
-            		<label>VDN</label>
+            		<label>Management</label>
             	</entry>
             </entry-points>
         </presentation>

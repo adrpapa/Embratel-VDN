@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDNEmbratel-1.0-1nReport-Msgid-Bugs-To:\n"
 "POT-Creation-Date: 2016-07-26 13:14-0300\n"
-"PO-Revision-Date: 2016-10-14 15:37-0300\n"
+"PO-Revision-Date: 2016-10-25 15:37-0200\n"
 "Language-Team: Portuguese <EMAIL@ADDRESS>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgid "Are you sure you want delete CDN __cdn__?"
 msgstr "Confirma exclusão do CDN __cdn__?"
 
 # @generated
-#: ui/channels.html:145
+#: ui/channels.html:144
 msgid "Are you sure you want delete Channels?"
 msgstr "Confirma a exclusão dos Canais?"
 
@@ -47,12 +47,12 @@ msgid "Avanced Options (additional charges may apply)"
 msgstr "Opções Avançadas (ATENÇÃO: Pode incidir cobrança adicional)"
 
 # @generated
-#: APP-META.xml:46
+#: APP-META.xml:48
 msgid "Back to Contents list"
 msgstr "Voltar para lista de conteúdo"
 
 # @generated
-#: APP-META.xml:69 APP-META.xml:93 APP-META.xml:105 APP-META.xml:111
+#: APP-META.xml:71 APP-META.xml:95 APP-META.xml:107 APP-META.xml:113
 msgid "Back to list"
 msgstr "Volta à lista"
 
@@ -62,7 +62,7 @@ msgid "Base URL"
 msgstr "URL Base"
 
 # @generated
-#: APP-META.xml:101 APP-META.xml:102
+#: APP-META.xml:103 APP-META.xml:104
 msgid "CDN"
 msgstr "CDN"
 
@@ -92,7 +92,7 @@ msgid "Channel Configuration"
 msgstr "Configuração do Canal"
 
 # @generated
-#: APP-META.xml:91
+#: APP-META.xml:93
 msgid "Channel Information"
 msgstr "Informação do Canal"
 
@@ -107,17 +107,17 @@ msgid "Complete Jobs"
 msgstr "Tarefas Encerradas"
 
 # @generated
-#: APP-META.xml:180 APP-META.xml:181
+#: APP-META.xml:182 APP-META.xml:183
 msgid "Content Delivery Network"
 msgstr "Content Delivery Network"
 
 # @generated
-#: APP-META.xml:44 ui/content-info.html:41
+#: APP-META.xml:46 ui/content-info.html:41
 msgid "Content Information"
 msgstr "Informações do Conteúdo"
 
 # @generated
-#: APP-META.xml:42 APP-META.xml:43
+#: APP-META.xml:44 APP-META.xml:45
 msgid "Conteúdo"
 msgstr "Conteúdo"
 
@@ -127,12 +127,12 @@ msgid "DASH"
 msgstr "DASH"
 
 # @generated
-#: ui/contents.html:46 ui/jobs.html:53 ui/channels.html:58 ui/cdns.html:46
+#: ui/contents.html:46 ui/jobs.html:53 ui/channels.html:57 ui/cdns.html:46
 msgid "Delete"
 msgstr "Remover"
 
 # @generated
-#: APP-META.xml:109
+#: APP-META.xml:111
 msgid "Delivery Service Information"
 msgstr "Detalhes do Serviço de Entrega (Delivery Service)"
 
@@ -173,7 +173,7 @@ msgid "Embratel"
 msgstr "Embratel"
 
 # @generated
-#: ui/jobs.html:95 ui/channels.html:85
+#: ui/jobs.html:95 ui/channels.html:84
 msgid ""
 "Error refreshing job __jobname__:\n"
 " __errmsg__"
@@ -212,6 +212,11 @@ msgid "General Configuration"
 msgstr "Configurações Gerais"
 
 # @generated
+#: APP-META.xml:28
+msgid "General fixes"
+msgstr "Correções em geral"
+
+# @generated
 #: ui/channel-info.html:37 ui/content-info.html:35
 msgid "HDS"
 msgstr "HDS"
@@ -247,7 +252,7 @@ msgid "IP or FQDN from origin server that will provide the content"
 msgstr "IP ou FQDN do servidor origem para provisionamento de conteúdo"
 
 # @generated
-#: APP-META.xml:26
+#: APP-META.xml:25
 msgid "Initial release."
 msgstr "Release inicial"
 
@@ -292,7 +297,7 @@ msgid "Job Id"
 msgstr "ID do Job"
 
 # @generated
-#: APP-META.xml:67
+#: APP-META.xml:69
 msgid "Job Information"
 msgstr "Informação do Job"
 
@@ -311,7 +316,7 @@ msgstr ""
 "__errmsg__ "
 
 # @generated
-#: APP-META.xml:53 APP-META.xml:54
+#: APP-META.xml:55 APP-META.xml:56
 msgid "Jobs"
 msgstr "Jobs"
 
@@ -321,12 +326,12 @@ msgid "Just In Time Encryption of content"
 msgstr "Criptografia em tempo real do conteúdo (JIT Encryption)"
 
 # @generated
-#: APP-META.xml:77 ui/cdns.html:39
+#: APP-META.xml:79 ui/cdns.html:39
 msgid "Live"
 msgstr "Live"
 
 # @generated
-#: APP-META.xml:78
+#: APP-META.xml:80
 msgid "Live Channels"
 msgstr "Canais Live"
 
@@ -359,8 +364,13 @@ msgid "MSS"
 msgstr "MSS"
 
 # @generated
+#: APP-META.xml:149
+msgid "Management"
+msgstr "Gerenciamento"
+
+# @generated
 #: ui/contents.html:32 ui/jobs.html:45 ui/jobs.html:65 ui/cdn-info.html:36
-#: ui/channels.html:31 ui/cdn-new-1.html:52 ui/cdns.html:34
+#: ui/channels.html:30 ui/cdn-new-1.html:52 ui/cdns.html:34
 #: ui/cdn-new-last.html:33
 msgid "Name"
 msgstr "Nome"
@@ -386,12 +396,12 @@ msgid "New"
 msgstr "Novo"
 
 # @generated
-#: APP-META.xml:79 ui/channels.html:53
+#: APP-META.xml:81 ui/channels.html:52
 msgid "New Channel"
 msgstr "Criar Novo Canal"
 
 # @generated
-#: APP-META.xml:103
+#: APP-META.xml:105
 msgid "New Delivery Service"
 msgstr "Novo Serviço de Entrega (Delivery Service)"
 
@@ -481,17 +491,17 @@ msgid "Quality index"
 msgstr "Taxa de Qualidade"
 
 # @generated
-#: ui/channels.html:42
+#: ui/channels.html:41
 msgid "RTMP Stream"
 msgstr "Stream RTMP"
 
 # @generated
-#: ui/channels.html:33
+#: ui/channels.html:32
 msgid "RTMP URL"
 msgstr "Site RTMP"
 
 # @generated
-#: ui/contents.html:47 ui/jobs.html:54 ui/channels.html:59 ui/cdns.html:47
+#: ui/contents.html:47 ui/jobs.html:54 ui/channels.html:58 ui/cdns.html:47
 msgid "Refresh"
 msgstr "Atualizar"
 
@@ -511,7 +521,7 @@ msgid "Resolutions, Frame Rates, Video Bit Rates and Audio Bit Rates that will b
 msgstr "Confirme a Resolução, Frame Rate, Bit Rate de Vídeo e Bit Rate de Áudio que serão usados na transcodificação"
 
 # @generated
-#: APP-META.xml:85
+#: APP-META.xml:87
 msgid "Review"
 msgstr "Revisar Configuraçoes"
 
@@ -542,7 +552,7 @@ msgid "Site / Path to content"
 msgstr "Site / Caminho dos conteúdos"
 
 # @generated
-#: ui/channels.html:56
+#: ui/channels.html:55
 msgid "Start"
 msgstr "Iniciar"
 
@@ -552,18 +562,18 @@ msgid "Start Encoding"
 msgstr "Início de Transcodificação"
 
 # @generated
-#: ui/channels.html:49
+#: ui/channels.html:48
 msgid "Start time"
 msgstr "Horário de início"
 
 # @generated
-#: ui/channel-info.html:59 ui/jobs.html:46 ui/jobs.html:66 ui/channels.html:32
+#: ui/channel-info.html:59 ui/jobs.html:46 ui/jobs.html:66 ui/channels.html:31
 #: ui/job-info.html:36
 msgid "State"
 msgstr "Status"
 
 # @generated
-#: ui/channels.html:57
+#: ui/channels.html:56
 msgid "Stop"
 msgstr "Parar"
 
@@ -578,7 +588,7 @@ msgid "Submit Date"
 msgstr "Data de Início"
 
 # @generated
-#: APP-META.xml:55
+#: APP-META.xml:57
 msgid "Submit New Content"
 msgstr "Enviar Conteúdo"
 
@@ -598,7 +608,7 @@ msgid "This is the path from content origin. It is used to redefine the CDN URL.
 msgstr "Informe a porção do caminho (path) de sua origem de dados (esta porção do caminho será suprimida da URL final do CDN)"
 
 # @generated
-#: APP-META.xml:61 ui/js/videoparams.js:147
+#: APP-META.xml:63 ui/js/videoparams.js:147
 msgid "Transcoder Parameters"
 msgstr "Parametros de Transcodificação"
 
@@ -624,47 +634,47 @@ msgid "Username (optional)"
 msgstr "Usuário"
 
 # @generated
-#: APP-META.xml:37 APP-META.xml:147
+#: APP-META.xml:39
 msgid "VDN"
 msgstr "VDN"
 
 # @generated
-#: APP-META.xml:136
+#: APP-META.xml:138
 msgid "VDN  Embratel  global configuration variables"
 msgstr "Variáveis Globais"
 
 # @generated
-#: APP-META.xml:143
+#: APP-META.xml:145
 msgid "VDN  Embratel Management"
 msgstr "Gerenciamento VDN"
 
 # @generated
-#: APP-META.xml:135
+#: APP-META.xml:137
 msgid "VDN  Embratel globals"
 msgstr "Globais VDN"
 
 # @generated
-#: APP-META.xml:164 APP-META.xml:165
+#: APP-META.xml:166 APP-META.xml:167
 msgid "VDN Content"
 msgstr "Conteúdo VDN"
 
 # @generated
-#: APP-META.xml:144
+#: APP-META.xml:146
 msgid "VDN Embratel environment"
 msgstr "Ambiente VDN"
 
 # @generated
-#: APP-META.xml:172 APP-META.xml:173
+#: APP-META.xml:174 APP-META.xml:175
 msgid "VDN Job"
 msgstr "Job"
 
 # @generated
-#: APP-META.xml:156 APP-META.xml:157
+#: APP-META.xml:158 APP-META.xml:159
 msgid "VDN Live Channels"
 msgstr "Live"
 
 # @generated
-#: APP-META.xml:41
+#: APP-META.xml:43
 msgid "VOD"
 msgstr "VOD"
 
@@ -677,6 +687,9 @@ msgstr "Bit Rate de Vídeo"
 #: APP-META.xml:17
 msgid "Video Delivery Network (VDN)"
 msgstr "Video Delivery Network (VDN)"
+
+msgid "Wait rtmp start"
+msgstr "Aguardando Transmissão"
 
 # @generated
 #: ui/js/videoparams.js:144
@@ -708,6 +721,12 @@ msgstr "[Exemplos: meuhost.meudominio.com.br / 201.233.111.10]"
 msgid "[myLiveEvent]"
 msgstr "[meuEvento]"
 
+msgid "complete"
+msgstr "Encerrado"
+
+msgid "error"
+msgstr "Erro"
+
 # @generated
 #: APP-META.xml:10
 msgid "https://embratel.com.br"
@@ -717,3 +736,9 @@ msgstr "https://embratel.com.br"
 #: APP-META.xml:14
 msgid "https://flts.com.br"
 msgstr "https://flts.com.br"
+
+msgid "preprocessing"
+msgstr "Pré-processando"
+
+msgid "starting"
+msgstr "Iniciando"

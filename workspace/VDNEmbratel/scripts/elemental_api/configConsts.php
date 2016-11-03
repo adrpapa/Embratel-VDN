@@ -42,6 +42,7 @@
         const CDMS_USER = "admin";
         const CDMS_PWD = "C1sc0CDN!";
         const CDMS_DOMAIN = "csi.cds.cisco.com";
+        const CDMS_MAX_BITRATE_PER_SESSION = 12000;
         
         //********* Splunk *********
         const SPLUNK_ADDRESS = '192.118.76.206';
