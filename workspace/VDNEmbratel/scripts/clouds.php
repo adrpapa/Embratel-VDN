@@ -11,7 +11,7 @@ require "aps/2/runtime.php";
 class cloud extends APS\ResourceBase {
 # Link to collection of contexts. Pay attention to [] brackets at the end of the @link line.
 	/**
-	 * @link("http://embratel.com.br/app/VDNEmbratel/context/1.0[]")
+	 * @link("http://embratel.com.br/app/VDNEmbratel/context/1.1[]")
 	 */
 	public $contexts;
 

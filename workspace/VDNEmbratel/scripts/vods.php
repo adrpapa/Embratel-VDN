@@ -15,7 +15,7 @@ class vod extends \APS\ResourceBase {
 
     // Relation with the management context
     /**
-        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.0")
+        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.1")
         * @required
         */
     public $context;
@@ -189,7 +189,7 @@ class vod extends \APS\ResourceBase {
         $logger->info("Creating new CDN for Delivery service: $ds_name content: $this->content_name");
 
         $logger->info("Intantiating CDN");
-        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/cdn/1.0");
+        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/cdn/1.1");
         $logger->info("Setting CDN Properties");
         $cdn->name = $cdnName;
         $cdn->description = $cdnName;

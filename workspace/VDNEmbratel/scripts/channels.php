@@ -18,7 +18,7 @@ class channel extends \APS\ResourceBase {
 
     // Relation with the management context
     /**
-        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.0")
+        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.1")
         * @required
         */
     public $context;
@@ -255,7 +255,7 @@ class channel extends \APS\ResourceBase {
 	                                $this->context->account->id,$axName);
 	        $originPath = sprintf("out/u/%s",formatClientID($this->context));
 	
-	        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/cdn/1.0");
+	        $cdn = \APS\TypeLibrary::newResourceByTypeId("http://embratel.com.br/app/VDNEmbratel/cdn/1.1");
 	        $cdn->name = $cdnName;
 	        $cdn->description = $cdnName;
 	        $cdn->alias = $axName;

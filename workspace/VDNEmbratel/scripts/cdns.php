@@ -12,7 +12,7 @@ require_once "elemental_api/configConsts.php";
 require_once "utils/splunk.php";
 
 /**
- * @type("http://embratel.com.br/app/VDNEmbratel/cdn/1.0")
+ * @type("http://embratel.com.br/app/VDNEmbratel/cdn/1.1")
  * @implements("http://aps-standard.org/types/core/resource/1.0")
  */
 class cdn extends \APS\ResourceBase {
@@ -20,7 +20,7 @@ class cdn extends \APS\ResourceBase {
     // Relation with the management context
 
     /**
-        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.0")
+        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.1")
         * @required
         */
     public $context;

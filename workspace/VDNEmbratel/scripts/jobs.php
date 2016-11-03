@@ -16,7 +16,7 @@ class job extends \APS\ResourceBase {
 
     // Relation with the management context
     /**
-        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.0")
+        * @link("http://embratel.com.br/app/VDNEmbratel/context/1.1")
         * @required
         */
     public $context;
