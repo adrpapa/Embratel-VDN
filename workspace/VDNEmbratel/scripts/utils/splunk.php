@@ -91,8 +91,8 @@ class SplunkStats {
     }
 }
 
-// $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventovod-1000001", null, null);
-// var_dump($splunkStats);
+$splunkStats = SplunkStats::getBilling("teste","ds-vodhttp-1021560", null, null);
+var_dump($splunkStats);
 // $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventodeltaive-1000001", $splunkStats->lastResultTime);
 // var_dump($splunkStats);
 // $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventodeltaive-1000001", $splunkStats->lastResultTime);

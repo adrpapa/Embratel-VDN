@@ -431,6 +431,7 @@ class context extends \APS\ResourceBase
             $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($cdn->aps->id, 'unassignServiceEngines'));
         }
+    }
 
     public function enable() {
         $logger = $this->getLogger();
@@ -445,7 +446,7 @@ class context extends \APS\ResourceBase
             $apsc->getIo()->sendRequest(\APS\Proto::GET,
                     $apsc->getIo()->resourcePath($cdn->aps->id, 'assignServiceEngines'));
         }
-
+    }
 }
 
 ?>

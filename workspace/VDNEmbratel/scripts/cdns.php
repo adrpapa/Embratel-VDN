@@ -217,6 +217,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End Creating DS");		
         } catch (Exception $fault) {
             $logger->info("Error creating DS " . $fault->getMessage());
+            $this->unprovision();
             throw new \Rest\RestException( 500, $userError." - Delivery Service", $fault->getMessage());
         }		
 
@@ -237,6 +238,7 @@ class cdn extends \APS\ResourceBase {
             $logger->info("<-- End Rule");
         } catch (Exception $fault) {
             $logger->info("Error assign Rule " . $fault->getMessage());
+            $this->unprovision();
             throw new \Rest\RestException( 500, $userError." - Assign Rule", $fault->getMessage());
         }		
         
@@ -353,7 +355,7 @@ class cdn extends \APS\ResourceBase {
         }
 
         // ASSIGN SEs
-        if ( !$ds->assignSEs() ) {
+        if ( !$ds->assignSEs($ds->getID()) ) {
             $logger->info("cdns:provisioning() Error assigning SEs to Delivery Service: " . $ds->getMessage());
             // Rollback
             $logger->info("cdns:provisioning() Rollbacking: [".$ds->getID()."].[".$origin->getID()."]");
@@ -468,8 +470,13 @@ class cdn extends \APS\ResourceBase {
         * @verb(GET)
         * @path("/assignServiceEngines")
         */
-    public assignServiceEngines(){
-    	//TODO: Insert code to insert service engines into delivery service
+    public function assignServiceEngines(){
+        if ( !is_null($this->delivery_service_id) ) {
+            $ds = new DeliveryService();
+			if( ! $ds->assignSEs( $this->delivery_service_id ) ) {
+				throw new \Exception("Can't assign service engines to delivery service:" . $ds->getMessage(), 504);
+			}
+		}
     	return;
     }
 
@@ -478,8 +485,13 @@ class cdn extends \APS\ResourceBase {
         * @verb(GET)
         * @path("/unassignServiceEngines")
         */
-    public unassignServiceEngines(){
-    	//TODO: Insert code to unassign service engines from delivery service
+    public function unassignServiceEngines(){
+        if ( !is_null($this->delivery_service_id) ) {
+            $ds = new DeliveryService();
+			if( ! $ds->unassignSEs( $this->delivery_service_id ) ) {
+				throw new \Exception("Can't unassign service engines from delivery service:" . $ds->getMessage(), 504);
+			}
+		}
     	return;
     }
 }

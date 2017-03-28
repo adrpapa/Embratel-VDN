@@ -1,3 +1,4 @@
+
 <?php
     require_once "CDSM.php";
     require_once "serviceEngine.php";
@@ -95,23 +96,74 @@
         	return ( parent::update(null,null) );  
         }
         
-        public function assignSEs() {
-        	$se = new ServiceEngine();
-        	if ( $se->get(null) ) {
-        		$list_ses = $se->getID();
-        	}
-        	else {
-        		return false;
-        	}
-        	
+        public function assignSEs($id) {
         	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
         	$this->action = "assignSEs";
-        	$this->deliveryService = $this->getID();
-        	if ( !$se->get( $se->getContentAcquirer() ) ) return false;
-        	$this->contentAcquirer = $se->getID();
-        	$this->se = $list_ses;
-        	
+        	$this->deliveryService = $id;
+        	$this->contentAcquirer = ServiceEngine::getSEList();
+        	$this->se = 'all';
         	return ( parent::update(null) );
         }
+
+        public function unassignSEs($id) {
+        	$this->taskAPI = "com.cisco.unicorn.ui.ChannelApiServlet";
+        	$this->action = "unassignSEs";
+        	$this->deliveryService = $id;
+        	$this->se = 'all';
+        	return ( parent::update(null) );        	
+        }
+
+    }
+
+
+	require_once "contentOrigin.php";
+    class TestDeliveryService {
+		protected $custom_name = 'testeBand';
+		protected $origin_server = 'testeband.org';
+		protected $origin_domain = 'testeband.org';
+		protected $description = 'teste cdn para unassign Service Engines';
+		protected $dsid = 'Channel_3009';
+		protected $orid = 'WebSite_3007';
+		
+		public static function assignSE(){
+			$ds = new DeliveryService();
+			if( ! $ds->assignSEs($dsid) ) {
+				throw new RuntimeException( $ds->getMessage());
+			}
+			return;	
+		}
+		
+		public static function deleteDS(){
+			$ds = new DeliveryService();
+			if( ! $ds->delete($dsid) ) {
+				throw new RuntimeException( $ds->getMessage());
+			}
+			return;	
+		}
+		
+		public static function createDS(){
+			$origin = new ContentOrigin("co-".$custom_name, $origin_server, $origin_domain, $description);
+			if ( !$origin->create() ) {
+				throw new RuntimeException( $origin->getMessage());
+			}
+			print "Content Origin created with ID=".$origin->getID()."\n";
+			$ds = new DeliveryService($custom_name, $origin->getID(), $description);
+			
+			/* INICIO Alteração sugeridas pelo Daniel Pinkas da Cisco */
+			$ds->live = "false";	// ($this->live ? "true":"false");
+			/* FIM Alteração sugeridas pelo Daniel Pinkas da Cisco */
+			
+			if ( !$ds->create() ) {
+				throw new RuntimeException( $ds->getMessage());
+			}
+			
+			// ASSIGN SEs
+			if ( ! $ds->assignSEs($ds->getID() ) ) {
+				throw new RuntimeException( $ds->getMessage());
+			}		
+			
+			print "\n\n\nDelivery service created with ID=".$ds->getID()."\n";
+			print "Content Origin created with ID=".$origin->getID()."\n";
+		}
     }
 ?>

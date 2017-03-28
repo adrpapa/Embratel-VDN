@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="VDNEmbratel">
-  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/context" version="1.0" relations="//@relations.0/@source //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source //@relations.5/@source //@relations.6/@source" name="context" implements="//@typesFromLibrary.0">
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/context" version="1.1" relations="//@relations.0/@source //@relations.1/@source //@relations.2/@source //@relations.3/@source //@relations.4/@source //@relations.5/@source //@relations.6/@source" name="context" implements="//@typesFromLibrary.0">
     <properties name="vodDeltaPaths" type="DeltaPaths" readonly="true"/>
     <properties name="VDN_HTTP_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTP"/>
     <properties name="VDN_HTTPS_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTPS"/>
@@ -24,6 +24,28 @@
       <properties name="standard" type="ProtoPaths"/>
       <properties name="premium" type="ProtoPaths"/>
     </structures>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.1" relations="//@relations.3/@target" name="cdn" implements="//@typesFromLibrary.0">
+    <properties name="name" type="string" description="CDN Name" required="true"/>
+    <properties name="description" type="string" description="CDN Description"/>
+    <properties name="alias" type="string" description="CDN Alias-only characters and numbers are allowed" required="true"/>
+    <properties name="origin_server" type="string" description="Content Origin Server(FQDN or IP) for video ingestion" required="true"/>
+    <properties name="origin_path" type="string" description="Content Path for video ingestion" required="true"/>
+    <properties name="https" type="boolean" description="Turn on HTTPS feature for output"/>
+    <properties name="https_in" type="boolean" description="Turn on HTTPS feature for input"/>
+    <properties name="live" type="boolean" description="Turn on Live Delivery Service"/>
+    <properties name="delivery_service_id" type="string" description="CDMS Delivery Service" readonly="true"/>
+    <properties name="content_origin_id" type="string" description="CDMS Content Origin" readonly="true"/>
+    <properties name="delivery_service_gen_settings_id" type="string" description="CDMS Delivery Service General Settings" readonly="true"/>
+    <properties name="rule_url_rwr_file_id" type="string" description="CDMS URL Rewrite Rule File" readonly="true"/>
+    <properties name="origin_domain" type="string" description="Content Origin Domain" readonly="true"/>
+    <properties name="delivery_service_name" type="string" description="Delivery Service Name" readonly="true"/>
+    <properties name="httpTrafficActualUsage" type="number" description="Traffic HTTP actual usage"/>
+    <properties name="http_s_TrafficActualUsage" type="number" description="Traffic HTTPS actual usage"/>
+    <properties name="newestSplunkData" type="string" description="Timestamp of last result from splunk"/>
+    <operations name="updateResourceUsage" verb="GET" path="/updateResourceUsage"/>
+    <operations name="assignServiceEngines" verb="GET" path="/assignServiceEngines"/>
+    <operations name="unassignServiceEngines" verb="GET" path="/unassignServiceEngines"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/channel" version="2.1" relations="//@relations.0/@target" name="channel" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="Channel Name" required="true"/>
@@ -52,26 +74,6 @@
     <properties name="audio_bitrates" type="array" description="Array of Audio Bitrates for the generated streams"/>
     <operations name="updateChannelStatus" verb="GET" path="/updateChannelStatus"/>
     <operations name="updateLiveUsage" verb="GET" path="/updateLiveUsage"/>
-  </internalTypes>
-  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.0" relations="//@relations.3/@target" name="cdn" implements="//@typesFromLibrary.0">
-    <properties name="name" type="string" description="CDN Name" required="true"/>
-    <properties name="description" type="string" description="CDN Description"/>
-    <properties name="alias" type="string" description="CDN Alias-only characters and numbers are allowed" required="true"/>
-    <properties name="origin_server" type="string" description="Content Origin Server(FQDN or IP) for video ingestion" required="true"/>
-    <properties name="origin_path" type="string" description="Content Path for video ingestion" required="true"/>
-    <properties name="https" type="boolean" description="Turn on HTTPS feature for output"/>
-    <properties name="https_in" type="boolean" description="Turn on HTTPS feature for input"/>
-    <properties name="live" type="boolean" description="Turn on Live Delivery Service"/>
-    <properties name="delivery_service_id" type="string" description="CDMS Delivery Service" readonly="true"/>
-    <properties name="content_origin_id" type="string" description="CDMS Content Origin" readonly="true"/>
-    <properties name="delivery_service_gen_settings_id" type="string" description="CDMS Delivery Service General Settings" readonly="true"/>
-    <properties name="rule_url_rwr_file_id" type="string" description="CDMS URL Rewrite Rule File" readonly="true"/>
-    <properties name="origin_domain" type="string" description="Content Origin Domain" readonly="true"/>
-    <properties name="delivery_service_name" type="string" description="Delivery Service Name" readonly="true"/>
-    <properties name="httpTrafficActualUsage" type="number" description="Traffic HTTP actual usage"/>
-    <properties name="http_s_TrafficActualUsage" type="number" description="Traffic HTTPS actual usage"/>
-    <properties name="newestSplunkData" type="string" description="Timestamp of last result from splunk"/>
-    <operations name="updateResourceUsage" verb="GET" path="/updateResourceUsage"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cloud" version="1.0" relations="//@relations.4/@target" application="true" name="cloud" implements="//@typesFromLibrary.1"/>
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/vod" version="1.0" relations="//@relations.2/@target" name="vod" implements="//@typesFromLibrary.0">
@@ -175,7 +177,7 @@
   </typesFromLibrary>
   <relations>
     <source type="//@internalTypes.0" name="channels" collection="true"/>
-    <target type="//@internalTypes.1" name="context" required="true"/>
+    <target type="//@internalTypes.2" name="context" required="true"/>
   </relations>
   <relations>
     <source type="//@internalTypes.0" name="jobs" collection="true"/>
@@ -187,7 +189,7 @@
   </relations>
   <relations>
     <source type="//@internalTypes.0" name="cdns" collection="true"/>
-    <target type="//@internalTypes.2" name="context" required="true"/>
+    <target type="//@internalTypes.1" name="context" required="true"/>
   </relations>
   <relations>
     <source type="//@internalTypes.0" name="cloud" required="true"/>

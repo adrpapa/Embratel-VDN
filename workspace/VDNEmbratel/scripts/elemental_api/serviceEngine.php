@@ -73,6 +73,16 @@ class ServiceEngine extends CDSM {
 		$ca = $this->xml->xpath("/SESettings/content-acquirer");
 		return( $ca[0][0]->__toString() );
 	}
+
+	public static function getSEList() {
+    	$se = new ServiceEngine();
+    	if ( $se->get(null) ) {
+    		if ( $se->get( $se->getContentAcquirer() ) ) 
+	    		return $se->getID();
+    	}
+		return false;
+	}
+
 }
 
 ?>

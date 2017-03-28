@@ -29,10 +29,10 @@
 		</list>
 	</section>
 	<section name="NewWizardAction">
-		<item value="com.parallels.aps.ide.ui.newProject" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<item value="org.eclipse.wst.xml.ui.internal.wizards.NewXMLWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="net.sourceforge.phpeclipse.wizards.NewWizardCategoryPHP"/>
-			<item value="org.eclipse.php.project.ui"/>
+			<item value="org.eclipse.wst.XMLCategory"/>
+			<item value="org.eclipse.ui.Examples"/>
 		</list>
 	</section>
 	<section name="InstallationDialogSettings">

@@ -10,7 +10,10 @@ class BillingLog {
         if (!file_exists($billingLogPath)) {
             mkdir($billingLogPath, 0755, true);
         }
-        $clientID = formatClientID($context);
+        if( $context == "teste")
+            $clientID = $context;
+        else
+            $clientID = formatClientID($context);
         $this->billingLog = $billingLogPath.$clientID."_".$name.".log";
         $this->billingError = $billingLogPath.$clientID."_".$name."_error.log";
         $this->billingDebug = $billingLogPath.$clientID."_".$name."_dbg.log";
