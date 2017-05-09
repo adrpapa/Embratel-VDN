@@ -25,28 +25,6 @@
       <properties name="premium" type="ProtoPaths"/>
     </structures>
   </internalTypes>
-  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.1" relations="//@relations.3/@target" name="cdn" implements="//@typesFromLibrary.0">
-    <properties name="name" type="string" description="CDN Name" required="true"/>
-    <properties name="description" type="string" description="CDN Description"/>
-    <properties name="alias" type="string" description="CDN Alias-only characters and numbers are allowed" required="true"/>
-    <properties name="origin_server" type="string" description="Content Origin Server(FQDN or IP) for video ingestion" required="true"/>
-    <properties name="origin_path" type="string" description="Content Path for video ingestion" required="true"/>
-    <properties name="https" type="boolean" description="Turn on HTTPS feature for output"/>
-    <properties name="https_in" type="boolean" description="Turn on HTTPS feature for input"/>
-    <properties name="live" type="boolean" description="Turn on Live Delivery Service"/>
-    <properties name="delivery_service_id" type="string" description="CDMS Delivery Service" readonly="true"/>
-    <properties name="content_origin_id" type="string" description="CDMS Content Origin" readonly="true"/>
-    <properties name="delivery_service_gen_settings_id" type="string" description="CDMS Delivery Service General Settings" readonly="true"/>
-    <properties name="rule_url_rwr_file_id" type="string" description="CDMS URL Rewrite Rule File" readonly="true"/>
-    <properties name="origin_domain" type="string" description="Content Origin Domain" readonly="true"/>
-    <properties name="delivery_service_name" type="string" description="Delivery Service Name" readonly="true"/>
-    <properties name="httpTrafficActualUsage" type="number" description="Traffic HTTP actual usage"/>
-    <properties name="http_s_TrafficActualUsage" type="number" description="Traffic HTTPS actual usage"/>
-    <properties name="newestSplunkData" type="string" description="Timestamp of last result from splunk"/>
-    <operations name="updateResourceUsage" verb="GET" path="/updateResourceUsage"/>
-    <operations name="assignServiceEngines" verb="GET" path="/assignServiceEngines"/>
-    <operations name="unassignServiceEngines" verb="GET" path="/unassignServiceEngines"/>
-  </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/channel" version="2.1" relations="//@relations.0/@target" name="channel" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="Channel Name" required="true"/>
     <properties name="description" type="string" description="Channel Description" required="true"/>
@@ -175,25 +153,26 @@
     <properties name="companyName" type="string" required="true"/>
     <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
   </typesFromLibrary>
+  <externalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.1" relations="//@relations.3/@target"/>
   <relations>
     <source type="//@internalTypes.0" name="channels" collection="true"/>
-    <target type="//@internalTypes.2" name="context" required="true"/>
-  </relations>
-  <relations>
-    <source type="//@internalTypes.0" name="jobs" collection="true"/>
-    <target type="//@internalTypes.5" name="context" required="true"/>
-  </relations>
-  <relations>
-    <source type="//@internalTypes.0" name="vods" collection="true"/>
-    <target type="//@internalTypes.4" name="context" required="true"/>
-  </relations>
-  <relations>
-    <source type="//@internalTypes.0" name="cdns" collection="true"/>
     <target type="//@internalTypes.1" name="context" required="true"/>
   </relations>
   <relations>
+    <source type="//@internalTypes.0" name="jobs" collection="true"/>
+    <target type="//@internalTypes.4" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="vods" collection="true"/>
+    <target type="//@internalTypes.3" name="context" required="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.0" name="cdns" collection="true"/>
+    <target type="//@externalTypes.0"/>
+  </relations>
+  <relations>
     <source type="//@internalTypes.0" name="cloud" required="true"/>
-    <target type="//@internalTypes.3" name="contexts" collection="true"/>
+    <target type="//@internalTypes.2" name="contexts" collection="true"/>
   </relations>
   <relations>
     <source type="//@internalTypes.0" name="subscription" required="true"/>

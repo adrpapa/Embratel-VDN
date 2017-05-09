@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $(dig +noall +answer host1.apo.apsdemo.org | wc -l) -gt 0 ]; then
+if pgrep -lf openvpn && [ $(dig +noall +answer host1.apo.apsdemo.org | wc -l) -gt 0 ]; then
 	dig +noall +answer host1.apo.apsdemo.org
 	echo 'VPN já está Configurada'
 	exit 0
