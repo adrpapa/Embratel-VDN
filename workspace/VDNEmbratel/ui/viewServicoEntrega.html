@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+<script>
+require([
+         "aps/load",
+         "aps/Output",
+         "aps/Memory",
+         "dojox/mvc/at",
+         "aps/ready!"
+     ], function(load, Output, Memory, at) {
+         "use strict";
+         
+         var data = [{
+             aps: {
+                 sys_id: "1"
+             },
+             info: {
+                 name: "Client_1021560_vod_http",
+                 description: "Descrição do serviço de entrega Client_1021560_vod_http que foi preenchido na tela de detalhes",
+                 alias: "vod_http",
+                 origin_server: "cliente.embratel.bom.br",
+                 origin_path: "caminho/para/os/arquivos",
+                 https: true,
+                 https_in: true,
+                 live: false,
+                 origin_domain: "origin.domain.com.br",
+                 delivery_service_name: "deliveryServiceNameOnCisco",
+                 httpTrafficAtualUsage: 987654321,
+                 http_s_TrafficActualUsage: 1234567890,
+                 newestSplunkData: "2017-05-13 12:21:12"
+             }
+         }, {
+             aps: {
+                 sys_id: "2"
+             },
+             info: {
+                 name: "Client_1021560_vod_http",
+                 description: "Descrição do serviço de entrega Client_1021560_vod_http que foi preenchido na tela de detalhes",
+                 alias: "vod_http",
+                 origin_server: "cliente.embratel.bom.br",
+                 origin_path: "caminho/para/os/arquivos",
+                 https: true,
+                 https_in: true,
+                 live: false,
+                 origin_domain: "origin.domain.com.br",
+                 delivery_service_name: "deliveryServiceNameOnCisco",
+                 httpTrafficAtualUsage: 987654321,
+                 http_s_TrafficActualUsage: 1234567890,
+                 newestSplunkData: "2017-05-13 12:21:12"
+             }
+         }];
+         
+         
+         var store = new Memory({
+             data: data,
+             idProperty: "aps.sys_id"
+         });
+         
+         load(["aps/PageContainer", [
+             ["aps/ActiveList", {
+                 store: store,
+                 cols:2
+             },
+              [
+                  ["aps/Button", {
+                      title: _("Add New Delivery Service"),
+                      iconClass: "sb-add-new",
+                      onClick: function() { aps.apsc.gotoView("servicoEntrega"); }
+                  }],
+                  ["aps/ActiveItem", {
+                      title: at("rel:info", "name"),
+                      description: [new Output({
+                          innerHTML: _("Domain Name: ${value}"),
+                          value: at("rel:info", "origin_domain"),
+                          "class": "summary-item" })
+                      ]
+                  },[
+                     ["aps/ToolbarButton", {
+                           label: _("Manage"),
+                           iconClass:"sb-login",
+                           onClick: function() { aps.apsc.gotoView("servicoEntrega"); }
+                       }],
+                       ["aps/ToolbarButton", {
+                           label: _("Remove"),
+                           iconClass:"sb-delete",
+                           onClick: function() {
+                               if (confirm(_("Confirm Deletion of __vdn__?",{"vdn":"VDN"}))) {
+                                   alert(_("Deleted!"));
+                               }
+                           }
+                       }],
+                       
+                       ["aps/Container", {title: _("Delivery Service Detail") }, [
+                            ["aps/FieldSet", [
+                                ["aps/Output", {
+                                    label: _("Alias"),
+                                    value: at("rel:info", "alias")
+                                }],
+                               ["aps/Output", {
+                                   label: _("Live"),
+                                   value: at("rel:info", "live")
+                               }],
+                                ["aps/Output", {
+                                    label: _("Use HTTPS"),
+                                    value: at("rel:info", "https")
+                                }],
+                                ["aps/Output", {
+                                    label: _("Origin Server"),
+                                    value: at("rel:info", "origin_server")
+                                }],
+                                ["aps/Output", {
+                                    label: _("Origin Path"),
+                                    value: at("rel:info", "origin_path")
+                                }],
+                                ["aps/Output", {
+                                    label: _("Description"),
+                                    value: at("rel:info", "description")
+                                }]
+                            ]]
+                        ]],
+                        ["aps/Container", {title: _("Estatisticas") }, [
+                            ["aps/FieldSet", [
+	                            ["aps/Output", {
+	                                label: _("Total HTTP Traffic"),
+	                                value: at("rel:info", "httpTrafficAtualUsage")
+	                            }],
+	                            ["aps/Output", {
+	                                label: _("Total HTTPS Traffic"),
+	                                value: at("rel:info", "http_s_TrafficActualUsage")
+	                            }],
+	                            ["aps/Output", {
+	                                label: _("Last Statistics read at"),
+	                                value: at("rel:info", "newestSplunkData")
+	                            }]
+	                        ]]
+                        ]]
+                   ]
+                  ]
+              ]
+             ]
+         ]]);
+     });
+</script>
+</head>
+<body>
+</body>
+</html>

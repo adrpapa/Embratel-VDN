@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<!--
+ * Created on 14 de mai de 2017
+ *
+ * To change the template for this generated file go to
+ * Window - Preferences - PHPeclipse - PHP - Code Templates
+-->
+ <head>
+<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+ <script>
+ require([
+          "aps/load",
+          "aps/ready!"
+      ], function(load) {
+          "use strict";
+
+          load(["aps/PageContainer", [
+              ["aps/ActiveList", {
+                  sortDescending: null,
+                  cols: 2},
+                  [
+                      ["aps/ActiveItem", {
+                          collapsible: false,
+                          title: "Portal Cisco Analytics",
+                          iconName: "images/cisco.png"
+                          },
+                          [["aps/ToolsList", {cols:1}, [
+                            ["aps/ToolbarButton", {
+                                title: "Entrar",
+                                iconName: "images/login.png"
+                                    }]
+                            ]]]
+                      ],
+
+                      ["aps/ActiveItem", {
+                          collapsible: false,
+                          title: "Resumo"
+                          },
+                          [["aps/ToolsList", {cols:1}, [
+                              ["aps/ToolbarButton", {
+                                  title: "Serviço de Entrega",
+                                  iconName: "images//start.png"
+                              }],
+                              ["aps/ToolbarButton", {
+                                  title: "Relatório",
+                                  iconName: "images/start.png"
+                              }]
+                          ]]]
+                      ]
+                  ]
+              ]
+          ]]);
+      });
+</script>
+</head>
+<body>
+</body>
+</html>

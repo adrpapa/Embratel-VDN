@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<!--
+ * Created on 14 de mai de 2017
+ *
+ * To change the template for this generated file go to
+ * Window - Preferences - PHPeclipse - PHP - Code Templates
+-->
+<head>
+<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+<script>
+require([ "aps/load", "dojox/mvc/at", "aps/ready!" ], function(load, at) {
+    "use strict";
+    var franquia = 20000;
+    var valor = 4000;
+    var warn = franquia * 0.8;
+    var classesMap;
+    eval(
+        'classesMap = { "' + warn + '" : "warn",' +
+        ' "' + franquia + '" : "over"}' );
+    
+    var franquiaS = 200000;
+    var valorS =    100000;
+    var warnS =     120000;
+    var classesMapS;
+    eval(
+        'classesMap = { "' + warnS + '" : "warn",' +
+        ' "' + franquia + '" : "over"}' );
+    
+    var rptOptions = {
+        dtIni : new Date(),
+        dtFim : new Date(),
+        detalhado: false,
+        porServEntraga: true
+    };
+    
+    load([ "aps/PageContainer",
+          [
+              [ "aps/FieldSet", { title: _("Tráfego HTTP") }, [
+                  [ "aps/Gauge", {
+                      legend : _("${value} GB utilizados de ${maximum} GB"),
+                      minimum : 0,
+                      maximum : franquia,
+                      value : valor,
+                      classesMap : classesMap } ] ]
+              ],
+              [ "aps/FieldSet", { title: _("Tráfego HTTPS") }, [
+                  [ "aps/Gauge", {
+                      legend : _("${value} GB usados de ${maximum} GB"),
+                      minimum : 0,
+                      maximum : franquiaS,
+                      value : valorS,
+                      classesMap : classesMapS } ] ]
+              ],
+              [ "aps/FieldSet", { title:  _("Gerar Relatório"), showLabels: false }, [
+                  [ "aps/Output", { value: _("Notas Explicativas da página de seleção do relatório") } ] ]
+              ],
+              [ "aps/FieldSet", { title:  _("Filtros") }, [
+                  [ "aps/DateTextBox", {label: _("Data Inicial"),
+                                        value: at(rptOptions, "dtIni") } ] ,
+                  [ "aps/DateTextBox", {label: _("Data Final"),
+                                        value: at(rptOptions, "dtFim") } ] ]
+              ],
+              [ "aps/FieldSet", { title:  _("Opções do Relatório"), showLabels: false }, [
+                  
+                  [ "aps/CheckBox", {label: _("Opções do Relatório"),
+                                     description: _("Detalhado"),
+                                     value: at(rptOptions, "detalhado") } ],
+                  ["aps/Output", { innerHTML:_("Apresentar relatório detalhando o uso por hora<br/><b>Atenção:</b> limitado ao período de 30 dias")}],
+                  [ "aps/CheckBox", {description: _("Por Serviço de Entrega"),
+                                     value: at(rptOptions, "porServEntrega") } ],
+                  ["aps/Output", { innerHTML:_("Apresentar relatório agrupado por <b>Serviço de Entrega</b>")} ] ]
+               
+              ]
+          ]
+         ]);
+});
+</script>
+</head>
+<body>
+</body>
+</html>
