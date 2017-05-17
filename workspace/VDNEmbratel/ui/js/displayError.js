@@ -14,6 +14,8 @@ define(["dijit/registry", "aps/Message", "aps/PageContainer"],
             }
             console.log(errData.message);
             console.log(errlogmsg);
+            
+            
             aps.apsc.cancelProcessing();
             var page = registry.byId("page");
             if(!page){

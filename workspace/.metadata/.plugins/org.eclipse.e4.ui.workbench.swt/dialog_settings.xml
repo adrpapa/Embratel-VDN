@@ -3,12 +3,13 @@
 	<section name="ShowViewDialog">
 		<item value="345" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="org.eclipse.jdt.ui.PackageExplorer" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
+		<item value="org.eclipse.ui.views.ResourceNavigator" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
 		<item value="455" key="DIALOG_HEIGHT"/>
 		<item value="515" key="DIALOG_X_ORIGIN"/>
 		<item value="65" key="DIALOG_Y_ORIGIN"/>
 		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="Dynamic Languages"/>
+			<item value="General"/>
 			<item value="Java"/>
 			<item value="Java Browsing"/>
 		</list>

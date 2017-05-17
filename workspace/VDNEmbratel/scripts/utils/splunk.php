@@ -27,7 +27,7 @@ class SplunkStats {
         $last_ts = clone $current_ts;
         $last_ts->modify('-7 day');
         if($lastResultTime != null) {
-            $last_ts = $lastResultTime == null ?  : date_create($lastResultTime);
+            $last_ts = date_create($lastResultTime);
         }
         $diff = ($current_ts->getTimestamp() - $last_ts->getTimestamp())/60;
         echo "current ts=".date_format( $current_ts, "c")."last ts=".date_format( $last_ts, "c")." diff=".$diff."\n";
@@ -91,8 +91,8 @@ class SplunkStats {
     }
 }
 
-$splunkStats = SplunkStats::getBilling("teste","ds-vodhttp-1021560", null, null);
-var_dump($splunkStats);
+// $splunkStats = SplunkStats::getBilling("teste","ds-vodhttp-1021560", null, null);
+// var_dump($splunkStats);
 // $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventodeltaive-1000001", $splunkStats->lastResultTime);
 // var_dump($splunkStats);
 // $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventodeltaive-1000001", $splunkStats->lastResultTime);

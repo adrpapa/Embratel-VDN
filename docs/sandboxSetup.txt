@@ -7,8 +7,8 @@ yum install php
 
 yum install mod_ssl
 
-wget http://download.apsstandard.org/php.runtime/aps-php-runtime-2.0-393.noarch.rpm
-rpm -ihv aps-php-runtime-2.0-393.noarch.rpm
+wget http://download.apsstandard.org/php.runtime/aps-php-runtime-2.1-313.noarch.rpm
+rpm -ihv rpm -ihv aps-php-runtime-2.1-313.noarch.rpm
 
 **********************************************************************************************
 
@@ -64,4 +64,5 @@ wget http://doc.apsstandard.org/2.1/_downloads/endpoint.sh
 
 chmod +x endpoint.sh
 
+Alguns logs da aplicação (erros no back-end) ficam no diretório: /var/log/httpd/
 

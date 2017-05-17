@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <application packaged="2016-06-16T10:37:18" version="2.0"
     xmlns="http://aps-standard.org/ns/2">
     <id>http://embratel.com.br/app/VDNEmbratel</id>
     <name>VDNEmbratel</name>
-    <version>2.0</version>
-    <release>3.3</release>
+    <version>3.0</version>
+    <release>1.0.1.7</release>
     <homepage>http://embratel.com.br/app/VDNEmbratel</homepage>
     <vendor>
-        <name>Embratel</name>
+        <name>Vendor Embratel</name>
         <homepage>https://embratel.com.br</homepage>
     </vendor>
     <packager>
@@ -14,18 +15,19 @@
         <homepage>https://flts.com.br</homepage>
     </packager>
     <presentation>
-        <summary>Video Delivery Network (VDN)</summary>
-        <description>Live and On-demand(VOD) video transcoding and distribution solution 
-allowing multiple streaming protocols (HLS, HDS, Smooth Streaming e DASH) 
-using content distribution network (CDN) for the internet.
+        <summary>Descrição sumária VDN</summary>
+        <description>Descriçao completa VDN.
         </description>
-        <icon path="images/icon.png" />
+        <icon path="ui/images/icon.png" />
         <changelog>
             <version release="1" version="1.0">
                 <entry>Initial release.</entry>
             </version>
             <version release="3.3" version="2.0">
-            	<entry>General fixes</entry>
+                <entry>General fixes</entry>
+            </version>
+            <version version="3.0" release="1.0.1.0">
+                <entry>Removidos o suporte ao Elemental Live / VOD</entry>
             </version>
         </changelog>
         <categories>
@@ -35,89 +37,47 @@ using content distribution network (CDN) for the internet.
         <languages>
             <language>en</language>
             <language>pt</language>
+            <language>es</language>
         </languages>
-        <navigation id="ccpebt" label="VDN">
-            <var name="context" type-id="http://embratel.com.br/app/VDNEmbratel/context/1.0" />
+        <navigation id="vndTree" label="VDN">
+            <var name="context" type-id="http://embratel.com.br/app/VDNEmbratel/context/2.0" />
             <plugs-to id="http://www.aps-standard.org/ui/service" />
-            
-            <item id="vod" label="VOD">
-                <item id="contents" label="Conteúdo">
-                    <view id="contents" label="Conteúdo">
-                        <view id="content-info" label="Content Information">
-                            <controls>
-                                <cancel label="Back to Contents list"/>
-                            </controls>
-                            <var name="content"
-                                type-id="http://embratel.com.br/app/VDNEmbratel/vod/1.0" />
-                        </view>
-                    </view>
-                </item>
-                <item id="jobs" label="Jobs">
-                    <view id="jobs" label="Jobs">
-                        <view id="job-new-1" label="Submit New Content">
-                            <controls>
-                                <cancel />
-                                <next />
-                            </controls>
-                        </view>
-                        <view id="job-new-last" label="Transcoder Parameters">
-                            <controls>
-                                <cancel />
-                                <finish />
-                            </controls>
-                        </view>
-                        <view id="job-info" label="Job Information">
-                            <controls>
-                                <cancel label="Back to list"/>
-                            </controls>
-                            <var name="job"
-                                type-id="http://embratel.com.br/app/VDNEmbratel/job/2.0" />
-                        </view>
-                    </view>
-                </item>
+
+            <item id="itemGeral" label="Geral">
+                <view id="viewGeral" label="Geral">
+                    <view id="ciscoAnalytics" label="CISCO"  /> 
+                </view>
             </item>
-            <item id="channels" label="Live">
-                <view id="channels" label="Live Channels">
-                    <view id="channel-new-1" label="New Channel">
+            <item id="itemServicoEntrega" label="Serviços de Entrega">
+                    <view id="viewServicoEntrega" label="Serviços de Entrega" >
+                    <view id="servicoEntrega" label="New Delivery Service">
                         <controls>
-                            <cancel />
-                            <next />
+                            <cancel label="Cancel"/>
+                            <submit label="Add" />
                         </controls>
-                    </view>
-                    <view id="channel-new-last" label="Review">
-                        <controls>
-                            <cancel />
-                            <finish />
-                        </controls>
-                    </view>
-                    <view id="channel-info" label="Channel Information">
-                        <controls>
-                                <cancel label="Back to list"/>
-<!--                             <cancel /> -->
-                        </controls>
-                        <var name="chnl"
-                            type-id="http://embratel.com.br/app/VDNEmbratel/channel/2.1" />
                     </view>
                 </view>
-            </item>		
-            <item id="cdns" label="CDN">
+            </item>
+            <item id="itemRelatorios" label="Reports">
+                <view id="viewRelatorios" label="Reports" />
+            </item>
+            <item id="itemLegado" label="">
                 <view id="cdns" label="CDN">
                     <view id="cdn-new-1" label="New Delivery Service">
                         <controls>
-                            <cancel label="Back to list"/>
+                            <cancel label="Back to list" />
                             <submit />
                         </controls>
                     </view>
                     <view id="cdn-info" label="Delivery Service Information">
                         <controls>
-                            <cancel label="Back to list"/>
-<!--                             <submit /> -->
+                            <cancel label="Back to list" />
+                            <submit />
                         </controls>
-                        <var name="cdnl"
-                            type-id="http://embratel.com.br/app/VDNEmbratel/cdn/1.0" />
+                        <var name="cdnl" type-id="http://embratel.com.br/app/VDNEmbratel/cdn/1.1" />
                     </view>
                 </view>
-            </item>						
+            </item>
         </navigation>
 
     </presentation>
@@ -129,58 +89,42 @@ using content distribution network (CDN) for the internet.
         </text>
     </license-agreement>
 
-    <upgrade match="version=ge=0,release=ge=0"/>
+    <upgrade match="version=ge=0,release=ge=0" />
 
-    <service id="clouds">
-        <code engine="php" path="scripts/clouds.php" />
+    <service id="globais">
+        <code engine="php" path="scripts/globais.php" />
         <presentation>
-            <name>VDN  Embratel globals</name>
-            <summary>VDN  Embratel  global configuration variables</summary>
+            <name>Globais</name>
+            <summary>Globais - Sumário</summary>
         </presentation>
     </service>
 
     <service id="contexts">
         <code engine="php" path="scripts/contexts.php" />
         <presentation>
-            <name>VDN  Embratel Management</name>
-            <summary>VDN Embratel environment</summary>
+            <name>VDN</name>
+            <summary>VDN Context Summary</summary>
             <entry-points>
-            	<entry dst="http://embratel.com.br/app/VDNEmbratel#contents" class="aps2-view">
-            		<label>Management</label>
-            	</entry>
+                <entry dst="http://embratel.com.br/app/VDNEmbratel#viewGeral"
+                    class="aps2-view">
+                    <label>Management</label>
+                    <description>Delivery Service Management
+                    </description>
+                </entry>
+                <entry dst="http://embratel.com.br/app/VDNEmbratel#ciscoAnalytics"
+                    class="aps2-view">
+                    <label>CISCO Portal Analytics</label>
+                    <description>CISCO Portal Analitics Full Description</description>
+                </entry>
             </entry-points>
         </presentation>
     </service>
-
-    <service id="channels">
-        <code engine="php" path="scripts/channels.php" />
-        <presentation>
-            <name>VDN Live Channels</name>
-            <summary>VDN Live Channels</summary>
-        </presentation>
-    </service>
-
-    <service id="vods">
-        <code engine="php" path="scripts/vods.php" />
-        <presentation>
-            <name>VDN Content</name>
-            <summary>VDN Content</summary>
-        </presentation>
-    </service>	
-
-    <service id="jobs">
-        <code engine="php" path="scripts/jobs.php" />
-        <presentation>
-            <name>VDN Job</name>
-            <summary>VDN Job</summary>
-        </presentation>
-    </service>	
-
+	
     <service id="cdns">
         <code engine="php" path="scripts/cdns.php" />
         <presentation>
-            <name>Content Delivery Network</name>
-            <summary>Content Delivery Network</summary>
+            <name>Service Delivery</name>
+            <summary>Service Delivery Summary</summary>
         </presentation>
-    </service>		
+</service>
 </application>

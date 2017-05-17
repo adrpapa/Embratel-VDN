@@ -1,21 +1,22 @@
 #!/bin/bash
 
-if pgrep -lf openvpn && [ $(dig +noall +answer host1.apo.apsdemo.org | wc -l) -gt 0 ]; then
-	dig +noall +answer host1.apo.apsdemo.org
-	echo 'VPN já está Configurada'
-	exit 0
-fi
+#if pgrep -lf openvpn && [ $(dig +noall +answer host1.apo.apsdemo.org | wc -l) -gt 0 ]; then
+#	dig +noall +answer host1.apo.apsdemo.org
+#	echo 'VPN já está Configurada'
+#	exit 0
+#fi
 
-cd /home/fastlane/Embratel/pgms/scripts/apo
 if [ $(id -u) != 0 ]; then
 	echo "must be root to run this script."
 	sudo /home/fastlane/Embratel/pgms/scripts/apo/startvpn.sh 
 	exit 1
 fi
 
+cd /home/fastlane/Embratel/pgms/scripts/apo
+
 DNS=10.112.0.11;
 
-pkill -f aps.ovpn
+pkill openvpn
 
 echo "Iniciando openvpn"
 openvpn --verb 9 --config aps.ovpn > /var/log/openvpn_apo.log &

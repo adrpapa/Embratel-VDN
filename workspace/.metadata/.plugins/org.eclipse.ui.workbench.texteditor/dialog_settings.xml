@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="isRegEx"/>
-		<item value="assignSEs" key="selection"/>
+		<item value="cdn" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="cdn"/>
+			<item value="basic"/>
 			<item value="assignSEs"/>
 			<item value="enableDS"/>
 			<item value="\$list_ses"/>
 			<item value="contentAcquirer"/>
 			<item value="optional_params_names"/>
 			<item value="unassignSEs"/>
-			<item value="configure"/>
-			<item value="assign"/>
 		</list>
 		<list key="replacehistory">
 			<item value="    "/>
@@ -30,7 +30,7 @@
 		<item value="319" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="427" key="DIALOG_HEIGHT"/>
-		<item value="1387" key="DIALOG_X_ORIGIN"/>
-		<item value="274" key="DIALOG_Y_ORIGIN"/>
+		<item value="1123" key="DIALOG_X_ORIGIN"/>
+		<item value="66" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

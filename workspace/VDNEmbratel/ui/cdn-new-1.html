@@ -19,7 +19,7 @@
         ], function (Store, registry, Message, getPlainValue, wd, at, load, Memory, getStateful, displayError, consts) {
             var constants = JSON.parse(consts);
             var cdn_new = {
-                aps: { type: "http://embratel.com.br/app/VDNEmbratel/cdn/1.0" },
+                aps: { type: "http://embratel.com.br/app/VDNEmbratel/cdn/1.1" },
                 name: "",
                 description: "",
                 alias: "",
@@ -36,7 +36,7 @@
             };
 
             var store = new Store({
-                apsType: "http://embratel.com.br/app/VDNEmbratel/cdn/1.0",
+                apsType: "http://embratel.com.br/app/VDNEmbratel/cdn/1.1",
                 //target: "/aps/2/resources/" + aps.context.vars.context.aps.id + "/jobs"
                 target: "/aps/2/resources/"
             });
