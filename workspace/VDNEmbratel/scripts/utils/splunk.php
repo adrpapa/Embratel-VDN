@@ -20,9 +20,9 @@ class SplunkStats {
     ** e o acumulado de GB desde a última medição
     */
     public static function getBilling( $context, $deliveryService, $lastResultTime ) {
-        $urlMask = "http://" . ConfigConsts::SPLUNK_ADDRESS 
-                . ConfigConsts::SPLUNK_ENDPOINT
-                . ConfigConsts::SPLUNK_QUERY;
+        $urlMask = "http://" . ConfigConsts::$SPLUNK_ADDRESS 
+                . ConfigConsts::$SPLUNK_ENDPOINT
+                . ConfigConsts::$SPLUNK_QUERY;
         $current_ts = date_create();
         $last_ts = clone $current_ts;
         $last_ts->modify('-7 day');
@@ -60,7 +60,7 @@ class SplunkStats {
                 $bucketSize='5m';
                 $diff = 0;
             }
-            $curl_obj = new ElementalRest(ConfigConsts::SPLUNK_ADDRESS,'servlet');
+            $curl_obj = new ElementalRest(ConfigConsts::$SPLUNK_ADDRESS,'servlet');
             curl_setopt($curl_obj->ch, CURLOPT_URL, 
                     sprintf($urlMask, $timeRange, $bucketSize, $deliveryService));
             echo sprintf($urlMask, $timeRange, $bucketSize, $deliveryService)."\n";
@@ -83,7 +83,7 @@ class SplunkStats {
                 }
             }
         }
-//      if( ConfigConsts::debug ) {
+//      if( ConfigConsts::$debug ) {
 //          var_dump($data);
 //          print( $data );
 //      }
@@ -91,7 +91,7 @@ class SplunkStats {
     }
 }
 
-// $splunkStats = SplunkStats::getBilling("teste","ds-vodhttp-1021560", null, null);
+// $splunkStats = SplunkStats::getBilling("teste","ds-ebtvdn-11", null, null);
 // var_dump($splunkStats);
 // $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventodeltaive-1000001", $splunkStats->lastResultTime);
 // var_dump($splunkStats);

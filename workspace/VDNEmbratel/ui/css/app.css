@@ -1,0 +1,39 @@
+.f-2x-small-size {
+    width: 80px;
+}
+
+.f-4x-small-size {
+    width: 160px;
+}
+
+input[type="text"], input[type="password"], input[type="number"], select, textarea {
+    border-color: #bbbec0;
+    border-radius: 3px;
+}
+
+.btn2 button{
+    width:24px !important;
+    min-width:24px !important;
+    padding: 4px 4px !Important;
+}
+
+.btn2 span{
+    height: 16px !important;
+}
+
+.apsDateTextBoxIncompleteFocused input, .apsTextAreaError { border-color: #ff9696 !important; background: #fedddf !important; }
+.apsDateTextBoxIncompleteFocused input:focus { border-color: #ff9696 !important; box-shadow: 0 0 3px #e7afb5 !important; }
+.apsDateTextBoxError input, .apsTextAreaError { border-color: #ff9696 !important; background: #fedddf !important; }
+.apsDateTextBoxError input:focus { border-color: #ff9696 !important; box-shadow: 0 0 3px #e7afb5 !important; }
+
+.sb-btn-custom-add-new span {
+	background-image: url("/pem/images/icons/new_16x16.gif") !important;
+}
+
+.sb-btn-custom-remove span {
+	background-image: url("/pem/images/icons/delete_16x16.gif") !important;
+}
+
+.cursor-help > div > div.title > div > h3 > span {
+    cursor: help;
+}

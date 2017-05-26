@@ -2,22 +2,16 @@
 <section name="Workbench">
 	<section name="">
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
-		<item value="TRUE" key="org.eclipse.dltk.search.resultpage.limit_enabled"/>
-		<item value="1000" key="org.eclipse.wst.jsdt.search.resultpage.limit"/>
-		<item value="1000" key="org.eclipse.dltk.search.resultpage.limit"/>
-		<item value="TRUE" key="org.eclipse.wst.jsdt.search.resultpage.limit_enabled"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
-		<item value="1" key="scope"/>
+		<item value="0" key="scope"/>
 	</section>
 	<section name="">
-		<item value="TRUE" key="org.eclipse.dltk.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
-		<item value="1000" key="org.eclipse.dltk.search.resultpage.limit"/>
 	</section>
 	<section name="TextSearchPage">
 		<item value="12" key="HISTORY_SIZE"/>
-		<item value="false" key="CASE_SENSITIVE"/>
+		<item value="true" key="CASE_SENSITIVE"/>
 		<item value="false" key="REG_EX_SEARCH"/>
 		<item value="false" key="WHOLE_WORD"/>
 		<item value="false" key="SEARCH_DERIVED"/>
@@ -25,7 +19,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="account" key="textPattern"/>
+			<item value="getResourceUsageReport" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -37,7 +31,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="apsutilsdebug" key="textPattern"/>
+			<item value="embratel.com.br/app/VDNEmbratel/globais/1.0" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -49,7 +43,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="$apphost" key="textPattern"/>
+			<item value="displayError" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -59,9 +53,9 @@
 		</section>
 		<section name="HISTORY10">
 			<item value="true" key="ignoreCase"/>
-			<item value="0" key="scope"/>
+			<item value="1" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="desktopQuota" key="textPattern"/>
+			<item value="::" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -73,7 +67,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="sample_grid" key="textPattern"/>
+			<item value="DBUsage" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -88,7 +82,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="Check the resource" key="textPattern"/>
+			<item value="public*static" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -100,7 +94,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="basicwithuiwithui" key="textPattern"/>
+			<item value="embratel.cloud/openstack/application/1.6" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -112,7 +106,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="aps-standard.org/samples/basic" key="textPattern"/>
+			<item value="loadConstants" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -124,7 +118,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="http://aps-standard.org/samples/basicwithui/" key="textPattern"/>
+			<item value="unassignServiceEngines" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -136,7 +130,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="http://embratel.com.br/app/VDN_Embratel" key="textPattern"/>
+			<item value="@path" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -145,10 +139,10 @@
 			</list>
 		</section>
 		<section name="HISTORY0">
-			<item value="true" key="ignoreCase"/>
-			<item value="1" key="scope"/>
+			<item value="false" key="ignoreCase"/>
+			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="console" key="textPattern"/>
+			<item value="vars.deliveryService" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -157,10 +151,10 @@
 			</list>
 		</section>
 		<section name="HISTORY1">
-			<item value="true" key="ignoreCase"/>
+			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="displayError" key="textPattern"/>
+			<item value="deliveryService" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -198,6 +192,7 @@
 	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
+			<item value="ConfigConsts::$"/>
 			<item value="http://embratel.com.br/app/VDN_Embratel/"/>
 			<item value="http://aps-standard.org/samples/basicwithui/"/>
 			<item value="aps-standard.org/samples/basicwithui"/>
@@ -211,11 +206,11 @@
 		<item value="1000" key="org.eclipse.dltk.search.resultpage.limit"/>
 	</section>
 	<section name="DialogBounds_SearchDialog">
-		<item value="1112" key="DIALOG_WIDTH"/>
+		<item value="1104" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="698" key="DIALOG_HEIGHT"/>
-		<item value="1410" key="DIALOG_X_ORIGIN"/>
-		<item value="155" key="DIALOG_Y_ORIGIN"/>
+		<item value="665" key="DIALOG_HEIGHT"/>
+		<item value="155" key="DIALOG_X_ORIGIN"/>
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.wst.jsdt.ui.JavaSearchResultPage">
 		<item value="1000" key="org.eclipse.wst.jsdt.search.resultpage.limit"/>

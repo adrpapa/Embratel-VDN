@@ -8,7 +8,15 @@ yum install php
 yum install mod_ssl
 
 wget http://download.apsstandard.org/php.runtime/aps-php-runtime-2.1-313.noarch.rpm
-rpm -ihv rpm -ihv aps-php-runtime-2.1-313.noarch.rpm
+rpm -ihv aps-php-runtime-2.1-313.noarch.rpm
+
+**********************************************************************************************
+
+# editar ~/.ssh/authorized keys para incluir chave publica para ssh sem login:
+
+cat ~/.ssh/id_rsa.pub
+
+vim ~/.ssh/authorized keys
 
 **********************************************************************************************
 
@@ -18,17 +26,10 @@ ln -s /usr/local/pem/APS/packages   packages
 ln -s /var/www/html/ebtvdn          www_ebtvdn 
 
 
+./endpoint.sh --upgrade vdn /usr/local/pem/APS/packages/VDNEmbratel-3.0-1.0.1.15.app.zip
+
+
 ***** Apache configuration *******************************************************************
-
-vim /etc/httpd/conf.d/ssl.conf
-SSLVerifyClient optional_no_ca
-...
-<Files ~ "\.(cgi|shtml|phtml|php3?)$">
-    SSLOptions +StdEnvVars +ExportCertData
-</Files>
-
-
-**********************************************************************************************
 
 /etc/httpd/conf/httpd.conf:
 
@@ -36,23 +37,9 @@ SSLVerifyClient optional_no_ca
 ...
     AllowOverride All
 ...    
-   
-** New:
-
-Alias /packages/ "/var/www/packages/"
-<Directory "/var/www/packages">
-    Options Indexes MultiViews FollowSymLinks
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-</Directory>
-
-
 ***** Apache Restart *************************************************************************
 
 service httpd restart
-
-**********************************************************************************************
 
 **********************************************************************************************
 
@@ -65,4 +52,31 @@ wget http://doc.apsstandard.org/2.1/_downloads/endpoint.sh
 chmod +x endpoint.sh
 
 Alguns logs da aplicação (erros no back-end) ficam no diretório: /var/log/httpd/
+
+Saída da console php fica no /var/log/httpd/error
+
+******************************************************************************************
+* Configuração do Odin
+*************************
+
+System -> Settings -> Locales
+    
+System -> Settings -> User Interface
+    Login Screen Language
+    Regional Settings - time zone
+
+System -> Settings -> System Properties
+    APS development mode = true
+    Mandatory fields (Address, First / Last Names)
+    Timeout
+    
+
+******************************************************************************************
+* Deploy
+******************************************************************************************
+vim /usr/local/bin/deploy
+
+#!/bin/bash
+/root/endpoint.sh --upgrade vdn $( ls -t /usr/local/pem/APS/packages/VDN*|head -1)
+service pemui restart
 

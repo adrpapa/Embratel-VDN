@@ -8,9 +8,9 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
 -->
- <head>
+<head>
 <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
- <script>
+<script type = 'text/javascript'>
  require([
           "aps/load",
           "aps/ready!"
@@ -30,9 +30,10 @@
                           [["aps/ToolsList", {cols:1}, [
                             ["aps/ToolbarButton", {
                                 title: "Entrar",
-                                iconName: "images/login.png"
-                                    }]
-                            ]]]
+                                iconName: "images/login.png",
+                                onClick: function() { aps.apsc.gotoView("ciscoAnalytics"); }
+                            }]
+                          ]]]
                       ],
 
                       ["aps/ActiveItem", {
@@ -42,11 +43,13 @@
                           [["aps/ToolsList", {cols:1}, [
                               ["aps/ToolbarButton", {
                                   title: "Serviço de Entrega",
-                                  iconName: "images//start.png"
+                                  iconName: "images//start.png",
+                                  onClick: function(){ aps.apsc.gotoView("viewServicoEntrega"); }
                               }],
                               ["aps/ToolbarButton", {
                                   title: "Relatório",
-                                  iconName: "images/start.png"
+                                  iconName: "images/start.png",
+                                  onClick: function(){ aps.apsc.gotoView("viewRelatorios"); }
                               }]
                           ]]]
                       ]

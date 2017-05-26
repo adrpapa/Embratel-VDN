@@ -10,11 +10,12 @@
 -->
 <head>
 <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
-<script>
+
+<script type = 'text/javascript'>
 require([ "aps/load", "dojox/mvc/at", "aps/ready!" ], function(load, at) {
     "use strict";
-    var franquia = 20000;
-    var valor = 4000;
+    var franquia = aps.context.vars.context.VDN_HTTP_Traffic.limit;
+    var valor = aps.context.vars.context.VDN_HTTP_Traffic.usage;
     var warn = franquia * 0.8;
     var classesMap;
     eval(

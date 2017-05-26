@@ -4,4 +4,3 @@ overviewRuler_migration=migrated_3.1
 quickdiff.characterMode=true
 quickdiff.nowarn.before.switch=always
 showWhitespaceCharacters=true
-spacesForTabs=true

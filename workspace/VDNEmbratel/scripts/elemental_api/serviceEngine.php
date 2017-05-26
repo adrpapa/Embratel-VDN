@@ -18,7 +18,7 @@ class ServiceEngine extends CDSM {
 	}	
 	
 	protected function loadXML() {
-		$serviceEngineFilename = dirname(__FILE__).'/../'.ConfigConsts::TEMPLATE_PATH . '/service_engines.xml';
+		$serviceEngineFilename = dirname(__FILE__).'/../'.ConfigConsts::$TEMPLATE_PATH . '/service_engines.xml';
 
 		if ( file_exists($serviceEngineFilename) ) {
 			$this->xml = simplexml_load_file( $serviceEngineFilename );

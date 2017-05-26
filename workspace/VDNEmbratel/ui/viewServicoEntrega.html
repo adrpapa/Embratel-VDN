@@ -2,146 +2,99 @@
 <html>
 <head>
 <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
-<script>
-require([
-         "aps/load",
-         "aps/Output",
-         "aps/Memory",
-         "dojox/mvc/at",
-         "aps/ready!"
-     ], function(load, Output, Memory, at) {
-         "use strict";
-         
-         var data = [{
-             aps: {
-                 sys_id: "1"
-             },
-             info: {
-                 name: "Client_1021560_vod_http",
-                 description: "Descrição do serviço de entrega Client_1021560_vod_http que foi preenchido na tela de detalhes",
-                 alias: "vod_http",
-                 origin_server: "cliente.embratel.bom.br",
-                 origin_path: "caminho/para/os/arquivos",
-                 https: true,
-                 https_in: true,
-                 live: false,
-                 origin_domain: "origin.domain.com.br",
-                 delivery_service_name: "deliveryServiceNameOnCisco",
-                 httpTrafficAtualUsage: 987654321,
-                 http_s_TrafficActualUsage: 1234567890,
-                 newestSplunkData: "2017-05-13 12:21:12"
-             }
-         }, {
-             aps: {
-                 sys_id: "2"
-             },
-             info: {
-                 name: "Client_1021560_vod_http",
-                 description: "Descrição do serviço de entrega Client_1021560_vod_http que foi preenchido na tela de detalhes",
-                 alias: "vod_http",
-                 origin_server: "cliente.embratel.bom.br",
-                 origin_path: "caminho/para/os/arquivos",
-                 https: true,
-                 https_in: true,
-                 live: false,
-                 origin_domain: "origin.domain.com.br",
-                 delivery_service_name: "deliveryServiceNameOnCisco",
-                 httpTrafficAtualUsage: 987654321,
-                 http_s_TrafficActualUsage: 1234567890,
-                 newestSplunkData: "2017-05-13 12:21:12"
-             }
-         }];
-         
-         
-         var store = new Memory({
-             data: data,
-             idProperty: "aps.sys_id"
-         });
-         
-         load(["aps/PageContainer", [
-             ["aps/ActiveList", {
-                 store: store,
-                 cols:2
-             },
-              [
-                  ["aps/Button", {
-                      title: _("Add New Delivery Service"),
-                      iconClass: "sb-add-new",
-                      onClick: function() { aps.apsc.gotoView("servicoEntrega"); }
-                  }],
-                  ["aps/ActiveItem", {
-                      title: at("rel:info", "name"),
-                      description: [new Output({
-                          innerHTML: _("Domain Name: ${value}"),
-                          value: at("rel:info", "origin_domain"),
-                          "class": "summary-item" })
-                      ]
-                  },[
-                     ["aps/ToolbarButton", {
-                           label: _("Manage"),
-                           iconClass:"sb-login",
-                           onClick: function() { aps.apsc.gotoView("servicoEntrega"); }
-                       }],
-                       ["aps/ToolbarButton", {
-                           label: _("Remove"),
-                           iconClass:"sb-delete",
-                           onClick: function() {
-                               if (confirm(_("Confirm Deletion of __vdn__?",{"vdn":"VDN"}))) {
-                                   alert(_("Deleted!"));
-                               }
-                           }
-                       }],
-                       
-                       ["aps/Container", {title: _("Delivery Service Detail") }, [
-                            ["aps/FieldSet", [
-                                ["aps/Output", {
-                                    label: _("Alias"),
-                                    value: at("rel:info", "alias")
-                                }],
-                               ["aps/Output", {
-                                   label: _("Live"),
-                                   value: at("rel:info", "live")
-                               }],
-                                ["aps/Output", {
-                                    label: _("Use HTTPS"),
-                                    value: at("rel:info", "https")
-                                }],
-                                ["aps/Output", {
-                                    label: _("Origin Server"),
-                                    value: at("rel:info", "origin_server")
-                                }],
-                                ["aps/Output", {
-                                    label: _("Origin Path"),
-                                    value: at("rel:info", "origin_path")
-                                }],
-                                ["aps/Output", {
-                                    label: _("Description"),
-                                    value: at("rel:info", "description")
-                                }]
-                            ]]
-                        ]],
-                        ["aps/Container", {title: _("Estatisticas") }, [
-                            ["aps/FieldSet", [
-	                            ["aps/Output", {
-	                                label: _("Total HTTP Traffic"),
-	                                value: at("rel:info", "httpTrafficAtualUsage")
-	                            }],
-	                            ["aps/Output", {
-	                                label: _("Total HTTPS Traffic"),
-	                                value: at("rel:info", "http_s_TrafficActualUsage")
-	                            }],
-	                            ["aps/Output", {
-	                                label: _("Last Statistics read at"),
-	                                value: at("rel:info", "newestSplunkData")
-	                            }]
-	                        ]]
-                        ]]
-                   ]
-                  ]
-              ]
-             ]
-         ]]);
-     });
+<script type = 'text/javascript'>
+	require([ "aps/ResourceStore",
+	          "aps/load",
+	          "aps/Output",
+	          "dojo/when",
+	          "dojox/mvc/at",
+	          "./js/displayError.js",
+	          "aps/ready!" ],
+    function(Store, load, Output, when, at, displayError) {
+		"use strict";
+		var store = new Store({
+			apsType : "http://embratel.com.br/app/VDNEmbratel/cdn/1.1",
+			target : "/aps/2/resources/"
+		});
+		load([ "aps/PageContainer", [
+		[ "aps/ActiveList", {
+			store : store,
+			cols : 2
+		}, [ [ "aps/Button", {
+			title : _("Add New Delivery Service"),
+			iconClass : "sb-add-new",
+			onClick : function() {
+				aps.apsc.gotoView("servicoEntregaNovo");
+			}
+		} ], [ "aps/ActiveItem", {
+			title : at("rel:name"),
+			description : [ new Output({
+				innerHTML : _("Domain Name: ${value}"),
+				value : at("rel:origin_domain"),
+				"class" : "summary-item"
+			}) ]
+		}, [ [ "aps/ToolbarButton", {
+			label : _("Manage"),
+			iconClass : "sb-login",
+			apsId: at("rel:aps","id"),
+			onClick : function() {
+				debugger;
+				aps.apsc.gotoView("servicoEntrega", this.apsId);
+			}
+		} ], [ "aps/ToolbarButton", {
+			label : _("Remove"),
+			iconClass : "sb-delete",
+			apsId: at("rel:aps","id"),
+			apsName: at("rel:name"),
+			onClick : function() {
+				var apsId = this.apsId;
+				console.log("Trying to delete CDN "+ this.apsName + " with id = [" + apsId + "]");
+				/* Get confirmation from the user for the delete operation */
+				if (confirm(_("Confirm Deletion of __vdn__?", {"vdn" : this.apsName}) ) ){
+					store.get(apsId).then( function(cdn){
+						when(store.remove(cdn),
+							/* If success, process the next VPS until the list is empty */
+							function(){
+								alert(_("Delivery Service __vdn__ removed"),
+										{"vdn" : this.apsName});
+							},
+							/* If failure, call the error handler */
+							function(e){
+								displayError(e);
+							}
+						);
+					});
+				}
+				this.cancel();
+            }
+		} ],
+
+		[ "aps/Container", {
+			title : _("Delivery Service Detail")
+		}, [ [ "aps/FieldSet", [ [ "aps/Output", {
+			label : _("Alias"),
+			value : at("rel:alias")
+		} ], [ "aps/Output", {
+			label : _("APS ID"),
+			value : at("rel:aps", "id"),
+			id: "aps_id"
+		} ], [ "aps/Output", {
+			label : _("Live"),
+			value : at("rel:", "live")
+		} ], [ "aps/Output", {
+			label : _("Use HTTPS"),
+			value : at("rel:", "https")
+		} ], [ "aps/Output", {
+			label : _("Origin Server"),
+			value : at("rel:", "origin_server")
+		} ], [ "aps/Output", {
+			label : _("Origin Path"),
+			value : at("rel:", "origin_path")
+		} ], [ "aps/Output", {
+			label : _("Description"),
+			value : at("rel:", "description")
+		} ] ] ] ] ] ] ] ] ] ] ]);
+	});
 </script>
 </head>
 <body>

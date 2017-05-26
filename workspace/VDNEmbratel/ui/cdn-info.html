@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
-    <script>
+<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+<script type = 'text/javascript'>
         require([
                 "aps/ResourceStore",
                 "dijit/registry",
@@ -23,7 +23,7 @@
                 model;
                 var constants = JSON.parse(consts);
             /* Getting Job properties */
-            store.get(aps.context.vars.cdnl.aps.id).then(function(object){
+            store.get(aps.context.vars.cdn.aps.id).then(function(object){
                 /* Collect the Job properties in the model */
                 model = getStateful(object);
                 

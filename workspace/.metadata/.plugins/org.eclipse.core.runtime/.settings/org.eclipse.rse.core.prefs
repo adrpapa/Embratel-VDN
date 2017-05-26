@@ -1,4 +1,4 @@
 activeuserprofiles=Team;fastlane;linux-t7gv
 eclipse.preferences.version=1
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=fastlane
-useridperkey=fastlane.Local\=fastlane;fastlane.cdn.flts.apsdemo.org\=root;
+useridperkey=fastlane.Local\=fastlane;fastlane.cdn.flts.apsdemo.org\=root;fastlane.vdn.flts.apsdemo.org\=admin;fastlane.aps3.apo.apsdemo.org\=root;

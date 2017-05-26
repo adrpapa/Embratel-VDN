@@ -6,7 +6,7 @@ require_once realpath(dirname( __FILE__ ))."/../elemental_api/utils.php";
 class BillingLog {
     public function __construct( $context, $name ){
         $current_ts = date_create();
-        $billingLogPath = ConfigConsts::BILLING_LOG_PATH.date_format( $current_ts, "/Y/m/");
+        $billingLogPath = ConfigConsts::$BILLING_LOG_PATH.date_format( $current_ts, "/Y/m/");
         if (!file_exists($billingLogPath)) {
             mkdir($billingLogPath, 0755, true);
         }
@@ -27,7 +27,7 @@ class BillingLog {
 
     public function debug($msg){
         $this->write($this->billingDebug, $msg);
-        if(ConfigConsts::debug) {
+        if(ConfigConsts::$debug) {
             echo "DEBUG: $msg";
         }
     }

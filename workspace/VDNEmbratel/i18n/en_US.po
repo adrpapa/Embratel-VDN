@@ -17,41 +17,48 @@ msgstr "Project-Id-Version: VDNEmbratel-1.0-1\n"
 "X-Generator: Poedit 1.8.5\n"
 
 # @generated
-#: ui/viewRelatorios.html:51
+#: ui/viewRelatorios.html:52
 msgid "${value} GB usados de ${maximum} GB"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:43
+#: ui/usage.html:152
+#: ui/usage.html:164
+#: ui/viewRelatorios.html:44
 msgid "${value} GB utilizados de ${maximum} GB"
 msgstr ""
 
 # @generated
-#: APP-META.xml:56
+#: ui/viewServicoEntrega.html:78
+msgid "APS ID"
+msgstr ""
+
+# @generated
+#: APP-META.xml:61
 msgid "Add"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:68
+#: ui/viewServicoEntrega.html:24
 msgid "Add New Delivery Service"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:60
+#: ui/servicoEntrega.html:59
 #: ui/cdn-info.html:45
 #: ui/cdn-new-1.html:60
 #: ui/cdn-new-last.html:35
-#: ui/viewServicoEntrega.html:98
+#: ui/viewServicoEntrega.html:75
 msgid "Alias"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:74
+#: ui/viewRelatorios.html:75
 msgid "Apresentar relatório agrupado por <b>Serviço de Entrega</b>"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:71
+#: ui/viewRelatorios.html:72
 msgid "Apresentar relatório detalhando o uso por hora<br/><b>Atenção:</b> limitado ao período de 30 dias"
 msgstr ""
 
@@ -61,13 +68,18 @@ msgid "Are you sure you want delete CDN __cdn__?"
 msgstr ""
 
 # @generated
-#: APP-META.xml:68
-#: APP-META.xml:74
+#: APP-META.xml:73
+#: APP-META.xml:79
 msgid "Back to list"
 msgstr ""
 
 # @generated
-#: APP-META.xml:65
+#: ui/usage.html:270
+msgid "By Project"
+msgstr ""
+
+# @generated
+#: APP-META.xml:70
 msgid "CDN"
 msgstr ""
 
@@ -87,37 +99,37 @@ msgid "CDN __cdn__ created automatically by the system - may not be removed"
 msgstr ""
 
 # @generated
-#: APP-META.xml:48
+#: APP-META.xml:49
 msgid "CISCO"
 msgstr ""
 
 # @generated
-#: APP-META.xml:117
+#: APP-META.xml:129
 msgid "CISCO Portal Analitics Full Description"
 msgstr ""
 
 # @generated
-#: APP-META.xml:116
+#: APP-META.xml:128
 msgid "CISCO Portal Analytics"
 msgstr ""
 
 # @generated
-#: APP-META.xml:55
+#: APP-META.xml:60
 msgid "Cancel"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:89
+#: ui/viewServicoEntrega.html:53
 msgid "Confirm Deletion of __vdn__?"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:63
+#: ui/viewRelatorios.html:64
 msgid "Data Final"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:61
+#: ui/viewRelatorios.html:62
 msgid "Data Inicial"
 msgstr ""
 
@@ -127,31 +139,38 @@ msgid "Delete"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:90
-msgid "Deleted!"
-msgstr ""
-
-# @generated
-#: ui/viewServicoEntrega.html:95
+#: ui/viewServicoEntrega.html:73
 msgid "Delivery Service Detail"
 msgstr ""
 
 # @generated
-#: APP-META.xml:72
+#: APP-META.xml:77
 msgid "Delivery Service Information"
 msgstr ""
 
 # @generated
-#: APP-META.xml:111
+#: APP-META.xml:123
 msgid "Delivery Service Management"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:93
+#: ui/viewServicoEntrega.html:58
+msgid "Delivery Service __vdn__ removed"
+msgstr ""
+
+# @generated
+#: APP-META.xml:105
+#: APP-META.xml:117
+#: APP-META.xml:142
+msgid "Deployment Guide"
+msgstr ""
+
+# @generated
+#: ui/servicoEntrega.html:92
 #: ui/cdn-info.html:79
 #: ui/cdn-new-1.html:85
 #: ui/cdn-new-last.html:34
-#: ui/viewServicoEntrega.html:118
+#: ui/viewServicoEntrega.html:94
 msgid "Description"
 msgstr ""
 
@@ -166,17 +185,32 @@ msgid "Descrição sumária VDN"
 msgstr "VDN short description"
 
 # @generated
-#: ui/viewRelatorios.html:69
+#: ui/usage.html:264
+msgid "Detailed"
+msgstr ""
+
+# @generated
+#: ui/viewRelatorios.html:70
 msgid "Detalhado"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:75
+#: ui/viewServicoEntrega.html:32
 msgid "Domain Name: ${value}"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:123
+#: ui/usage.html:232
+msgid "End Date"
+msgstr ""
+
+# @generated
+#: ui/usage.html:245
+msgid "End Time"
+msgstr ""
+
+# @generated
+#: ui/viewServicoEntrega.html:97
 msgid "Estatisticas"
 msgstr ""
 
@@ -186,7 +220,7 @@ msgid "Fastlane"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:60
+#: ui/viewRelatorios.html:61
 msgid "Filtros"
 msgstr ""
 
@@ -196,23 +230,24 @@ msgid "General fixes"
 msgstr ""
 
 # @generated
-#: APP-META.xml:46
 #: APP-META.xml:47
+#: APP-META.xml:48
 msgid "Geral"
 msgstr "General"
 
 # @generated
-#: ui/viewRelatorios.html:57
+#: ui/usage.html:174
+#: ui/viewRelatorios.html:58
 msgid "Gerar Relatório"
 msgstr ""
 
 # @generated
-#: APP-META.xml:97
+#: APP-META.xml:101
 msgid "Globais"
 msgstr "Globals"
 
 # @generated
-#: APP-META.xml:98
+#: APP-META.xml:102
 msgid "Globais - Sumário"
 msgstr "Globals - Summary"
 
@@ -227,13 +262,13 @@ msgid "HTTPS Delivery"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:86
+#: ui/servicoEntrega.html:85
 #: ui/cdn-new-1.html:93
 msgid "HTTPS protocol"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:72
+#: ui/servicoEntrega.html:71
 #: ui/cdn-info.html:61
 #: ui/cdn-new-1.html:72
 msgid "IP or FQDN from origin server that will provide the content"
@@ -245,35 +280,35 @@ msgid "Initial release."
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:73
+#: ui/servicoEntrega.html:72
 #: ui/cdn-info.html:62
 #: ui/cdn-new-1.html:73
 msgid "Invalid value. It should be a valid IPv4 or FQDN"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:82
+#: ui/servicoEntrega.html:81
 #: ui/cdn-info.html:72
 #: ui/cdn-new-1.html:82
 msgid "Invalid value. It should be a valid path. Ex: out/u"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:65
+#: ui/servicoEntrega.html:64
 #: ui/cdn-info.html:51
 #: ui/cdn-new-1.html:65
 msgid "Invalid value. It should contains only numbers and letters"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:134
+#: ui/viewServicoEntrega.html:105
 msgid "Last Statistics read at"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:90
+#: ui/servicoEntrega.html:89
 #: ui/cdns.html:39
-#: ui/viewServicoEntrega.html:102
+#: ui/viewServicoEntrega.html:82
 msgid "Live"
 msgstr ""
 
@@ -288,17 +323,17 @@ msgid "Live?"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:81
+#: ui/viewServicoEntrega.html:37
 msgid "Manage"
 msgstr ""
 
 # @generated
-#: APP-META.xml:110
+#: APP-META.xml:122
 msgid "Management"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:52
+#: ui/servicoEntrega.html:51
 #: ui/cdn-info.html:36
 #: ui/cdn-new-1.html:52
 #: ui/cdns.html:34
@@ -308,7 +343,7 @@ msgid "Name"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:58
+#: ui/servicoEntrega.html:57
 #: ui/cdn-info.html:43
 #: ui/cdn-new-1.html:58
 msgid "Name is mandatory. Please fill it"
@@ -320,7 +355,7 @@ msgid "Name of this CDN configuration. It is used to identify this configuration
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:57
+#: ui/servicoEntrega.html:56
 #: ui/cdn-new-1.html:57
 msgid "Name of this CDN configuration. It's used to identify this configuration in your control panel"
 msgstr ""
@@ -331,47 +366,52 @@ msgid "New"
 msgstr ""
 
 # @generated
-#: APP-META.xml:53
-#: APP-META.xml:66
+#: APP-META.xml:58
+#: APP-META.xml:71
 msgid "New Delivery Service"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:46
+#: ui/servicoEntrega.html:45
 msgid "New Service Delivery"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:58
+#: ui/viewRelatorios.html:59
 msgid "Notas Explicativas da página de seleção do relatório"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:66
-#: ui/viewRelatorios.html:68
+#: ui/usage.html:175
+msgid "Notas Explicativas da página de seleção do relatório."
+msgstr ""
+
+# @generated
+#: ui/viewRelatorios.html:67
+#: ui/viewRelatorios.html:69
 msgid "Opções do Relatório"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:76
+#: ui/servicoEntrega.html:75
 #: ui/cdn-info.html:66
 #: ui/cdn-new-1.html:76
 #: ui/cdn-new-last.html:37
-#: ui/viewServicoEntrega.html:114
+#: ui/viewServicoEntrega.html:91
 msgid "Origin Path"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:68
+#: ui/servicoEntrega.html:67
 #: ui/cdn-info.html:56
 #: ui/cdn-new-1.html:68
 #: ui/cdn-new-last.html:36
-#: ui/viewServicoEntrega.html:110
+#: ui/viewServicoEntrega.html:88
 msgid "Origin Server"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:72
+#: ui/viewRelatorios.html:73
 msgid "Por Serviço de Entrega"
 msgstr ""
 
@@ -381,7 +421,7 @@ msgid "Refresh"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:86
+#: ui/viewServicoEntrega.html:44
 msgid "Remove"
 msgstr ""
 
@@ -391,24 +431,46 @@ msgid "Removidos o suporte ao Elemental Live / VOD"
 msgstr ""
 
 # @generated
-#: APP-META.xml:61
-#: APP-META.xml:62
+#: ui/usage.html:392
+msgid "Report"
+msgstr ""
+
+# @generated
+#: ui/usage.html:262
+msgid "Report Options"
+msgstr ""
+
+# @generated
+#: APP-META.xml:53
+#: APP-META.xml:66
+#: APP-META.xml:67
 msgid "Reports"
 msgstr ""
 
 # @generated
+#: ui/usage.html:287
+msgid "Request"
+msgstr ""
+
+# @generated
+#: ui/servicoEntrega.html:112
 #: ui/servicoEntrega.html:115
 #: ui/cdn-new-1.html:118
 msgid "Required fields have to be filled"
 msgstr ""
 
 # @generated
-#: APP-META.xml:126
+#: ui/usage.html:181
+msgid "Resource Usage Report"
+msgstr ""
+
+# @generated
+#: APP-META.xml:138
 msgid "Service Delivery"
 msgstr ""
 
 # @generated
-#: APP-META.xml:127
+#: APP-META.xml:139
 msgid "Service Delivery Summary"
 msgstr ""
 
@@ -419,9 +481,29 @@ msgid "Service Routing Domain Name"
 msgstr ""
 
 # @generated
-#: APP-META.xml:51
-#: APP-META.xml:52
+#: APP-META.xml:55
+#: APP-META.xml:57
 msgid "Serviços de Entrega"
+msgstr ""
+
+# @generated
+#: ui/usage.html:271
+msgid "Show report grouped by project."
+msgstr ""
+
+# @generated
+#: ui/usage.html:265
+msgid "Show report usage by hour."
+msgstr ""
+
+# @generated
+#: ui/usage.html:189
+msgid "Start Date"
+msgstr ""
+
+# @generated
+#: ui/usage.html:207
+msgid "Start Time"
 msgstr ""
 
 # @generated
@@ -430,46 +512,87 @@ msgid "Subdomains of __cdmsDomain__ may not be used."
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:99
+#: APP-META.xml:104
+#: APP-META.xml:116
+#: APP-META.xml:141
+msgid "Support"
+msgstr ""
+
+# @generated
+#: ui/servicoEntrega.html:98
 msgid "Text explaining how delivery service works"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:64
+#: ui/usage.html:122
+msgid "The Detailed report period can not be greater than 31 days."
+msgstr ""
+
+# @generated
+#: ui/usage.html:198
+#: ui/usage.html:236
+msgid "The date entered is invalid."
+msgstr ""
+
+# @generated
+#: ui/usage.html:182
+msgid "The report informs the usage until the last reading, the actual hour can change the usage over the time."
+msgstr ""
+
+# @generated
+#: ui/usage.html:117
+msgid "The start date must be before the end date."
+msgstr ""
+
+# @generated
+#: ui/servicoEntrega.html:63
 #: ui/cdn-info.html:50
 #: ui/cdn-new-1.html:64
 msgid "This alias will be used in the Service Routing Domain Name generated by the system"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:81
+#: ui/servicoEntrega.html:80
 #: ui/cdn-info.html:73
 #: ui/cdn-new-1.html:81
 msgid "This is the path from content origin. It is used to redefine the CDN URL. It will supress the needed to type this path before the video name in the URL"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:126
+#: ui/viewServicoEntrega.html:99
 msgid "Total HTTP Traffic"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:130
+#: ui/viewServicoEntrega.html:102
 msgid "Total HTTPS Traffic"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:41
+#: ui/usage.html:148
+#: ui/viewRelatorios.html:42
 msgid "Tráfego HTTP"
 msgstr ""
 
 # @generated
-#: ui/viewRelatorios.html:49
+#: ui/usage.html:160
+#: ui/viewRelatorios.html:50
 msgid "Tráfego HTTPS"
 msgstr ""
 
 # @generated
-#: ui/viewServicoEntrega.html:106
+#: ui/js/displayError.js:12
+#: ui/js/displayError.js:37
+msgid "Unable to connect."
+msgstr ""
+
+# @generated
+#: APP-META.xml:52
+msgid "Usage Report"
+msgstr ""
+
+# @generated
+#: ui/viewServicoEntrega.html:85
 msgid "Use HTTPS"
 msgstr ""
 
@@ -485,12 +608,12 @@ msgstr ""
 
 # @generated
 #: APP-META.xml:42
-#: APP-META.xml:105
+#: APP-META.xml:113
 msgid "VDN"
 msgstr ""
 
 # @generated
-#: APP-META.xml:106
+#: APP-META.xml:114
 msgid "VDN Context Summary"
 msgstr ""
 
@@ -500,28 +623,28 @@ msgid "Vendor Embratel"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:56
+#: ui/servicoEntrega.html:55
 #: ui/cdn-info.html:41
 #: ui/cdn-new-1.html:56
 msgid "[Example: This is a live event for IT free lessons]"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:63
+#: ui/servicoEntrega.html:62
 #: ui/cdn-info.html:49
 #: ui/cdn-new-1.html:63
 msgid "[Example: livefreelessons]"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:80
+#: ui/servicoEntrega.html:79
 #: ui/cdn-info.html:71
 #: ui/cdn-new-1.html:80
 msgid "[Example: out/u/myvideos]"
 msgstr ""
 
 # @generated
-#: ui/servicoEntrega.html:71
+#: ui/servicoEntrega.html:70
 #: ui/cdn-info.html:60
 #: ui/cdn-new-1.html:71
 msgid "[Examples: myhost.mydomain.com 201.233.111.10]"

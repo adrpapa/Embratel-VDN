@@ -1,42 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="PHPDLTKSearchPage">
-		<item value="5" key="HISTORY_SIZE"/>
+		<item value="12" key="HISTORY_SIZE"/>
 		<item value="false" key="CASE_SENSITIVE"/>
-		<section name="HISTORY4">
+		<section name="HISTORY6">
 			<item value="false" key="isCaseSensitive"/>
 			<item value="" key="modelElement"/>
-			<item value="0" key="scope"/>
-			<item value="$apphost" key="pattern"/>
+			<item value="3" key="scope"/>
+			<item value="TEMPLATE_PATH" key="pattern"/>
 			<item value="1" key="limitTo"/>
 			<item value="true" key="includeInterpreterEnvironment"/>
 			<item value="0" key="searchFor"/>
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY2">
-			<item value="false" key="isCaseSensitive"/>
-			<item value="" key="modelElement"/>
-			<item value="0" key="scope"/>
-			<item value="cloudpass" key="pattern"/>
-			<item value="1" key="limitTo"/>
-			<item value="true" key="includeInterpreterEnvironment"/>
-			<item value="0" key="searchFor"/>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY3">
-			<item value="false" key="isCaseSensitive"/>
-			<item value="" key="modelElement"/>
-			<item value="0" key="scope"/>
-			<item value="cloudadmin" key="pattern"/>
-			<item value="1" key="limitTo"/>
-			<item value="true" key="includeInterpreterEnvironment"/>
-			<item value="0" key="searchFor"/>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY0">
+		<section name="HISTORY7">
 			<item value="false" key="isCaseSensitive"/>
 			<item value="" key="modelElement"/>
 			<item value="0" key="scope"/>
@@ -47,11 +25,110 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY1">
+		<section name="HISTORY4">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="LIVE_" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY10">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="cloudadmin" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY5">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="API_VERSION" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY11">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="$apphost" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY8">
 			<item value="false" key="isCaseSensitive"/>
 			<item value="" key="modelElement"/>
 			<item value="0" key="scope"/>
 			<item value="cloud" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY9">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="cloudpass" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY2">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="SSH_PRIVATE_KEY" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY3">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="VOD_" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY0">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="ConfigConsts::" key="pattern"/>
+			<item value="1" key="limitTo"/>
+			<item value="true" key="includeInterpreterEnvironment"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY1">
+			<item value="false" key="isCaseSensitive"/>
+			<item value="" key="modelElement"/>
+			<item value="0" key="scope"/>
+			<item value="CDMS_ADDRESS" key="pattern"/>
 			<item value="1" key="limitTo"/>
 			<item value="true" key="includeInterpreterEnvironment"/>
 			<item value="0" key="searchFor"/>

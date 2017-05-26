@@ -10,6 +10,7 @@
     <properties name="SPLUNK_ENDPOINT" type="string"/>
     <properties name="SPLUNK_QUERY" type="string"/>
     <properties name="PORTAL_ANALYTICS_URL" type="string"/>
+    <properties name="debug" type="boolean"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.1" relations="//@relations.1/@source" name="cdn" implements="//@typesFromLibrary.0">
     <properties name="name" type="string" description="CDN Name" required="true"/>
@@ -36,6 +37,7 @@
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/context" version="2.0" relations="//@relations.1/@target //@relations.0/@target //@relations.2/@source //@relations.3/@source" name="context" implements="//@typesFromLibrary.0">
     <properties name="VDN_HTTP_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTP"/>
     <properties name="VDN_HTTPS_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTPS"/>
+    <operations name="getResourceUsageDetailsReport" verb="PUT" path="/resource_usage"/>
   </internalTypes>
   <typesFromLibrary id="http://aps-standard.org/types/core/resource" version="1.0" name="Resource">
     <operations name="provision" verb="POST" path="/"/>

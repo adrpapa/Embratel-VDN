@@ -74,15 +74,15 @@ class NiceSSH {
         $name ie <streamName>
     */
     public static function getUsage($clientId, $proto, $level, $name){
-        $host = ConfigConsts::DELTA_HOST;
-        $user = ConfigConsts::DELTA_USER;
-        $fingerprint = ConfigConsts::DELTA_FINGERPRINT;
-        $niceSSH = new NiceSSH($host, $fingerprint, $user, ConfigConsts::SSH_PUBLIC_KEY, ConfigConsts::SSH_PRIVATE_KEY);
+        $host = ConfigConsts::$DELTA_HOST;
+        $user = ConfigConsts::$DELTA_USER;
+        $fingerprint = ConfigConsts::$DELTA_FINGERPRINT;
+        $niceSSH = new NiceSSH($host, $fingerprint, $user, ConfigConsts::$SSH_PUBLIC_KEY, ConfigConsts::$SSH_PRIVATE_KEY);
         $niceSSH->connect();
         // Resultados são retornados em KB
         // temos tudo detalhado para o bilhetador logar e totalizar
         
-        $dirname = ConfigConsts::DELTA_VOD_STORAGE_LOCATION."/$clientId/vod/$proto/$level/$name";
+        $dirname = ConfigConsts::$DELTA_VOD_STORAGE_LOCATION."/$clientId/vod/$proto/$level/$name";
         $dir = rtrim($niceSSH->exec("du -s $dirname"), "\n");
         
         $result = array();

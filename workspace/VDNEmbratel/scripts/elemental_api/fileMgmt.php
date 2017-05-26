@@ -72,7 +72,7 @@
         public function createUrlRewriteRule($domain,$path,$protocol="http") {
         	$xml_rule = $this->getXML();
         	
-        	if( ConfigConsts::debug ) {
+        	if( ConfigConsts::$debug ) {
         		print( $xml_rule );
         	}
         	
@@ -85,7 +85,7 @@
         	$regsub[0][0]      = $protocol . "://(.*." . $domain . ")/(.*)";
         	$rewrite_url[0][0] = $protocol . "://$1/" . rtrim(ltrim($path,"/"),"/") . "/$2";
  
-        	if( ConfigConsts::debug ) {
+        	if( ConfigConsts::$debug ) {
         		print( $xml_rule );
         	}        	
         	
@@ -95,7 +95,7 @@
         public function updateUrlRewriteRule($id,$domain,$path,$protocol="http") {
         	$xml_rule = $this->getXML();
         	 
-        	if( ConfigConsts::debug ) {
+        	if( ConfigConsts::$debug ) {
         		print( $xml_rule );
         	}
         	 
@@ -108,7 +108,7 @@
         	$regsub[0][0]      = $protocol . "://(.*." . $domain . ")/(.*)";
         	$rewrite_url[0][0] = $protocol . "://$1/" . rtrim(ltrim($path,"/"),"/") . "/$2";
         
-        	if( ConfigConsts::debug ) {
+        	if( ConfigConsts::$debug ) {
         		print( $xml_rule );
         	}
         	 
@@ -116,7 +116,7 @@
         }        
         
         protected function getXML() {
-        	$templateFilename = dirname(__FILE__) . '/../' . ConfigConsts::TEMPLATE_PATH . '/rule-url-rwr.xml';
+        	$templateFilename = dirname(__FILE__) . '/../' . ConfigConsts::$TEMPLATE_PATH . '/rule-url-rwr.xml';
         	
         	if ( file_exists($templateFilename) ) {
         		$xml = simplexml_load_file($templateFilename);

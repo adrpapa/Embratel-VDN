@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="./css/app.css" type="text/css" rel="stylesheet">
+<link href="./css/jsmodal-light.css" type="text/css" rel="stylesheet">
+<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+<script>
+require(
+		[ "aps/Memory", "dojo/on", "dijit/registry", "dojo/when",
+				"dojox/mvc/getPlainValue", "dojox/mvc/at",
+				"dojox/mvc/getStateful", "aps/xhr", "aps/Gauge",
+				"aps/PageContainer", "aps/Container", "aps/FieldSet",
+				"aps/Grid", "aps/Output", "aps/TextBox", "aps/CheckBox",
+				"aps/DateTextBox", "aps/Button", "aps/Tooltip",
+				"./js/displayError.js", "dojo/date", "dojo/date/stamp",
+				"dojo/_base/declare", "aps/ready!" ],
+		function(Memory, on, registry, when, getPlainValue, at,
+				getStateful, xhr, Gauge, PageContainer, Container,
+				FieldSet, Grid, Output, TextBox, CheckBox, DateTextBox,
+				Button, Tooltip, displayError, DateModule, DateStamp,
+				declare) {
+			debugger;
+			var myDateTextBox = declare("myDateTextBox", DateTextBox,
+					{
+						myFormat : {
+							selector : 'date'
+						},
+						value : "", // prevent parser from trying to convert to Date object
+						postMixInProperties : function() { // change value string to Date object
+							this.inherited(arguments);
+							// convert value to Date object
+							this.value = DateStamp
+									.fromISOString(this.value);
+						},
+						// To write back to the server in Oracle format, override the serialize method:
+						serialize : function(dateObject, options) {
+							return DateStamp.toISOString(dateObject,
+									this.myFormat);
+						},
+						format : function(/*Date*/value, /*locale.__FormatOptions*/
+						constraints) {
+							//      Formats the value as a Date, according to specified locale (second argument)
+							if (!value) {
+								return '';
+							}
+							constraints.locale = aps.context.locale
+									.toLowerCase().replace('_', '-');
+							return this.dateLocaleModule.format(value,
+									constraints);
+						},
+						displayMessage : function(message) {
+							if (message && this.focused)
+								Tooltip.show(message, this.focusNode,
+										this.tooltipPosition, !this
+												.isLeftToRight(), null,
+										"tooltip-error");
+							else
+								Tooltip.hide(this.focusNode,
+										"tooltip-error");
+						},
+						getPromptMessage : function() {
+							if (!this.isValid()) {
+								return this.invalidMessage;
+							}
+							return this.promptMessage;
+						}
+					});
+
+			var storeGrid = new Memory({
+				data : [],
+				idProperty : ''
+			});
+
+			var currDay = new Date();
+
+			var data = {
+				ini_date : DateStamp.toISOString(new Date(currDay
+						.getFullYear(), currDay.getMonth(), 1), {
+					selector : 'date'
+				}),
+				ini_time : '00:00:00',
+				end_date : DateStamp.toISOString(currDay, {
+					selector : 'date'
+				}),
+				end_time : '23:59:59',
+				detail : true,
+				project : false
+			};
+
+			var usageModel = getStateful(data);
+
+			var dateValidation = function() {
+				var invalid = new Date('X');
+				console.log('Date validation calling.');
+				var date_ini = usageModel.get('ini_date');
+				//Caso uma data seja invalida, os demais são válidos
+				if (typeof date_ini == "undefined") {
+					return true;
+				}
+				date_ini = _getDate(date_ini);
+				var time_ini = usageModel.get('ini_time').split(':');
+				date_ini.setHours(time_ini[0]);
+				date_ini.setMinutes(time_ini[1]);
+				date_ini.setSeconds(time_ini[2]);
+				var date_end = usageModel.get('end_date');
+				//Caso uma data seja invalida, os demais são válidos
+				if (typeof date_end == "undefined") {
+					return true;
+				}
+				date_end = _getDate(date_end);
+				var time_end = usageModel.get('end_time').split(':');
+				date_end.setHours(time_end[0]);
+				date_end.setMinutes(time_end[1]);
+				date_end.setSeconds(time_end[2]);
+
+				if (DateModule.compare(date_ini, date_end, 'datetime') > 0) {
+					_setInvalidMessage(_('The start date must be before the end date.'));
+					return false;
+				}
+				if (usageModel.get('detail')
+						&& DateModule.difference(date_ini, date_end, 'day') > 35) {
+					_setInvalidMessage(_('The Detailed report period can not be greater than 31 days.'));
+					return false;
+				}
+				return true;
+			};
+
+			var dataUsage = {
+				franquia : aps.context.vars.context.VDN_HTTP_Traffic.limit,
+				valor : aps.context.vars.context.VDN_HTTP_Traffic.usage,
+				franquiaS : aps.context.vars.context.VDN_HTTPS_Traffic.limit,
+				valorS : aps.context.vars.context.VDN_HTTPS_Traffic.usage
+			}
+			dataUsage['max'] = dataUsage['valor'] > dataUsage['franquia']? dataUsage['valor'] : dataUsage['franquia'];
+			dataUsage['maxS'] = dataUsage['valorS'] > dataUsage['franquiaS']? dataUsage['valorS'] : dataUsage['franquiaS'];
+			var currentUsage = getStateful(dataUsage);
+
+			var page = new PageContainer({
+				id : 'page'
+			});
+
+			var http_fs = new FieldSet({ title : _("Tráfego HTTP") });
+			var overClass=[];
+			overClass[currentUsage.franquia] = "over";
+			var http_gauge = new Gauge({
+				legend : _("${value} GB utilizados de ${maximum} GB"),
+				maximum : at(currentUsage.max),
+				value : at(currentUsage.valor),
+				classesMap : overClass
+			});
+			http_fs.addChild(http_gauge);
+			page.addChild(http_fs);
+
+			var https_fs = new FieldSet({title : _("Tráfego HTTPS")});
+			var overClassS=[];
+			overClassS[currentUsage.franquiaS] = "over";
+			var https_gauge = new Gauge({
+				legend : _("${value} GB utilizados de ${maximum} GB"),
+				maximum : at(currentUsage.maxS),
+				value : at(currentUsage.valorS),
+				classesMap : overClassS
+			})
+			https_fs.addChild(https_gauge);
+			page.addChild(https_fs);
+
+			var report_fs = new FieldSet(
+					{
+						title : _("Gerar Relatório"),
+						description : _('Notas Explicativas da página de seleção do relatório.')
+								+ '<br><br>'
+					});
+
+			var report_fs = new FieldSet(
+					{
+						title : _("Resource Usage Report"),
+						description : _('The report informs the usage until the last reading, the actual hour can change the usage over the time.')
+					});
+
+			var ini_date = new myDateTextBox({
+				id : 'tx_ini_date',
+				//lang: aps.context.locale,
+				value : at(usageModel, 'ini_date'),
+				label : _("Start Date"),
+				constrains : {
+					selector : 'date',
+					locale : aps.context.locale.toLowerCase().replace('-'),
+					fullYear : true
+				},
+				isValid : function() {
+					if (this._isInvalidDate(this.value)) {
+						this.set('invalidMessage',
+								_('The date entered is invalid.'));
+						return false;
+					}
+					return dateValidation();
+				}
+			});
+
+			var ini_time = new TextBox({
+				id : 'tx_ini_time',
+				label : _("Start Time"),
+				value : at(usageModel, 'ini_time'),
+				mask : "Hh:Mm:Ss",
+				autoSize : false,
+				'class' : 'f-2x-small-size',
+				definitions : {
+					"H" : "[0-2]",
+					"h" : "[0-9]",
+					"M" : "[0-5]",
+					"m" : "[0-9]",
+					"S" : "[0-5]",
+					"s" : "[0-9]"
+				},
+				isValid : dateValidation
+			});
+
+			var end_date = new myDateTextBox({
+				id : 'tx_end_date',
+				//lang: aps.context.locale,
+				value : at(usageModel, 'end_date'),
+				constrains : {
+					selector : 'date',
+					locale : aps.context.locale.toLowerCase().replace('-'),
+					fullYear : true
+				},
+				label : _("End Date"),
+				isValid : function() {
+					if (this._isInvalidDate(this.value)) {
+						this.set('invalidMessage',
+								_('The date entered is invalid.'));
+						return false;
+					}
+					return dateValidation();
+				}
+			});
+
+			var end_time = new TextBox({
+				id : 'tx_end_time',
+				label : _("End Time"),
+				value : at(usageModel, 'end_time'),
+				mask : "Hh:Mm:Ss",
+				autoSize : false,
+				'class' : 'f-2x-small-size',
+				definitions : {
+					"H" : "[0-2]",
+					"h" : "[0-9]",
+					"M" : "[0-5]",
+					"m" : "[0-9]",
+					"S" : "[0-5]",
+					"s" : "[0-9]"
+				},
+				isValid : dateValidation
+			});
+
+			var detail = new CheckBox({
+				label : _('Report Options'),
+				checked : at(usageModel, 'detail'),
+				description : _("Detailed"),
+				hint : _('Show report usage by hour.')
+			});
+
+			var project = new CheckBox({
+				checked : at(usageModel, 'project'),
+				description : _("By Project"),
+				hint : _('Show report grouped by project.')
+			});
+
+			report_fs.addChild(ini_date);
+// 			report_fs.addChild(ini_time);
+			report_fs.addChild(end_date);
+// 			report_fs.addChild(end_time);
+			report_fs.addChild(detail);
+			report_fs.addChild(project);
+			page.addChild(report_fs);
+
+			var operatioctfs = new Container({
+				title : true
+			});
+
+			var export_bt = new Button({
+				title : _('Request'),
+				onClick : function() {
+					var that = this;
+
+					if (!page.validate()) {
+						that.cancel();
+						return;
+					}
+
+					var reportQuery = '/aps/2/resources/' + aps.context.vars.context.aps.id + '/resource_usage';
+					when(xhr(reportQuery, {
+						method : "PUT",
+						data : JSON.stringify(usageModel)
+					}), function(result) {
+
+						registry.byId("result_ct").set('visible', true);
+
+						storeGrid.data = result.data;
+						storeGrid.idProperty = result.titles[0];
+
+						var layout = [];
+						var order_attr = {
+							attribute : "Recurso",
+							descending : false
+						};
+						for (var i = 0; i < result.titles.length; i++) {
+							layout.push({
+								"name" : result.titles[i],
+								"field" : result.titles[i]
+							});
+							if (result.titles[i] == 'Data') {
+								order_attr = {
+									attribute : "Data",
+									descending : true
+								};
+							}
+						}
+
+						var grid = registry.byId("grid_export");
+
+						if (!grid) {
+							grid = new Grid({
+								id : "grid_export",
+								store : storeGrid,
+								columns : layout
+							});
+							grid.placeAt('result_ct', "last");
+						} else {
+							grid.set('columns', layout);
+							grid.refresh();
+
+						}
+						grid.set('sort', order_attr);
+
+						that.cancel();
+					}, function(err) {
+						that.cancel();
+						displayError(err);
+					});
+				}
+			});
+
+			usageModel.watch(function(name, oldValue, value) {
+				if (name == 'ini_date' && typeof value != "undefined") {
+					var date_ini = _getDate(value);
+					var date_end = this.get('end_date');
+					if (typeof date_end == 'undefined'
+							|| usageModel.get('detail')
+							&& DateModule.difference(date_ini,
+									_getDate(date_end), 'day') > 31) {
+						usageModel.set('end_date', DateStamp.toISOString(
+								DateModule.add(date_ini, "day", 30), {
+									selector : 'date'
+								}));
+					}
+				}
+				console.log('teste');
+				document.body.focus();
+				ini_date.validate();
+				ini_time.validate();
+				end_date.validate();
+				end_time.validate();
+			});
+
+			var _setInvalidMessage = function(msg) {
+				ini_date.set('invalidMessage', msg);
+				ini_time.set('invalidMessage', msg);
+				end_date.set('invalidMessage', msg);
+				end_time.set('invalidMessage', msg);
+			};
+
+			var _getDate = function(value) {
+				if (typeof value != "object") {
+					value = DateStamp.fromISOString(value);
+				}
+				return value;
+			};
+
+			operatioctfs.addChild(export_bt);
+			page.addChild(operatioctfs);
+
+			var result_ct = new Container({
+				id : 'result_ct',
+				title : _("Report"),
+				style : "padding-bottom: 15px; padding-top: 25px;",
+				visible : false
+			});
+
+			page.addChild(result_ct);
+
+			page.startup();
+
+			page.placeAt(document.body);
+
+		});
+</script>
+</head>
+<body>
+</body>
+</html>

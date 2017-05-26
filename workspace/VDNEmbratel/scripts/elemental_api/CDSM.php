@@ -4,25 +4,26 @@ require_once "configConsts.php";
 require_once "elementalRest.php";
 
 // ** Classe CDSM
-// Encapsula as funcionalidades principais para manutenção de Service no CDMS
+// Encapsula as funcionalidades principais para manutenÃ§Ã£o de Service no CDMS
 // **
 abstract class CDSM {
 	protected $xml_result;
 	protected $internal_id;
 	protected $internal_status;
 	protected $internal_message;
-	protected $cdmAddress = ConfigConsts::CDMS_ADDRESS;
-	protected $cdmPort = ConfigConsts::CDMS_PORT;
+	//protected $cdmAddress;
+	//protected $cdmPort;
 	protected $taskAPI;
 	protected $action;
 	protected $urlString;
-	protected $cdmUserName = ConfigConsts::CDMS_USER;
-	protected $cdmPassword = ConfigConsts::CDMS_PWD;
+	//protected $cdmUserName;
+	//protected $cdmPassword;
 	protected $params;
 	protected $optional_params_names;
 
 	public function __construct() {
-		$this->urlString = "https://" . $this->cdmAddress . ":" . $this->cdmPort . "/servlet/";
+		$this->urlString = "https://" . ConfigConsts::$CDMS_ADDRESS .
+			 ":" . ConfigConsts::$CDMS_PORT . "/servlet/";
 	}
 
 	protected function setInternalStatus() {
@@ -112,12 +113,14 @@ abstract class CDSM {
 			}
 		}
 			
-		$credentials = $this->cdmUserName . ':' . $this->cdmPassword;
-		$this->urlString = "https://" . $this->cdmAddress . ":" . $this->cdmPort . "/servlet/";
+//		$credentials = $this->cdmUserName . ':' . $this->cdmPassword;
+		$credentials = ConfigConsts::$CDMS_USER . ':' . ConfigConsts::$CDMS_PWD;
+		$this->urlString = "https://" . ConfigConsts::$CDMS_ADDRESS .
+			 ":" . ConfigConsts::$CDMS_PORT . "/servlet/";
 		$this->urlString .= $this->taskAPI . "?action=" . $this->action . $optional_params;
 		
 		try {
-			$curl_obj = new ElementalRest($this->cdmAddress,'servlet');
+			$curl_obj = new ElementalRest(ConfigConsts::$CDMS_ADDRESS,'servlet');
 			$curl_obj->uri = $this->urlString;
 			$this->xml_result = $curl_obj->restCDSM( base64_encode($credentials),$data );
 		} catch(Exception $ex) { 

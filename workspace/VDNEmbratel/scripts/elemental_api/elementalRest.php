@@ -16,13 +16,12 @@ class ElementalRest {
         if( $port != null ){
             $this->uri .= ':'.$port;
         }
-//             $this->uri = $baseURI.'/'.ConfigConsts::API_VERSION.'/api/'.'$apiEndpoint;
         $this->uri .= '/api/'.$apiEndpoint;
         $this->ch = curl_init();
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         // Ignora verificação SSL - se certificado do site for válido, remover isso
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
-        if( ConfigConsts::debug ) {
+        if( ConfigConsts::$debug ) {
             curl_setopt($this->ch, CURLOPT_VERBOSE, true);
         }
     }
@@ -33,13 +32,13 @@ class ElementalRest {
                 
     // Busca template para o evento 
     function getTemplate($templateID, $templateName) {
-        $templateFilename = dirname(__FILE__) . '/../' . ConfigConsts::TEMPLATE_PATH.'/'.$templateName.'_'.$templateID.'.xml';
+        $templateFilename = dirname(__FILE__) . '/../' . ConfigConsts::$TEMPLATE_PATH.'/'.$templateName.'_'.$templateID.'.xml';
         if(! file_exists($templateFilename)) {
             print "Criando Template ".$templateFilename.PHP_EOL;
             $xml = $this->restGet( $templateID, 'clean=true');
             //$xml = $this->restGet( $templateID );
-            if(! is_dir(dirname(__FILE__) . '/../' . ConfigConsts::TEMPLATE_PATH)) {
-                mkdir(dirname(__FILE__) . '/../' . ConfigConsts::TEMPLATE_PATH,0755, true);
+            if(! is_dir(dirname(__FILE__) . '/../' . ConfigConsts::$TEMPLATE_PATH)) {
+                mkdir(dirname(__FILE__) . '/../' . ConfigConsts::$TEMPLATE_PATH,0755, true);
             }
             $xml->asXml($templateFilename);
         }
@@ -73,7 +72,7 @@ class ElementalRest {
 
         // build file parameters
         $k = "0";
-        $v = dirname(__FILE__) . '/../' . ConfigConsts::TEMPLATE_PATH . "/rule-url-rwr.xml";
+        $v = dirname(__FILE__) . '/../' . ConfigConsts::$TEMPLATE_PATH . "/rule-url-rwr.xml";
 
         $v = call_user_func("end", explode(DIRECTORY_SEPARATOR, $v));
         $k = str_replace($disallow, "_", $k);
@@ -190,7 +189,7 @@ class ElementalRest {
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->headers );
         
         $data = curl_exec($this->ch);
-        if( ConfigConsts::debug ) {
+        if( ConfigConsts::$debug ) {
             echo "*********************\nExecutando CURL\n";
             echo "URL to call: $urlFinal\n";
             print_r($this->headers);
