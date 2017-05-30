@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="$context" key="selection"/>
+		<item value="$origin_domain" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="$origin_domain"/>
+			<item value="$this"/>
+			<item value="origin_domain"/>
+			<item value="$new-&gt;"/>
+			<item value="&lt;var"/>
+			<item value="mozyProAccountUser"/>
+			<item value="mozyProAccount.groups.list"/>
 			<item value="$context"/>
-			<item value="servico"/>
-			<item value="cdn_new"/>
-			<item value="store"/>
-			<item value="ConfigConsts :: loadConstants"/>
-			<item value="loadConstants"/>
-			<item value="createDeliveryService"/>
-			<item value="classesMap"/>
 		</list>
 		<list key="replacehistory">
 			<item value="ConfigConsts::loadConstants"/>
@@ -32,7 +32,7 @@
 		<item value="321" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="431" key="DIALOG_HEIGHT"/>
-		<item value="1524" key="DIALOG_X_ORIGIN"/>
-		<item value="270" key="DIALOG_Y_ORIGIN"/>
+		<item value="1494" key="DIALOG_X_ORIGIN"/>
+		<item value="209" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

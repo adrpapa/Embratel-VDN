@@ -197,22 +197,51 @@ class context extends \ APS \ ResourceBase {
 	public function getResourceUsageDetailsReport($request){
 		$this->logger->debug("[" . __METHOD__ . '] >>');
 		ConfigConsts::loadConstants($this);
-		$request = json_decode($request);
-		$return = array();
-		$return['titles'] = [_("Delivery Service"), _("Traffic Date"), _("HTTP Traffic"), _("HTTPS Traffic")];
-		$return['data'] = ["Serviço1", "01/01/2001", "350", "280"];
 		try{
-			$request->account_id = $this->account_id;
-			$request->subscription_id = $this->subscription_id;
-			$return = OpenstackFactory::getResourceUsageReport($this->app, $request);
+			$request = json_decode($request);
+			$headers = array(
+					_("Serviço de Entrega"),
+					_("Data/Hora"),
+					_("Traffico HTTP"),
+					_("Traffico HTTPS")
+			);
+			$data = array(
+				array(_("Serviço de Entrega")=>"Serviço1", "Data/Hora"=>"01/01/2001", _("Traffico HTTP")=>"150", _("Traffico HTTPS")=>"980"),
+				array(_("Serviço de Entrega")=>"Serviço2", "Data/Hora"=>"01/01/2001", _("Traffico HTTP")=>"250", _("Traffico HTTPS")=>"880"),
+				array(_("Serviço de Entrega")=>"Serviço3", "Data/Hora"=>"01/01/2001", _("Traffico HTTP")=>"350", _("Traffico HTTPS")=>"780"),
+			);
+			$return = array(
+				"titles" => $headers,
+				"data" => $data
+			);
+			print_r($return);
+			$this->logger->debug("[".__METHOD__. '] << ');
+			return $return;
 		}catch (\Exception $e){
 			$this->log->error("[".__METHOD__. "]".$e->getMessage()." ".$e->getFile()."(".$e->getLine().")".PHP_EOL.$e->getTraceAsString());
 			throw new \Rest\RestException(500, _("An error has ocurred while trying to retrieve the usage data."), $e->getMessage());
 		}
-		$this->log->debug("[".__METHOD__. '] << ');
-		return $return;
 	}
-	
-
 }
+//		function _($str){
+//			return $str;
+//		}
+
+
+//		$request = (object)[];
+//		$request->CDMS_ADDRESS                 = "";
+//		$request->CDMS_PORT                    = "";
+//		$request->CDMS_USER                    = "";
+//		$request->CDMS_PWD                     = "";
+//		$request->CDMS_DOMAIN                  = "";
+//		$request->CDMS_MAX_BITRATE_PER_SESSION = ""; 
+//		$request->SPLUNK_ADDRESS               = "";
+//		$request->SPLUNK_ENDPOINT              = ""; 
+//		$request->SPLUNK_QUERY                 = "";
+//		
+//		print_r($request);
+//			$ctx = new context();
+//			$ctx->global = $request;
+//			$ctx->getResourceUsageDetailsReport("{}");
+
 ?>

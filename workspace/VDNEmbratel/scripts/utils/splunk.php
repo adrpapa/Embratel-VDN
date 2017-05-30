@@ -65,7 +65,11 @@ class SplunkStats {
                     sprintf($urlMask, $timeRange, $bucketSize, $deliveryService));
             echo sprintf($urlMask, $timeRange, $bucketSize, $deliveryService)."\n";
             $data = curl_exec($curl_obj->ch);
-//            echo $data;
+            echo "\n******** Curl call for statistics - Request *************\n";
+            print_r( $curl_obj );
+            echo "\n******** Curl call for statistics - Response *************\n";
+            print_r( $data );
+            echo "\n**************** end Curl call for statistics *************\n";
             // TODO Quebrar log por data..
             
             if( ! isset($data) || $data == '"None"' || $data == '""') {
@@ -91,8 +95,8 @@ class SplunkStats {
     }
 }
 
-// $splunkStats = SplunkStats::getBilling("teste","ds-ebtvdn-11", null, null);
-// var_dump($splunkStats);
+//$splunkStats = SplunkStats::getBilling("teste","ds-ebtvdn-11", null, null);
+//var_dump($splunkStats);
 // $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventodeltaive-1000001", $splunkStats->lastResultTime);
 // var_dump($splunkStats);
 // $splunkStats = SplunkStats::getBilling("Client_1000001","ds-eventodeltaive-1000001", $splunkStats->lastResultTime);

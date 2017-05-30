@@ -261,12 +261,10 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
+		ConfigConsts::loadConstants($this->context);
 		$logger->info("Iniciando updating do CDN... ".$this->aps->id);    	 
 		echo "************ CDN Object *********";print_r($this);
 		$this->_copy($new);
-		$this->origin_domain = $origin_domain;
-		echo "************ New Object *********";print_r($this);
-		ConfigConsts::loadConstants($this->context);
 
 		$custom_name   = $new->alias . "-" . getClientID($this->context);
 		$custom_domain = $new->alias . "." . getClientID($this->context);
@@ -274,6 +272,8 @@ class cdn extends \APS\ResourceBase {
 		$ds_name       = "ds-".$custom_name;
 
 		$logger->info("New Domain:".$origin_domain);
+		$this->origin_domain = $origin_domain;
+		echo "************ New Object *********";print_r($this);
 
 		if ( !is_null($this->content_origin_id) ) {
 			$origin = new ContentOrigin("co-".$custom_name,$new->origin_server,$origin_domain,$new->description);
