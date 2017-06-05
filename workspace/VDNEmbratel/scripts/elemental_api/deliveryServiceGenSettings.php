@@ -15,7 +15,7 @@
         protected $internal_OsHttpPort;
         protected $internal_ReadTimeout;
         
-        public function __construct( $deliveryService=null,$protocol="http",$Bitrate="1000",$HashLevel="0",
+        public function __construct( $deliveryService=null,$protocol="http",$Bitrate="10000",$HashLevel="0",
                                      $TmpfsSize="2",$OsHttpPort="80",$ReadTimeout="5") {
                                 	
         	$this->optional_params_names = array(

@@ -130,9 +130,11 @@ require(
 				valor : aps.context.vars.context.VDN_HTTP_Traffic.usage,
 				franquiaS : aps.context.vars.context.VDN_HTTPS_Traffic.limit,
 				valorS : aps.context.vars.context.VDN_HTTPS_Traffic.usage
-			}
+			};
 			dataUsage['max'] = dataUsage['valor'] > dataUsage['franquia']? dataUsage['valor'] : dataUsage['franquia'];
 			dataUsage['maxS'] = dataUsage['valorS'] > dataUsage['franquiaS']? dataUsage['valorS'] : dataUsage['franquiaS'];
+			dataUsage['max'] = dataUsage['franquia'];
+			dataUsage['maxS'] = dataUsage['franquiaS'];
 			var currentUsage = getStateful(dataUsage);
 
 			var page = new PageContainer({
@@ -299,21 +301,13 @@ require(
 						storeGrid.idProperty = result.titles[0];
 
 						var layout = [];
-						var order_attr = {
-							attribute : "Recurso",
-							descending : false
-						};
+// 						};
 						for (var i = 0; i < result.titles.length; i++) {
 							layout.push({
 								"name" : result.titles[i],
-								"field" : result.titles[i]
+								"field" : result.titles[i],
+								"sortable" : true
 							});
-							if (result.titles[i] == 'Data') {
-								order_attr = {
-									attribute : "Data",
-									descending : true
-								};
-							}
 						}
 
 						var grid = registry.byId("grid_export");
@@ -323,6 +317,7 @@ require(
 								id : "grid_export",
 								store : storeGrid,
 								columns : layout
+// 								sort : { attribute: result.titles[0], descending: false }
 							});
 							grid.placeAt('result_ct', "last");
 						} else {
@@ -330,7 +325,6 @@ require(
 							grid.refresh();
 
 						}
-						grid.set('sort', order_attr);
 
 						that.cancel();
 					}, function(err) {

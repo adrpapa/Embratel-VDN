@@ -565,7 +565,7 @@ msgstr "Tráfego HTTP Total"
 #: ui/viewServicoEntrega.html:102
 # @generated
 msgid "Total HTTPS Traffic"
-msgstr "Tráfego HTTP Total"
+msgstr "Tráfego HTTPS Total"
 
 #: ui/usage.html:148
 #: ui/viewRelatorios.html:42

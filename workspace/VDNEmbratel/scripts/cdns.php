@@ -289,8 +289,12 @@ class cdn extends \APS\ResourceBase {
 				$logger->info("cdns:provisioning() Error updating Delivery Service: " . $ds->getMessage());
 				throw new \Exception("Can't update delivery service:" . $ds->getMessage(), 502);    		
 			}
-
 			$this->delivery_service_name = $ds_name;
+			$dsgs = new DeliveryServiceGenSettings();
+			$dsgs->Bitrate = ConfigConsts::CDMS_MAX_BITRATE_PER_SESSION;
+			$dsgs->OsProtocol=( $this->https ? "1":"0");
+			$dsgs->StreamingProtocol=($this->https ? "1":"0");
+			$dsgs->update($this->delivery_service_id);
 		}
 
 		if ( !is_null($this->rule_url_rwr_file_id) ) {
@@ -300,6 +304,7 @@ class cdn extends \APS\ResourceBase {
 				throw new \Exception("Can't update rule to delivery service:" . $rule->getMessage(), 505);
 			}
 		}
+		
 
 		$logger->info("Fim updating do CDN... ".$this->aps->id);
 		$logger->debug("[".__METHOD__. '] <<');
@@ -397,7 +402,8 @@ class cdn extends \APS\ResourceBase {
 
 		// if ( $this->live ) return;	// Precisa confirmar isso....
 
-		$dsgs = new DeliveryServiceGenSettings($ds->getID(), ($this->https ? "https" : "http") );
+		$dsgs = new DeliveryServiceGenSettings($ds->getID(), ($this->https ? "https" : "http"),
+			ConfigConsts::$CDMS_MAX_BITRATE_PER_SESSION );
 
 		/* INICIO Alterações sugeridas pelo Daniel Pinkas da Cisco */
 		// $dsgs->HttpExtAllow = "true";
@@ -473,18 +479,17 @@ class cdn extends \APS\ResourceBase {
 		$this->newestSplunkData = $splunkStats->lastResultTime;
 		//$logger->info(var_dump($splunkStats));
 
-## Calculate the resource usage properties
-		$this->httpTrafficActualUsage += $splunkStats->gigaTransfered;
-# Save counters to return to caller
-		$usage['httpTrafficActualUsage'] = $splunkStats->gigaTransfered;
-
+## Calculate the resource usage properties and save counters to return to caller
+		$usage['lastResultTime'] = $splunkStats->lastResultTime;
 		if( $this->https ) {
 			$this->http_s_TrafficActualUsage += $splunkStats->gigaTransfered;
+			$usage['httpTrafficActualUsage'] = 0;
 			$usage['httpsTrafficActualUsage'] = $splunkStats->gigaTransfered;
 		} else {
+			$this->httpTrafficActualUsage += $splunkStats->gigaTransfered;
+			$usage['httpTrafficActualUsage'] = $splunkStats->gigaTransfered;
 			$usage['httpsTrafficActualUsage'] = 0;
 		}
-		$logger->debug("[".__METHOD__. '] <<');
 
 ## Save resource usage in the APS controller
 		$apsc = \APS\Request::getController();

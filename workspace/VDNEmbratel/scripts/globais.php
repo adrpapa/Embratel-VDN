@@ -73,6 +73,17 @@ class globais extends \APS\ResourceBase {
 	public $PORTAL_ANALYTICS_URL = '192.118.76.206';
 	
 	/**
+	 * @type(string)
+	 * @title("Template de Email")
+	 */
+	public $EMAIL_TEMPLATE_NAME = 'Notificação de criação de Serviço de Entrega';
+	
+	/**
+	 * @type(string)
+	 * @title("Maximum bitrate limit per session")
+	 */
+	public $CDMS_MAX_BITRATE_PER_SESSION = '12000';
+	/**
 	 * @type(boolean)
 	 * @title("Depuração")
 	 */

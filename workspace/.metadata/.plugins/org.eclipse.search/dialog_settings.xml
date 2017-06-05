@@ -16,10 +16,10 @@
 		<item value="false" key="WHOLE_WORD"/>
 		<item value="false" key="SEARCH_DERIVED"/>
 		<section name="HISTORY6">
-			<item value="true" key="ignoreCase"/>
+			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="getResourceUsageReport" key="textPattern"/>
+			<item value="deliveryService" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -31,7 +31,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="embratel.com.br/app/VDNEmbratel/globais/1.0" key="textPattern"/>
+			<item value="unassignServiceEngines" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -40,10 +40,10 @@
 			</list>
 		</section>
 		<section name="HISTORY4">
-			<item value="true" key="ignoreCase"/>
+			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="displayError" key="textPattern"/>
+			<item value="billinglog" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -53,9 +53,9 @@
 		</section>
 		<section name="HISTORY10">
 			<item value="true" key="ignoreCase"/>
-			<item value="1" key="scope"/>
+			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="::" key="textPattern"/>
+			<item value="DBUsage" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -64,10 +64,10 @@
 			</list>
 		</section>
 		<section name="HISTORY5">
-			<item value="true" key="ignoreCase"/>
+			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="DBUsage" key="textPattern"/>
+			<item value="vars.deliveryService" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -82,7 +82,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="public*static" key="textPattern"/>
+			<item value="getResourceUsageReport" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -94,7 +94,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="embratel.cloud/openstack/application/1.6" key="textPattern"/>
+			<item value="@path" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -106,7 +106,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="loadConstants" key="textPattern"/>
+			<item value="displayError" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -115,10 +115,10 @@
 			</list>
 		</section>
 		<section name="HISTORY2">
-			<item value="true" key="ignoreCase"/>
+			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="unassignServiceEngines" key="textPattern"/>
+			<item value="usage" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -127,10 +127,10 @@
 			</list>
 		</section>
 		<section name="HISTORY3">
-			<item value="true" key="ignoreCase"/>
+			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="@path" key="textPattern"/>
+			<item value="BillingLog" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -142,7 +142,7 @@
 			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="vars.deliveryService" key="textPattern"/>
+			<item value="ConfigConsts::" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -154,7 +154,7 @@
 			<item value="false" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="deliveryService" key="textPattern"/>
+			<item value="BILLING_LOG_PATH" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -206,9 +206,9 @@
 		<item value="1000" key="org.eclipse.dltk.search.resultpage.limit"/>
 	</section>
 	<section name="DialogBounds_SearchDialog">
-		<item value="1104" key="DIALOG_WIDTH"/>
+		<item value="1088" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="665" key="DIALOG_HEIGHT"/>
+		<item value="599" key="DIALOG_HEIGHT"/>
 		<item value="155" key="DIALOG_X_ORIGIN"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
 	</section>

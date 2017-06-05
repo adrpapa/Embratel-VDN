@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="referrer" content="no-referrer" />
 	<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
 	<script>
-	require([
-	         "aps/ready!"
-	     ], function() {
-	         "use strict";
-	         debugger;
-	         window.location.href = aps.context.vars.globais.PORTAL_ANALYTICS_URL;
-			});
+		require([ "aps/xhr", "dojo/when", "./js/displayError.js", "aps/ready!" ],
+
+		function(xhr, when, displayError) {
+			debugger;
+			displayError(_('Wait while you are redirect to openstack.'), 'warning');
+
+			var mapForm = document.createElement("form");
+			mapForm.target = "_blank";
+			mapForm.method = "POST"; // or "post" if appropriate
+			mapForm.action = aps.context.vars.globais.PORTAL_ANALYTICS_URL;
+			var mapInput = document.createElement("input");
+			mapInput.type = "hidden";
+			mapInput.name = "token";
+			mapInput.id = "token";
+			mapInput.value = "token";
+			mapForm.appendChild(mapInput);
+			document.body.appendChild(mapForm);
+			mapForm.submit();
+			mapForm.parentNode.removeChild(mapForm);
+			
+			setTimeout(function(){ aps.apsc.gotoView("viewGeral"); }, 5000);
+
+		});
 	</script>
 </head>
-<body></body>
+<body>
+</body>
 </html>

@@ -4,7 +4,7 @@
 	<id>http://embratel.com.br/app/VDNEmbratel</id>
 	<name>VDNEmbratel</name>
 	<version>3.0</version>
-	<release>1.0.1.39</release>
+	<release>1.1</release>
 	<homepage>http://embratel.com.br/app/VDNEmbratel</homepage>
 	<vendor>
 		<name>Vendor Embratel</name>
@@ -26,8 +26,8 @@
 			<version release="3.3" version="2.0">
 				<entry>General fixes</entry>
 			</version>
-			<version version="3.0" release="1.0.1.0">
-				<entry>Removidos o suporte ao Elemental Live / VOD</entry>
+			<version version="3.0" release="1.1">
+				<entry>Removidos o suporte ao Elemental Live / VOD e incluído o relatório de consumo</entry>
 			</version>
 		</changelog>
 		<categories>
@@ -85,7 +85,7 @@
 		</text>
 	</license-agreement>
 
-	<upgrade match="version=ge=0,release=ge=0" />
+	<upgrade match="version =ge=3.0" />
 
 	<service id="globais">
 		<code engine="php" path="scripts/globais.php" />

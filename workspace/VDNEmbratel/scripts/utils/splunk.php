@@ -34,7 +34,7 @@ class SplunkStats {
         $splunkStats = new self();
         $splunkStats->lastResultTime = $lastResultTime;
         $splunkStats->gigaTransfered = 0;
-        $billingLog = new BillingLog($context, "splunk");
+        $billingLog = new BillingLog($context, "splunk", true);
         $billingLog->debug("Lookup Billing ".$deliveryService." last result time:".$lastResultTime."\n");
         
         while( $diff > 5 ){
@@ -73,8 +73,20 @@ class SplunkStats {
             // TODO Quebrar log por data..
             
             if( ! isset($data) || $data == '"None"' || $data == '""') {
+				$now = time();
+				$nomin = date('i',$now);
+				$min = $nomin - ( $nomin % 5 );
+				$date = strtotime(date('Y/m/d H:', $now).$min.":00");
+				echo "Date=".date(DATE_ATOM, $now)." Rounded Minutes=".date(DATE_ATOM,$date)."\n";
+				$splunkStats->lastQueryTime = date(DATE_ATOM, $now);
+				$splunkStats->lastResultTime = date(DATE_ATOM, $date);
+				$splunkStats->gigaTransfered = $nomin/10;
+				echo "Using FAKE Statistical data!!!!!!!"."\n";
+				print_r($splunkStats);
                 $billingLog->error(" ***** No data for ".$deliveryService." url: ".$urlMask."\n");
-                continue;
+                $diff = 0;
+                break;
+                //continue;
             }
 //            echo $data." ===== data\n\n";
             $rlstObj=json_decode(json_decode($data));

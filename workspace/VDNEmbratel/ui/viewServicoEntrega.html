@@ -93,7 +93,19 @@
 		} ], [ "aps/Output", {
 			label : _("Description"),
 			value : at("rel:", "description")
+		} ] ] ] ] ], [ "aps/Container", {
+			title : _("Estatisticas")
+		}, [ [ "aps/FieldSet", [ [ "aps/Output", {
+			label : _("Total HTTP Traffic"),
+			value : at("rel:", "httpTrafficAtualUsage")
+		} ], [ "aps/Output", {
+			label : _("Total HTTPS Traffic"),
+			value : at("rel:", "http_s_TrafficActualUsage")
+		} ], [ "aps/Output", {
+			label : _("Last Statistics read at"),
+			value : at("rel:", "newestSplunkData")
 		} ] ] ] ] ] ] ] ] ] ] ]);
+
 	});
 </script>
 </head>

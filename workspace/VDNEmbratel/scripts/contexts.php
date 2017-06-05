@@ -8,6 +8,7 @@ require_once 'loader.php';
 
 require_once "utils/niceSSH.php";
 require_once "utils/BillingLog.php";
+require_once "utils/usageReport.php";
 
 // Definition of type structures
 
@@ -58,14 +59,14 @@ class context extends \ APS \ ResourceBase {
 	/**
 	    * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
 	    * @description("VDN Total Traffic HTTP")
-	    * @unit("kb")
+	    * @unit("gb")
 	    */
 	public $VDN_HTTP_Traffic;
 
 	/**
 	    * @type("http://aps-standard.org/types/core/resource/1.0#Counter")
-	    * @description("VDN Total Traffic HTTPS")
-	    * @unit("kb")
+	    * @description("VDN Total Traffic HTTPS") 
+	    * @unit("gb")
 	    */
 	public $VDN_HTTPS_Traffic;
 
@@ -134,20 +135,28 @@ class context extends \ APS \ ResourceBase {
 		## Reset the local variables
 		$VDN_HTTP_Traffic = 0;
 		$VDN_HTTPS_Traffic = 0;
-		$cdnTrafficLog = new BillingLog($this, "cdn");
+		$cdnTrafficLog = new BillingLog($this, "usage", false);
 		## Collect resource usage from all CDNs
 		foreach ($this->cdns as $cdn) {
 			$this->logger->info("Fetching CDN traffic usage. for $cdn->origin_domain");
-			$usage = $apsc->getIo()->sendRequest(\ APS \ Proto :: GET, $apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
+			$usage = $apsc->getIo()->sendRequest(\ APS \ Proto :: GET, 
+					$apsc->getIo()->resourcePath($cdn->aps->id, 'updateResourceUsage'));
 			$usage = json_decode($usage);
-			$httpTraffic = $usage->httpTrafficActualUsage * 1024 * 1024; // convert GB to MB
-			$http_s_Traffic = $usage->httpsTrafficActualUsage * 1024 * 1024; // convert GB to MB
-			$logline = "$cdn->origin_domain;$httpTraffic;$http_s_Traffic";
+			$VDN_HTTP_Traffic += $usage->httpTrafficActualUsage; // * 1024 * 1024; // convert GB to MB ?
+			$VDN_HTTPS_Traffic += $usage->httpsTrafficActualUsage; // * 1024 * 1024;  // convert GB to MB?
+			$resultTime = $usage->lastResultTime;
+			$id = $cdn->aps->id;
+			$logline = "$resultTime;$id;$cdn->name;$cdn->origin_domain;";
+			if( $cdn->https ) {
+				$logline .= "HTTPS;$usage->httpsTrafficActualUsage";
+			} else {
+				$logline .= "HTTP;$usage->httpTrafficActualUsage";
+			}
 			$this->logger->debug($logline);
 			$cdnTrafficLog->log($logline);
 		}
-		$this->VDN_HTTP_Traffic->usage += round($VDN_HTTP_Traffic * 1024 * 1024); // convert GB to MB;
-		$this->VDN_HTTPS_Traffic->usage += round($VDN_HTTPS_Traffic * 1024 * 1024);
+		$this->VDN_HTTP_Traffic->usage += $VDN_HTTP_Traffic;
+		$this->VDN_HTTPS_Traffic->usage += $VDN_HTTPS_Traffic;
 
 		## Update the APS resource counters
 		$this->logger->info(sprintf("Resource usage after update: http=%f https=%f", $this->VDN_HTTP_Traffic->usage, $this->VDN_HTTPS_Traffic->usage));
@@ -198,50 +207,22 @@ class context extends \ APS \ ResourceBase {
 		$this->logger->debug("[" . __METHOD__ . '] >>');
 		ConfigConsts::loadConstants($this);
 		try{
-			$request = json_decode($request);
-			$headers = array(
-					_("Serviço de Entrega"),
-					_("Data/Hora"),
-					_("Traffico HTTP"),
-					_("Traffico HTTPS")
-			);
-			$data = array(
-				array(_("Serviço de Entrega")=>"Serviço1", "Data/Hora"=>"01/01/2001", _("Traffico HTTP")=>"150", _("Traffico HTTPS")=>"980"),
-				array(_("Serviço de Entrega")=>"Serviço2", "Data/Hora"=>"01/01/2001", _("Traffico HTTP")=>"250", _("Traffico HTTPS")=>"880"),
-				array(_("Serviço de Entrega")=>"Serviço3", "Data/Hora"=>"01/01/2001", _("Traffico HTTP")=>"350", _("Traffico HTTPS")=>"780"),
-			);
-			$return = array(
-				"titles" => $headers,
-				"data" => $data
-			);
-			print_r($return);
+			$params = json_decode($request);
+			$subscriptionId=getClientID($this);
+			$usageReport = new UsageReport(
+				$subscriptionId,
+				$params->ini_date,
+				$params->end_date,
+				$params->detail,
+				$params->project );
+			$response = $usageReport->genReport();
+			// print_r($response);
 			$this->logger->debug("[".__METHOD__. '] << ');
-			return $return;
+			return $response;
 		}catch (\Exception $e){
-			$this->log->error("[".__METHOD__. "]".$e->getMessage()." ".$e->getFile()."(".$e->getLine().")".PHP_EOL.$e->getTraceAsString());
+			$this->logger->error("[".__METHOD__. "]".$e->getMessage()." ".$e->getFile()."(".$e->getLine().")".PHP_EOL.$e->getTraceAsString());
 			throw new \Rest\RestException(500, _("An error has ocurred while trying to retrieve the usage data."), $e->getMessage());
 		}
 	}
 }
-//		function _($str){
-//			return $str;
-//		}
-
-
-//		$request = (object)[];
-//		$request->CDMS_ADDRESS                 = "";
-//		$request->CDMS_PORT                    = "";
-//		$request->CDMS_USER                    = "";
-//		$request->CDMS_PWD                     = "";
-//		$request->CDMS_DOMAIN                  = "";
-//		$request->CDMS_MAX_BITRATE_PER_SESSION = ""; 
-//		$request->SPLUNK_ADDRESS               = "";
-//		$request->SPLUNK_ENDPOINT              = ""; 
-//		$request->SPLUNK_QUERY                 = "";
-//		
-//		print_r($request);
-//			$ctx = new context();
-//			$ctx->global = $request;
-//			$ctx->getResourceUsageDetailsReport("{}");
-
 ?>
