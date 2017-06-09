@@ -10,5 +10,8 @@ require_once "elemental_api/configConsts.php";
 
 require_once "elemental_api/utils.php";
 
+$logger = \APS\LoggerRegistry::get();
+$logger->setLogFile("logs/VDNEmbratel_" . date("Ymd") . ".log");
+
 ?>
 

@@ -161,7 +161,9 @@ class ElementalRest {
     }
 
     function restCall( $id=null, $command=null, $params=null){
-        echo "Calling restCall with id=$id, command=$command, params=$params";
+        $logger = \APS\LoggerRegistry::get();
+        $logger->setLogFile("logs/VDNEmbratel_" . date("Ymd") . ".log");
+        $logger->debug( "Calling restCall with id=$id, command=$command, params=$params");
         $urlFinal=$this->uri;
         if( $id ) {
             $urlFinal .= '/'.$id;
@@ -190,10 +192,11 @@ class ElementalRest {
         
         $data = curl_exec($this->ch);
         if( ConfigConsts::$debug ) {
-            echo "*********************\nExecutando CURL\n";
-            echo "URL to call: $urlFinal\n";
-            print_r($this->headers);
-            echo "\n********************\n";
+
+            $logger->debug( "*********************\nExecutando CURL\n" );
+            $logger->debug( "URL to call: $urlFinal\n" );
+            $logger->debug( print_r($this->headers, true) );
+            $logger->debug("\n********************\n");
         }
         $httpRC = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
         if (curl_errno($this->ch)) {

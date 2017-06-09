@@ -7,6 +7,9 @@ yum install php
 
 yum install mod_ssl
 
+yum install php-xmlrpc
+
+
 wget http://download.apsstandard.org/php.runtime/aps-php-runtime-2.1-313.noarch.rpm
 rpm -ihv aps-php-runtime-2.1-313.noarch.rpm
 
@@ -80,3 +83,14 @@ vim /usr/local/bin/deploy
 /root/endpoint.sh --upgrade vdn $( ls -t /usr/local/pem/APS/packages/VDN*|head -1)
 service pemui restart
 
+
+
+******************************************************************************************
+* PBA
+******************************************************************************************
+
+Criar Service Plan
+ 
+Configurar Products->Online store -> screen
+
+Escoloher uma tela para incluir o Service Plan

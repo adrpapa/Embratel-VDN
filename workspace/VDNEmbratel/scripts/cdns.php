@@ -8,6 +8,8 @@ require_once "elemental_api/deliveryServiceGenSettings.php";
 require_once "elemental_api/fileMgmt.php";
 require_once "utils/splunk.php";
 
+require_once "embratel/common/parallels/Parallels.php";
+
 /**
 * Class context
 * @type("http://embratel.com.br/app/VDNEmbratel/cdn/1.1")
@@ -16,7 +18,7 @@ require_once "utils/splunk.php";
 */
 class cdn extends \APS\ResourceBase {
 	/**
-	 * @link("http://embratel.com.br/app/VDNEmbratel/context/2.0")
+	 * @link("http://embratel.com.br/app/VDNEmbratel/context/2.1")
 	 * @required
 	 */
 	public $context;
@@ -181,11 +183,33 @@ class cdn extends \APS\ResourceBase {
 ## Definition of the functions that will respond to the different CRUD operations
 #############################################################################################################################################
 
+	public function tostring() {
+		$retval  = "context:$this->context->aps->id";
+		$retval  = " name:$this->name";
+		$retval .= " description:$this->description";
+		$retval .= " alias:$this->alias";
+		$retval .= " origin_server:$this->origin_server";
+		$retval .= " origin_path:$this->origin_path";
+		$retval .= " https:$this->https";
+		$retval .= " https_in:$this->https_in";
+		$retval .= " live:$this->live";
+		$retval .= " delivery_service_id:$this->delivery_service_id";
+		$retval .= " content_origin_id:$this->content_origin_id";
+		$retval .= " delivery_service_gen_settings_id:$this->delivery_service_gen_settings_id";
+		$retval .= " rule_url_rwr_file_id:$this->rule_url_rwr_file_id";
+		$retval .= " origin_domain:$this->origin_domain";
+		$retval .= " delivery_service_name:$this->delivery_service_name";	
+		$retval .= " httpTrafficActualUsage:$this->httpTrafficActualUsage";
+		$retval .= " http_s_TrafficActualUsage:$this->http_s_TrafficActualUsage";	
+		$retval .= " newestSplunkData:$this->newestSplunkData";
+		return $retval;
+	}
+	
 	public function provision() { 
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
-		echo "************ CDN Object *********";print_r($this);
+//		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this->context);
 		$logger->info("Iniciando provisionamento do CDN... ".$this->aps->id);
 
@@ -253,6 +277,8 @@ class cdn extends \APS\ResourceBase {
 		$this->origin_domain = $origin_domain;
 		//*****************************************
 
+		$this->logActivity(__METHOD__, true, "Recurso Incluído");
+		$return = $this->notifyDeliveryServiceCreation();
 		$logger->info("<-- Fim Provisionando CDN.Delivery Service ID:".$this->delivery_service_id.".Content Origin ID:".$this->content_origin_id);
 		$logger->debug("[".__METHOD__. '] <<');
 	}
@@ -263,7 +289,9 @@ class cdn extends \APS\ResourceBase {
 		$logger->debug("[".__METHOD__. '] >>');
 		ConfigConsts::loadConstants($this->context);
 		$logger->info("Iniciando updating do CDN... ".$this->aps->id);    	 
-		echo "************ CDN Object *********";print_r($this);
+		$resource_before = \APS\TypeLibrary::newResourceByTypeId(
+				"http://embratel.com.br/app/VDNEmbratel/cdn/1.1");
+		$resource_before->_copy($this);
 		$this->_copy($new);
 
 		$custom_name   = $new->alias . "-" . getClientID($this->context);
@@ -273,7 +301,6 @@ class cdn extends \APS\ResourceBase {
 
 		$logger->info("New Domain:".$origin_domain);
 		$this->origin_domain = $origin_domain;
-		echo "************ New Object *********";print_r($this);
 
 		if ( !is_null($this->content_origin_id) ) {
 			$origin = new ContentOrigin("co-".$custom_name,$new->origin_server,$origin_domain,$new->description);
@@ -291,7 +318,7 @@ class cdn extends \APS\ResourceBase {
 			}
 			$this->delivery_service_name = $ds_name;
 			$dsgs = new DeliveryServiceGenSettings();
-			$dsgs->Bitrate = ConfigConsts::CDMS_MAX_BITRATE_PER_SESSION;
+			$dsgs->Bitrate = ConfigConsts::$CDMS_MAX_BITRATE_PER_SESSION;
 			$dsgs->OsProtocol=( $this->https ? "1":"0");
 			$dsgs->StreamingProtocol=($this->https ? "1":"0");
 			$dsgs->update($this->delivery_service_id);
@@ -306,18 +333,56 @@ class cdn extends \APS\ResourceBase {
 		}
 		
 
+		$this->logActivity(__METHOD__, true, "Recurso Alterado", $resource_before);
 		$logger->info("Fim updating do CDN... ".$this->aps->id);
 		$logger->debug("[".__METHOD__. '] <<');
 	}
 
-	public function retrieve(){
+	public function logActivity($method, $ok, $notes, $resource_before=null) {
+		$logger = \APS\LoggerRegistry::get();
+		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
+		$logger->debug("[".__METHOD__. '] >>');
+		ConfigConsts::loadConstants($this->context);
+		$activity = \APS\TypeLibrary::newResourceByTypeId(
+				"http://embratel.com.br/app/VDNEmbratel/activity/1.0");
+		if( $ok == false ){
+			$activity->result = "ERROR";
+		} else {
+			$activity->result = "OK";
+		}
+		$activity->resource_name = $this->name;
+		$activity->usuer_login = "faltapreencher";
+		$activity->user_name = "Falta preencher";
+		$activity->operation_timestamp;
+		$activity->operation_type = $method;
+		$activity->resource_type = __CLASS__;
+		$activity->resource_after = $this->tostring();
+		if( isset($resource_before) ) {
+			$activity->resource_before = $resource_before->tostring();
+		} else {
+			$activity->resource_before = "N/A";
+		}
+		$activity->notes = $notes;
 
+		$apsc = \APS\Request::getController();
+		$apsc2 = $apsc->impersonate($this);
+		$context = $apsc2->getResource($this->context->aps->id);
+		$apsc2->linkResource($context, 'activities', $activity);
+		$logger->debug("[".__METHOD__. '] <<');
+	}
+
+	public function retrieve(){
+		$logger = \APS\LoggerRegistry::get();
+		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
+		$logger->debug("[".__METHOD__. '] >>');
+		$logger->debug("[".__METHOD__. '] <<');
 	}
 
 	public function upgrade(){
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
+		$this->logActivity(__METHOD__, true, "Upgrade de Recurso");
 		$logger->debug("[".__METHOD__. '] <<');
 	}
 
@@ -326,7 +391,6 @@ class cdn extends \APS\ResourceBase {
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
 		$logger->info("Iniciando des-provisionamento do CDN... ".$this->aps->id);
-		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this->context);
 
 		if ( !is_null($this->delivery_service_gen_settings_id) ) {
@@ -349,6 +413,7 @@ class cdn extends \APS\ResourceBase {
 			$rule->delete( $this->rule_url_rwr_file_id );    	
 		}
 
+		$this->logActivity(__METHOD__, true, "Desprovisionamento de Recurso");
 		$logger->info("<-- Fim DES-Provisionando CDN");    	    	
 		$logger->debug("[".__METHOD__. '] <<');
 	}
@@ -362,7 +427,6 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
-		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this->context);
 		$ds = new DeliveryService($custom_name,$origin->getID(),$this->description);
 		/* INICIO Alteração sugeridas pelo Daniel Pinkas da Cisco */
@@ -388,6 +452,7 @@ class cdn extends \APS\ResourceBase {
 			throw new \Exception("Can't assign service engines to delivery service:" . $ds->getMessage(), 504);
 		}		
 
+		$this->logActivity(__METHOD__, true, "Criado Delivery Service");
 		$logger->debug("[".__METHOD__. '] <<');
 		return $ds;
 	}
@@ -396,7 +461,7 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
-		echo "************ CDN Object *********";print_r($this);
+//		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this->context);
 		// CUSTOMIZE PROTOCOL: HTTP or HTTPS
 
@@ -421,6 +486,7 @@ class cdn extends \APS\ResourceBase {
 			throw new \Exception("Can't customize delivery service:" . $dsgs->getMessage(), 503);
 		}			
 
+		$this->logActivity(__METHOD__, true, "Criado Delivery Service General Settings");
 		$logger->debug("[".__METHOD__. '] <<');
 		return $dsgs;
 	}
@@ -429,7 +495,7 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
-		echo "************ CDN Object *********";print_r($this);
+//		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this->context);
 		$rule = new FileMgmt("20",$custom_name . "-url-rwr-rule","upload");
 
@@ -456,6 +522,7 @@ class cdn extends \APS\ResourceBase {
 			throw new \Exception("Can't apply rule to delivery service:" . $ds->getMessage(), 506);
 		}		
 
+		$this->logActivity(__METHOD__, true, "Criado Rule File e associado ao Delivery Service");
 		$logger->debug("[".__METHOD__. '] <<');
 		return $rule;
 	}
@@ -469,7 +536,7 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
-		echo "************ CDN Object *********";print_r($this);
+//		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this->context);
 		$usage = array();
 		$clientID = getClientID($this->context);
@@ -498,6 +565,40 @@ class cdn extends \APS\ResourceBase {
 		return $usage;
 	}
 
+
+	public function notifyDeliveryServiceCreation(){
+		$logger = \APS\LoggerRegistry::get();
+		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
+		$logger->debug("[".__METHOD__. '] >>');
+		ConfigConsts::loadConstants($this->context);
+		if( ConfigConsts::$PBA_API == "" ||
+			ConfigConsts::$EMAIL_TEMPLATE_NAME == '' ) {
+				$logger->debug("Notification Skipped configure PBA Api Gate and Email template");
+				return;
+			}
+		$accountID=getClientID($this->context);
+		$apsc = \APS\Request::getController();
+		$apsc2 = $apsc->impersonate($this);
+		$users = $apsc2->getResources('implementing(http://aps-standard.org/types/core/user/1.0)');
+		$userID = $users[0]->memberId;
+
+		$placeholders = array();
+		$placeholders['Service_Delivery_Name'] = $this->delivery_service_name;
+		$placeholders['usuario'] = $users[0]->login;
+		$placeholders['PORTAL_ANALYTICS_URL'] = ConfigConsts::$PORTAL_ANALYTICS_URL;
+		$parallels = new Parallels($logger);
+
+		$return = $parallels->sendNotification(ConfigConsts::$EMAIL_TEMPLATE_NAME,
+			 	$accountID, $userID, $placeholders);
+		if($return == false) {
+			echo $return;
+		}
+		$this->logActivity(__METHOD__, $return, $parallels->message);
+		$logger->debug("[".__METHOD__. '] <<');
+		return $return;
+	}
+
+
 	/**
 	 * Enable Service engines for CDN
 	 * @verb(GET)
@@ -507,7 +608,7 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
-		echo "************ CDN Object *********";print_r($this);
+//		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this->context);
 		if ( !is_null($this->delivery_service_id) ) {
 			$ds = new DeliveryService();
@@ -527,7 +628,7 @@ class cdn extends \APS\ResourceBase {
 		$logger = \APS\LoggerRegistry::get();
 		$logger->setLogFile("logs/" . __CLASS__ . "_" . date("Ymd") . ".log");
 		$logger->debug("[".__METHOD__. '] >>');
-		echo "************ CDN Object *********";print_r($this);
+//		echo "************ CDN Object *********";print_r($this);
 		ConfigConsts::loadConstants($this);
 		if ( !is_null($this->delivery_service_id) ) {
 			$ds = new DeliveryService();

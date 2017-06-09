@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="ASCII"?>
 <aps:APSPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aps="http://aps-standard.org/ns/2" projectName="VDNEmbratel">
-  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/globais" version="1.0" relations="//@relations.0/@source" application="true" name="globais" implements="//@typesFromLibrary.1">
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/globais" version="1.1" relations="//@relations.0/@source" application="true" name="globais" implements="//@typesFromLibrary.1">
     <properties name="CDMS_ADDRESS" type="string"/>
     <properties name="CDMS_PORT" type="string"/>
     <properties name="CDMS_USER" type="string"/>
     <properties name="CDMS_PWD" type="string"/>
     <properties name="CDMS_DOMAIN" type="string"/>
-    <properties name="SPLUNK_ADDRESS" type="string"/>
-    <properties name="SPLUNK_ENDPOINT" type="string"/>
-    <properties name="SPLUNK_QUERY" type="string"/>
     <properties name="PORTAL_ANALYTICS_URL" type="string"/>
     <properties name="EMAIL_TEMPLATE_NAME" type="string"/>
     <properties name="CDMS_MAX_BITRATE_PER_SESSION" type="string"/>
+    <properties name="PBA_API" type="string"/>
+    <properties name="POA_API" type="string"/>
+    <properties name="SPLUNK_ADDRESS" type="string"/>
+    <properties name="SPLUNK_ENDPOINT" type="string"/>
+    <properties name="SPLUNK_QUERY" type="string"/>
     <properties name="debug" type="boolean"/>
   </internalTypes>
   <internalTypes id="http://embratel.com.br/app/VDNEmbratel/cdn" version="1.1" relations="//@relations.1/@source" name="cdn" implements="//@typesFromLibrary.0">
@@ -36,10 +38,22 @@
     <operations name="assignServiceEngines" verb="GET" path="/assignServiceEngines"/>
     <operations name="unassignServiceEngines" verb="GET" path="/unassignServiceEngines"/>
   </internalTypes>
-  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/context" version="2.0" relations="//@relations.1/@target //@relations.0/@target //@relations.2/@source //@relations.3/@source" name="context" implements="//@typesFromLibrary.0">
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/context" version="2.1" relations="//@relations.1/@target //@relations.2/@source //@relations.0/@target //@relations.3/@source //@relations.4/@source" name="context" implements="//@typesFromLibrary.0">
     <properties name="VDN_HTTP_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTP"/>
     <properties name="VDN_HTTPS_Traffic" type="http://aps-standard.org/types/core/resource/1.0#Counter" description="VDN Total Traffic HTTPS"/>
     <operations name="getResourceUsageDetailsReport" verb="PUT" path="/resource_usage"/>
+  </internalTypes>
+  <internalTypes id="http://embratel.com.br/app/VDNEmbratel/activity" version="1.0" relations="//@relations.2/@target" name="activity" implements="//@typesFromLibrary.0">
+    <properties name="resource_name" type="string"/>
+    <properties name="usuer_login" type="string"/>
+    <properties name="user_name" type="string"/>
+    <properties name="operation_timestamp" type="string"/>
+    <properties name="operation_type" type="string"/>
+    <properties name="resource_type" type="string"/>
+    <properties name="resource_after" type="string"/>
+    <properties name="resource_before" type="string"/>
+    <properties name="result" type="string"/>
+    <properties name="notes" type="string"/>
   </internalTypes>
   <typesFromLibrary id="http://aps-standard.org/types/core/resource" version="1.0" name="Resource">
     <operations name="provision" verb="POST" path="/"/>
@@ -70,7 +84,7 @@
   <typesFromLibrary id="http://aps-standard.org/types/core/application" version="1.0" name="Application" implements="//@typesFromLibrary.0">
     <operations name="upgrade" verb="POST" path="/upgrade"/>
   </typesFromLibrary>
-  <typesFromLibrary id="http://aps-standard.org/types/core/subscription" version="1.0" relations="//@relations.2/@target" name="Subscription">
+  <typesFromLibrary id="http://aps-standard.org/types/core/subscription" version="1.0" relations="//@relations.3/@target" name="Subscription">
     <properties name="trial" type="boolean"/>
     <properties name="disabled" type="boolean"/>
     <properties name="name" type="string"/>
@@ -89,7 +103,7 @@
       <properties name="unit" type="string" required="true"/>
     </structures>
   </typesFromLibrary>
-  <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.3/@target" name="Account">
+  <typesFromLibrary id="http://aps-standard.org/types/core/account" version="1.0" relations="//@relations.4/@target" name="Account">
     <properties name="companyName" type="string" required="true"/>
     <properties name="addressPostal" type="http://aps-standard.org/types/core/contact/1.1#Address" required="true"/>
   </typesFromLibrary>
@@ -100,6 +114,10 @@
   <relations>
     <source type="//@internalTypes.1" name="context" required="true"/>
     <target type="//@internalTypes.2" name="cdns" collection="true"/>
+  </relations>
+  <relations>
+    <source type="//@internalTypes.2" name="activities" collection="true"/>
+    <target type="//@internalTypes.3" name="context" required="true"/>
   </relations>
   <relations>
     <source type="//@internalTypes.2" name="subscription" required="true"/>

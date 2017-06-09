@@ -14,7 +14,7 @@ require_once "utils/usageReport.php";
 
 /**
 * Class context
-* @type("http://embratel.com.br/app/VDNEmbratel/context/2.0")
+* @type("http://embratel.com.br/app/VDNEmbratel/context/2.1")
 * @implements("http://aps-standard.org/types/core/resource/1.0")
 */
 
@@ -24,9 +24,14 @@ class context extends \ APS \ ResourceBase {
 	*/
 	public $cdns;
 
+	/**
+	* @link("http://embratel.com.br/app/VDNEmbratel/activity/1.0[]")
+	*/
+	public $activities;
+
 	## Strong relation (link) to the application instance
 	/**
-	* @link("http://embratel.com.br/app/VDNEmbratel/globais/1.0")
+	* @link("http://embratel.com.br/app/VDNEmbratel/globais/1.1")
 	* @required
 	*/
 	public $global;
@@ -131,7 +136,7 @@ class context extends \ APS \ ResourceBase {
 
 		## Connect to the APS controller
 		$apsc = \ APS \ Request :: getController();
-
+ 
 		## Reset the local variables
 		$VDN_HTTP_Traffic = 0;
 		$VDN_HTTPS_Traffic = 0;

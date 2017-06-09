@@ -24,7 +24,10 @@
 		public static $SPLUNK_ADDRESS = '192.118.76.206';
 		public static $SPLUNK_ENDPOINT = '/splunkApp/en-US/custom/CDN_Usage_Reporting/cdnusage/metric_data';
 		public static $SPLUNK_QUERY = '?metric=cdn_ds_bytes_delivered&time_range=%s&span=%s&delivery_service=%s&time_format';
-
+		public static $EMAIL_TEMPLATE_NAME = '';
+		public static $PORTAL_ANALYTICS_URL;
+		public static $PBA_API = 'http://172.16.130.119:5224/RPC2';
+		public static $POA_API = 'http://172.16.130.119:8440/RPC2';
 
 		public static function loadConstants( $resource ) {
 			// ConfigConsts::$TEMPLATE_PATH                = $globais.$TEMPLATE_PATH;
@@ -39,11 +42,19 @@
 			if( $resource->global->CDMS_MAX_BITRATE_PER_SESSION != null ) {
 				self::$CDMS_MAX_BITRATE_PER_SESSION = $resource->global->CDMS_MAX_BITRATE_PER_SESSION;
 			}
-			self::$SPLUNK_ADDRESS               = $resource->global->SPLUNK_ADDRESS;
-			self::$SPLUNK_ENDPOINT              = $resource->global->SPLUNK_ENDPOINT;
-			self::$SPLUNK_QUERY                 = $resource->global->SPLUNK_QUERY;
+			self::$SPLUNK_ADDRESS				= $resource->global->SPLUNK_ADDRESS;
+			self::$SPLUNK_ENDPOINT				= $resource->global->SPLUNK_ENDPOINT;
+			self::$SPLUNK_QUERY					= $resource->global->SPLUNK_QUERY;
+			if( $resource->global->EMAIL_TEMPLATE_NAME != null ) {
+				self::$EMAIL_TEMPLATE_NAME		= $resource->global->EMAIL_TEMPLATE_NAME;
 			}
+			if( $resource->global->PBA_API != null || $resource->global->PBA_API == "" ) {
+				self::$PBA_API		= $resource->global->PBA_API;
+			}
+			if( $resource->global->POA_API != null || $resource->global->POA_API == "" ) {
+				self::$POA_API		= $resource->global->POA_API;
+			}
+			self::$PORTAL_ANALYTICS_URL			= $resource->global->PORTAL_ANALYTICS_URL;
+		}
 	}
-
-
 ?>

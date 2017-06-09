@@ -1,16 +1,16 @@
 <?php
 
 require_once 'loader.php';
-
+ 
 /**
  * Class globais presents application and its global parameters
- * @type("http://embratel.com.br/app/VDNEmbratel/globais/1.0")
+ * @type("http://embratel.com.br/app/VDNEmbratel/globais/1.1")
  * @implements("http://aps-standard.org/types/core/application/1.0")
  */
 class globais extends \APS\ResourceBase {
 # Link to collection of contexts. Pay attention to [] brackets at the end of the @link line.
 	/**
-	 * @link("http://embratel.com.br/app/VDNEmbratel/context/2.0[]")
+	 * @link("http://embratel.com.br/app/VDNEmbratel/context/2.1[]")
 	 */
 	public $contexts;
 	
@@ -50,6 +50,39 @@ class globais extends \APS\ResourceBase {
 	
 	/**
 	 * @type(string)
+	 * @title("URL do Portal Analytics")
+	 */
+	public $PORTAL_ANALYTICS_URL = '192.118.76.206';
+	
+	/**
+	 * deve contemplar placeholders: @@Service_Delivery_Name@ e @@usuario@
+	 */
+	/**
+	 * @type(string)
+	 * @title("Template de Email")
+	 */
+	public $EMAIL_TEMPLATE_NAME = '';
+	
+	/**
+	 * @type(string)
+	 * @title("Maximum bitrate limit per session")
+	 */
+	public $CDMS_MAX_BITRATE_PER_SESSION = '12000';
+
+	/**
+	 * @type(string)
+	 * @title("Endereço da API do PBA: test:172.20.233.45 prod:172.20.230.47")
+	 */
+	public $PBA_API = 'http://172.20.233.45:5224/RPC2';
+
+	/**
+	 * @type(string)
+	 * @title("Endereço da API do POA: test:172.20.233.40 prod:172.20.230.40")
+	 */
+	public $POA_API = 'http://172.20.233.40:8440/RPC2';
+
+	/**
+	 * @type(string)
 	 * @title("URL para obtenção do consumo")
 	 */
 	public $SPLUNK_ADDRESS = '192.118.76.206';
@@ -66,23 +99,6 @@ class globais extends \APS\ResourceBase {
 	 */
 	public $SPLUNK_QUERY = '?metric=cdn_ds_bytes_delivered&time_range=%s&span=%s&delivery_service=%s&time_format';
 	
-	/**
-	 * @type(string)
-	 * @title("URL do Portal Analytics")
-	 */
-	public $PORTAL_ANALYTICS_URL = '192.118.76.206';
-	
-	/**
-	 * @type(string)
-	 * @title("Template de Email")
-	 */
-	public $EMAIL_TEMPLATE_NAME = 'Notificação de criação de Serviço de Entrega';
-	
-	/**
-	 * @type(string)
-	 * @title("Maximum bitrate limit per session")
-	 */
-	public $CDMS_MAX_BITRATE_PER_SESSION = '12000';
 	/**
 	 * @type(boolean)
 	 * @title("Depuração")

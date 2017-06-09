@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/aps/2/ui/runtime/client/aps/aps.js"></script>
+<script type = 'text/javascript'>
+	require([ "aps/ResourceStore",
+	          "aps/Container",
+	          "aps/Grid",
+	          "dojox/mvc/StatefulArray",
+	          "aps/PageContainer",
+	          "aps/ready!"
+	        ],
+	function(Store, Container, Grid, StatefulArray, PageContainer) {
+		"use strict";
+		debugger;
+		var store = new Store({
+			apsType : "http://embratel.com.br/app/VDNEmbratel/activity/1.0",
+			target : "/aps/2/resources/"
+		});
+		
+		var layoutSimpleGrid = [
+			{ "name": "Recurso", "field": "resource_name"},
+			{ "name": "Login", "field": "usuer_login"},
+			{ "name": "Usuário", "field": "user_name"},
+			{ "name": "Horário", "field": "operation_timestamp"},
+			{ "name": "Operação", "field": "operation_type"},
+			{ "name": "Tipo", "field": "resource_type"},
+			{ "name": "Resultado", "field": "result"},
+			{ "name": "Observação", "field": "notes"},
+			{ "name": "Antes", "field": "resource_after"},
+			{ "name": "Depois", "field": "resource_before"}
+		];
+
+	    var page = new PageContainer({}, "simpleGrid");
+
+		var con = new Container({ title: "Registro de Atividades" });
+
+		var selectionArray = new StatefulArray([]);
+
+	    var simpleGrid = new Grid({
+	        columns: layoutSimpleGrid,
+	        store: store,
+	        selectionMode: "multiple",
+	        selectionArray: selectionArray
+	    });
+
+	    con.addChild(simpleGrid);
+	    page.addChild(con);
+	    page.startup();
+	});
+</script>
+</head>
+<body>
+</body>
+</html>

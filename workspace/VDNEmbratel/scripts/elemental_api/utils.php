@@ -50,36 +50,6 @@
         return $totalMiliSeconds;
     }
         
-	/**
-	* Send e-mail using PBA template
-	* @param string $TemplateName Template code
-	* @param integer $SubscriptionID Subscription ID
-	* @param integer $UserID PBA User ID
-	* @param array $PlaceHolders Values to send to template: array( 'key' => 'value', ...)
-	*/
-	public function sendNotification($TemplateName, $SubscriptionID, $UserID, $PlaceHolders)
-	{
-		$this->logger->debug("[".__METHOD__ ."] >> {$TemplateName}, {$SubscriptionID}, {$UserID}");
-		
-		$param = array();
-		$param["Server"] = "MESSAGE";
-		$param["Method"] = "SendSubscriptionNotificationForUser_API";
-		$param["Params"][] = strval($TemplateName);
-		$param["Params"][] = intval($SubscriptionID);
-		$param["Params"][] = intval($UserID);
-		foreach ($PlaceHolders as $key => $value) {
-			$param["Params"][] = strval($key);
-			$param["Params"][] = strval($value);
-		}
-		$dados = $this->busca('PBA', 'Execute', $param);
-		if ($dados === false) {
-			$this->logger->debug("[".__METHOD__ ."] << false");
-			return false;
-		}
-		$this->logger->debug("[".__METHOD__ ."] << {$dados['Result'][0]['Status']}");
-		return $dados['Result'][0]['Status'];
-	}
-        
         
 //      echo txtDuration2ms("29s 568ms");
 ?>

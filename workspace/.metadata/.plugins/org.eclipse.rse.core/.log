@@ -1,4 +1,4 @@
-Mon Jun 05 09:23:01 BRT 2017
+Fri Jun 09 07:42:14 BRT 2017
 ERROR org.eclipse.rse.core  Unexpected Exception
 java.net.UnknownHostException: linux-t7gv: linux-t7gv: Nome ou serviço desconhecido
 	at java.net.InetAddress.getLocalHost(InetAddress.java:1505)

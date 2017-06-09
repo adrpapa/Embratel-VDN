@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<application packaged="2016-06-16T10:37:18" version="2.0"
-	xmlns="http://aps-standard.org/ns/2">
+<application packaged="2017-06-06T16:44:08" version="2.0" xmlns="http://aps-standard.org/ns/2">
 	<id>http://embratel.com.br/app/VDNEmbratel</id>
 	<name>VDNEmbratel</name>
 	<version>3.0</version>
-	<release>1.1</release>
+	<release>1.9</release>
 	<homepage>http://embratel.com.br/app/VDNEmbratel</homepage>
 	<vendor>
 		<name>Vendor Embratel</name>
@@ -18,7 +16,7 @@
 		<summary>Descrição sumária VDN</summary>
 		<description>Descriçao completa VDN.
 		</description>
-		<icon path="ui/images/icon.png" />
+		<icon path="ui/images/icon.png"/>
 		<changelog>
 			<version release="1" version="1.0">
 				<entry>Initial release.</entry>
@@ -26,7 +24,7 @@
 			<version release="3.3" version="2.0">
 				<entry>General fixes</entry>
 			</version>
-			<version version="3.0" release="1.1">
+			<version release="1.1" version="3.0">
 				<entry>Removidos o suporte ao Elemental Live / VOD e incluído o relatório de consumo</entry>
 			</version>
 		</changelog>
@@ -40,9 +38,9 @@
 			<language>es</language>
 		</languages>
 		<navigation id="vndTree" label="VDN">
-			<var name="context" type-id="http://embratel.com.br/app/VDNEmbratel/context/2.0" />
-			<var name="globais" type-id="http://embratel.com.br/app/VDNEmbratel/globais/1.0" />
-			<plugs-to id="http://www.aps-standard.org/ui/service" />
+			<var name="context" type-id="http://embratel.com.br/app/VDNEmbratel/context/2.1"/>
+			<var name="globais" type-id="http://embratel.com.br/app/VDNEmbratel/globais/1.1"/>
+			<plugs-to id="http://www.aps-standard.org/ui/service"/>
 			<item id="itemGeral" label="Geral">
 				<view id="viewGeral" label="Geral">
 					<view id="ciscoAnalytics" label="CISCO">
@@ -52,20 +50,16 @@
 			<item id="itemServicoEntrega" label="Delivery Services">
 				<view id="viewServicoEntrega" label="Delivery Services">
 					<view id="servicoEntrega" label="Delivery Service Maintenance">
-						<var name="servico" 
-							type-id="http://embratel.com.br/app/VDNEmbratel/cdn/1.1"
-							required="false" />
+						<var name="servico" required="false" type-id="http://embratel.com.br/app/VDNEmbratel/cdn/1.1"/>
 						<controls>
-							<cancel label="Cancel" />
-							<submit label="Update" />
+							<cancel label="Cancel"/>
+							<submit label="Update"/>
 						</controls>
 					</view>
-					<view id="servicoEntregaNovo" 
-						label="New Delivery Service"
-						src="ui/servicoEntrega.html">
+					<view id="servicoEntregaNovo" label="New Delivery Service" src="ui/servicoEntrega.html">
 						<controls>
-							<cancel label="Cancel" />
-							<submit label="Add" />
+							<cancel label="Cancel"/>
+							<submit label="Add"/>
 						</controls>
 					</view>
 				</view>
@@ -74,21 +68,25 @@
 				<view id="usage" label="Reports">
 				</view>
 			</item>
+			<item id="itemAtividades" label="Log">
+				<view id="activities" label="Log">
+				</view>
+			</item>
 		</navigation>
 
 	</presentation>
 	<license-agreement must-accept="true">
-		<free />
+		<free/>
 		<text>
 			<name>End-User License Agreement</name>
 			<file>http://opensource.org/licenses/bsd-license</file>
 		</text>
 	</license-agreement>
 
-	<upgrade match="version =ge=3.0" />
+	<upgrade match="version =ge=3.0"/>
 
 	<service id="globais">
-		<code engine="php" path="scripts/globais.php" />
+		<code engine="php" path="scripts/globais.php"/>
 		<presentation>
 			<name>Globais</name>
 			<summary>Globais - Sumário</summary>
@@ -100,7 +98,7 @@
 	</service>
 
 	<service id="contexts">
-		<code engine="php" path="scripts/contexts.php" />
+		<code engine="php" path="scripts/contexts.php"/>
 		<presentation>
 			<name>VDN</name>
 			<summary>VDN Context Summary</summary>
@@ -109,14 +107,12 @@
 				<link class="deployment-guide" href="http://www.embratel.com.br">Deployment Guide</link>
 			</infolinks>
 			<entry-points>
-				<entry dst="http://embratel.com.br/app/VDNEmbratel#viewGeral"
-					class="aps2-view">
+				<entry class="aps2-view" dst="http://embratel.com.br/app/VDNEmbratel#viewGeral">
 					<label>Management</label>
 					<description>Delivery Service Management
                     </description>
 				</entry>
-				<entry dst="http://embratel.com.br/app/VDNEmbratel#ciscoAnalytics"
-					class="aps2-view">
+				<entry class="aps2-view" dst="http://embratel.com.br/app/VDNEmbratel#ciscoAnalytics">
 					<label>CISCO Portal Analytics</label>
 					<description>CISCO Portal Analitics Full Description</description>
 				</entry>
@@ -125,10 +121,22 @@
 	</service>
 
 	<service id="cdns">
-		<code engine="php" path="scripts/cdns.php" />
+		<code engine="php" path="scripts/cdns.php"/>
 		<presentation>
 			<name>Service Delivery</name>
 			<summary>Service Delivery Summary</summary>
+			<infolinks>
+				<link class="support" href="http://www.embratel.com.br">Support</link>
+				<link class="deployment-guide" href="http://www.embratel.com.br">Deployment Guide</link>
+			</infolinks>
+		</presentation>
+	</service>
+
+	<service id="activities">
+		<code engine="php" path="scripts/activities.php"/>
+		<presentation>
+			<name>Log de Atividades</name>
+			<summary>Registro de atividades</summary>
 			<infolinks>
 				<link class="support" href="http://www.embratel.com.br">Support</link>
 				<link class="deployment-guide" href="http://www.embratel.com.br">Deployment Guide</link>

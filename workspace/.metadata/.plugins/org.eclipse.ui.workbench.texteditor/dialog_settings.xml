@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="ConfigConsts::" key="selection"/>
+		<item value="echo" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="ConfigConsts::"/>
-			<item value="CDMS_MAX_BITRATE_PER_SESSION"/>
-			<item value="$ds"/>
-			<item value="$new"/>
-			<item value="$data"/>
-			<item value="$dsgs"/>
-			<item value="deliveryServiceGen"/>
-			<item value="modify"/>
+			<item value="echo"/>
+			<item value="variabl"/>
+			<item value="notifyDeliveryServiceCreation"/>
+			<item value=" CDN "/>
+			<item value="activit"/>
+			<item value="logActivity"/>
+			<item value="variab"/>
+			<item value="php"/>
 		</list>
 		<list key="replacehistory">
+			<item value="$this-&gt;message"/>
 			<item value="ConfigConsts::loadConstants"/>
 			<item value="ConfigConsts::loadConstants($this-&gt;context"/>
 			<item value="ConfigConsts::loadConstants($this-&gt;context)"/>
@@ -25,14 +26,13 @@
 			<item value="getLogger(__CLASS__)"/>
 			<item value=""/>
 			<item value="    "/>
-			<item value="$logger = $this-&gt;getLogger();"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="345" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="530" key="DIALOG_HEIGHT"/>
-		<item value="-505" key="DIALOG_X_ORIGIN"/>
-		<item value="242" key="DIALOG_Y_ORIGIN"/>
+		<item value="-622" key="DIALOG_X_ORIGIN"/>
+		<item value="139" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

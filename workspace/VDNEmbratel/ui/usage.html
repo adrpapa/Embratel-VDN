@@ -20,7 +20,7 @@ require(
 				Button, Tooltip, displayError, DateModule, DateStamp,
 				declare) {
 			debugger;
-			var myDateTextBox = declare("myDateTextBox", DateTextBox,
+			var MyDateTextBox = declare("MyDateTextBox", DateTextBox,
 					{
 						myFormat : {
 							selector : 'date'
@@ -117,8 +117,8 @@ require(
 					_setInvalidMessage(_('The start date must be before the end date.'));
 					return false;
 				}
-				if (usageModel.get('detail')
-						&& DateModule.difference(date_ini, date_end, 'day') > 35) {
+				if (usageModel.get('detail') &&
+						DateModule.difference(date_ini, date_end, 'day') > 35) {
 					_setInvalidMessage(_('The Detailed report period can not be greater than 31 days.'));
 					return false;
 				}
@@ -161,24 +161,17 @@ require(
 				maximum : at(currentUsage.maxS),
 				value : at(currentUsage.valorS),
 				classesMap : overClassS
-			})
+			});
 			https_fs.addChild(https_gauge);
 			page.addChild(https_fs);
 
 			var report_fs = new FieldSet(
 					{
 						title : _("Gerar Relatório"),
-						description : _('Notas Explicativas da página de seleção do relatório.')
-								+ '<br><br>'
+						description : _('Notas Explicativas da página de seleção do relatório.')+ '<br><br>'
 					});
 
-			var report_fs = new FieldSet(
-					{
-						title : _("Resource Usage Report"),
-						description : _('The report informs the usage until the last reading, the actual hour can change the usage over the time.')
-					});
-
-			var ini_date = new myDateTextBox({
+			var ini_date = new MyDateTextBox({
 				id : 'tx_ini_date',
 				//lang: aps.context.locale,
 				value : at(usageModel, 'ini_date'),
@@ -216,7 +209,7 @@ require(
 				isValid : dateValidation
 			});
 
-			var end_date = new myDateTextBox({
+			var end_date = new MyDateTextBox({
 				id : 'tx_end_date',
 				//lang: aps.context.locale,
 				value : at(usageModel, 'end_date'),
@@ -338,9 +331,9 @@ require(
 				if (name == 'ini_date' && typeof value != "undefined") {
 					var date_ini = _getDate(value);
 					var date_end = this.get('end_date');
-					if (typeof date_end == 'undefined'
-							|| usageModel.get('detail')
-							&& DateModule.difference(date_ini,
+					if (typeof date_end == 'undefined' ||
+							usageModel.get('detail') &&
+							DateModule.difference(date_ini,
 									_getDate(date_end), 'day') > 31) {
 						usageModel.set('end_date', DateStamp.toISOString(
 								DateModule.add(date_ini, "day", 30), {
